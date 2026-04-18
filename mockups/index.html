@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trade Way CRM — اختر التصميم</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Cairo', 'Inter', system-ui, sans-serif;
+    background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 50%, #f0fdf4 100%);
+    min-height: 100vh;
+    color: #0f172a;
+    padding: 40px 20px;
+  }
+  .wrap { max-width: 1280px; margin: 0 auto; }
+  header { text-align: center; margin-bottom: 48px; }
+  .logo { width: 72px; height: 72px; margin-bottom: 16px; }
+  h1 { font-size: 36px; font-weight: 800; color: #0f5132; margin-bottom: 8px; }
+  .sub { color: #475569; font-size: 16px; max-width: 640px; margin: 0 auto; line-height: 1.7; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px; }
+  .card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(15, 81, 50, 0.08);
+    border: 2px solid transparent;
+    transition: all 0.3s;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+  }
+  .card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(15, 81, 50, 0.15); border-color: #43A047; }
+  .preview {
+    height: 240px;
+    position: relative;
+    overflow: hidden;
+  }
+  .p1 { background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%); }
+  .p1::before {
+    content: ''; position: absolute; inset: 20px;
+    background:
+      linear-gradient(white, white) padding-box,
+      linear-gradient(135deg, #e5e7eb, #d1fae5) border-box;
+    border: 1px solid transparent;
+    border-radius: 12px;
+  }
+  .p1::after {
+    content: 'Dashboard'; position: absolute; top: 36px; right: 36px;
+    width: 80px; height: 6px; background: #0f5132; border-radius: 4px;
+    color: transparent;
+  }
+  .p2 { background: #0f172a; position: relative; }
+  .p2::before {
+    content: ''; position: absolute; top: 0; right: 0; bottom: 0; width: 60px;
+    background: #1e293b;
+  }
+  .p2::after {
+    content: ''; position: absolute; top: 20px; right: 80px; left: 20px; bottom: 20px;
+    background: white; border-radius: 4px;
+  }
+  .p3 {
+    background: linear-gradient(135deg, #16a34a 0%, #0f5132 100%);
+    position: relative;
+  }
+  .p3::before {
+    content: '🏆'; font-size: 80px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    opacity: 0.3;
+  }
+  .p3::after {
+    content: '#1 نورا — 47 أكتف'; position: absolute; bottom: 20px; right: 20px; left: 20px;
+    background: rgba(255,255,255,0.95); padding: 12px 16px; border-radius: 12px;
+    font-weight: 700; color: #0f5132; text-align: center;
+  }
+  .body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
+  .tag {
+    display: inline-block; font-size: 11px; font-weight: 700;
+    padding: 4px 10px; border-radius: 999px;
+    background: #d1fae5; color: #065f46; margin-bottom: 12px;
+    letter-spacing: 0.5px;
+  }
+  h3 { font-size: 22px; font-weight: 800; color: #0f172a; margin-bottom: 8px; }
+  .desc { color: #475569; font-size: 14px; line-height: 1.7; margin-bottom: 16px; flex: 1; }
+  ul { list-style: none; margin-bottom: 20px; }
+  ul li {
+    font-size: 13px; color: #334155; padding: 6px 0;
+    border-bottom: 1px dashed #e2e8f0;
+    display: flex; justify-content: space-between;
+  }
+  ul li:last-child { border-bottom: 0; }
+  ul li span { color: #64748b; font-size: 12px; }
+  .btn {
+    display: block; text-align: center;
+    background: #0f5132; color: white; text-decoration: none;
+    padding: 12px 20px; border-radius: 12px;
+    font-weight: 700; font-size: 14px;
+    transition: background 0.2s;
+  }
+  .btn:hover { background: #065f46; }
+  footer { text-align: center; margin-top: 48px; color: #64748b; font-size: 13px; }
+  footer strong { color: #0f5132; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img src="shared/logo.svg" class="logo" alt="Trade Way">
+    <h1>Trade Way CRM — اختر التصميم</h1>
+    <p class="sub">3 اتجاهات مختلفة كليًا لنفس النظام. كل واحد يتناسب مع ذوق/احتياج مختلف. افتح كل تصميم وشوفه كامل (دخول + داشبورد + ليدز + فانل + موافقات) وقولي رقم اللي عاجبك.</p>
+  </header>
+
+  <div class="grid">
+    <a href="design-1/index.html" class="card">
+      <div class="preview p1"></div>
+      <div class="body">
+        <span class="tag">DESIGN 01</span>
+        <h3>Clarity — النقاء</h3>
+        <p class="desc">تصميم نظيف وهادي مستوحى من Linear و Stripe. أبيض واسع، أخضر Trade Way كلون أساسي، تركيز على المحتوى بدون إزعاج بصري. الأنسب للاستخدام اليومي الطويل.</p>
+        <ul>
+          <li>الطابع <span>Modern SaaS</span></li>
+          <li>الكثافة <span>متوسطة</span></li>
+          <li>الشخصية <span>هادئ / احترافي</span></li>
+          <li>مناسب لـ <span>Account Managers + TL</span></li>
+        </ul>
+        <span class="btn">افتح التصميم ←</span>
+      </div>
+    </a>
+
+    <a href="design-2/index.html" class="card">
+      <div class="preview p2"></div>
+      <div class="body">
+        <span class="tag">DESIGN 02</span>
+        <h3>Command — القيادة</h3>
+        <p class="desc">كونسول عمليات كثيف البيانات مستوحى من Salesforce Lightning و Intercom. سايدبار غامق، شاشات مليانة معلومات، اختصارات كيبورد. الأنسب للسيلز اللي شغّال على لوحات كتير يوميًا.</p>
+        <ul>
+          <li>الطابع <span>Ops Console</span></li>
+          <li>الكثافة <span>عالية</span></li>
+          <li>الشخصية <span>قوي / احترافي</span></li>
+          <li>مناسب لـ <span>Sales Agents + QA</span></li>
+        </ul>
+        <span class="btn">افتح التصميم ←</span>
+      </div>
+    </a>
+
+    <a href="design-3/index.html" class="card">
+      <div class="preview p3"></div>
+      <div class="body">
+        <span class="tag">DESIGN 03</span>
+        <h3>Arena — الحلبة</h3>
+        <p class="desc">تصميم محفّز مستوحى من SalesScreen و Ambition. ليدربورد ضخم، شارات، تدرجات خضراء مفعمة، احتفاء بالإنجازات. الأنسب لو هتعلقه على شاشة في الأوفيس يحفّز التيم كله.</p>
+        <ul>
+          <li>الطابع <span>Gamified</span></li>
+          <li>الكثافة <span>منخفضة / بصري</span></li>
+          <li>الشخصية <span>حماسي / تنافسي</span></li>
+          <li>مناسب لـ <span>TV Wall + Team Leaders</span></li>
+        </ul>
+        <span class="btn">افتح التصميم ←</span>
+      </div>
+    </a>
+  </div>
+
+  <footer>
+    كل تصميم بيعرض: شاشة الدخول · الداشبورد · قائمة الليدز · ملف الـContact + Enrollments · فانل Kanban · طابور الموافقات · رفع Bulk · سينك Google Sheet ·<br>
+    <strong>Trade Way CRM</strong> — Built by Claude Agent on branch <code>claude/analyze-crm-requirements-arvwt</code>
+  </footer>
+</div>
+</body>
+</html>

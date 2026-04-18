@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <!-- Diagonal stripes -->
+  <g opacity="0.9">
+    <rect x="6" y="30" width="8" height="60" transform="rotate(-45 10 60)" fill="#7CB342"/>
+    <rect x="18" y="30" width="8" height="60" transform="rotate(-45 22 60)" fill="#7CB342"/>
+    <rect x="30" y="30" width="8" height="60" transform="rotate(-45 34 60)" fill="#7CB342"/>
+  </g>
+  <!-- Main diamond -->
+  <rect x="42" y="18" width="60" height="60" rx="4" transform="rotate(45 72 48)" fill="#43A047"/>
+  <!-- TW letters -->
+  <text x="60" y="68" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="26" fill="white" text-anchor="middle">TW</text>
+</svg>
