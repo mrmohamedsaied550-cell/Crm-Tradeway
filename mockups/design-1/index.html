@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trade Way CRM · Clarity · تسجيل الدخول</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="login-page">
+<div class="login-split">
+  <aside class="login-hero">
+    <div class="login-brand">
+      <img src="../shared/logo.svg" alt="Trade Way" width="48" height="48">
+      <span>Trade Way CRM</span>
+    </div>
+    <div class="login-hero-body">
+      <p class="eyebrow">Clarity · التصميم الأول</p>
+      <h1>كل ليد في مكانه الصح،<br>وكل فرصة فرصة فعلًا.</h1>
+      <p class="hero-sub">نظام CRM مصمم لفريق Trade Way: توزيع تلقائي، فانل أوضح، موافقات بضغطة زر، وسينك لحظي مع Google Sheets.</p>
+      <ul class="hero-list">
+        <li><span class="dot"></span> توزيع Round-Robin تلقائي للـLeads</li>
+        <li><span class="dot"></span> طابور موافقات واحد للـTL/QA</li>
+        <li><span class="dot"></span> تقارير لحظية عن الأكتف &amp; الـPipeline</li>
+      </ul>
+    </div>
+    <footer class="login-foot">© 2026 Trade Way — All rights reserved.</footer>
+  </aside>
+
+  <main class="login-form">
+    <div class="form-wrap">
+      <h2>تسجيل الدخول</h2>
+      <p class="sub">سجّل بحسابك الوظيفي عشان تدخل لوحة CRM.</p>
+      <form onsubmit="event.preventDefault(); window.location='dashboard.html';">
+        <label>البريد الوظيفي</label>
+        <input type="email" value="nora@tradeway.eg" required>
+        <label>كلمة المرور</label>
+        <input type="password" value="••••••••" required>
+        <div class="row-between">
+          <label class="check"><input type="checkbox" checked> تذكّرني</label>
+          <a href="#" class="link">نسيت كلمة المرور؟</a>
+        </div>
+        <button class="btn-primary" type="submit">دخول →</button>
+        <div class="divider"><span>أو</span></div>
+        <button type="button" class="btn-google">
+          <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#4285F4" d="M45.12 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.84c-.51 2.75-2.06 5.08-4.39 6.64v5.52h7.11c4.16-3.83 6.56-9.47 6.56-16.17z"/><path fill="#34A853" d="M24 46c5.94 0 10.92-1.97 14.56-5.33l-7.11-5.52c-1.97 1.32-4.49 2.1-7.45 2.1-5.73 0-10.58-3.87-12.31-9.07H4.34v5.7C7.96 41.07 15.4 46 24 46z"/><path fill="#FBBC05" d="M11.69 28.18c-.44-1.32-.69-2.73-.69-4.18s.25-2.86.69-4.18v-5.7H4.34C2.85 17.1 2 20.45 2 24s.85 6.9 2.34 9.88l7.35-5.7z"/><path fill="#EA4335" d="M24 9.75c3.23 0 6.13 1.11 8.41 3.29l6.31-6.31C34.91 3.18 29.93 1 24 1 15.4 1 7.96 5.93 4.34 13.12l7.35 5.7C13.42 13.62 18.27 9.75 24 9.75z"/></svg>
+          الدخول بحساب Google
+        </button>
+      </form>
+    </div>
+  </main>
+</div>
+</body>
+</html>

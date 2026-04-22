@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>أحمد فاروق · Clarity · Trade Way CRM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="side-brand"><img src="../shared/logo.svg"><div><b>Trade Way</b><small>Clarity · v1</small></div></div>
+    <ul class="nav">
+      <li><a href="dashboard.html">📊 الداشبورد</a></li>
+      <li><a href="leads.html">👥 الليدز</a></li>
+      <li><a href="funnel.html">🎯 الفانل</a></li>
+      <li><a href="contact.html" class="active">📇 Contact</a></li>
+    </ul>
+    <div class="nav-section">الإدارة</div>
+    <ul class="nav">
+      <li><a href="approvals.html">✅ الموافقات <span class="pill" style="background:var(--err-soft);color:var(--err)">7</span></a></li>
+      <li><a href="bulk.html">⬆️ رفع Bulk</a></li>
+      <li><a href="sync.html">🔄 Google Sheet</a></li>
+    </ul>
+    <div class="side-bottom">
+      <a href="index.html" class="me"><div class="avatar">ن</div><div class="me-info"><b>نورا سيد</b><span>Team Leader</span></div></a>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input placeholder="بحث عام…"></div>
+      <div class="top-actions">
+        <button class="btn">+ ليد جديد</button>
+        <button class="icon-btn"><span class="ping"></span>🔔</button>
+      </div>
+    </div>
+
+    <div class="page">
+      <div class="crumb"><a href="leads.html">الليدز</a> / Contact</div>
+      <div class="card" style="margin-top:8px;padding:24px;display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap">
+        <div class="avatar" style="width:72px;height:72px;font-size:26px">أ</div>
+        <div class="grow" style="min-width:280px">
+          <h1 style="font-size:24px;font-weight:800;margin-bottom:4px">أحمد فاروق محمد</h1>
+          <div class="row" style="gap:8px;flex-wrap:wrap;margin-bottom:10px">
+            <span class="badge b-meet">Qualified</span>
+            <span class="pill">Facebook</span>
+            <span class="pill">🔥 Hot lead</span>
+            <span class="pill">VIP</span>
+          </div>
+          <div class="row" style="gap:24px;flex-wrap:wrap;color:var(--ink-soft);font-size:13px">
+            <span>📱 +20 100 234 5678</span>
+            <span>✉️ ahmed.f@gmail.com</span>
+            <span>📍 القاهرة · المعادي</span>
+            <span>🎓 خريج هندسة كمبيوتر</span>
+          </div>
+        </div>
+        <div class="row">
+          <button class="btn">💬 WhatsApp</button>
+          <button class="btn">📞 اتصال</button>
+          <button class="btn">✉️ بريد</button>
+          <button class="btn-brand btn">تسجيل كإنرولمنت →</button>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-top:16px">
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div class="card">
+            <div class="card-h"><h3>سجل النشاط</h3><button class="btn btn-sm">+ نشاط</button></div>
+            <ul class="tl">
+              <li><div class="when">اليوم · 10:42</div><div class="what">📞 مكالمة 8د 20ث — "مهتم بخيار التقسيط"</div><div class="who">بواسطة نورا سيد</div></li>
+              <li><div class="when">اليوم · 09:15</div><div class="what">✉️ إرسال كتالوج الكورسات</div><div class="who">بواسطة نورا سيد</div></li>
+              <li><div class="when">أمس · 17:30</div><div class="what">💬 WhatsApp: تمت محادثة من 12 رسالة</div><div class="who">بواسطة منى علي</div></li>
+              <li><div class="when">أمس · 14:10</div><div class="what">🏷️ تمت إضافة تاج "Hot lead"</div><div class="who">النظام</div></li>
+              <li><div class="when">أمس · 11:02</div><div class="what">⬆️ تم استيراد الليد من Facebook Ads</div><div class="who">Auto-import</div></li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <div class="card-h"><h3>الإنرولمنتس (2)</h3><button class="btn btn-sm">+ إنرولمنت</button></div>
+            <table class="table">
+              <thead><tr><th>الكورس</th><th>البرنامج</th><th>الدفعة</th><th>المدفوع</th><th>الحالة</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><b>Full Stack Web Dev</b><br><span class="muted" style="font-size:11px">Cohort #18 · Oct 2026</span></td>
+                  <td>Bootcamp · 6 شهور</td>
+                  <td>$1,200</td>
+                  <td>$400 <span class="muted" style="font-size:11px">(33%)</span></td>
+                  <td><span class="badge b-ok">Active</span></td>
+                </tr>
+                <tr>
+                  <td><b>TOEFL Prep</b><br><span class="muted" style="font-size:11px">Evening Track</span></td>
+                  <td>Short Course · 8 أسابيع</td>
+                  <td>$300</td>
+                  <td>$300 <span class="muted" style="font-size:11px">(100%)</span></td>
+                  <td><span class="badge b-won">مكتمل</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="card">
+            <div class="card-h"><h3>ملاحظات داخلية</h3></div>
+            <div class="field" style="margin-bottom:0"><textarea placeholder="اكتب ملاحظة للفريق…">الطالب بيفضّل التقسيط على 3 دفعات. مهم نرجع ليه يوم الأحد قبل 12 ظهرًا عشان بيتواصل ساعتها.</textarea></div>
+            <div class="row" style="margin-top:10px"><button class="btn-brand btn btn-sm">حفظ</button><span class="muted" style="font-size:11px">آخر تعديل: نورا · منذ 20د</span></div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div class="card">
+            <h3 style="margin-bottom:14px">معلومات سريعة</h3>
+            <div style="display:grid;gap:10px;font-size:13px">
+              <div class="row"><span class="muted">المصدر</span><b class="right">Facebook Lead Ads</b></div>
+              <div class="row"><span class="muted">الحملة</span><b class="right">Fall-Bootcamps-2026</b></div>
+              <div class="row"><span class="muted">أول تواصل</span><b class="right">18/04/2026</b></div>
+              <div class="row"><span class="muted">المسؤول</span><b class="right">منى علي</b></div>
+              <div class="row"><span class="muted">Lead Score</span><b class="right" style="color:var(--brand)">87 / 100 🔥</b></div>
+              <div class="row"><span class="muted">قيمة متوقعة</span><b class="right">$1,200</b></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3 style="margin-bottom:14px">المهام القادمة</h3>
+            <div style="display:flex;flex-direction:column;gap:8px;font-size:13px">
+              <label class="row" style="gap:8px;padding:8px;border-radius:8px;background:var(--bg)"><input type="checkbox"> <div><b>مكالمة متابعة</b><div class="muted" style="font-size:11px">اليوم · 15:00</div></div></label>
+              <label class="row" style="gap:8px;padding:8px"><input type="checkbox"> <div><b>إرسال عقد موقّع</b><div class="muted" style="font-size:11px">غدًا · 10:00</div></div></label>
+              <label class="row" style="gap:8px;padding:8px"><input type="checkbox" checked> <div><s>إرسال الكتالوج</s><div class="muted" style="font-size:11px">تم اليوم 09:15</div></div></label>
+            </div>
+            <button class="btn btn-sm" style="margin-top:10px;width:100%">+ مهمة</button>
+          </div>
+
+          <div class="card">
+            <h3 style="margin-bottom:14px">الملفات (3)</h3>
+            <div style="display:flex;flex-direction:column;gap:8px;font-size:13px">
+              <div class="row" style="padding:8px;border:1px solid var(--line);border-radius:10px"><span>📄</span><div class="grow"><b style="font-size:12px">CV-AhmedFarouk.pdf</b><div class="muted" style="font-size:11px">340KB · رُفع أمس</div></div><span>⬇️</span></div>
+              <div class="row" style="padding:8px;border:1px solid var(--line);border-radius:10px"><span>📄</span><div class="grow"><b style="font-size:12px">Contract-Draft.pdf</b><div class="muted" style="font-size:11px">120KB · اليوم</div></div><span>⬇️</span></div>
+              <div class="row" style="padding:8px;border:1px solid var(--line);border-radius:10px"><span>🖼️</span><div class="grow"><b style="font-size:12px">IDCard.jpg</b><div class="muted" style="font-size:11px">1.2MB · اليوم</div></div><span>⬇️</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

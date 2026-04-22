@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الموافقات · Clarity · Trade Way CRM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="side-brand"><img src="../shared/logo.svg"><div><b>Trade Way</b><small>Clarity · v1</small></div></div>
+    <ul class="nav">
+      <li><a href="dashboard.html">📊 الداشبورد</a></li>
+      <li><a href="leads.html">👥 الليدز</a></li>
+      <li><a href="funnel.html">🎯 الفانل</a></li>
+      <li><a href="contact.html">📇 Contact</a></li>
+    </ul>
+    <div class="nav-section">الإدارة</div>
+    <ul class="nav">
+      <li><a href="approvals.html" class="active">✅ الموافقات <span class="pill" style="background:var(--err-soft);color:var(--err)">7</span></a></li>
+      <li><a href="bulk.html">⬆️ رفع Bulk</a></li>
+      <li><a href="sync.html">🔄 Google Sheet</a></li>
+    </ul>
+    <div class="side-bottom">
+      <a href="index.html" class="me"><div class="avatar">ن</div><div class="me-info"><b>نورا سيد</b><span>Team Leader</span></div></a>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input placeholder="بحث في الطلبات…"></div>
+    </div>
+
+    <div class="page">
+      <div class="page-head">
+        <div>
+          <div class="crumb">CRM · Approvals</div>
+          <h1>طابور الموافقات</h1>
+          <p>راجع الطلبات اللي محتاجة اعتماد TL/QA. اعتمد بضغطة واحدة أو اطلب تعديل.</p>
+        </div>
+        <div class="row">
+          <button class="btn">📂 الأرشيف</button>
+          <button class="btn">⚙️ قواعد الموافقة</button>
+        </div>
+      </div>
+
+      <div class="alert alert-warn">
+        <span>⚠️</span>
+        <div><b>7 طلبات معلّقة · 3 منها منتظرة أكثر من 4 ساعات.</b><br>اعتماد الـWon Deals بيفضي الـslot للمندوب يشتغل على ليدز جديدة.</div>
+      </div>
+
+      <div class="card" style="padding:14px;margin-bottom:16px">
+        <div class="row" style="gap:8px;flex-wrap:wrap">
+          <button class="btn btn-sm" style="background:var(--brand);color:white;border-color:var(--brand)">الكل (7)</button>
+          <button class="btn btn-sm">Won Deals (3)</button>
+          <button class="btn btn-sm">Refund (1)</button>
+          <button class="btn btn-sm">Discount (2)</button>
+          <button class="btn btn-sm">Lead Reassign (1)</button>
+          <div class="right row">
+            <button class="btn btn-sm">✓ اعتماد كل اللي اخترته</button>
+            <button class="btn btn-sm" style="color:var(--err)">✕ رفض</button>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <!-- Item 1 -->
+        <div class="card" style="padding:18px">
+          <div class="row" style="margin-bottom:14px;gap:10px;flex-wrap:wrap">
+            <input type="checkbox">
+            <span class="badge b-won">Won Deal</span>
+            <b>إغلاق صفقة — ليلى حسن — Digital Marketing</b>
+            <span class="right muted" style="font-size:12px">طلب من: منى علي · منذ 22د</span>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:14px;font-size:13px">
+            <div><div class="muted" style="font-size:11px">قيمة الصفقة</div><b>$980</b></div>
+            <div><div class="muted" style="font-size:11px">الكورس</div><b>Digital Marketing</b></div>
+            <div><div class="muted" style="font-size:11px">طريقة الدفع</div><b>تحويل بنكي</b></div>
+            <div><div class="muted" style="font-size:11px">المرفقات</div><b>إيصال.pdf</b></div>
+          </div>
+          <div class="row">
+            <button class="btn-brand btn btn-sm">✓ اعتماد</button>
+            <button class="btn btn-sm">💬 طلب تعديل</button>
+            <button class="btn btn-sm" style="color:var(--err)">✕ رفض</button>
+            <a href="contact.html" class="btn btn-sm right">فتح ملف الليد →</a>
+          </div>
+        </div>
+
+        <!-- Item 2 -->
+        <div class="card" style="padding:18px">
+          <div class="row" style="margin-bottom:14px;gap:10px;flex-wrap:wrap">
+            <input type="checkbox">
+            <span class="badge" style="background:var(--info-soft);color:var(--info)">Discount 15%</span>
+            <b>طلب خصم — محمد عاطف — Cyber Security</b>
+            <span class="right muted" style="font-size:12px">طلب من: نورا · منذ 1س</span>
+          </div>
+          <div class="alert alert-info" style="margin-bottom:14px"><span>ℹ️</span><div>السبب: "الطالب خريج جديد، طلب خصم 15% لو دفع كاش مرة واحدة. القيمة النهائية $3,230."</div></div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:14px;font-size:13px">
+            <div><div class="muted" style="font-size:11px">السعر الأصلي</div><b>$3,800</b></div>
+            <div><div class="muted" style="font-size:11px">بعد الخصم</div><b style="color:var(--brand)">$3,230</b></div>
+            <div><div class="muted" style="font-size:11px">فرق</div><b>-$570</b></div>
+            <div><div class="muted" style="font-size:11px">حد التفويض</div><b>10% (متجاوَز)</b></div>
+          </div>
+          <div class="row">
+            <button class="btn-brand btn btn-sm">✓ اعتماد</button>
+            <button class="btn btn-sm">💬 طلب تعديل</button>
+            <button class="btn btn-sm" style="color:var(--err)">✕ رفض</button>
+          </div>
+        </div>
+
+        <!-- Item 3 -->
+        <div class="card" style="padding:18px">
+          <div class="row" style="margin-bottom:14px;gap:10px;flex-wrap:wrap">
+            <input type="checkbox">
+            <span class="badge" style="background:var(--err-soft);color:var(--err)">Refund</span>
+            <b>طلب استرداد — أمل حامد — Full Stack</b>
+            <span class="right muted" style="font-size:12px">طلب من: كريم · منذ 3س</span>
+          </div>
+          <div class="alert alert-warn" style="margin-bottom:14px"><span>⚠️</span><div>خلال نافذة الـ7 أيام (3/7). الطالبة طلبت استرداد بسبب ظروف عمل.</div></div>
+          <div class="row">
+            <button class="btn-brand btn btn-sm">✓ اعتماد (رد كامل)</button>
+            <button class="btn btn-sm">رد جزئي</button>
+            <button class="btn btn-sm" style="color:var(--err)">✕ رفض</button>
+          </div>
+        </div>
+
+        <!-- Item 4 -->
+        <div class="card" style="padding:18px">
+          <div class="row" style="margin-bottom:14px;gap:10px;flex-wrap:wrap">
+            <input type="checkbox">
+            <span class="badge b-won">Won Deal</span>
+            <b>إغلاق صفقة — دينا مصطفى — Web Dev</b>
+            <span class="right muted" style="font-size:12px">طلب من: منى · منذ 4س</span>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:14px;font-size:13px">
+            <div><div class="muted" style="font-size:11px">قيمة الصفقة</div><b>$1,850</b></div>
+            <div><div class="muted" style="font-size:11px">الكورس</div><b>Web Dev · Full</b></div>
+            <div><div class="muted" style="font-size:11px">طريقة الدفع</div><b>Stripe</b></div>
+            <div><div class="muted" style="font-size:11px">المرفقات</div><b>Stripe receipt ✓</b></div>
+          </div>
+          <div class="row">
+            <button class="btn-brand btn btn-sm">✓ اعتماد</button>
+            <button class="btn btn-sm">💬 طلب تعديل</button>
+          </div>
+        </div>
+
+        <!-- Item 5 -->
+        <div class="card" style="padding:18px">
+          <div class="row" style="margin-bottom:14px;gap:10px;flex-wrap:wrap">
+            <input type="checkbox">
+            <span class="badge" style="background:#e0e7ff;color:#3730a3">Reassign</span>
+            <b>نقل ليد — سارة عبد الله — من كريم → منى</b>
+            <span class="right muted" style="font-size:12px">طلب من: كريم · منذ 5س</span>
+          </div>
+          <div class="alert alert-info" style="margin-bottom:14px"><span>ℹ️</span><div>السبب: "الطالبة طلبت مندوبة، ومنى متاحة."</div></div>
+          <div class="row">
+            <button class="btn-brand btn btn-sm">✓ اعتماد النقل</button>
+            <button class="btn btn-sm" style="color:var(--err)">✕ رفض</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

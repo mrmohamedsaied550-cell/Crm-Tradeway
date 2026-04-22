@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Funnel · Command · Trade Way CRM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="side-brand"><img src="../shared/logo.svg" alt=""><div><b>Trade Way</b><small>Command · v2</small></div></div>
+    <div class="side-sec">العمليات</div>
+    <ul class="side-nav">
+      <li><a href="dashboard.html">📊 Dashboard</a></li>
+      <li><a href="leads.html">👥 Leads <span class="count">1247</span></a></li>
+      <li><a href="funnel.html" class="active">🎯 Funnel</a></li>
+      <li><a href="contact.html">📇 Contacts</a></li>
+    </ul>
+    <div class="side-sec">الإدارة</div>
+    <ul class="side-nav">
+      <li><a href="approvals.html">✅ Approvals <span class="count">7</span></a></li>
+      <li><a href="bulk.html">⬆ Bulk Import</a></li>
+      <li><a href="sync.html">🔄 Sheet Sync</a></li>
+    </ul>
+    <div class="side-bottom"><div class="avatar">ن</div><div style="flex:1"><b>نورا سيد</b><span>TL · Cairo</span></div><span class="sts"></span></div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="cmd"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input placeholder="Search deals…"><span class="kbd">⌘ K</span></div>
+      <div class="top-actions"><button class="btn">+ Deal <span class="kbd">N</span></button><button class="ibtn">🔔<span class="n">9</span></button></div>
+    </div>
+
+    <div class="subbar">
+      <div class="tab active">Kanban</div>
+      <div class="tab">Forecast</div>
+      <div class="tab">Velocity</div>
+      <div class="tab">Loss Reasons</div>
+      <div style="margin-right:auto;display:flex;gap:6px">
+        <select class="btn btn-sm"><option>Pipeline: Main</option><option>Bootcamps</option><option>Short Courses</option></select>
+        <select class="btn btn-sm"><option>Team: All</option><option>نورا</option><option>كريم</option></select>
+        <button class="btn btn-sm">⚙ Configure stages</button>
+      </div>
+    </div>
+
+    <div class="page">
+      <div class="kpi-strip">
+        <div class="kpi"><div class="kpi-l">Total deals</div><div class="kpi-v">127</div><div class="kpi-s">$284K</div></div>
+        <div class="kpi"><div class="kpi-l">Avg deal</div><div class="kpi-v">$2,236</div><div class="kpi-s up">▲ 8%</div></div>
+        <div class="kpi"><div class="kpi-l">Avg stage time</div><div class="kpi-v">4.2d</div><div class="kpi-s up">faster 0.5d</div></div>
+        <div class="kpi"><div class="kpi-l">Win rate</div><div class="kpi-v">24.6%</div><div class="kpi-s dn">▼ 2.1</div></div>
+        <div class="kpi"><div class="kpi-l">Forecast (30d)</div><div class="kpi-v">$72K</div><div class="kpi-s">weighted</div></div>
+        <div class="kpi w"><div class="kpi-l">Stagnant &gt;14d</div><div class="kpi-v">18</div><div class="kpi-s">needs action</div></div>
+      </div>
+
+      <div class="kanban">
+        <div class="k-col">
+          <div class="k-col-h"><span class="dot" style="background:#3b82f6"></span><b>New</b><span class="c">48 · $92K</span></div>
+          <div class="k-card">
+            <b>أحمد فاروق 🔥</b>
+            <div style="color:var(--ink-mute)">Full Stack · Bootcamp</div>
+            <div class="tags"><span class="tag">Facebook</span><span class="tag">Cairo</span></div>
+            <div class="meta"><span class="mini">م</span><span>$1,200 · today</span></div>
+          </div>
+          <div class="k-card">
+            <b>عمر شريف</b>
+            <div style="color:var(--ink-mute)">UI/UX</div>
+            <div class="tags"><span class="tag">Landing</span></div>
+            <div class="meta"><span class="mini">ك</span><span>$1,100 · 2h</span></div>
+          </div>
+          <div class="k-card">
+            <b>حسن أشرف</b>
+            <div style="color:var(--ink-mute)">Graphic Design</div>
+            <div class="tags"><span class="tag">Facebook</span></div>
+            <div class="meta"><span class="mini">ن</span><span>$890 · 1d</span></div>
+          </div>
+          <div class="k-card">
+            <b>رنا مجدي</b>
+            <div style="color:var(--ink-mute)">Data Science</div>
+            <div class="tags"><span class="tag">LinkedIn</span></div>
+            <div class="meta"><span class="mini">م</span><span>$2,400 · 1d</span></div>
+          </div>
+          <div class="k-card">
+            <b>هاني عبدالله</b>
+            <div style="color:var(--ink-mute)">DevOps</div>
+            <div class="meta"><span class="mini">س</span><span>$1,600 · 2d</span></div>
+          </div>
+          <div style="color:var(--ink-mute);font-size:11px;text-align:center;padding:6px">+ 43 more</div>
+        </div>
+
+        <div class="k-col">
+          <div class="k-col-h"><span class="dot" style="background:#f59e0b"></span><b>Contacted</b><span class="c">36 · $68K</span></div>
+          <div class="k-card">
+            <b>سارة عبد الله</b>
+            <div style="color:var(--ink-mute)">Data Analytics</div>
+            <div class="tags"><span class="tag">Google</span></div>
+            <div class="meta"><span class="mini">ك</span><span>$2,400 · 2d in stage</span></div>
+          </div>
+          <div class="k-card">
+            <b>ندى إبراهيم</b>
+            <div style="color:var(--ink-mute)">PMP Prep</div>
+            <div class="meta"><span class="mini">ن</span><span>$1,650 · 1d</span></div>
+          </div>
+          <div class="k-card">
+            <b>طارق سالم</b>
+            <div style="color:var(--ink-mute)">Cloud AWS</div>
+            <div class="meta"><span class="mini">م</span><span>$1,900 · 3d</span></div>
+          </div>
+          <div class="k-card" style="border-color:var(--warn)">
+            <b>⏰ علاء سمير</b>
+            <div style="color:var(--ink-mute)">Stagnant 18d</div>
+            <div class="meta"><span class="mini">ر</span><span>$1,200</span></div>
+          </div>
+          <div style="color:var(--ink-mute);font-size:11px;text-align:center;padding:6px">+ 32 more</div>
+        </div>
+
+        <div class="k-col">
+          <div class="k-col-h"><span class="dot" style="background:#22c55e"></span><b>Qualified</b><span class="c">22 · $48K</span></div>
+          <div class="k-card">
+            <b>يوسف حجاج 🔥</b>
+            <div style="color:var(--ink-mute)">Data Science</div>
+            <div class="tags"><span class="tag">LinkedIn</span></div>
+            <div class="meta"><span class="mini">م</span><span>$2,900 · 2d</span></div>
+          </div>
+          <div class="k-card">
+            <b>مي فاروق</b>
+            <div style="color:var(--ink-mute)">Digital Mktg</div>
+            <div class="meta"><span class="mini">ن</span><span>$1,400 · 4d</span></div>
+          </div>
+          <div style="color:var(--ink-mute);font-size:11px;text-align:center;padding:6px">+ 20 more</div>
+        </div>
+
+        <div class="k-col">
+          <div class="k-col-h"><span class="dot" style="background:#8b5cf6"></span><b>Meeting</b><span class="c">14 · $42K</span></div>
+          <div class="k-card">
+            <b>محمد عاطف</b>
+            <div style="color:var(--ink-mute)">Cyber Security</div>
+            <div class="tags"><span class="tag">Referral</span></div>
+            <div class="meta"><span class="mini">ن</span><span>$3,800 · tomorrow 16:00</span></div>
+          </div>
+          <div class="k-card">
+            <b>أمل حامد</b>
+            <div style="color:var(--ink-mute)">Full Stack</div>
+            <div class="meta"><span class="mini">ك</span><span>$1,200 · in 2d</span></div>
+          </div>
+          <div class="k-card">
+            <b>ليلى عصام</b>
+            <div style="color:var(--ink-mute)">Cloud</div>
+            <div class="meta"><span class="mini">س</span><span>$2,100 · in 3d</span></div>
+          </div>
+          <div style="color:var(--ink-mute);font-size:11px;text-align:center;padding:6px">+ 11 more</div>
+        </div>
+
+        <div class="k-col">
+          <div class="k-col-h"><span class="dot" style="background:#14532d"></span><b>Won</b><span class="c">9 · $18K</span></div>
+          <div class="k-card" style="background:var(--brand-soft);border-color:var(--brand)">
+            <b>ليلى حسن ✓</b>
+            <div style="color:var(--ink-mute)">Digital Marketing</div>
+            <div class="meta"><span class="mini">م</span><span>$980 · Apr 21</span></div>
+          </div>
+          <div class="k-card" style="background:var(--brand-soft);border-color:var(--brand)">
+            <b>دينا مصطفى ✓</b>
+            <div style="color:var(--ink-mute)">Web Dev</div>
+            <div class="meta"><span class="mini">م</span><span>$1,850 · Apr 21</span></div>
+          </div>
+          <div class="k-card" style="border:1px dashed var(--warn);background:rgba(245,158,11,.08)">
+            <b>⏳ كارم أشرف</b>
+            <div style="color:var(--ink-mute)">Awaiting TL approval</div>
+            <div class="meta"><span class="mini">ك</span><span>$1,100</span></div>
+          </div>
+          <div style="color:var(--ink-mute);font-size:11px;text-align:center;padding:6px">+ 6 more</div>
+        </div>
+
+        <div class="k-col">
+          <div class="k-col-h"><span class="dot" style="background:#ef4444"></span><b>Lost</b><span class="c">6 · $12K</span></div>
+          <div class="k-card" style="opacity:.75">
+            <b>مريم علاء</b>
+            <div style="color:var(--ink-mute)">Price too high</div>
+            <div class="meta"><span class="mini">ك</span><span>$0</span></div>
+          </div>
+          <div class="k-card" style="opacity:.75">
+            <b>محمود عادل</b>
+            <div style="color:var(--ink-mute)">Chose competitor</div>
+            <div class="meta"><span class="mini">ن</span><span>$0</span></div>
+          </div>
+          <div class="k-card" style="opacity:.75">
+            <b>هبة رامي</b>
+            <div style="color:var(--ink-mute)">Lost contact</div>
+            <div class="meta"><span class="mini">ر</span><span>$0</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الفانل · Clarity · Trade Way CRM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="side-brand"><img src="../shared/logo.svg"><div><b>Trade Way</b><small>Clarity · v1</small></div></div>
+    <ul class="nav">
+      <li><a href="dashboard.html">📊 الداشبورد</a></li>
+      <li><a href="leads.html">👥 الليدز</a></li>
+      <li><a href="funnel.html" class="active">🎯 الفانل</a></li>
+      <li><a href="contact.html">📇 Contact</a></li>
+    </ul>
+    <div class="nav-section">الإدارة</div>
+    <ul class="nav">
+      <li><a href="approvals.html">✅ الموافقات <span class="pill" style="background:var(--err-soft);color:var(--err)">7</span></a></li>
+      <li><a href="bulk.html">⬆️ رفع Bulk</a></li>
+      <li><a href="sync.html">🔄 Google Sheet</a></li>
+    </ul>
+    <div class="side-bottom">
+      <a href="index.html" class="me"><div class="avatar">ن</div><div class="me-info"><b>نورا سيد</b><span>Team Leader</span></div></a>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input placeholder="بحث في الفانل…"></div>
+      <div class="top-actions">
+        <button class="btn">+ ليد جديد</button>
+      </div>
+    </div>
+
+    <div class="page">
+      <div class="page-head">
+        <div>
+          <div class="crumb">CRM · Pipeline</div>
+          <h1>الفانل (Kanban)</h1>
+          <p>اسحب الكارت من مرحلة لمرحلة — التغيير بيتحفظ مباشرة. الموافقات (ربح/فقد) بتتطلب اعتماد TL.</p>
+        </div>
+        <div class="row">
+          <select class="btn"><option>كل الفِرَق</option><option>فريق نورا</option></select>
+          <select class="btn"><option>كل الكورسات</option><option>Bootcamps</option><option>Short Courses</option></select>
+          <button class="btn">📊 تحليل</button>
+        </div>
+      </div>
+
+      <div class="kpi-grid" style="margin-bottom:18px">
+        <div class="kpi"><div class="kpi-label">كل الصفقات</div><div class="kpi-value" style="font-size:22px">127</div><span class="muted" style="font-size:11px">$284K إجمالي</span></div>
+        <div class="kpi"><div class="kpi-label">متوسط مدة المرحلة</div><div class="kpi-value" style="font-size:22px">4.2 يوم</div><span class="kpi-delta up">▼ 0.5 أسرع</span></div>
+        <div class="kpi"><div class="kpi-label">معدل التحويل</div><div class="kpi-value" style="font-size:22px">24.6%</div><span class="muted" style="font-size:11px">New → Won</span></div>
+        <div class="kpi"><div class="kpi-label">متوقع الإغلاق</div><div class="kpi-value" style="font-size:22px">$72K</div><span class="muted" style="font-size:11px">الشهر الحالي</span></div>
+      </div>
+
+      <div class="kanban">
+        <div class="col">
+          <div class="col-h"><b>🆕 New</b><span class="count">48 · $92K</span></div>
+          <div class="card-l">
+            <div class="name">أحمد فاروق <span class="pill" style="background:#fee2e2;color:#b91c1c">🔥</span></div>
+            <div class="muted" style="font-size:11px">Full Stack · Bootcamp</div>
+            <div class="tags"><span class="pill">Facebook</span></div>
+            <div class="meta"><span class="mini">م</span><span>$1,200 · اليوم</span></div>
+          </div>
+          <div class="card-l">
+            <div class="name">عمر شريف</div>
+            <div class="muted" style="font-size:11px">UI/UX</div>
+            <div class="tags"><span class="pill">Landing</span></div>
+            <div class="meta"><span class="mini">ك</span><span>$1,100 · منذ 2س</span></div>
+          </div>
+          <div class="card-l">
+            <div class="name">حسن أشرف</div>
+            <div class="muted" style="font-size:11px">Graphic Design</div>
+            <div class="tags"><span class="pill">Facebook</span></div>
+            <div class="meta"><span class="mini">ن</span><span>$890 · أمس</span></div>
+          </div>
+          <div class="card-l">
+            <div class="name">رنا مجدي</div>
+            <div class="muted" style="font-size:11px">Data Science</div>
+            <div class="tags"><span class="pill">LinkedIn</span></div>
+            <div class="meta"><span class="mini">م</span><span>$2,400 · أمس</span></div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="col-h"><b>📞 Contacted</b><span class="count">36 · $68K</span></div>
+          <div class="card-l">
+            <div class="name">سارة عبد الله</div>
+            <div class="muted" style="font-size:11px">Data Analytics</div>
+            <div class="tags"><span class="pill">Google Ads</span></div>
+            <div class="meta"><span class="mini">ك</span><span>$2,400</span></div>
+          </div>
+          <div class="card-l">
+            <div class="name">ندى إبراهيم</div>
+            <div class="muted" style="font-size:11px">PMP Prep</div>
+            <div class="tags"><span class="pill">Facebook</span></div>
+            <div class="meta"><span class="mini">ن</span><span>$1,650</span></div>
+          </div>
+          <div class="card-l">
+            <div class="name">طارق سالم</div>
+            <div class="muted" style="font-size:11px">Cloud AWS</div>
+            <div class="meta"><span class="mini">م</span><span>$1,900</span></div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="col-h"><b>✨ Qualified</b><span class="count">22 · $48K</span></div>
+          <div class="card-l">
+            <div class="name">يوسف حجاج <span class="pill" style="background:#fee2e2;color:#b91c1c">🔥</span></div>
+            <div class="muted" style="font-size:11px">Data Science</div>
+            <div class="tags"><span class="pill">LinkedIn</span></div>
+            <div class="meta"><span class="mini">م</span><span>$2,900</span></div>
+          </div>
+          <div class="card-l">
+            <div class="name">مي فاروق</div>
+            <div class="muted" style="font-size:11px">Digital Marketing</div>
+            <div class="meta"><span class="mini">ن</span><span>$1,400</span></div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="col-h"><b>📅 Meeting</b><span class="count">14 · $42K</span></div>
+          <div class="card-l">
+            <div class="name">محمد عاطف</div>
+            <div class="muted" style="font-size:11px">Cyber Security</div>
+            <div class="tags"><span class="pill">Referral</span></div>
+            <div class="meta"><span class="mini">ن</span><span>$3,800 · غدًا 16:00</span></div>
+          </div>
+          <div class="card-l">
+            <div class="name">أمل حامد</div>
+            <div class="muted" style="font-size:11px">Full Stack</div>
+            <div class="meta"><span class="mini">ك</span><span>$1,200 · بعد غد</span></div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="col-h"><b>🏆 Won</b><span class="count">9 · $18K</span></div>
+          <div class="card-l" style="border-color:var(--brand-2);background:var(--brand-softer)">
+            <div class="name">ليلى حسن ✓</div>
+            <div class="muted" style="font-size:11px">Digital Marketing</div>
+            <div class="meta"><span class="mini">م</span><span>$980</span></div>
+          </div>
+          <div class="card-l" style="border-color:var(--brand-2);background:var(--brand-softer)">
+            <div class="name">دينا مصطفى ✓</div>
+            <div class="muted" style="font-size:11px">Web Dev</div>
+            <div class="meta"><span class="mini">م</span><span>$1,850</span></div>
+          </div>
+          <div class="card-l" style="border:1px dashed var(--warn);background:var(--warn-soft)">
+            <div class="name">⏳ في انتظار اعتماد TL</div>
+            <div class="muted" style="font-size:11px">كريم — كارم أشرف $1,100</div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="col-h"><b>❌ Lost</b><span class="count">6 · $12K</span></div>
+          <div class="card-l" style="opacity:.75">
+            <div class="name">مريم علاء</div>
+            <div class="muted" style="font-size:11px">السعر عالي — تأجيل</div>
+            <div class="meta"><span class="mini">ك</span><span>$0</span></div>
+          </div>
+          <div class="card-l" style="opacity:.75">
+            <div class="name">محمود عادل</div>
+            <div class="muted" style="font-size:11px">اختار منافس</div>
+            <div class="meta"><span class="mini">ن</span><span>$0</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

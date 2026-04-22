@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sheet Sync · Arena · Trade Way CRM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="s-logo"><img src="../shared/logo.svg" alt=""></div>
+    <ul class="s-nav">
+      <li><a href="dashboard.html"><span class="i">🏆</span>الحلبة</a></li>
+      <li><a href="leads.html"><span class="i">👥</span>الليدز</a></li>
+      <li><a href="funnel.html"><span class="i">🎯</span>الفانل</a></li>
+      <li><a href="contact.html"><span class="i">📇</span>Contact</a></li>
+      <li><a href="approvals.html"><span class="i">✅</span>موافقات<span class="b">7</span></a></li>
+      <li><a href="bulk.html"><span class="i">⬆️</span>Bulk</a></li>
+      <li><a href="sync.html" class="active"><span class="i">🔄</span>Sheet</a></li>
+    </ul>
+    <div class="s-bot"><div class="s-me">ن</div></div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input placeholder="ابحث…"></div>
+      <div class="streak"><span class="fire">🔥</span> 14 يوم</div>
+      <div class="top-actions">
+        <button class="btn btn-brand">+ ربط شيت</button>
+        <button class="ibtn">🔔<span class="n">9</span></button>
+      </div>
+    </div>
+
+    <div class="page">
+      <div class="hero" style="padding:24px 28px">
+        <h1 style="font-size:26px">🔄 سينك Google Sheets</h1>
+        <p style="font-size:14px">اربط شيت جوجل مباشرة — أي ليد جديد في الشيت يدخل الحلبة فورًا، وأي Won deal يظهر في شيت المالية.</p>
+      </div>
+
+      <div class="kpi-row">
+        <div class="kpi featured"><div class="icon">🟢</div><div class="lbl">اتصالات نشطة</div><div class="v">2</div><span class="d">كل شيء تمام</span></div>
+        <div class="kpi"><div class="icon">📥</div><div class="lbl">صفوف اليوم</div><div class="v">142</div><span class="d up">آخر 24س</span></div>
+        <div class="kpi"><div class="icon">⚡</div><div class="lbl">آخر مزامنة</div><div class="v" style="font-size:20px">منذ 2د</div><span class="d">Leads-FB</span></div>
+        <div class="kpi"><div class="icon">⚠️</div><div class="lbl">أخطاء اليوم</div><div class="v">3</div><span class="d">1 موبايل، 2 تخطّي</span></div>
+      </div>
+
+      <!-- Connected sheets -->
+      <div class="grid-2" style="grid-template-columns:1fr 1fr">
+        <div class="panel">
+          <div class="panel-h">
+            <div style="display:flex;align-items:center;gap:10px">
+              <span style="font-size:32px">📊</span>
+              <div>
+                <h3 style="margin:0">Leads — FB Ads 2026</h3>
+                <div class="sub-t">Sheet → CRM · كل 5 دقائق</div>
+              </div>
+            </div>
+            <span class="pill pill-green">✓ متصل</span>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px">
+            <div style="padding:10px;background:var(--bg);border-radius:10px"><div style="font-size:10px;color:var(--ink-mute);font-weight:700">آخر مزامنة</div><b>منذ 2 دقيقة</b></div>
+            <div style="padding:10px;background:var(--bg);border-radius:10px"><div style="font-size:10px;color:var(--ink-mute);font-weight:700">الصفوف</div><b>1,420</b></div>
+            <div style="padding:10px;background:var(--bg);border-radius:10px"><div style="font-size:10px;color:var(--ink-mute);font-weight:700">اليوم</div><b>+94</b></div>
+            <div style="padding:10px;background:var(--bg);border-radius:10px"><div style="font-size:10px;color:var(--ink-mute);font-weight:700">الأخطاء</div><b>1</b></div>
+          </div>
+          <div class="prog" style="margin-bottom:12px"><span style="width:92%"></span></div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn btn-sm btn-brand">🔄 مزامنة الآن</button>
+            <button class="btn btn-sm">✏️ مطابقة</button>
+            <button class="btn btn-sm">📜 السجل</button>
+            <button class="btn btn-sm" style="color:var(--err);border-color:#fca5a5">⏸ إيقاف</button>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-h">
+            <div style="display:flex;align-items:center;gap:10px">
+              <span style="font-size:32px">💰</span>
+              <div>
+                <h3 style="margin:0">Won Deals — Finance</h3>
+                <div class="sub-t">CRM → Sheet · كل 15 دقيقة</div>
+              </div>
+            </div>
+            <span class="pill pill-green">✓ متصل</span>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px">
+            <div style="padding:10px;background:var(--bg);border-radius:10px"><div style="font-size:10px;color:var(--ink-mute);font-weight:700">آخر مزامنة</div><b>منذ 12د</b></div>
+            <div style="padding:10px;background:var(--bg);border-radius:10px"><div style="font-size:10px;color:var(--ink-mute);font-weight:700">الصفوف</div><b>216</b></div>
+            <div style="padding:10px;background:var(--bg);border-radius:10px"><div style="font-size:10px;color:var(--ink-mute);font-weight:700">اليوم</div><b>+14</b></div>
+            <div style="padding:10px;background:var(--bg);border-radius:10px"><div style="font-size:10px;color:var(--ink-mute);font-weight:700">الأخطاء</div><b>0</b></div>
+          </div>
+          <div class="prog" style="margin-bottom:12px"><span style="width:100%" class="gold"></span></div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn btn-sm btn-brand">🔄 مزامنة الآن</button>
+            <button class="btn btn-sm">✏️ مطابقة</button>
+            <button class="btn btn-sm">📜 السجل</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mapping -->
+      <div class="panel" style="margin-bottom:20px">
+        <div class="panel-h">
+          <div><h3>🔗 مطابقة الأعمدة — Leads FB Ads 2026</h3><div class="sub-t">أي عمود في الشيت يقابل أي حقل في CRM</div></div>
+          <button class="btn btn-sm btn-brand">💾 حفظ</button>
+        </div>
+        <table class="table">
+          <thead><tr><th>عمود الشيت</th><th>عينة</th><th>حقل CRM</th><th>Primary Key</th><th>تحويل</th></tr></thead>
+          <tbody>
+            <tr><td><b>A · Timestamp</b></td><td style="color:var(--ink-mute);font-family:monospace;font-size:11px">2026-04-21 10:42</td><td><span class="pill pill-green">تاريخ الإنشاء</span></td><td>—</td><td>parse ISO</td></tr>
+            <tr><td><b>B · Full Name</b></td><td style="color:var(--ink-mute)">أحمد فاروق</td><td><span class="pill pill-green">الاسم</span></td><td>—</td><td>trim</td></tr>
+            <tr><td><b>C · Phone</b></td><td style="color:var(--ink-mute);font-family:monospace">+201002345678</td><td><span class="pill pill-green">الموبايل</span></td><td><span class="pill pill-gold">🔑 PK</span></td><td>E.164</td></tr>
+            <tr><td><b>D · Email</b></td><td style="color:var(--ink-mute)">ahmed.f@gmail.com</td><td><span class="pill pill-green">البريد</span></td><td>—</td><td>lowercase</td></tr>
+            <tr><td><b>E · Campaign</b></td><td style="color:var(--ink-mute)">Fall-Bootcamps-2026</td><td><span class="pill pill-green">الحملة</span></td><td>—</td><td>—</td></tr>
+            <tr><td><b>F · Interested In</b></td><td style="color:var(--ink-mute)">Full Stack</td><td><span class="pill pill-green">الكورس</span></td><td>—</td><td>map values</td></tr>
+            <tr><td><b>G · Budget</b></td><td style="color:var(--ink-mute)">1200</td><td><span class="pill pill-green">القيمة</span></td><td>—</td><td>numeric</td></tr>
+            <tr><td><b>H · City</b></td><td style="color:var(--ink-mute)">Cairo</td><td><span class="pill pill-green">المدينة</span></td><td>—</td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Live log -->
+      <div class="panel">
+        <div class="panel-h">
+          <div><h3>⚡ السجل اللحظي</h3><div class="sub-t">كل مزامنة بتظهر هنا فورًا</div></div>
+          <div style="display:flex;gap:8px">
+            <span class="pill pill-green">● LIVE</span>
+            <button class="btn btn-sm">⏸ إيقاف</button>
+          </div>
+        </div>
+        <div class="code">
+<span style="color:#64748b">10:42:12</span> <span style="color:#4ade80">[OK]</span>   Sheet→CRM: inserted rows 1418-1420 (3 new leads) +30 XP team
+<span style="color:#64748b">10:42:01</span> <span style="color:#94a3b8">[INFO]</span> Starting scheduled sync (every 5m)
+<span style="color:#64748b">10:37:08</span> <span style="color:#4ade80">[OK]</span>   Sheet→CRM: inserted row 1417 (+1 lead: سارة عبد الله)
+<span style="color:#64748b">10:32:04</span> <span style="color:#4ade80">[OK]</span>   CRM→Sheet: updated row 1201 (status=Won $980) 🎉
+<span style="color:#64748b">10:27:12</span> <span style="color:#fbbf24">[WARN]</span> Row 1416 skipped: duplicate mobile (already in CRM)
+<span style="color:#64748b">10:27:01</span> <span style="color:#4ade80">[OK]</span>   Sheet→CRM: 8 rows inserted (1408-1415) +80 XP team
+<span style="color:#64748b">10:22:00</span> <span style="color:#94a3b8">[INFO]</span> Starting scheduled sync
+<span style="color:#64748b">10:16:45</span> <span style="color:#f87171">[ERR]</span>  Row 1407 invalid phone "0100" — skipped
+<span style="color:#64748b">10:16:44</span> <span style="color:#4ade80">[OK]</span>   Sheet→CRM: 11 rows inserted (1396-1406)
+<span style="color:#64748b">10:11:30</span> <span style="color:#94a3b8">[INFO]</span> OAuth token refreshed (expires in 59m)
+<span style="color:#64748b">10:05:00</span> <span style="color:#4ade80">[OK]</span>   Scheduled sync complete · 0 changes
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

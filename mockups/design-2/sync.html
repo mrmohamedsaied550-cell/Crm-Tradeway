@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sheet Sync · Command · Trade Way CRM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="side-brand"><img src="../shared/logo.svg" alt=""><div><b>Trade Way</b><small>Command · v2</small></div></div>
+    <div class="side-sec">العمليات</div>
+    <ul class="side-nav">
+      <li><a href="dashboard.html">📊 Dashboard</a></li>
+      <li><a href="leads.html">👥 Leads <span class="count">1247</span></a></li>
+      <li><a href="funnel.html">🎯 Funnel</a></li>
+      <li><a href="contact.html">📇 Contacts</a></li>
+    </ul>
+    <div class="side-sec">الإدارة</div>
+    <ul class="side-nav">
+      <li><a href="approvals.html">✅ Approvals <span class="count">7</span></a></li>
+      <li><a href="bulk.html">⬆ Bulk Import</a></li>
+      <li><a href="sync.html" class="active">🔄 Sheet Sync</a></li>
+    </ul>
+    <div class="side-bottom"><div class="avatar">ن</div><div style="flex:1"><b>نورا سيد</b><span>TL · Cairo</span></div><span class="sts"></span></div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="cmd"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input placeholder="Search sheets…"><span class="kbd">⌘ K</span></div>
+      <div class="top-actions"><button class="btn btn-brand">+ Connect Sheet</button><button class="ibtn">🔔<span class="n">9</span></button></div>
+    </div>
+
+    <div class="subbar">
+      <div class="tab active">Connections <span class="c">2</span></div>
+      <div class="tab">Live log</div>
+      <div class="tab">Errors <span class="c">3</span></div>
+      <div class="tab">OAuth &amp; Auth</div>
+    </div>
+
+    <div class="page">
+      <div class="kpi-strip">
+        <div class="kpi"><div class="kpi-l">Active syncs</div><div class="kpi-v">2</div><div class="kpi-s up">all healthy</div></div>
+        <div class="kpi"><div class="kpi-l">Rows today</div><div class="kpi-v">142</div><div class="kpi-s">last 24h</div></div>
+        <div class="kpi"><div class="kpi-l">Last sync</div><div class="kpi-v">2m ago</div><div class="kpi-s">Leads-FB</div></div>
+        <div class="kpi w"><div class="kpi-l">Errors 24h</div><div class="kpi-v">3</div><div class="kpi-s">1 invalid phone, 2 skip</div></div>
+        <div class="kpi"><div class="kpi-l">Avg latency</div><div class="kpi-v">1.8s</div><div class="kpi-s">p95: 3.2s</div></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-h"><h3>Connected sheets</h3><div class="right"><button class="btn btn-xs">+ New</button></div></div>
+        <div class="panel-b nopad">
+          <table class="tbl">
+            <thead><tr><th>Sheet</th><th>Direction</th><th>Trigger</th><th>Last run</th><th>Rows</th><th>Errors</th><th>Status</th><th></th></tr></thead>
+            <tbody>
+              <tr>
+                <td>📊 <b>Leads — FB Ads 2026</b><div style="font-size:10px;color:var(--ink-mute);font-family:monospace">1a2B3c4D5e6F…</div></td>
+                <td>Sheet → CRM</td>
+                <td>Every 5 min</td>
+                <td style="color:var(--ink-mute)">2 min ago</td>
+                <td>1,420</td>
+                <td>1</td>
+                <td><span class="st st-q">ACTIVE</span></td>
+                <td><button class="btn btn-xs">⚙</button></td>
+              </tr>
+              <tr>
+                <td>📊 <b>Won Deals — Finance Export</b><div style="font-size:10px;color:var(--ink-mute);font-family:monospace">9z8Y7x6W5v…</div></td>
+                <td>CRM → Sheet</td>
+                <td>Every 15 min</td>
+                <td style="color:var(--ink-mute)">12 min ago</td>
+                <td>216</td>
+                <td>0</td>
+                <td><span class="st st-q">ACTIVE</span></td>
+                <td><button class="btn btn-xs">⚙</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:12px">
+        <div class="panel">
+          <div class="panel-h">
+            <h3>Column Mapping — Leads FB Ads 2026</h3>
+            <div class="right"><button class="btn btn-xs">Test</button><button class="btn btn-xs">💾 Save</button></div>
+          </div>
+          <div class="panel-b nopad">
+            <table class="tbl">
+              <thead><tr><th>Sheet col</th><th>Sample</th><th>→</th><th>CRM field</th><th>Req</th><th>Transform</th></tr></thead>
+              <tbody>
+                <tr><td><b>A · Timestamp</b></td><td style="color:var(--ink-mute);font-family:monospace;font-size:10px">2026-04-21 10:42</td><td>→</td><td>created_at</td><td>Yes</td><td>parse(ISO)</td></tr>
+                <tr><td><b>B · Full Name</b></td><td style="color:var(--ink-mute)">أحمد فاروق</td><td>→</td><td>name</td><td>Yes</td><td>trim</td></tr>
+                <tr><td><b>C · Phone</b></td><td style="color:var(--ink-mute);font-family:monospace">+201002345678</td><td>→</td><td>mobile <b style="color:var(--brand)">(PK)</b></td><td>Yes</td><td>E.164</td></tr>
+                <tr><td><b>D · Email</b></td><td style="color:var(--ink-mute)">ahmed.f@gmail.com</td><td>→</td><td>email</td><td>No</td><td>lower</td></tr>
+                <tr><td><b>E · Campaign</b></td><td style="color:var(--ink-mute)">Fall-Bootcamps-2026</td><td>→</td><td>campaign</td><td>No</td><td>—</td></tr>
+                <tr><td><b>F · Interested In</b></td><td style="color:var(--ink-mute)">Full Stack</td><td>→</td><td>interest</td><td>No</td><td>map values</td></tr>
+                <tr><td><b>G · Budget</b></td><td style="color:var(--ink-mute)">1200</td><td>→</td><td>expected_value</td><td>No</td><td>numeric</td></tr>
+                <tr><td><b>H · City</b></td><td style="color:var(--ink-mute)">Cairo</td><td>→</td><td>city</td><td>No</td><td>—</td></tr>
+                <tr><td><b>I · Notes</b></td><td style="color:var(--ink-mute)">يفضل تقسيط</td><td>→</td><td>notes</td><td>No</td><td>—</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-h">
+            <h3>Live sync log</h3>
+            <span class="pill-live" style="background:rgba(22,163,74,.15);color:var(--brand-2);padding:2px 8px;border-radius:4px;font-size:10px;font-weight:800">● LIVE</span>
+            <div class="right"><button class="btn btn-xs">⏸ Pause</button><button class="btn btn-xs">Clear</button></div>
+          </div>
+          <div class="panel-b" style="padding:8px">
+            <div class="log">
+<span class="t">10:42:12</span> <span class="ok">[OK]</span>   Sheet→CRM: inserted rows 1418-1420 (3 leads)
+<span class="t">10:42:01</span> <span class="t">[INFO]</span> Starting scheduled sync (every 5m)
+<span class="t">10:37:08</span> <span class="ok">[OK]</span>   Sheet→CRM: inserted row 1417
+<span class="t">10:37:00</span> <span class="t">[INFO]</span> Starting scheduled sync
+<span class="t">10:32:04</span> <span class="ok">[OK]</span>   CRM→Sheet: updated row 1201 (status=Won)
+<span class="t">10:27:12</span> <span class="w">[WARN]</span> Row 1416 skipped: duplicate mobile (exists row 882)
+<span class="t">10:27:01</span> <span class="ok">[OK]</span>   Sheet→CRM: 8 rows inserted (1408-1415)
+<span class="t">10:22:00</span> <span class="t">[INFO]</span> Starting scheduled sync
+<span class="t">10:16:45</span> <span class="err">[ERR]</span>  Row 1407 invalid phone "0100" — skipped
+<span class="t">10:16:44</span> <span class="ok">[OK]</span>   Sheet→CRM: 11 rows inserted (1396-1406)
+<span class="t">10:11:30</span> <span class="t">[INFO]</span> OAuth token refreshed (expires in 59m)
+<span class="t">10:05:00</span> <span class="ok">[OK]</span>   Scheduled sync complete · 0 changes
+<span class="t">10:00:00</span> <span class="t">[INFO]</span> Starting scheduled sync
+<span class="t">09:55:40</span> <span class="ok">[OK]</span>   Sheet→CRM: 6 rows inserted
+<span class="t">09:50:22</span> <span class="ok">[OK]</span>   Sheet→CRM: 2 rows inserted
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
+        <div class="panel">
+          <div class="panel-h"><h3>Dedup &amp; conflict</h3></div>
+          <div class="panel-b fieldset">
+            <div class="fld"><label>Primary key</label><select><option>mobile (E.164)</option><option>email</option></select></div>
+            <div class="fld"><label>On duplicate</label><select><option>Skip (keep CRM value)</option><option>Overwrite with sheet</option><option>Merge (non-empty)</option></select></div>
+            <div class="fld"><label>On invalid</label><select><option>Skip row, log error</option><option>Fail entire sync</option></select></div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-h"><h3>Distribution</h3></div>
+          <div class="panel-b fieldset">
+            <div class="fld"><label>Default routing</label><select><option>Round-Robin (active team)</option><option>Single agent</option><option>By city</option></select></div>
+            <div class="fld"><label>Fallback owner</label><select><option>نورا (TL)</option></select></div>
+            <label style="display:flex;gap:6px;font-size:12px"><input type="checkbox" checked> Tag as "synced:sheet"</label>
+            <label style="display:flex;gap:6px;font-size:12px"><input type="checkbox" checked> Notify owner</label>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-h"><h3>Connection info</h3></div>
+          <div class="panel-b">
+            <div class="info-grid">
+              <div class="l">Auth</div><div class="v">Google OAuth (service acc)</div>
+              <div class="l">Scope</div><div class="v">sheets.readonly</div>
+              <div class="l">Created by</div><div class="v">Ahmed (Admin)</div>
+              <div class="l">Since</div><div class="v">01/02/2026</div>
+              <div class="l">Quota used</div><div class="v">12% (120/1000/min)</div>
+            </div>
+            <div class="alert al-o" style="margin-top:10px"><span>✓</span><div style="font-size:11px">Connection healthy · token auto-refresh OK</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

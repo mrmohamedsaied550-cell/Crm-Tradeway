@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trade Way CRM · Command · تسجيل دخول</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="login-page">
+<div class="login-card">
+  <div class="login-left">
+    <h1>دخول Trade Way Ops</h1>
+    <p class="sub">لوحة العمليات · نسخة v2.0 · مجهّزة لاختصارات الكيبورد.</p>
+    <form onsubmit="event.preventDefault(); window.location='dashboard.html';">
+      <label>البريد الوظيفي</label>
+      <input type="email" value="nora@tradeway.eg" required>
+      <label>كلمة المرور</label>
+      <input type="password" value="••••••••" required>
+      <label style="display:flex;align-items:center;gap:6px;margin-top:14px"><input type="checkbox" checked> <span style="font-size:12px;color:var(--side-ink);text-transform:none;letter-spacing:0">جلسة 8 ساعات</span></label>
+      <button class="btn-p" type="submit">دخول الكونسول →</button>
+      <div style="margin-top:14px;color:var(--side-mute);font-size:11px;text-align:center">نسيت كلمة المرور؟ تواصل مع الأدمن</div>
+    </form>
+  </div>
+  <div class="login-right">
+    <div>
+      <div class="brand"><img src="../shared/logo.svg" width="28" height="28" alt=""><span style="color:white">Trade Way</span><small style="color:var(--side-mute)">· Command</small></div>
+      <h2>كونسول عمليات<br>بسرعة الأنبياء.</h2>
+      <p style="color:var(--side-ink);font-size:13px;line-height:1.8;margin-bottom:18px">كثيف بالبيانات، مصمّم للسيلز اللي بيفتح 30 ليد في الساعة ومحتاج كل حاجة قدامه من غير ما يحرك الماوس.</p>
+    </div>
+    <div class="shortcuts">
+      <div style="color:var(--brand-hi);font-size:10px;letter-spacing:1.5px;font-weight:800;margin-bottom:10px">⌨️ الاختصارات الأساسية</div>
+      <div class="list">
+        <div><span class="kbd">⌘ K</span> البحث الشامل</div>
+        <div><span class="kbd">N</span> ليد جديد</div>
+        <div><span class="kbd">G + L</span> اذهب للليدز</div>
+        <div><span class="kbd">G + F</span> اذهب للفانل</div>
+        <div><span class="kbd">J / K</span> التنقل بين الصفوف</div>
+        <div><span class="kbd">?</span> قائمة الاختصارات الكاملة</div>
+      </div>
+    </div>
+    <div class="login-foot">© 2026 Trade Way · All systems operational</div>
+  </div>
+</div>
+</body>
+</html>

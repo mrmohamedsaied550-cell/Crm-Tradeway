@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الحلبة · Arena · Trade Way CRM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="s-logo"><img src="../shared/logo.svg" alt=""></div>
+    <ul class="s-nav">
+      <li><a href="dashboard.html" class="active"><span class="i">🏆</span>الحلبة</a></li>
+      <li><a href="leads.html"><span class="i">👥</span>الليدز</a></li>
+      <li><a href="funnel.html"><span class="i">🎯</span>الفانل</a></li>
+      <li><a href="contact.html"><span class="i">📇</span>Contact</a></li>
+      <li><a href="approvals.html"><span class="i">✅</span>موافقات<span class="b">7</span></a></li>
+      <li><a href="bulk.html"><span class="i">⬆️</span>Bulk</a></li>
+      <li><a href="sync.html"><span class="i">🔄</span>Sheet</a></li>
+    </ul>
+    <div class="s-bot">
+      <div class="s-me">ن</div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="search">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input placeholder="ابحث…">
+      </div>
+      <div class="streak"><span class="fire">🔥</span> 14 يوم ستريك!</div>
+      <div class="top-actions">
+        <button class="btn btn-brand">+ ليد جديد</button>
+        <button class="ibtn">🔔<span class="n">9</span></button>
+        <button class="ibtn">🎖️</button>
+      </div>
+    </div>
+
+    <div class="page">
+      <div class="hero">
+        <h1>الصدارة ليكي يا <span>نورا</span> 🥇</h1>
+        <p>أنتي في المركز الأول اليوم بـ 47 أكتف، الفرق بينك وبين منى 8 بس. لو قفلتي اتنين تاني، هتكسري الرقم القياسي الأسبوعي.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-top:20px;position:relative">
+          <div style="background:rgba(255,255,255,.12);padding:12px 14px;border-radius:14px;backdrop-filter:blur(4px)">
+            <div style="font-size:11px;color:#bbf7d0;letter-spacing:.5px;font-weight:700">الأكتف اليوم</div>
+            <div style="font-size:28px;font-weight:800">47 <span style="color:#4ade80;font-size:14px">▲ 18%</span></div>
+          </div>
+          <div style="background:rgba(255,255,255,.12);padding:12px 14px;border-radius:14px">
+            <div style="font-size:11px;color:#bbf7d0;letter-spacing:.5px;font-weight:700">المفتوحة</div>
+            <div style="font-size:28px;font-weight:800">4 <span style="color:#4ade80;font-size:14px">+ $5.2K</span></div>
+          </div>
+          <div style="background:rgba(255,255,255,.12);padding:12px 14px;border-radius:14px">
+            <div style="font-size:11px;color:#bbf7d0;letter-spacing:.5px;font-weight:700">XP اليوم</div>
+            <div style="font-size:28px;font-weight:800">1,240 <span style="color:#fbbf24;font-size:14px">⚡ +240</span></div>
+          </div>
+          <div style="background:rgba(255,255,255,.12);padding:12px 14px;border-radius:14px">
+            <div style="font-size:11px;color:#bbf7d0;letter-spacing:.5px;font-weight:700">المستوى</div>
+            <div style="font-size:28px;font-weight:800">Gold II <span style="font-size:18px">🥇</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <!-- Leaderboard -->
+        <div class="panel">
+          <div class="panel-h">
+            <div>
+              <h3>🏆 ليدربورد اليوم</h3>
+              <div class="sub-t">الترتيب بيتحدث لحظيًا حسب عدد الأكتف.</div>
+            </div>
+            <div style="display:flex;gap:6px">
+              <button class="btn btn-sm" style="background:var(--brand);color:white;border-color:var(--brand)">اليوم</button>
+              <button class="btn btn-sm">الأسبوع</button>
+              <button class="btn btn-sm">الشهر</button>
+            </div>
+          </div>
+
+          <div class="lb">
+            <div class="lb-row top1">
+              <div class="lb-rank">🥇</div>
+              <div class="lb-avatar">ن</div>
+              <div class="lb-info">
+                <div class="lb-name">نورا سيد <span class="pill pill-gold">⚡ Streak 14</span></div>
+                <div class="lb-role">Team Leader · Cairo</div>
+                <div class="lb-bar"><span style="width:100%"></span></div>
+              </div>
+              <div class="lb-value"><b>47</b><span>أكتف · $5.2K</span></div>
+            </div>
+
+            <div class="lb-row top2">
+              <div class="lb-rank">🥈</div>
+              <div class="lb-avatar" style="background:linear-gradient(135deg,#60a5fa,#1e40af)">م</div>
+              <div class="lb-info">
+                <div class="lb-name">منى علي <span class="pill pill-info">🎯 Close Master</span></div>
+                <div class="lb-role">Sales Agent</div>
+                <div class="lb-bar"><span style="width:83%"></span></div>
+              </div>
+              <div class="lb-value"><b>39</b><span>أكتف · $4.1K</span></div>
+            </div>
+
+            <div class="lb-row top3">
+              <div class="lb-rank">🥉</div>
+              <div class="lb-avatar" style="background:linear-gradient(135deg,#f59e0b,#b45309)">ك</div>
+              <div class="lb-info">
+                <div class="lb-name">كريم حسام</div>
+                <div class="lb-role">Sales Agent</div>
+                <div class="lb-bar"><span style="width:70%"></span></div>
+              </div>
+              <div class="lb-value"><b>33</b><span>أكتف · $3.5K</span></div>
+            </div>
+
+            <div class="lb-row">
+              <div class="lb-rank">#4</div>
+              <div class="lb-avatar" style="background:linear-gradient(135deg,#a78bfa,#6d28d9)">س</div>
+              <div class="lb-info">
+                <div class="lb-name">سيف محمود</div>
+                <div class="lb-role">Sales Agent</div>
+                <div class="lb-bar"><span style="width:60%"></span></div>
+              </div>
+              <div class="lb-value"><b>28</b><span>أكتف</span></div>
+            </div>
+
+            <div class="lb-row">
+              <div class="lb-rank">#5</div>
+              <div class="lb-avatar" style="background:linear-gradient(135deg,#f87171,#b91c1c)">ر</div>
+              <div class="lb-info">
+                <div class="lb-name">ريم سامي</div>
+                <div class="lb-role">Sales Agent</div>
+                <div class="lb-bar"><span style="width:45%"></span></div>
+              </div>
+              <div class="lb-value"><b>21</b><span>أكتف</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- My Progress -->
+        <div>
+          <div class="panel" style="margin-bottom:20px">
+            <div class="panel-h">
+              <div>
+                <h3>🎯 أهداف اليوم</h3>
+                <div class="sub-t">لو كمّلتيها كلها، هتاخدي +500 XP</div>
+              </div>
+            </div>
+            <div style="display:grid;gap:12px">
+              <div class="goal-card">
+                <div class="t">30 أكتف <span style="color:var(--brand)">47 / 30 ✓</span></div>
+                <div class="prog"><span style="width:100%" class="gold"></span></div>
+                <div class="d">🎉 مكتمل! +200 XP</div>
+              </div>
+              <div class="goal-card">
+                <div class="t">3 صفقات مقفولة <span>2 / 3</span></div>
+                <div class="prog"><span style="width:66%"></span></div>
+                <div class="d">⏱ لسه باقي صفقة واحدة · +300 XP</div>
+              </div>
+              <div class="goal-card">
+                <div class="t">10 مكالمات جديدة <span>7 / 10</span></div>
+                <div class="prog"><span style="width:70%"></span></div>
+                <div class="d">+150 XP</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-h"><div><h3>🎖️ الشارات</h3><div class="sub-t">8 من 24 محقّقة</div></div></div>
+            <div class="badges">
+              <div class="badge-card earned"><div class="emoji">🔥</div><div class="title">Streak 14</div><div class="d">يومي</div></div>
+              <div class="badge-card earned"><div class="emoji">💎</div><div class="title">Close x100</div><div class="d">حياة</div></div>
+              <div class="badge-card earned"><div class="emoji">🚀</div><div class="title">Quick Draw</div><div class="d">&lt; 5د</div></div>
+              <div class="badge-card earned"><div class="emoji">👑</div><div class="title">TL Hero</div></div>
+              <div class="badge-card"><div class="emoji">🏆</div><div class="title">+25 / أسبوع</div><div class="d">18 / 25</div></div>
+              <div class="badge-card locked"><div class="emoji">🦄</div><div class="title">50K Month</div></div>
+              <div class="badge-card locked"><div class="emoji">🎯</div><div class="title">30% Win</div></div>
+              <div class="badge-card locked"><div class="emoji">⚡</div><div class="title">Streak 30</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <div class="panel">
+          <div class="panel-h"><h3>🔥 أهم ليدز اليوم</h3></div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="padding:12px;border:1px solid var(--line);border-radius:14px">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                <b style="font-size:14px">أحمد فاروق</b>
+                <span class="pill pill-err">🔥 Hot 87</span>
+              </div>
+              <div style="color:var(--ink-mute);font-size:12px">Full Stack · $1,200 · Facebook</div>
+              <div style="display:flex;gap:6px;margin-top:10px">
+                <button class="btn btn-sm btn-brand">📞 اتصل</button>
+                <button class="btn btn-sm">💬 WA</button>
+                <a href="contact.html" class="btn btn-sm">فتح →</a>
+              </div>
+            </div>
+            <div style="padding:12px;border:1px solid var(--line);border-radius:14px">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                <b style="font-size:14px">محمد عاطف</b>
+                <span class="pill pill-err">🔥 Hot 92</span>
+              </div>
+              <div style="color:var(--ink-mute);font-size:12px">Cyber Sec · $3,800 · Referral</div>
+              <div style="display:flex;gap:6px;margin-top:10px">
+                <button class="btn btn-sm btn-brand">📞 اتصل</button>
+                <button class="btn btn-sm">💬 WA</button>
+              </div>
+            </div>
+            <div style="padding:12px;border:1px solid var(--line);border-radius:14px">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                <b style="font-size:14px">يوسف حجاج</b>
+                <span class="pill pill-warn">Score 88</span>
+              </div>
+              <div style="color:var(--ink-mute);font-size:12px">Data Science · $2,900 · LinkedIn</div>
+              <div style="display:flex;gap:6px;margin-top:10px">
+                <button class="btn btn-sm btn-brand">📞 اتصل</button>
+                <button class="btn btn-sm">💬 WA</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-h"><h3>🎉 احتفالات التيم</h3></div>
+          <div class="alert celebrate" style="margin-bottom:10px">
+            <span style="font-size:22px">🎊</span>
+            <div><div>منى أقفلت صفقة $1,850 !</div><div style="font-weight:600;font-size:12px;margin-top:2px">Web Dev · منذ 5 دقائق</div></div>
+          </div>
+          <div class="alert ok" style="margin-bottom:10px">
+            <span>🏅</span>
+            <div><b>كريم</b> وصل لشارة "Quick Draw"<div style="font-size:11px;color:var(--ink-mute);margin-top:2px">رد على ليد في 3 دقائق</div></div>
+          </div>
+          <div class="alert ok" style="margin-bottom:10px">
+            <span>⚡</span>
+            <div><b>نورا</b> وصلت ستريك 14 يوم<div style="font-size:11px;color:var(--ink-mute);margin-top:2px">+200 XP bonus</div></div>
+          </div>
+          <div class="alert info">
+            <span>🎯</span>
+            <div><b>التيم كله</b> خطى 85% من هدف الأسبوع<div style="font-size:11px;color:var(--ink-mute);margin-top:2px">لسه 32 أكتف بس!</div></div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-h"><h3>⚡ موجة الأداء</h3></div>
+          <div class="chart" style="height:220px"></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:14px;text-align:center">
+            <div><div class="pill pill-green">اليوم</div><b style="display:block;margin-top:6px;font-size:20px">168</b></div>
+            <div><div class="pill pill-info">الأسبوع</div><b style="display:block;margin-top:6px;font-size:20px">892</b></div>
+            <div><div class="pill pill-warn">الشهر</div><b style="display:block;margin-top:6px;font-size:20px">3,241</b></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

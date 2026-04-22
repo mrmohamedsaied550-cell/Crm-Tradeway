@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الليدز · Clarity · Trade Way CRM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="side-brand"><img src="../shared/logo.svg"><div><b>Trade Way</b><small>Clarity · v1</small></div></div>
+    <div class="nav-section">العمل اليومي</div>
+    <ul class="nav">
+      <li><a href="dashboard.html">📊 الداشبورد</a></li>
+      <li><a href="leads.html" class="active">👥 الليدز</a></li>
+      <li><a href="funnel.html">🎯 الفانل</a></li>
+      <li><a href="contact.html">📇 Contact</a></li>
+    </ul>
+    <div class="nav-section">الإدارة</div>
+    <ul class="nav">
+      <li><a href="approvals.html">✅ الموافقات <span class="pill" style="background:var(--err-soft);color:var(--err)">7</span></a></li>
+      <li><a href="bulk.html">⬆️ رفع Bulk</a></li>
+      <li><a href="sync.html">🔄 Google Sheet</a></li>
+    </ul>
+    <div class="side-bottom">
+      <a href="index.html" class="me"><div class="avatar">ن</div><div class="me-info"><b>نورا سيد</b><span>Team Leader</span></div></a>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="search">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input placeholder="ابحث في الليدز بالاسم / الهاتف / الإيميل…">
+      </div>
+      <div class="top-actions">
+        <button class="btn">+ ليد جديد</button>
+        <button class="icon-btn"><span class="ping"></span>🔔</button>
+      </div>
+    </div>
+
+    <div class="page">
+      <div class="page-head">
+        <div>
+          <div class="crumb">CRM · Leads</div>
+          <h1>الليدز (1,247)</h1>
+          <p>كل الليدز في مكان واحد — بالفلتر اللي يناسبك.</p>
+        </div>
+        <div class="row">
+          <button class="btn">📥 استيراد</button>
+          <button class="btn">📤 تصدير CSV</button>
+          <button class="btn-brand btn">+ ليد جديد</button>
+        </div>
+      </div>
+
+      <div class="card" style="padding:14px;margin-bottom:16px">
+        <div class="row" style="gap:8px;flex-wrap:wrap">
+          <select class="btn"><option>كل المصادر</option><option>Facebook</option><option>Google Ads</option><option>Referral</option><option>TikTok</option></select>
+          <select class="btn"><option>كل الحالات</option><option>جديد</option><option>تم التواصل</option><option>Qualified</option><option>موعد</option><option>ربح</option><option>فقد</option></select>
+          <select class="btn"><option>كل المسؤولين</option><option>نورا</option><option>منى</option><option>كريم</option></select>
+          <select class="btn"><option>آخر 30 يوم</option><option>اليوم</option><option>هذا الأسبوع</option></select>
+          <button class="btn">+ فلتر</button>
+          <div class="right row">
+            <span class="muted" style="font-size:12px">ترتيب:</span>
+            <select class="btn"><option>الأحدث</option><option>الأقدم</option><option>الأعلى قيمة</option></select>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="padding:0;overflow:hidden">
+        <div class="row" style="padding:12px 16px;border-bottom:1px solid var(--line);background:var(--bg);gap:10px">
+          <label class="check"><input type="checkbox"> تحديد الكل</label>
+          <span class="muted" style="font-size:12px">|  اختير 3 عناصر</span>
+          <div class="right row">
+            <button class="btn btn-sm">📧 بريد جماعي</button>
+            <button class="btn btn-sm">👤 إعادة توزيع</button>
+            <button class="btn btn-sm">🏷️ تاج</button>
+            <button class="btn btn-sm" style="color:var(--err)">🗑️ حذف</button>
+          </div>
+        </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th style="width:36px"><input type="checkbox"></th>
+              <th>الاسم</th>
+              <th>جهة الاتصال</th>
+              <th>المصدر</th>
+              <th>الحالة</th>
+              <th>المسؤول</th>
+              <th>القيمة</th>
+              <th>آخر نشاط</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><input type="checkbox" checked></td><td><a href="contact.html"><b>أحمد فاروق</b></a><br><span class="muted" style="font-size:11px">كورس Full Stack</span></td><td>📱 +20 100 234 5678<br><span class="muted" style="font-size:11px">ahmed.f@gmail.com</span></td><td><span class="pill">Facebook</span></td><td><span class="badge b-new">جديد</span></td><td><span class="mini">م</span></td><td><b>$1,200</b></td><td class="muted">منذ 3د</td><td>⋯</td></tr>
+            <tr><td><input type="checkbox" checked></td><td><a href="contact.html"><b>سارة عبد الله</b></a><br><span class="muted" style="font-size:11px">دبلومة Data Analytics</span></td><td>📱 +20 122 555 4433<br><span class="muted" style="font-size:11px">sara.a@gmail.com</span></td><td><span class="pill">Google Ads</span></td><td><span class="badge b-contact">تم التواصل</span></td><td><span class="mini">ك</span></td><td><b>$2,400</b></td><td class="muted">منذ 12د</td><td>⋯</td></tr>
+            <tr><td><input type="checkbox" checked></td><td><a href="contact.html"><b>محمد عاطف</b></a><br><span class="muted" style="font-size:11px">بوتكامب Cyber Security</span></td><td>📱 +20 122 987 6543</td><td><span class="pill">Referral</span></td><td><span class="badge b-meet">موعد غدًا</span></td><td><span class="mini">ن</span></td><td><b>$3,800</b></td><td class="muted">منذ 28د</td><td>⋯</td></tr>
+            <tr><td><input type="checkbox"></td><td><a href="contact.html"><b>ليلى حسن</b></a><br><span class="muted" style="font-size:11px">Digital Marketing</span></td><td>📱 +20 155 112 2334<br><span class="muted" style="font-size:11px">laila.h@outlook.com</span></td><td><span class="pill">TikTok</span></td><td><span class="badge b-won">ربح ✓ $980</span></td><td><span class="mini">م</span></td><td><b>$980</b></td><td class="muted">منذ 1س</td><td>⋯</td></tr>
+            <tr><td><input type="checkbox"></td><td><a href="contact.html"><b>عمر شريف</b></a><br><span class="muted" style="font-size:11px">كورس UI/UX</span></td><td>📱 +20 155 111 2222</td><td><span class="pill">Landing</span></td><td><span class="badge b-new">جديد</span></td><td><span class="mini">ك</span></td><td><b>$1,100</b></td><td class="muted">منذ 2س</td><td>⋯</td></tr>
+            <tr><td><input type="checkbox"></td><td><a href="contact.html"><b>ندى إبراهيم</b></a><br><span class="muted" style="font-size:11px">PMP Preparation</span></td><td>📱 +20 128 776 5544</td><td><span class="pill">Facebook</span></td><td><span class="badge b-contact">تم التواصل</span></td><td><span class="mini">ن</span></td><td><b>$1,650</b></td><td class="muted">منذ 3س</td><td>⋯</td></tr>
+            <tr><td><input type="checkbox"></td><td><a href="contact.html"><b>يوسف حجاج</b></a><br><span class="muted" style="font-size:11px">Data Science</span></td><td>📱 +20 111 222 3344<br><span class="muted" style="font-size:11px">yhaggag@gmail.com</span></td><td><span class="pill">LinkedIn</span></td><td><span class="badge b-meet">Qualified</span></td><td><span class="mini">م</span></td><td><b>$2,900</b></td><td class="muted">أمس · 15:20</td><td>⋯</td></tr>
+            <tr><td><input type="checkbox"></td><td><a href="contact.html"><b>مريم علاء</b></a><br><span class="muted" style="font-size:11px">Accounting Bundle</span></td><td>📱 +20 155 334 5566</td><td><span class="pill">Referral</span></td><td><span class="badge b-lost">فقد</span></td><td><span class="mini">ك</span></td><td class="muted">$0</td><td class="muted">أمس · 11:40</td><td>⋯</td></tr>
+            <tr><td><input type="checkbox"></td><td><a href="contact.html"><b>حسن أشرف</b></a><br><span class="muted" style="font-size:11px">Graphic Design</span></td><td>📱 +20 155 999 8888</td><td><span class="pill">Facebook</span></td><td><span class="badge b-new">جديد</span></td><td><span class="mini">ن</span></td><td><b>$890</b></td><td class="muted">أمس · 10:15</td><td>⋯</td></tr>
+            <tr><td><input type="checkbox"></td><td><a href="contact.html"><b>دينا مصطفى</b></a><br><span class="muted" style="font-size:11px">Web Dev · Full</span></td><td>📱 +20 122 445 6677<br><span class="muted" style="font-size:11px">dina.m@yahoo.com</span></td><td><span class="pill">Google Ads</span></td><td><span class="badge b-won">ربح ✓ $1,850</span></td><td><span class="mini">م</span></td><td><b>$1,850</b></td><td class="muted">أمس · 09:00</td><td>⋯</td></tr>
+          </tbody>
+        </table>
+        <div class="row" style="padding:14px 16px;border-top:1px solid var(--line);gap:10px">
+          <span class="muted" style="font-size:12px">عرض 1–10 من 1,247</span>
+          <div class="right row">
+            <button class="btn btn-sm">← السابق</button>
+            <span class="pill">1</span> <span class="muted">2</span> <span class="muted">3</span> <span class="muted">…</span> <span class="muted">125</span>
+            <button class="btn btn-sm">التالي →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

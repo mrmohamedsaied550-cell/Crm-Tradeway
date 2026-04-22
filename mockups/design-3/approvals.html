@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الموافقات · Arena · Trade Way CRM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="s-logo"><img src="../shared/logo.svg" alt=""></div>
+    <ul class="s-nav">
+      <li><a href="dashboard.html"><span class="i">🏆</span>الحلبة</a></li>
+      <li><a href="leads.html"><span class="i">👥</span>الليدز</a></li>
+      <li><a href="funnel.html"><span class="i">🎯</span>الفانل</a></li>
+      <li><a href="contact.html"><span class="i">📇</span>Contact</a></li>
+      <li><a href="approvals.html" class="active"><span class="i">✅</span>موافقات<span class="b">7</span></a></li>
+      <li><a href="bulk.html"><span class="i">⬆️</span>Bulk</a></li>
+      <li><a href="sync.html"><span class="i">🔄</span>Sheet</a></li>
+    </ul>
+    <div class="s-bot"><div class="s-me">ن</div></div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input placeholder="ابحث في الطلبات…"></div>
+      <div class="streak"><span class="fire">🔥</span> 14 يوم</div>
+      <div class="top-actions">
+        <button class="btn">⚙️ قواعد</button>
+        <button class="ibtn">🔔<span class="n">9</span></button>
+      </div>
+    </div>
+
+    <div class="page">
+      <div class="hero" style="padding:24px 28px;background:linear-gradient(135deg,#fbbf24 0%,#d97706 60%,#b45309 100%)">
+        <h1 style="font-size:26px">✅ طابور الموافقات</h1>
+        <p style="font-size:14px;color:#fef3c7">7 طلبات معلّقة · 3 منتظرة أكثر من 4 ساعات. كل موافقة بتفضي المندوب يكسب ليد جديد 🚀</p>
+      </div>
+
+      <div class="kpi-row">
+        <div class="kpi"><div class="icon">⏳</div><div class="lbl">معلّق</div><div class="v">7</div><span class="d">3 متأخرة &gt; 4س</span></div>
+        <div class="kpi"><div class="icon">🏆</div><div class="lbl">Won Deals</div><div class="v">3</div><span class="d up">$4,730 جاهز</span></div>
+        <div class="kpi"><div class="icon">💸</div><div class="lbl">Refunds</div><div class="v">1</div><span class="d">ضمن نافذة 7 أيام</span></div>
+        <div class="kpi"><div class="icon">🎁</div><div class="lbl">Discounts</div><div class="v">2</div><span class="d">فوق 10%</span></div>
+      </div>
+
+      <div class="alert warn" style="margin-bottom:20px">
+        <span style="font-size:20px">⏱</span>
+        <div><b>3 طلبات فوق SLA الخاص بيها.</b> اعتمدها الأول عشان المندوبين يرجعوا للحلبة 🎯</div>
+      </div>
+
+      <!-- Approval cards -->
+      <div style="display:grid;gap:14px">
+        <div class="panel" style="border-right:6px solid var(--brand)">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px">
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+              <span class="pill pill-green" style="font-size:12px;padding:5px 12px">🏆 WON DEAL</span>
+              <b style="font-size:16px">ليلى حسن — $980</b>
+              <span style="font-size:12px;color:var(--ink-mute)">Digital Marketing</span>
+            </div>
+            <div style="display:flex;gap:8px;align-items:center">
+              <span class="pill pill-err">⚠ 22 دقيقة</span>
+              <span style="font-size:12px;color:var(--ink-mute)">طلب من: منى علي</span>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:14px">
+            <div style="padding:10px;background:var(--bg);border-radius:10px"><div style="font-size:10px;color:var(--ink-mute);font-weight:700">القيمة</div><b style="font-size:16px">$980</b></div>
+            <div style="padding:10px;background:var(--bg);border-radius:10px"><div style="font-size:10px;color:var(--ink-mute);font-weight:700">الكورس</div><b style="font-size:13px">Digital Mktg</b></div>
+            <div style="padding:10px;background:var(--bg);border-radius:10px"><div style="font-size:10px;color:var(--ink-mute);font-weight:700">الدفع</div><b style="font-size:13px">تحويل بنكي</b></div>
+            <div style="padding:10px;background:var(--bg);border-radius:10px"><div style="font-size:10px;color:var(--ink-mute);font-weight:700">المرفقات</div><b style="font-size:13px">إيصال.pdf ✓</b></div>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn btn-brand">✓ اعتماد</button>
+            <button class="btn">💬 طلب تعديل</button>
+            <button class="btn" style="color:var(--err);border-color:#fca5a5">✕ رفض</button>
+            <a href="contact.html" class="btn" style="margin-right:auto">📇 فتح ملف الليد →</a>
+          </div>
+        </div>
+
+        <div class="panel" style="border-right:6px solid var(--info)">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px">
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+              <span class="pill pill-info" style="font-size:12px;padding:5px 12px">🎁 DISCOUNT 15%</span>
+              <b style="font-size:16px">محمد عاطف — Cyber Security</b>
+            </div>
+            <div style="display:flex;gap:8px;align-items:center">
+              <span class="pill pill-err">⚠ 1س 12د</span>
+              <span style="font-size:12px;color:var(--ink-mute)">طلب من: نورا</span>
+            </div>
+          </div>
+          <div class="alert info" style="margin-bottom:14px">
+            <span>💡</span>
+            <div>الطالب خريج جديد، طلب خصم 15% لو دفع كاش مرة واحدة. القيمة النهائية $3,230.</div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:14px">
+            <div style="padding:10px;background:var(--bg);border-radius:10px"><div style="font-size:10px;color:var(--ink-mute);font-weight:700">السعر الأصلي</div><b style="font-size:16px">$3,800</b></div>
+            <div style="padding:10px;background:linear-gradient(135deg,#d1fae5,#ecfdf5);border-radius:10px"><div style="font-size:10px;color:var(--brand-2);font-weight:700">بعد الخصم</div><b style="font-size:16px;color:var(--brand)">$3,230</b></div>
+            <div style="padding:10px;background:var(--bg);border-radius:10px"><div style="font-size:10px;color:var(--ink-mute);font-weight:700">الفرق</div><b style="font-size:16px">-$570</b></div>
+            <div style="padding:10px;background:#fef3c7;border-radius:10px"><div style="font-size:10px;color:#92400e;font-weight:700">حد التفويض</div><b style="font-size:13px;color:#92400e">10% (متجاوَز)</b></div>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn btn-brand">✓ اعتماد</button>
+            <button class="btn">💬 طلب تعديل</button>
+            <button class="btn" style="color:var(--err);border-color:#fca5a5">✕ رفض</button>
+          </div>
+        </div>
+
+        <div class="panel" style="border-right:6px solid var(--err)">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px">
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+              <span class="pill pill-err" style="font-size:12px;padding:5px 12px">💸 REFUND</span>
+              <b style="font-size:16px">أمل حامد — Full Stack</b>
+            </div>
+            <div style="display:flex;gap:8px;align-items:center">
+              <span class="pill pill-err">⚠ 3س 20د</span>
+              <span style="font-size:12px;color:var(--ink-mute)">طلب من: كريم</span>
+            </div>
+          </div>
+          <div class="alert warn" style="margin-bottom:14px">
+            <span>⚠️</span>
+            <div>خلال نافذة الـ7 أيام (يوم 3/7). الطالبة طلبت استرداد بسبب ظروف عمل طارئة.</div>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn btn-brand">✓ اعتماد (رد كامل)</button>
+            <button class="btn">رد جزئي 50%</button>
+            <button class="btn" style="color:var(--err);border-color:#fca5a5">✕ رفض</button>
+          </div>
+        </div>
+
+        <div class="panel" style="border-right:6px solid var(--brand)">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px">
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+              <span class="pill pill-green" style="font-size:12px;padding:5px 12px">🏆 WON DEAL</span>
+              <b style="font-size:16px">دينا مصطفى — $1,850</b>
+              <span style="font-size:12px;color:var(--ink-mute)">Web Dev</span>
+            </div>
+            <div style="display:flex;gap:8px">
+              <span style="font-size:12px;color:var(--ink-mute)">منذ 4س · منى</span>
+            </div>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn btn-brand">✓ اعتماد</button>
+            <button class="btn">💬 طلب تعديل</button>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px">
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+              <span class="pill" style="font-size:12px;padding:5px 12px;background:#e0e7ff;color:#3730a3">🔄 REASSIGN</span>
+              <b style="font-size:16px">سارة عبد الله — من كريم → منى</b>
+            </div>
+            <div style="display:flex;gap:8px">
+              <span style="font-size:12px;color:var(--ink-mute)">منذ 5س · كريم</span>
+            </div>
+          </div>
+          <div class="alert info" style="margin-bottom:14px">
+            <span>💡</span>
+            <div>السبب: "الطالبة طلبت مندوبة بنت، ومنى متاحة."</div>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn btn-brand">✓ اعتماد النقل</button>
+            <button class="btn" style="color:var(--err);border-color:#fca5a5">✕ رفض</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

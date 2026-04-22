@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Google Sheet Sync · Clarity · Trade Way CRM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="side-brand"><img src="../shared/logo.svg"><div><b>Trade Way</b><small>Clarity · v1</small></div></div>
+    <ul class="nav">
+      <li><a href="dashboard.html">📊 الداشبورد</a></li>
+      <li><a href="leads.html">👥 الليدز</a></li>
+      <li><a href="funnel.html">🎯 الفانل</a></li>
+      <li><a href="contact.html">📇 Contact</a></li>
+    </ul>
+    <div class="nav-section">الإدارة</div>
+    <ul class="nav">
+      <li><a href="approvals.html">✅ الموافقات <span class="pill" style="background:var(--err-soft);color:var(--err)">7</span></a></li>
+      <li><a href="bulk.html">⬆️ رفع Bulk</a></li>
+      <li><a href="sync.html" class="active">🔄 Google Sheet</a></li>
+    </ul>
+    <div class="side-bottom">
+      <a href="index.html" class="me"><div class="avatar">ن</div><div class="me-info"><b>نورا سيد</b><span>Team Leader</span></div></a>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input placeholder="بحث…"></div>
+    </div>
+
+    <div class="page">
+      <div class="page-head">
+        <div>
+          <div class="crumb">CRM · Integrations</div>
+          <h1>سينك Google Sheets</h1>
+          <p>اربط شيت جوجل مباشرة — أي ليد جديد في الشيت يظهر فورًا في CRM والعكس.</p>
+        </div>
+        <div class="row">
+          <button class="btn">📖 الدليل</button>
+          <button class="btn-brand btn">+ ربط شيت جديد</button>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-h">
+            <div class="row">
+              <span style="font-size:28px">📊</span>
+              <div>
+                <h3 style="margin:0">Leads — Facebook Ads 2026</h3>
+                <a href="#" class="muted" style="font-size:12px">docs.google.com/…/1a2B3c4D5e6F</a>
+              </div>
+            </div>
+            <span class="badge b-ok">✓ متصل</span>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:12px 0;font-size:13px">
+            <div><div class="muted" style="font-size:11px">آخر مزامنة</div><b>منذ 2 دقيقة</b></div>
+            <div><div class="muted" style="font-size:11px">الاتجاه</div><b>Sheet → CRM</b></div>
+            <div><div class="muted" style="font-size:11px">التكرار</div><b>كل 5 دقائق</b></div>
+            <div><div class="muted" style="font-size:11px">الصفوف المُزامنة</div><b>1,420</b></div>
+          </div>
+          <div class="progress" style="margin:6px 0 12px"><span style="width:92%"></span></div>
+          <div class="row">
+            <button class="btn btn-sm">🔄 مزامنة الآن</button>
+            <button class="btn btn-sm">✏️ تعديل المطابقة</button>
+            <button class="btn btn-sm">📊 سجل العمليات</button>
+            <button class="btn btn-sm" style="color:var(--err)">⏸ إيقاف</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-h">
+            <div class="row">
+              <span style="font-size:28px">📊</span>
+              <div>
+                <h3 style="margin:0">Won Deals — Finance Export</h3>
+                <a href="#" class="muted" style="font-size:12px">docs.google.com/…/9z8Y7x6W</a>
+              </div>
+            </div>
+            <span class="badge b-ok">✓ متصل</span>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:12px 0;font-size:13px">
+            <div><div class="muted" style="font-size:11px">آخر مزامنة</div><b>منذ 12 دقيقة</b></div>
+            <div><div class="muted" style="font-size:11px">الاتجاه</div><b>CRM → Sheet</b></div>
+            <div><div class="muted" style="font-size:11px">التكرار</div><b>كل 15 دقيقة</b></div>
+            <div><div class="muted" style="font-size:11px">الصفوف المُزامنة</div><b>216</b></div>
+          </div>
+          <div class="progress" style="margin:6px 0 12px"><span style="width:100%;background:linear-gradient(90deg,#16a34a,#065f46)"></span></div>
+          <div class="row">
+            <button class="btn btn-sm">🔄 مزامنة الآن</button>
+            <button class="btn btn-sm">✏️ تعديل المطابقة</button>
+            <button class="btn btn-sm">📊 سجل العمليات</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-h">
+          <h3>📋 مطابقة الأعمدة — Leads Facebook Ads 2026</h3>
+          <button class="btn btn-sm">+ إضافة عمود</button>
+        </div>
+        <p class="muted" style="font-size:12px;margin-bottom:12px">اختر أي عمود من الشيت يقابل أي حقل في CRM. التغييرات بتطبّق في المزامنة القادمة.</p>
+        <table class="table">
+          <thead><tr><th>عمود الشيت</th><th>عينة</th><th>→</th><th>حقل CRM</th><th>إلزامي؟</th><th></th></tr></thead>
+          <tbody>
+            <tr><td><b>Timestamp</b></td><td class="muted">2026-04-21 10:42</td><td>→</td><td><span class="pill b-ok">تاريخ الإنشاء</span></td><td>نعم</td><td><button class="btn btn-sm">⋯</button></td></tr>
+            <tr><td><b>Full Name</b></td><td class="muted">أحمد فاروق</td><td>→</td><td><span class="pill b-ok">الاسم الكامل</span></td><td>نعم</td><td><button class="btn btn-sm">⋯</button></td></tr>
+            <tr><td><b>Phone</b></td><td class="muted">+201002345678</td><td>→</td><td><span class="pill b-ok">الموبايل (Primary Key)</span></td><td>نعم</td><td><button class="btn btn-sm">⋯</button></td></tr>
+            <tr><td><b>Email</b></td><td class="muted">ahmed.f@gmail.com</td><td>→</td><td><span class="pill b-ok">البريد</span></td><td>لا</td><td><button class="btn btn-sm">⋯</button></td></tr>
+            <tr><td><b>Campaign</b></td><td class="muted">Fall-Bootcamps-2026</td><td>→</td><td><span class="pill b-ok">الحملة</span></td><td>لا</td><td><button class="btn btn-sm">⋯</button></td></tr>
+            <tr><td><b>Interested In</b></td><td class="muted">Full Stack</td><td>→</td><td><span class="pill b-ok">الكورس المطلوب</span></td><td>لا</td><td><button class="btn btn-sm">⋯</button></td></tr>
+            <tr><td><b>Budget</b></td><td class="muted">1200</td><td>→</td><td><span class="pill b-ok">القيمة المتوقعة</span></td><td>لا</td><td><button class="btn btn-sm">⋯</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card" style="margin-top:16px">
+        <div class="card-h">
+          <h3>⏱ سجل المزامنة (Realtime)</h3>
+          <span class="pill" style="background:#d1fae5;color:#065f46">● Live</span>
+        </div>
+        <table class="table">
+          <thead><tr><th>الوقت</th><th>الاتجاه</th><th>النوع</th><th>التفاصيل</th><th>الحالة</th></tr></thead>
+          <tbody>
+            <tr><td class="muted">10:42:12</td><td>Sheet → CRM</td><td><span class="pill">Insert</span></td><td>+3 ليدز جدد (صفوف 1418-1420)</td><td><span class="badge b-ok">✓ نجح</span></td></tr>
+            <tr><td class="muted">10:37:08</td><td>Sheet → CRM</td><td><span class="pill">Insert</span></td><td>+1 ليد جديد (صف 1417)</td><td><span class="badge b-ok">✓ نجح</span></td></tr>
+            <tr><td class="muted">10:32:04</td><td>CRM → Sheet</td><td><span class="pill">Update</span></td><td>تحديث status لصف 1201 (Won)</td><td><span class="badge b-ok">✓ نجح</span></td></tr>
+            <tr><td class="muted">10:27:01</td><td>Sheet → CRM</td><td><span class="pill">Skip</span></td><td>صف 1416 — موبايل مكرر</td><td><span class="pill" style="background:var(--warn-soft);color:#92400e">تخطّي</span></td></tr>
+            <tr><td class="muted">10:22:00</td><td>Sheet → CRM</td><td><span class="pill">Insert</span></td><td>+8 ليدز جدد (صفوف 1408-1415)</td><td><span class="badge b-ok">✓ نجح</span></td></tr>
+            <tr><td class="muted">10:16:45</td><td>Sheet → CRM</td><td><span class="pill">Error</span></td><td>صف 1407 — موبايل غير صالح "0100"</td><td><span class="badge b-lost">✕ خطأ</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

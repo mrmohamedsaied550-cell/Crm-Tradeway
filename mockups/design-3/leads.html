@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الليدز · Arena · Trade Way CRM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="s-logo"><img src="../shared/logo.svg" alt=""></div>
+    <ul class="s-nav">
+      <li><a href="dashboard.html"><span class="i">🏆</span>الحلبة</a></li>
+      <li><a href="leads.html" class="active"><span class="i">👥</span>الليدز</a></li>
+      <li><a href="funnel.html"><span class="i">🎯</span>الفانل</a></li>
+      <li><a href="contact.html"><span class="i">📇</span>Contact</a></li>
+      <li><a href="approvals.html"><span class="i">✅</span>موافقات<span class="b">7</span></a></li>
+      <li><a href="bulk.html"><span class="i">⬆️</span>Bulk</a></li>
+      <li><a href="sync.html"><span class="i">🔄</span>Sheet</a></li>
+    </ul>
+    <div class="s-bot"><div class="s-me">ن</div></div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input placeholder="ابحث في الليدز…"></div>
+      <div class="streak"><span class="fire">🔥</span> 14 يوم</div>
+      <div class="top-actions">
+        <button class="btn btn-brand">+ ليد جديد</button>
+        <button class="ibtn">🔔<span class="n">9</span></button>
+      </div>
+    </div>
+
+    <div class="page">
+      <div class="hero" style="padding:24px 28px">
+        <h1 style="font-size:26px">🎯 اختار فريستك من 1,247 ليد</h1>
+        <p style="font-size:14px">كل ليد هتكلّمه = +10 XP. الليدز اللي شعلة 🔥 بتديك x2. اكتشف ليدز ساخنة قبل ما غيرك ياخدها!</p>
+      </div>
+
+      <!-- My XP Progress strip -->
+      <div class="panel" style="padding:16px 22px;margin-bottom:20px;display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="font-size:32px">🥇</div>
+          <div>
+            <div style="font-size:11px;color:var(--ink-mute);font-weight:700">مستواك</div>
+            <b style="font-size:16px">Gold II</b>
+          </div>
+        </div>
+        <div style="flex:1;min-width:200px">
+          <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:700;color:var(--ink-mute);margin-bottom:6px"><span>XP: 8,240</span><span>Gold III في 1,760 XP</span></div>
+          <div class="prog"><span style="width:82%" class="gold"></span></div>
+        </div>
+        <div style="display:flex;gap:12px">
+          <div style="text-align:center"><b style="display:block;font-size:20px;color:var(--brand-2)">47</b><span style="font-size:11px;color:var(--ink-mute)">اليوم</span></div>
+          <div style="text-align:center"><b style="display:block;font-size:20px;color:var(--brand-2)">892</b><span style="font-size:11px;color:var(--ink-mute)">الأسبوع</span></div>
+          <div style="text-align:center"><b style="display:block;font-size:20px;color:var(--gold-dk)">#1</b><span style="font-size:11px;color:var(--ink-mute)">الترتيب</span></div>
+        </div>
+      </div>
+
+      <!-- Filters -->
+      <div class="panel" style="padding:14px 18px;margin-bottom:20px">
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+          <button class="btn btn-sm" style="background:var(--gradient-1);color:white;border-color:transparent">🌟 الكل (1,247)</button>
+          <button class="btn btn-sm">🔥 Hot (22)</button>
+          <button class="btn btn-sm">⚡ Quick wins (48)</button>
+          <button class="btn btn-sm">💰 بايبلاين عالي (14)</button>
+          <button class="btn btn-sm">⏰ SLA خطر (6)</button>
+          <div style="margin-right:auto;display:flex;gap:6px">
+            <select class="btn btn-sm"><option>المصدر: الكل</option></select>
+            <select class="btn btn-sm"><option>المسؤول: أنا</option></select>
+            <button class="btn btn-sm">📤 CSV</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Leads grid (cards) -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px">
+        <a href="contact.html" class="panel" style="padding:18px;cursor:pointer;display:block;border-right:6px solid var(--err)">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
+            <div>
+              <b style="font-size:16px;display:block">أحمد فاروق</b>
+              <span style="font-size:12px;color:var(--ink-mute)">Full Stack · $1,200</span>
+            </div>
+            <span class="pill pill-err">🔥 HOT 87</span>
+          </div>
+          <div style="display:flex;gap:6px;margin-bottom:12px">
+            <span class="pill pill-info">Facebook</span>
+            <span class="pill">جديد</span>
+            <span class="pill pill-gold">x2 XP</span>
+          </div>
+          <div style="display:flex;gap:6px;margin-bottom:8px">
+            <button class="btn btn-sm btn-brand" style="flex:1">📞</button>
+            <button class="btn btn-sm" style="flex:1">💬</button>
+            <button class="btn btn-sm" style="flex:1">✉️</button>
+          </div>
+          <div style="font-size:11px;color:var(--ink-mute)">منذ 3د · <span class="mini" style="width:22px;height:22px;font-size:10px">م</span> منى</div>
+        </a>
+
+        <a href="contact.html" class="panel" style="padding:18px;display:block;border-right:6px solid var(--err)">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
+            <div>
+              <b style="font-size:16px;display:block">محمد عاطف</b>
+              <span style="font-size:12px;color:var(--ink-mute)">Cyber Security · $3,800</span>
+            </div>
+            <span class="pill pill-err">🔥 HOT 92</span>
+          </div>
+          <div style="display:flex;gap:6px;margin-bottom:12px">
+            <span class="pill pill-info">Referral</span>
+            <span class="pill">موعد غدًا</span>
+          </div>
+          <div style="display:flex;gap:6px;margin-bottom:8px">
+            <button class="btn btn-sm btn-brand" style="flex:1">📞</button>
+            <button class="btn btn-sm" style="flex:1">💬</button>
+            <button class="btn btn-sm" style="flex:1">✉️</button>
+          </div>
+          <div style="font-size:11px;color:var(--ink-mute)">منذ 28د · <span class="mini" style="width:22px;height:22px;font-size:10px">ن</span> نورا</div>
+        </a>
+
+        <a href="contact.html" class="panel" style="padding:18px;display:block;border-right:6px solid var(--warn)">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
+            <div>
+              <b style="font-size:16px;display:block">يوسف حجاج</b>
+              <span style="font-size:12px;color:var(--ink-mute)">Data Science · $2,900</span>
+            </div>
+            <span class="pill pill-warn">Score 88</span>
+          </div>
+          <div style="display:flex;gap:6px;margin-bottom:12px">
+            <span class="pill pill-info">LinkedIn</span>
+            <span class="pill">Qualified</span>
+          </div>
+          <div style="display:flex;gap:6px;margin-bottom:8px">
+            <button class="btn btn-sm btn-brand" style="flex:1">📞</button>
+            <button class="btn btn-sm" style="flex:1">💬</button>
+            <button class="btn btn-sm" style="flex:1">✉️</button>
+          </div>
+          <div style="font-size:11px;color:var(--ink-mute)">أمس · <span class="mini" style="width:22px;height:22px;font-size:10px">م</span> منى</div>
+        </a>
+
+        <a href="contact.html" class="panel" style="padding:18px;display:block">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
+            <div>
+              <b style="font-size:16px;display:block">سارة عبد الله</b>
+              <span style="font-size:12px;color:var(--ink-mute)">Data Analytics · $2,400</span>
+            </div>
+            <span class="pill pill-warn">74</span>
+          </div>
+          <div style="display:flex;gap:6px;margin-bottom:12px">
+            <span class="pill pill-info">Google Ads</span>
+            <span class="pill">تم التواصل</span>
+          </div>
+          <div style="display:flex;gap:6px;margin-bottom:8px">
+            <button class="btn btn-sm btn-brand" style="flex:1">📞</button>
+            <button class="btn btn-sm" style="flex:1">💬</button>
+            <button class="btn btn-sm" style="flex:1">✉️</button>
+          </div>
+          <div style="font-size:11px;color:var(--ink-mute)">منذ 12د · <span class="mini" style="width:22px;height:22px;font-size:10px">ك</span> كريم</div>
+        </a>
+
+        <a href="contact.html" class="panel" style="padding:18px;display:block;border-right:6px solid var(--brand)">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
+            <div>
+              <b style="font-size:16px;display:block">ليلى حسن ✓</b>
+              <span style="font-size:12px;color:var(--ink-mute)">Digital Mktg · $980</span>
+            </div>
+            <span class="pill pill-green">🏆 WON</span>
+          </div>
+          <div style="display:flex;gap:6px;margin-bottom:12px">
+            <span class="pill pill-info">TikTok</span>
+            <span class="pill pill-green">+$980</span>
+          </div>
+          <div class="alert celebrate" style="padding:8px 12px;font-size:12px;margin-bottom:8px">🎉 مبروك!</div>
+          <div style="font-size:11px;color:var(--ink-mute)">منذ 1س · <span class="mini" style="width:22px;height:22px;font-size:10px">م</span> منى</div>
+        </a>
+
+        <a href="contact.html" class="panel" style="padding:18px;display:block">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
+            <div>
+              <b style="font-size:16px;display:block">عمر شريف</b>
+              <span style="font-size:12px;color:var(--ink-mute)">UI/UX · $1,100</span>
+            </div>
+            <span class="pill">62</span>
+          </div>
+          <div style="display:flex;gap:6px;margin-bottom:12px">
+            <span class="pill pill-info">Landing</span>
+            <span class="pill">جديد</span>
+          </div>
+          <div style="display:flex;gap:6px;margin-bottom:8px">
+            <button class="btn btn-sm btn-brand" style="flex:1">📞</button>
+            <button class="btn btn-sm" style="flex:1">💬</button>
+            <button class="btn btn-sm" style="flex:1">✉️</button>
+          </div>
+          <div style="font-size:11px;color:var(--ink-mute)">منذ 2س · <span class="mini" style="width:22px;height:22px;font-size:10px">ك</span> كريم</div>
+        </a>
+
+        <a href="contact.html" class="panel" style="padding:18px;display:block">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
+            <div>
+              <b style="font-size:16px;display:block">ندى إبراهيم</b>
+              <span style="font-size:12px;color:var(--ink-mute)">PMP Prep · $1,650</span>
+            </div>
+            <span class="pill pill-warn">69</span>
+          </div>
+          <div style="display:flex;gap:6px;margin-bottom:12px">
+            <span class="pill pill-info">Facebook</span>
+            <span class="pill">تم التواصل</span>
+          </div>
+          <div style="display:flex;gap:6px;margin-bottom:8px">
+            <button class="btn btn-sm btn-brand" style="flex:1">📞</button>
+            <button class="btn btn-sm" style="flex:1">💬</button>
+            <button class="btn btn-sm" style="flex:1">✉️</button>
+          </div>
+          <div style="font-size:11px;color:var(--ink-mute)">منذ 3س · <span class="mini" style="width:22px;height:22px;font-size:10px">ن</span> نورا</div>
+        </a>
+
+        <a href="contact.html" class="panel" style="padding:18px;display:block;border-right:6px solid var(--brand)">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
+            <div>
+              <b style="font-size:16px;display:block">دينا مصطفى ✓</b>
+              <span style="font-size:12px;color:var(--ink-mute)">Web Dev · $1,850</span>
+            </div>
+            <span class="pill pill-green">🏆 WON</span>
+          </div>
+          <div style="display:flex;gap:6px;margin-bottom:12px">
+            <span class="pill pill-info">Google</span>
+            <span class="pill pill-warn">⏳ اعتماد</span>
+          </div>
+          <div style="font-size:11px;color:var(--ink-mute)">أمس · <span class="mini" style="width:22px;height:22px;font-size:10px">م</span> منى</div>
+        </a>
+      </div>
+
+      <div style="text-align:center;margin-top:24px">
+        <button class="btn btn-brand">تحميل المزيد (+1,235 ليد)</button>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
