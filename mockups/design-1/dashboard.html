@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard · Clarity · Trade Way CRM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="side-brand">
+      <img src="../shared/logo.svg" alt="TW">
+      <div><b>Trade Way</b><small>Clarity · v1</small></div>
+    </div>
+    <div class="nav-section">العمل اليومي</div>
+    <ul class="nav">
+      <li><a href="dashboard.html" class="active">📊 الداشبورد</a></li>
+      <li><a href="leads.html">👥 الليدز</a></li>
+      <li><a href="funnel.html">🎯 الفانل</a></li>
+      <li><a href="contact.html">📇 Contact</a></li>
+    </ul>
+    <div class="nav-section">الإدارة</div>
+    <ul class="nav">
+      <li><a href="approvals.html">✅ الموافقات <span class="pill" style="background:var(--err-soft);color:var(--err)">7</span></a></li>
+      <li><a href="bulk.html">⬆️ رفع Bulk</a></li>
+      <li><a href="sync.html">🔄 Google Sheet</a></li>
+    </ul>
+    <div class="nav-section">عام</div>
+    <ul class="nav">
+      <li><a href="#">⚙️ الإعدادات</a></li>
+      <li><a href="#">❓ المساعدة</a></li>
+    </ul>
+    <div class="side-bottom">
+      <a href="index.html" class="me">
+        <div class="avatar">ن</div>
+        <div class="me-info"><b>نورا سيد</b><span>Team Leader</span></div>
+      </a>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="search">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input placeholder="ابحث عن ليد، كونتاكت، صفقة… (Ctrl+K)">
+      </div>
+      <div class="top-actions">
+        <button class="btn">+ ليد جديد</button>
+        <button class="icon-btn" title="إشعارات"><span class="ping"></span>🔔</button>
+        <button class="icon-btn" title="رسائل">✉️</button>
+      </div>
+    </div>
+
+    <div class="page">
+      <div class="page-head">
+        <div>
+          <div class="crumb">صباح الخير، نورا 👋</div>
+          <h1>الداشبورد</h1>
+          <p>نظرة سريعة على أداء اليوم وفريقك — محدَّثة الآن.</p>
+        </div>
+        <div class="row">
+          <select class="btn"><option>اليوم</option><option>هذا الأسبوع</option><option>هذا الشهر</option></select>
+          <button class="btn-brand btn">تصدير تقرير</button>
+        </div>
+      </div>
+
+      <div class="kpi-grid">
+        <div class="kpi">
+          <div class="kpi-label">ليدز جديدة</div>
+          <div class="kpi-value">142</div>
+          <span class="kpi-delta up">▲ 18% vs أمس</span>
+          <div class="chart-fake kpi-spark" style="height:36px"></div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">أكتف اليوم</div>
+          <div class="kpi-value">37</div>
+          <span class="kpi-delta up">▲ 9%</span>
+          <div class="chart-fake kpi-spark"></div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">Win Rate</div>
+          <div class="kpi-value">24.6%</div>
+          <span class="kpi-delta down">▼ 2.1%</span>
+          <div class="chart-fake kpi-spark"></div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">Pipeline متاح</div>
+          <div class="kpi-value">$284K</div>
+          <span class="kpi-delta up">▲ 12%</span>
+          <div class="chart-fake kpi-spark"></div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-h">
+            <div>
+              <h3>أداء الأكتف خلال آخر 30 يوم</h3>
+              <div class="sub-t">الأكتف يوميًا مقارنة بالمستهدف (30/يوم)</div>
+            </div>
+            <div class="row">
+              <span class="pill" style="background:var(--brand-softer);color:var(--brand)">● فعلي</span>
+              <span class="pill">● مستهدف</span>
+            </div>
+          </div>
+          <div class="chart-fake"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-h">
+            <h3>توزيع الفانل</h3>
+          </div>
+          <div style="display:grid;gap:12px">
+            <div>
+              <div class="row" style="margin-bottom:4px"><b style="font-size:13px">New</b><span class="right muted" style="font-size:12px">48</span></div>
+              <div class="progress"><span style="width:80%"></span></div>
+            </div>
+            <div>
+              <div class="row" style="margin-bottom:4px"><b style="font-size:13px">Contacted</b><span class="right muted" style="font-size:12px">36</span></div>
+              <div class="progress"><span style="width:62%"></span></div>
+            </div>
+            <div>
+              <div class="row" style="margin-bottom:4px"><b style="font-size:13px">Qualified</b><span class="right muted" style="font-size:12px">22</span></div>
+              <div class="progress"><span style="width:40%"></span></div>
+            </div>
+            <div>
+              <div class="row" style="margin-bottom:4px"><b style="font-size:13px">Meeting</b><span class="right muted" style="font-size:12px">14</span></div>
+              <div class="progress"><span style="width:28%"></span></div>
+            </div>
+            <div>
+              <div class="row" style="margin-bottom:4px"><b style="font-size:13px">Won</b><span class="right muted" style="font-size:12px">9</span></div>
+              <div class="progress"><span style="width:18%"></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-h">
+            <h3>أحدث الليدز</h3>
+            <a href="leads.html" class="link">عرض الكل ←</a>
+          </div>
+          <table class="table">
+            <thead><tr><th>الاسم</th><th>المصدر</th><th>الحالة</th><th>المسؤول</th><th>متى</th></tr></thead>
+            <tbody>
+              <tr><td><b>أحمد فاروق</b><br><span class="muted" style="font-size:11px">+20 100 234 5678</span></td><td><span class="pill">Facebook</span></td><td><span class="badge b-new">جديد</span></td><td><span class="mini">م</span> منى</td><td class="muted">منذ 3د</td></tr>
+              <tr><td><b>سارة عبد الله</b><br><span class="muted" style="font-size:11px">sara.a@gmail.com</span></td><td><span class="pill">Google Ads</span></td><td><span class="badge b-contact">تم التواصل</span></td><td><span class="mini">ك</span> كريم</td><td class="muted">منذ 12د</td></tr>
+              <tr><td><b>محمد عاطف</b><br><span class="muted" style="font-size:11px">+20 122 987 6543</span></td><td><span class="pill">Referral</span></td><td><span class="badge b-meet">موعد</span></td><td><span class="mini">ن</span> نورا</td><td class="muted">منذ 28د</td></tr>
+              <tr><td><b>ليلى حسن</b><br><span class="muted" style="font-size:11px">laila.h@outlook.com</span></td><td><span class="pill">TikTok</span></td><td><span class="badge b-won">ربح ✓</span></td><td><span class="mini">م</span> منى</td><td class="muted">منذ 1س</td></tr>
+              <tr><td><b>عمر شريف</b><br><span class="muted" style="font-size:11px">+20 155 111 2222</span></td><td><span class="pill">Landing</span></td><td><span class="badge b-new">جديد</span></td><td><span class="mini">ك</span> كريم</td><td class="muted">منذ 2س</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card">
+          <div class="card-h">
+            <h3>ليدربورد الفريق — اليوم</h3>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div class="row" style="padding:10px;border-radius:10px;background:var(--brand-softer)">
+              <span style="font-size:18px">🥇</span>
+              <div class="avatar">ن</div>
+              <div class="grow"><b style="font-size:13px">نورا سيد</b><div class="muted" style="font-size:11px">TL · Cairo</div></div>
+              <b style="color:var(--brand)">47 أكتف</b>
+            </div>
+            <div class="row" style="padding:10px">
+              <span style="font-size:18px">🥈</span>
+              <div class="avatar" style="background:linear-gradient(135deg,#60a5fa,#1d4ed8)">م</div>
+              <div class="grow"><b style="font-size:13px">منى علي</b><div class="muted" style="font-size:11px">Agent</div></div>
+              <b>39</b>
+            </div>
+            <div class="row" style="padding:10px">
+              <span style="font-size:18px">🥉</span>
+              <div class="avatar" style="background:linear-gradient(135deg,#f59e0b,#b45309)">ك</div>
+              <div class="grow"><b style="font-size:13px">كريم حسام</b><div class="muted" style="font-size:11px">Agent</div></div>
+              <b>33</b>
+            </div>
+            <div class="row" style="padding:10px">
+              <span class="muted" style="font-size:12px">#4</span>
+              <div class="avatar" style="background:linear-gradient(135deg,#a78bfa,#6d28d9)">س</div>
+              <div class="grow"><b style="font-size:13px">سيف محمود</b><div class="muted" style="font-size:11px">Agent</div></div>
+              <b>28</b>
+            </div>
+            <div class="row" style="padding:10px">
+              <span class="muted" style="font-size:12px">#5</span>
+              <div class="avatar" style="background:linear-gradient(135deg,#f87171,#b91c1c)">ر</div>
+              <div class="grow"><b style="font-size:13px">ريم سامي</b><div class="muted" style="font-size:11px">Agent</div></div>
+              <b>21</b>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-h">
+          <h3>مهام اليوم</h3>
+          <span class="pill">12 مهمة</span>
+        </div>
+        <table class="table">
+          <thead><tr><th>المهمة</th><th>الليد</th><th>النوع</th><th>الموعد</th><th>الحالة</th><th></th></tr></thead>
+          <tbody>
+            <tr><td><b>اتصال متابعة بعد العرض</b></td><td>أحمد فاروق</td><td><span class="pill">📞 مكالمة</span></td><td>اليوم · 11:00</td><td><span class="badge b-hot">متأخر 15د</span></td><td><button class="btn btn-sm">ابدأ الآن</button></td></tr>
+            <tr><td><b>إرسال عرض محدث عبر WhatsApp</b></td><td>سارة عبد الله</td><td><span class="pill">💬 واتساب</span></td><td>اليوم · 13:30</td><td><span class="badge b-wait">قادم</span></td><td><button class="btn btn-sm">افتح</button></td></tr>
+            <tr><td><b>اجتماع Zoom لمراجعة العقد</b></td><td>محمد عاطف</td><td><span class="pill">🎥 اجتماع</span></td><td>اليوم · 16:00</td><td><span class="badge b-wait">قادم</span></td><td><button class="btn btn-sm">افتح</button></td></tr>
+            <tr><td><b>إيميل تأكيد حجز الكورس</b></td><td>ليلى حسن</td><td><span class="pill">✉️ إيميل</span></td><td>غدًا · 09:00</td><td><span class="badge b-ok">مجدولة</span></td><td><button class="btn btn-sm">افتح</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leads · Command · Trade Way CRM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="side-brand"><img src="../shared/logo.svg" alt=""><div><b>Trade Way</b><small>Command · v2</small></div></div>
+    <div class="side-sec">العمليات</div>
+    <ul class="side-nav">
+      <li><a href="dashboard.html">📊 Dashboard</a></li>
+      <li><a href="leads.html" class="active">👥 Leads <span class="count">1247</span></a></li>
+      <li><a href="funnel.html">🎯 Funnel</a></li>
+      <li><a href="contact.html">📇 Contacts</a></li>
+    </ul>
+    <div class="side-sec">الإدارة</div>
+    <ul class="side-nav">
+      <li><a href="approvals.html">✅ Approvals <span class="count">7</span></a></li>
+      <li><a href="bulk.html">⬆ Bulk Import</a></li>
+      <li><a href="sync.html">🔄 Sheet Sync</a></li>
+    </ul>
+    <div class="side-bottom">
+      <div class="avatar">ن</div>
+      <div style="flex:1"><b>نورا سيد</b><span>TL · Cairo</span></div>
+      <span class="sts"></span>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="cmd">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input placeholder="ابحث في 1,247 ليد…">
+        <span class="kbd">⌘ K</span>
+      </div>
+      <div class="top-actions">
+        <button class="btn">+ Lead <span class="kbd">N</span></button>
+        <button class="ibtn">🔔<span class="n">9</span></button>
+      </div>
+    </div>
+
+    <div class="subbar">
+      <div class="tab active">All <span class="c">1247</span></div>
+      <div class="tab">Mine <span class="c">184</span></div>
+      <div class="tab">Hot 🔥 <span class="c">22</span></div>
+      <div class="tab">Unassigned <span class="c">48</span></div>
+      <div class="tab">SLA at risk <span class="c">14</span></div>
+      <div class="tab">+ New View</div>
+      <div style="margin-right:auto;display:flex;gap:6px">
+        <button class="btn btn-sm">🔽 Group by</button>
+        <button class="btn btn-sm">⚙ Columns</button>
+        <button class="btn btn-sm">💾 Save view</button>
+      </div>
+    </div>
+
+    <div class="page">
+      <div class="panel" style="padding:0;overflow:hidden">
+        <div class="filters">
+          <span class="chip">Source: Facebook, Google <span class="x">✕</span></span>
+          <span class="chip">Status: New, Contacted <span class="x">✕</span></span>
+          <span class="chip">Agent: Mine <span class="x">✕</span></span>
+          <span class="chip">Value ≥ $1,000 <span class="x">✕</span></span>
+          <select><option>Last 30d</option><option>Today</option></select>
+          <button class="btn btn-xs">+ Filter</button>
+          <div style="margin-right:auto;display:flex;gap:6px;align-items:center;font-size:11px;color:var(--ink-mute)">
+            <span>Selected: <b>3</b></span>
+            <button class="btn btn-xs">📧 Email</button>
+            <button class="btn btn-xs">👤 Reassign</button>
+            <button class="btn btn-xs">🏷 Tag</button>
+            <button class="btn btn-xs">📤 Export</button>
+            <button class="btn btn-xs" style="color:var(--err)">🗑 Delete</button>
+          </div>
+        </div>
+        <table class="tbl">
+          <thead>
+            <tr>
+              <th style="width:32px"><input type="checkbox"></th>
+              <th style="width:180px">Name</th>
+              <th>Contact</th>
+              <th>Source</th>
+              <th>Stage</th>
+              <th>Agent</th>
+              <th>Value</th>
+              <th>Score</th>
+              <th>Last Act</th>
+              <th>Next Task</th>
+              <th>Age</th>
+              <th>SLA</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="sel"><td><input type="checkbox" checked></td><td><a href="contact.html"><b>أحمد فاروق</b></a><div style="font-size:10px;color:var(--ink-mute)">Full Stack</div></td><td>📱 +20 100 234 5678</td><td>Facebook</td><td><span class="st st-new">NEW</span></td><td><span class="mini">م</span></td><td>$1,200</td><td><b style="color:var(--brand)">87</b></td><td>Call · 3m</td><td>Call 15:00</td><td>2h</td><td><span class="dot-s r"></span></td><td>⋯</td></tr>
+            <tr class="sel"><td><input type="checkbox" checked></td><td><a href="contact.html"><b>سارة عبد الله</b></a><div style="font-size:10px;color:var(--ink-mute)">Data Analytics</div></td><td>📱 +20 122 555 4433</td><td>Google</td><td><span class="st st-ct">CONT</span></td><td><span class="mini">ك</span></td><td>$2,400</td><td>74</td><td>Email · 12m</td><td>WhatsApp 13:30</td><td>4h</td><td><span class="dot-s r"></span></td><td>⋯</td></tr>
+            <tr class="sel"><td><input type="checkbox" checked></td><td><a href="contact.html"><b>محمد عاطف</b></a><div style="font-size:10px;color:var(--ink-mute)">Cyber Security</div></td><td>📱 +20 122 987 6543</td><td>Referral</td><td><span class="st st-m">MEET</span></td><td><span class="mini">ن</span></td><td>$3,800</td><td><b style="color:var(--brand)">92</b></td><td>Call · 28m</td><td>Meet tomorrow</td><td>1d</td><td><span class="dot-s g"></span></td><td>⋯</td></tr>
+            <tr><td><input type="checkbox"></td><td><a href="contact.html"><b>ليلى حسن</b></a><div style="font-size:10px;color:var(--ink-mute)">Digital Mktg</div></td><td>📱 +20 155 112 2334</td><td>TikTok</td><td><span class="st st-w">WON</span></td><td><span class="mini">م</span></td><td>$980</td><td>81</td><td>Won · 1h</td><td>—</td><td>3d</td><td><span class="dot-s g"></span></td><td>⋯</td></tr>
+            <tr><td><input type="checkbox"></td><td><a href="contact.html"><b>عمر شريف</b></a><div style="font-size:10px;color:var(--ink-mute)">UI/UX</div></td><td>📱 +20 155 111 2222</td><td>Landing</td><td><span class="st st-new">NEW</span></td><td><span class="mini">ك</span></td><td>$1,100</td><td>62</td><td>Assigned · 2h</td><td>Call in 1h</td><td>2h</td><td><span class="dot-s y"></span></td><td>⋯</td></tr>
+            <tr><td><input type="checkbox"></td><td><a href="contact.html"><b>ندى إبراهيم</b></a><div style="font-size:10px;color:var(--ink-mute)">PMP Prep</div></td><td>📱 +20 128 776 5544</td><td>Facebook</td><td><span class="st st-ct">CONT</span></td><td><span class="mini">ن</span></td><td>$1,650</td><td>69</td><td>WhatsApp · 3h</td><td>Call tomorrow</td><td>5h</td><td><span class="dot-s g"></span></td><td>⋯</td></tr>
+            <tr><td><input type="checkbox"></td><td><a href="contact.html"><b>يوسف حجاج</b></a><div style="font-size:10px;color:var(--ink-mute)">Data Science</div></td><td>📱 +20 111 222 3344</td><td>LinkedIn</td><td><span class="st st-q">QUAL</span></td><td><span class="mini">م</span></td><td>$2,900</td><td><b style="color:var(--brand)">88</b></td><td>Call · 4h</td><td>Meet Thu</td><td>2d</td><td><span class="dot-s g"></span></td><td>⋯</td></tr>
+            <tr><td><input type="checkbox"></td><td><a href="contact.html"><b>مريم علاء</b></a><div style="font-size:10px;color:var(--ink-mute)">Accounting</div></td><td>📱 +20 155 334 5566</td><td>Referral</td><td><span class="st st-l">LOST</span></td><td><span class="mini">ك</span></td><td>—</td><td>32</td><td>Lost · 1d</td><td>—</td><td>5d</td><td><span class="dot-s g"></span></td><td>⋯</td></tr>
+            <tr><td><input type="checkbox"></td><td><a href="contact.html"><b>حسن أشرف</b></a><div style="font-size:10px;color:var(--ink-mute)">Graphic Design</div></td><td>📱 +20 155 999 8888</td><td>Facebook</td><td><span class="st st-new">NEW</span></td><td><span class="mini">ن</span></td><td>$890</td><td>58</td><td>Assigned · 1d</td><td>—</td><td>1d</td><td><span class="dot-s y"></span> 45m</td><td>⋯</td></tr>
+            <tr><td><input type="checkbox"></td><td><a href="contact.html"><b>دينا مصطفى</b></a><div style="font-size:10px;color:var(--ink-mute)">Web Dev Full</div></td><td>📱 +20 122 445 6677</td><td>Google</td><td><span class="st st-wait">WAIT</span> approval</td><td><span class="mini">م</span></td><td>$1,850</td><td>76</td><td>Won · 2h</td><td>—</td><td>8h</td><td><span class="dot-s g"></span></td><td>⋯</td></tr>
+            <tr><td><input type="checkbox"></td><td><a href="contact.html"><b>طارق سالم</b></a><div style="font-size:10px;color:var(--ink-mute)">Cloud AWS</div></td><td>📱 +20 155 667 7889</td><td>LinkedIn</td><td><span class="st st-ct">CONT</span></td><td><span class="mini">م</span></td><td>$1,900</td><td>71</td><td>Email · 2d</td><td>Follow-up Fri</td><td>4d</td><td><span class="dot-s g"></span></td><td>⋯</td></tr>
+            <tr><td><input type="checkbox"></td><td><a href="contact.html"><b>رنا مجدي</b></a><div style="font-size:10px;color:var(--ink-mute)">Data Science</div></td><td>📱 +20 100 778 8990</td><td>LinkedIn</td><td><span class="st st-new">NEW</span></td><td><span class="mini">م</span></td><td>$2,400</td><td>65</td><td>Assigned · 1d</td><td>Call today</td><td>1d</td><td><span class="dot-s g"></span></td><td>⋯</td></tr>
+            <tr><td><input type="checkbox"></td><td><a href="contact.html"><b>أمل حامد</b></a><div style="font-size:10px;color:var(--ink-mute)">Full Stack</div></td><td>📱 +20 122 123 4567</td><td>Facebook</td><td><span class="st st-m">MEET</span></td><td><span class="mini">ك</span></td><td>$1,200</td><td>79</td><td>Meet · 3h ago</td><td>Close mtg</td><td>3d</td><td><span class="dot-s g"></span></td><td>⋯</td></tr>
+            <tr><td><input type="checkbox"></td><td><a href="contact.html"><b>مي فاروق</b></a><div style="font-size:10px;color:var(--ink-mute)">Digital Mktg</div></td><td>📱 +20 155 112 3344</td><td>Google</td><td><span class="st st-q">QUAL</span></td><td><span class="mini">ن</span></td><td>$1,400</td><td>72</td><td>Call · 5h</td><td>Send quote</td><td>2d</td><td><span class="dot-s g"></span></td><td>⋯</td></tr>
+          </tbody>
+        </table>
+        <div style="padding:10px 14px;border-top:1px solid var(--line);display:flex;align-items:center;gap:10px;font-size:11px">
+          <span style="color:var(--ink-mute)">Showing 1–14 of 1,247 · 3 selected</span>
+          <div style="margin-right:auto;display:flex;gap:4px;align-items:center">
+            <button class="btn btn-xs">← <span class="kbd">H</span></button>
+            <span class="btn btn-xs" style="background:var(--brand);color:white;border-color:var(--brand)">1</span>
+            <span class="btn btn-xs">2</span>
+            <span class="btn btn-xs">3</span>
+            <span style="color:var(--ink-mute)">…</span>
+            <span class="btn btn-xs">89</span>
+            <button class="btn btn-xs"><span class="kbd">L</span> →</button>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:10px;font-size:10px;color:var(--ink-mute);padding:0 4px;align-items:center">
+        <span>Shortcuts:</span>
+        <span class="kbd">J</span><span class="kbd">K</span> row ·
+        <span class="kbd">X</span> select ·
+        <span class="kbd">E</span> edit ·
+        <span class="kbd">Enter</span> open ·
+        <span class="kbd">A</span> assign ·
+        <span class="kbd">S</span> stage ·
+        <span class="kbd">?</span> all
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact · Command · Trade Way CRM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="side-brand"><img src="../shared/logo.svg" alt=""><div><b>Trade Way</b><small>Command · v2</small></div></div>
+    <div class="side-sec">العمليات</div>
+    <ul class="side-nav">
+      <li><a href="dashboard.html">📊 Dashboard</a></li>
+      <li><a href="leads.html">👥 Leads <span class="count">1247</span></a></li>
+      <li><a href="funnel.html">🎯 Funnel</a></li>
+      <li><a href="contact.html" class="active">📇 Contacts</a></li>
+    </ul>
+    <div class="side-sec">الإدارة</div>
+    <ul class="side-nav">
+      <li><a href="approvals.html">✅ Approvals <span class="count">7</span></a></li>
+      <li><a href="bulk.html">⬆ Bulk Import</a></li>
+      <li><a href="sync.html">🔄 Sheet Sync</a></li>
+    </ul>
+    <div class="side-bottom"><div class="avatar">ن</div><div style="flex:1"><b>نورا سيد</b><span>TL · Cairo</span></div><span class="sts"></span></div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="cmd"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input placeholder="Command palette…"><span class="kbd">⌘ K</span></div>
+      <div class="top-actions"><button class="btn">+ Lead</button><button class="ibtn">🔔<span class="n">9</span></button></div>
+    </div>
+
+    <div class="subbar">
+      <div class="tab">Overview</div>
+      <div class="tab active">Contact Profile</div>
+      <div class="tab">Enrollments <span class="c">2</span></div>
+      <div class="tab">Activity <span class="c">24</span></div>
+      <div class="tab">Files <span class="c">3</span></div>
+      <div class="tab">Quotes</div>
+      <div style="margin-right:auto;display:flex;gap:6px">
+        <button class="btn btn-sm">← <span class="kbd">K</span></button>
+        <button class="btn btn-sm">Next <span class="kbd">J</span></button>
+      </div>
+    </div>
+
+    <div class="page">
+      <div class="bread"><a href="leads.html">Leads</a> › <a href="leads.html">All</a> › <span>أحمد فاروق محمد</span></div>
+
+      <div class="split" style="grid-template-columns:1fr">
+        <div class="detail">
+          <div class="d-head">
+            <div class="avatar">أ</div>
+            <div style="flex:1">
+              <div class="name">أحمد فاروق محمد <span class="st st-q">QUALIFIED</span> <span class="st st-new" style="background:rgba(239,68,68,.14);color:#b91c1c">🔥 HOT</span></div>
+              <div class="meta">
+                <span>📱 +20 100 234 5678</span>
+                <span>✉ ahmed.f@gmail.com</span>
+                <span>📍 القاهرة · المعادي</span>
+                <span>🎓 هندسة كمبيوتر</span>
+                <span>🏢 فري لانسر</span>
+              </div>
+            </div>
+            <div style="text-align:center">
+              <div style="font-size:10px;color:var(--ink-mute);font-weight:700;letter-spacing:.5px">LEAD SCORE</div>
+              <div style="font-size:32px;font-weight:800;color:var(--brand);line-height:1">87</div>
+              <div style="font-size:10px;color:var(--ink-mute)">/ 100</div>
+            </div>
+          </div>
+
+          <div class="d-actions">
+            <button class="btn btn-sm btn-brand">📞 Call Now</button>
+            <button class="btn btn-sm">💬 WhatsApp</button>
+            <button class="btn btn-sm">✉ Email</button>
+            <button class="btn btn-sm">🎥 Schedule meet</button>
+            <button class="btn btn-sm">📝 Note <span class="kbd">⌘ ⇧ N</span></button>
+            <div style="margin-right:auto;display:flex;gap:6px">
+              <select class="btn btn-sm"><option>Stage: Qualified</option><option>New</option><option>Contacted</option><option>Meeting</option><option>Won</option><option>Lost</option></select>
+              <select class="btn btn-sm"><option>Owner: منى</option><option>نورا</option><option>كريم</option></select>
+              <button class="btn btn-sm">🏷 Tag</button>
+              <button class="btn btn-sm btn-dark">Convert → Deal</button>
+            </div>
+          </div>
+
+          <div class="d-tabs">
+            <div class="t active">Activity</div>
+            <div class="t">Enrollments (2)</div>
+            <div class="t">Tasks (3)</div>
+            <div class="t">Files (3)</div>
+            <div class="t">Emails</div>
+            <div class="t">Notes</div>
+            <div class="t">Audit</div>
+          </div>
+
+          <div class="d-body" style="display:grid;grid-template-columns:1.4fr 1fr;gap:16px">
+            <div>
+              <div class="panel" style="margin-bottom:12px">
+                <div class="panel-h"><h3>Log Activity</h3></div>
+                <div class="panel-b">
+                  <div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap">
+                    <button class="btn btn-xs" style="background:var(--brand);color:white;border-color:var(--brand)">📞 Call</button>
+                    <button class="btn btn-xs">💬 WhatsApp</button>
+                    <button class="btn btn-xs">✉ Email</button>
+                    <button class="btn btn-xs">🎥 Meeting</button>
+                    <button class="btn btn-xs">📝 Note</button>
+                  </div>
+                  <textarea class="fld" placeholder="Log call outcome… e.g. 'interested in installments, needs follow-up Sunday morning'" style="width:100%;padding:8px;border:1px solid var(--line);border-radius:6px;font-family:inherit;font-size:12px;min-height:70px"></textarea>
+                  <div style="display:flex;gap:6px;margin-top:8px;align-items:center">
+                    <select class="btn btn-xs"><option>Duration: 8m 20s</option></select>
+                    <select class="btn btn-xs"><option>Outcome: Interested</option><option>Not interested</option><option>No answer</option></select>
+                    <button class="btn btn-xs btn-brand" style="margin-right:auto">Save <span class="kbd" style="color:white;background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.3)">⌘ S</span></button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="panel">
+                <div class="panel-h"><h3>Activity Timeline</h3><span class="hint">24 events</span></div>
+                <div class="panel-b">
+                  <ul class="tl">
+                    <li><div class="w">TODAY · 10:42</div><div class="t">📞 <b>Call outbound</b> 8m 20s — "interested, asking installments"</div><div style="font-size:11px;color:var(--ink-mute)">by نورا سيد</div></li>
+                    <li><div class="w">TODAY · 09:15</div><div class="t">✉ Email sent — "Trade Way Bootcamps 2026 catalog.pdf"</div><div style="font-size:11px;color:var(--ink-mute)">by نورا سيد · opened ✓</div></li>
+                    <li><div class="w">YESTERDAY · 17:30</div><div class="t">💬 WhatsApp conversation — 12 messages</div><div style="font-size:11px;color:var(--ink-mute)">by منى علي</div></li>
+                    <li><div class="w">YESTERDAY · 14:10</div><div class="t">🏷 Tag added: "Hot lead"</div><div style="font-size:11px;color:var(--ink-mute)">by system (score &gt; 80)</div></li>
+                    <li><div class="w">YESTERDAY · 11:02</div><div class="t">⬆ Lead imported from Facebook Lead Ads</div><div style="font-size:11px;color:var(--ink-mute)">campaign: Fall-Bootcamps-2026</div></li>
+                    <li><div class="w">YESTERDAY · 11:02</div><div class="t">👤 Assigned to: منى علي (round-robin)</div></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="panel" style="margin-top:12px">
+                <div class="panel-h"><h3>Enrollments</h3><div class="right"><button class="btn btn-xs">+ New</button></div></div>
+                <div class="panel-b nopad">
+                  <table class="tbl">
+                    <thead><tr><th>Course</th><th>Track</th><th>Cohort</th><th>Price</th><th>Paid</th><th>Status</th></tr></thead>
+                    <tbody>
+                      <tr><td><b>Full Stack Web Dev</b></td><td>Bootcamp 6m</td><td>#18 · Oct 2026</td><td>$1,200</td><td>$400 (33%)</td><td><span class="st st-q">ACTIVE</span></td></tr>
+                      <tr><td><b>TOEFL Prep</b></td><td>Short 8w</td><td>Evening</td><td>$300</td><td>$300 (100%)</td><td><span class="st st-w">DONE</span></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div class="panel" style="margin-bottom:12px">
+                <div class="panel-h"><h3>Key Details</h3><div class="right"><button class="btn btn-xs">Edit</button></div></div>
+                <div class="panel-b">
+                  <div class="info-grid">
+                    <div class="l">Source</div><div class="v">Facebook Lead Ads</div>
+                    <div class="l">Campaign</div><div class="v">Fall-Bootcamps-2026</div>
+                    <div class="l">Ad</div><div class="v">FB-BM-012-Full-Stack</div>
+                    <div class="l">UTM</div><div class="v" style="font-family:monospace;font-size:11px">src=fb · med=paid · cmp=fall</div>
+                    <div class="l">First seen</div><div class="v">18/04/2026 11:02</div>
+                    <div class="l">Owner</div><div class="v"><span class="mini">م</span> منى علي</div>
+                    <div class="l">Team</div><div class="v">Cairo A1</div>
+                    <div class="l">Est. value</div><div class="v">$1,200</div>
+                    <div class="l">Expected close</div><div class="v">15/05/2026</div>
+                    <div class="l">Probability</div><div class="v">70%</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="panel" style="margin-bottom:12px">
+                <div class="panel-h"><h3>Next Tasks (3)</h3><div class="right"><button class="btn btn-xs">+ Task</button></div></div>
+                <div class="panel-b" style="font-size:12px">
+                  <label style="display:flex;gap:8px;padding:6px 0;border-bottom:1px solid var(--line-soft)"><input type="checkbox"><div><b>📞 Follow-up call</b><div style="font-size:11px;color:var(--ink-mute)">Today · 15:00 · <span class="dot-s r"></span> overdue soon</div></div></label>
+                  <label style="display:flex;gap:8px;padding:6px 0;border-bottom:1px solid var(--line-soft)"><input type="checkbox"><div><b>✉ Send contract draft</b><div style="font-size:11px;color:var(--ink-mute)">Tomorrow · 10:00</div></div></label>
+                  <label style="display:flex;gap:8px;padding:6px 0"><input type="checkbox" checked><div><s>✉ Catalog sent</s><div style="font-size:11px;color:var(--ink-mute)">Today 09:15 ✓</div></div></label>
+                </div>
+              </div>
+
+              <div class="panel" style="margin-bottom:12px">
+                <div class="panel-h"><h3>Files (3)</h3><div class="right"><button class="btn btn-xs">+ Upload</button></div></div>
+                <div class="panel-b" style="display:grid;gap:6px;font-size:11px">
+                  <div style="display:flex;gap:8px;align-items:center;padding:6px;border:1px solid var(--line);border-radius:6px"><span>📄</span><div style="flex:1"><b>CV-AhmedFarouk.pdf</b><div style="color:var(--ink-mute)">340 KB · yesterday</div></div>⬇</div>
+                  <div style="display:flex;gap:8px;align-items:center;padding:6px;border:1px solid var(--line);border-radius:6px"><span>📄</span><div style="flex:1"><b>Contract-Draft-v2.pdf</b><div style="color:var(--ink-mute)">120 KB · today</div></div>⬇</div>
+                  <div style="display:flex;gap:8px;align-items:center;padding:6px;border:1px solid var(--line);border-radius:6px"><span>🖼</span><div style="flex:1"><b>IDCard.jpg</b><div style="color:var(--ink-mute)">1.2 MB · today</div></div>⬇</div>
+                </div>
+              </div>
+
+              <div class="panel">
+                <div class="panel-h"><h3>Similar Leads (3)</h3></div>
+                <div class="panel-b" style="font-size:11px;display:grid;gap:6px">
+                  <div style="display:flex;gap:8px;padding:6px;border:1px solid var(--line);border-radius:6px"><span class="mini">ع</span><div style="flex:1"><b>عمر شريف</b><div style="color:var(--ink-mute)">Same campaign · UI/UX</div></div></div>
+                  <div style="display:flex;gap:8px;padding:6px;border:1px solid var(--line);border-radius:6px"><span class="mini">ح</span><div style="flex:1"><b>حسن أشرف</b><div style="color:var(--ink-mute)">Same source · Graphic</div></div></div>
+                  <div style="display:flex;gap:8px;padding:6px;border:1px solid var(--line);border-radius:6px"><span class="mini">ر</span><div style="flex:1"><b>رنا مجدي</b><div style="color:var(--ink-mute)">Similar profile</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

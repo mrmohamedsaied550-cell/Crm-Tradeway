@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>رفع Bulk · Clarity · Trade Way CRM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="side-brand"><img src="../shared/logo.svg"><div><b>Trade Way</b><small>Clarity · v1</small></div></div>
+    <ul class="nav">
+      <li><a href="dashboard.html">📊 الداشبورد</a></li>
+      <li><a href="leads.html">👥 الليدز</a></li>
+      <li><a href="funnel.html">🎯 الفانل</a></li>
+      <li><a href="contact.html">📇 Contact</a></li>
+    </ul>
+    <div class="nav-section">الإدارة</div>
+    <ul class="nav">
+      <li><a href="approvals.html">✅ الموافقات <span class="pill" style="background:var(--err-soft);color:var(--err)">7</span></a></li>
+      <li><a href="bulk.html" class="active">⬆️ رفع Bulk</a></li>
+      <li><a href="sync.html">🔄 Google Sheet</a></li>
+    </ul>
+    <div class="side-bottom">
+      <a href="index.html" class="me"><div class="avatar">ن</div><div class="me-info"><b>نورا سيد</b><span>Team Leader</span></div></a>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input placeholder="بحث…"></div>
+    </div>
+
+    <div class="page">
+      <div class="page-head">
+        <div>
+          <div class="crumb">CRM · Bulk Import</div>
+          <h1>رفع Bulk للليدز</h1>
+          <p>ارفع ملف CSV أو Excel — النظام هيتحقق من البيانات ويوزعها تلقائيًا حسب قواعدك.</p>
+        </div>
+        <div class="row">
+          <a href="#" class="btn">📥 تحميل قالب CSV</a>
+          <a href="#" class="btn">📖 دليل الأعمدة</a>
+        </div>
+      </div>
+
+      <div class="steps">
+        <div class="step done"><span class="n">✓</span> 1. رفع الملف</div>
+        <div class="step active"><span class="n">2</span> مطابقة الأعمدة</div>
+        <div class="step"><span class="n">3</span> مراجعة &amp; تنظيف</div>
+        <div class="step"><span class="n">4</span> توزيع &amp; استيراد</div>
+      </div>
+
+      <div class="card" style="margin-bottom:16px">
+        <div class="row" style="margin-bottom:14px">
+          <h3 style="font-size:16px;font-weight:800">📄 leads-april-import.csv</h3>
+          <span class="right pill">418 صف · 9 أعمدة · 124 KB</span>
+        </div>
+        <div class="alert alert-ok"><span>✓</span><div>تم رفع الملف بنجاح. اقرأ 418 صف صحيح، 0 أخطاء في التنسيق.</div></div>
+
+        <h3 style="margin:18px 0 10px;font-size:15px;font-weight:800">مطابقة الأعمدة</h3>
+        <p class="muted" style="font-size:13px;margin-bottom:14px">قارن كل عمود في ملفك بالحقل المطابق في CRM. اللي بينتهي بـ <span class="pill b-new">مكتشف تلقائيًا</span> النظام لقاه لوحده.</p>
+
+        <table class="table">
+          <thead><tr><th>العمود في ملفك</th><th>نموذج القيمة</th><th>→</th><th>الحقل في CRM</th><th>ملاحظات</th></tr></thead>
+          <tbody>
+            <tr><td><b>full_name</b></td><td class="muted">أحمد فاروق محمد</td><td>→</td><td><select class="field" style="padding:6px 10px"><option selected>الاسم الكامل ✓</option></select></td><td><span class="pill b-new">مكتشف تلقائيًا</span></td></tr>
+            <tr><td><b>phone</b></td><td class="muted">+20 100 234 5678</td><td>→</td><td><select class="field" style="padding:6px 10px"><option selected>الموبايل ✓</option></select></td><td><span class="pill b-new">مكتشف تلقائيًا</span></td></tr>
+            <tr><td><b>email</b></td><td class="muted">ahmed.f@gmail.com</td><td>→</td><td><select class="field" style="padding:6px 10px"><option selected>البريد ✓</option></select></td><td><span class="pill b-new">مكتشف تلقائيًا</span></td></tr>
+            <tr><td><b>campaign</b></td><td class="muted">Fall-Bootcamps-2026</td><td>→</td><td><select class="field" style="padding:6px 10px"><option selected>الحملة ✓</option></select></td><td><span class="pill b-new">مكتشف تلقائيًا</span></td></tr>
+            <tr><td><b>course_interest</b></td><td class="muted">Full Stack</td><td>→</td><td><select class="field" style="padding:6px 10px"><option>-- اختر --</option><option>الكورس المطلوب</option><option selected>الكورس (ينشئ الاهتمام)</option></select></td><td><span class="pill" style="background:var(--warn-soft);color:#92400e">محتاج مراجعة</span></td></tr>
+            <tr><td><b>budget</b></td><td class="muted">1200</td><td>→</td><td><select class="field" style="padding:6px 10px"><option selected>القيمة المتوقعة ($)</option></select></td><td><span class="pill b-new">مكتشف تلقائيًا</span></td></tr>
+            <tr><td><b>city</b></td><td class="muted">Cairo</td><td>→</td><td><select class="field" style="padding:6px 10px"><option selected>المدينة</option></select></td><td><span class="pill b-ok">OK</span></td></tr>
+            <tr><td><b>notes</b></td><td class="muted">"يفضل تقسيط"</td><td>→</td><td><select class="field" style="padding:6px 10px"><option selected>ملاحظات</option></select></td><td><span class="pill b-ok">OK</span></td></tr>
+            <tr><td><b>ref_code</b></td><td class="muted">REF-0412</td><td>→</td><td><select class="field" style="padding:6px 10px"><option>-- تجاهل --</option><option selected>كود الإحالة</option></select></td><td><span class="pill">اختياري</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <h3 style="font-size:16px;margin-bottom:12px">قواعد التوزيع &amp; التكرار</h3>
+        <div class="two-col">
+          <div class="field">
+            <label>عند التكرار (بالموبايل)</label>
+            <select><option>ارفض الصف المكرر (مقترح)</option><option>استبدل البيانات القديمة</option><option>أنشئ ليد جديد بعلم تكرار</option></select>
+          </div>
+          <div class="field">
+            <label>قاعدة التوزيع</label>
+            <select><option>Round-Robin بين الفريق النشط (مقترح)</option><option>توزيع كله لمندوب محدد</option><option>حسب المدينة</option><option>حسب المصدر</option></select>
+          </div>
+          <div class="field">
+            <label>المندوبين المؤهلين</label>
+            <select><option>كل الفريق (5 مندوبين)</option><option>فريق نورا (3)</option></select>
+          </div>
+          <div class="field">
+            <label>مصدر الاستيراد (Tag)</label>
+            <input type="text" value="CSV · April-2026 · Manual Upload">
+          </div>
+        </div>
+        <div class="alert alert-info" style="margin-top:6px"><span>ℹ️</span><div>هيبدأ المعاينة على أول 50 صف قبل ما تستورد كله — عشان تتأكد إن المطابقة صح.</div></div>
+        <div class="row" style="margin-top:14px">
+          <button class="btn">← رجوع</button>
+          <div class="right row">
+            <button class="btn">💾 حفظ كنموذج</button>
+            <button class="btn-brand btn">معاينة &amp; استيراد →</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:16px">
+        <h3 style="font-size:16px;margin-bottom:12px">📜 آخر عمليات الاستيراد</h3>
+        <table class="table">
+          <thead><tr><th>الملف</th><th>الحجم</th><th>الصفوف</th><th>نجح/فشل</th><th>المستخدم</th><th>التاريخ</th></tr></thead>
+          <tbody>
+            <tr><td>march-retargeting.csv</td><td>89 KB</td><td>312</td><td><span class="pill b-ok">312 ✓</span></td><td>نورا</td><td class="muted">19/04 · 11:22</td></tr>
+            <tr><td>facebook-lead-export.xlsx</td><td>1.2 MB</td><td>1,240</td><td><span class="pill" style="background:var(--warn-soft);color:#92400e">1,198 ✓ / 42 مكرر</span></td><td>أحمد (Admin)</td><td class="muted">12/04 · 14:08</td></tr>
+            <tr><td>walk-in-april.csv</td><td>22 KB</td><td>48</td><td><span class="pill b-ok">48 ✓</span></td><td>نورا</td><td class="muted">08/04 · 09:30</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

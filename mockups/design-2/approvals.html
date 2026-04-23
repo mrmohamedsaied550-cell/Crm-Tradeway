@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Approvals · Command · Trade Way CRM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="side-brand"><img src="../shared/logo.svg" alt=""><div><b>Trade Way</b><small>Command · v2</small></div></div>
+    <div class="side-sec">العمليات</div>
+    <ul class="side-nav">
+      <li><a href="dashboard.html">📊 Dashboard</a></li>
+      <li><a href="leads.html">👥 Leads <span class="count">1247</span></a></li>
+      <li><a href="funnel.html">🎯 Funnel</a></li>
+      <li><a href="contact.html">📇 Contacts</a></li>
+    </ul>
+    <div class="side-sec">الإدارة</div>
+    <ul class="side-nav">
+      <li><a href="approvals.html" class="active">✅ Approvals <span class="count">7</span></a></li>
+      <li><a href="bulk.html">⬆ Bulk Import</a></li>
+      <li><a href="sync.html">🔄 Sheet Sync</a></li>
+    </ul>
+    <div class="side-bottom"><div class="avatar">ن</div><div style="flex:1"><b>نورا سيد</b><span>TL · Cairo</span></div><span class="sts"></span></div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="cmd"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input placeholder="Search approvals…"><span class="kbd">⌘ K</span></div>
+      <div class="top-actions"><button class="btn">⚙ Rules</button><button class="ibtn">🔔<span class="n">9</span></button></div>
+    </div>
+
+    <div class="subbar">
+      <div class="tab active">Pending <span class="c">7</span></div>
+      <div class="tab">Approved today <span class="c">14</span></div>
+      <div class="tab">Rejected <span class="c">2</span></div>
+      <div class="tab">All</div>
+      <div class="tab">Delegated to me</div>
+      <div style="margin-right:auto;display:flex;gap:6px">
+        <button class="btn btn-sm btn-brand">✓ Approve selected (3)</button>
+        <button class="btn btn-sm" style="color:var(--err)">✕ Reject</button>
+      </div>
+    </div>
+
+    <div class="page">
+      <div class="split">
+        <div class="list">
+          <div class="list-head">
+            <select style="padding:4px 8px;border:1px solid var(--line);border-radius:6px;font-size:11px"><option>All types</option><option>Won deals</option><option>Discounts</option><option>Refunds</option><option>Reassign</option></select>
+            <select style="padding:4px 8px;border:1px solid var(--line);border-radius:6px;font-size:11px"><option>By age</option><option>Oldest first</option></select>
+          </div>
+          <div class="list-items">
+            <div class="item sel">
+              <div class="row1">
+                <span class="st st-w">WON</span>
+                <span style="font-size:10px;color:var(--err);font-weight:800">⚠ 22m</span>
+              </div>
+              <b style="display:block;margin-top:4px">ليلى حسن — $980</b>
+              <div class="row2"><span>Digital Marketing</span>·<span>by منى</span></div>
+            </div>
+            <div class="item">
+              <div class="row1">
+                <span class="st st-new" style="background:rgba(59,130,246,.12);color:#1e40af">DISCOUNT 15%</span>
+                <span style="font-size:10px;color:var(--err);font-weight:800">⚠ 1h 12m</span>
+              </div>
+              <b style="display:block;margin-top:4px">محمد عاطف — −$570</b>
+              <div class="row2"><span>Cyber Security</span>·<span>by نورا</span></div>
+            </div>
+            <div class="item">
+              <div class="row1">
+                <span class="st st-l">REFUND</span>
+                <span style="font-size:10px;color:var(--err);font-weight:800">⚠ 3h 20m</span>
+              </div>
+              <b style="display:block;margin-top:4px">أمل حامد — Full refund</b>
+              <div class="row2"><span>Full Stack</span>·<span>by كريم</span></div>
+            </div>
+            <div class="item">
+              <div class="row1">
+                <span class="st st-w">WON</span>
+                <span style="font-size:10px;color:var(--ink-mute)">4h</span>
+              </div>
+              <b style="display:block;margin-top:4px">دينا مصطفى — $1,850</b>
+              <div class="row2"><span>Web Dev</span>·<span>by منى</span></div>
+            </div>
+            <div class="item">
+              <div class="row1">
+                <span class="st st-wait">REASSIGN</span>
+                <span style="font-size:10px;color:var(--ink-mute)">5h</span>
+              </div>
+              <b style="display:block;margin-top:4px">سارة — كريم→منى</b>
+              <div class="row2"><span>Data Analytics</span>·<span>by كريم</span></div>
+            </div>
+            <div class="item">
+              <div class="row1">
+                <span class="st st-new" style="background:rgba(59,130,246,.12);color:#1e40af">DISCOUNT 10%</span>
+                <span style="font-size:10px;color:var(--ink-mute)">6h</span>
+              </div>
+              <b style="display:block;margin-top:4px">يوسف حجاج — −$290</b>
+              <div class="row2"><span>Data Science</span>·<span>by منى</span></div>
+            </div>
+            <div class="item">
+              <div class="row1">
+                <span class="st st-w">WON</span>
+                <span style="font-size:10px;color:var(--ink-mute)">8h</span>
+              </div>
+              <b style="display:block;margin-top:4px">كارم أشرف — $1,100</b>
+              <div class="row2"><span>UI/UX</span>·<span>by كريم</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="detail">
+          <div class="d-head" style="align-items:center">
+            <span class="st st-w" style="font-size:12px;padding:4px 10px">WON DEAL</span>
+            <div style="flex:1">
+              <div class="name">ليلى حسن — Digital Marketing Course</div>
+              <div class="meta"><span>Amount: <b style="color:var(--brand)">$980</b></span><span>Requested by: منى علي</span><span>22m ago</span></div>
+            </div>
+            <div style="text-align:center">
+              <div style="font-size:10px;color:var(--err);font-weight:800">SLA</div>
+              <div style="font-size:20px;font-weight:800;color:var(--err)">38m left</div>
+            </div>
+          </div>
+
+          <div class="d-actions">
+            <button class="btn btn-sm btn-brand">✓ Approve <span class="kbd" style="background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.3);color:white">A</span></button>
+            <button class="btn btn-sm" style="color:var(--err)">✕ Reject <span class="kbd">R</span></button>
+            <button class="btn btn-sm">💬 Request changes</button>
+            <button class="btn btn-sm">👤 Delegate</button>
+            <div style="margin-right:auto;display:flex;gap:6px">
+              <button class="btn btn-sm">← Prev <span class="kbd">K</span></button>
+              <button class="btn btn-sm">Next <span class="kbd">J</span> →</button>
+            </div>
+          </div>
+
+          <div class="d-body">
+            <div class="alert al-i" style="margin-bottom:14px">
+              <span>ℹ</span>
+              <div><b>Why approval needed:</b> Won deals ≥ $500 require TL approval per policy TW-POL-003.</div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+              <div>
+                <div class="panel">
+                  <div class="panel-h"><h3>Deal Details</h3></div>
+                  <div class="panel-b">
+                    <div class="info-grid">
+                      <div class="l">Lead</div><div class="v"><a href="contact.html" style="color:var(--brand-2)">ليلى حسن</a></div>
+                      <div class="l">Course</div><div class="v">Digital Marketing (Short · 10 weeks)</div>
+                      <div class="l">Cohort</div><div class="v">Evening · May 2026</div>
+                      <div class="l">Gross</div><div class="v">$980</div>
+                      <div class="l">Discount</div><div class="v">$0 (0%)</div>
+                      <div class="l">Net</div><div class="v" style="color:var(--brand)">$980</div>
+                      <div class="l">Payment</div><div class="v">Bank transfer</div>
+                      <div class="l">Installments</div><div class="v">1 × $980 (paid in full)</div>
+                      <div class="l">Source</div><div class="v">TikTok · campaign Spring-2026</div>
+                      <div class="l">Agent</div><div class="v"><span class="mini">م</span> منى علي</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="panel" style="margin-top:12px">
+                  <div class="panel-h"><h3>Attachments (2)</h3></div>
+                  <div class="panel-b" style="display:grid;gap:6px;font-size:12px">
+                    <div style="display:flex;gap:8px;padding:8px;border:1px solid var(--line);border-radius:6px"><span>📄</span><div style="flex:1"><b>Bank-Receipt-04-21.pdf</b><div style="font-size:10px;color:var(--ink-mute)">248 KB · verified ✓</div></div><button class="btn btn-xs">View</button></div>
+                    <div style="display:flex;gap:8px;padding:8px;border:1px solid var(--line);border-radius:6px"><span>📄</span><div style="flex:1"><b>Signed-Agreement.pdf</b><div style="font-size:10px;color:var(--ink-mute)">1.1 MB</div></div><button class="btn btn-xs">View</button></div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="panel">
+                  <div class="panel-h"><h3>Customer Context</h3></div>
+                  <div class="panel-b">
+                    <div class="info-grid">
+                      <div class="l">Lead age</div><div class="v">12 days</div>
+                      <div class="l">Touches</div><div class="v">14 (6 calls, 8 WhatsApp)</div>
+                      <div class="l">Lead score</div><div class="v" style="color:var(--brand)">81</div>
+                      <div class="l">Past enrollments</div><div class="v">0</div>
+                      <div class="l">First seen</div><div class="v">09/04/2026</div>
+                      <div class="l">Won on</div><div class="v">21/04/2026 · 10:40</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="panel" style="margin-top:12px">
+                  <div class="panel-h"><h3>Agent note</h3></div>
+                  <div class="panel-b">
+                    <div style="padding:10px;background:var(--bg);border-radius:6px;font-size:12px;line-height:1.7">
+                      "تم إغلاق الصفقة بعد 3 مكالمات + 8 رسائل واتس. العميلة مؤكدة الحضور في دفعة مايو المسائي. الدفعة كاملة في تحويل بنكي واحد."
+                      <div style="margin-top:8px;font-size:11px;color:var(--ink-mute)">— منى علي · 10:42</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="panel" style="margin-top:12px">
+                  <div class="panel-h"><h3>Approval checklist</h3></div>
+                  <div class="panel-b" style="font-size:12px;display:grid;gap:4px">
+                    <label style="display:flex;gap:6px"><input type="checkbox" checked> Payment evidence attached</label>
+                    <label style="display:flex;gap:6px"><input type="checkbox" checked> Signed agreement attached</label>
+                    <label style="display:flex;gap:6px"><input type="checkbox" checked> Cohort capacity available (2/20 left)</label>
+                    <label style="display:flex;gap:6px"><input type="checkbox"> Referral credit issued (N/A)</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel" style="margin-top:12px">
+              <div class="panel-h"><h3>Decision note (optional)</h3></div>
+              <div class="panel-b">
+                <textarea style="width:100%;padding:8px;border:1px solid var(--line);border-radius:6px;font-family:inherit;font-size:12px;min-height:60px" placeholder="Add a note visible to the agent…"></textarea>
+                <div style="display:flex;gap:6px;margin-top:8px">
+                  <button class="btn btn-sm btn-brand">✓ Approve &amp; notify <span class="kbd" style="background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.3);color:white">⌘ ⏎</span></button>
+                  <button class="btn btn-sm">Approve silently</button>
+                  <button class="btn btn-sm" style="color:var(--err);margin-right:auto">Reject</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

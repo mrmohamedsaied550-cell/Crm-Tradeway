@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard · Command · Trade Way CRM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="side-brand"><img src="../shared/logo.svg" alt=""><div><b>Trade Way</b><small>Command · v2</small></div></div>
+    <div class="side-sec">العمليات</div>
+    <ul class="side-nav">
+      <li><a href="dashboard.html" class="active">📊 Dashboard <span class="k">G D</span></a></li>
+      <li><a href="leads.html">👥 Leads <span class="count">1247</span></a></li>
+      <li><a href="funnel.html">🎯 Funnel <span class="k">G F</span></a></li>
+      <li><a href="contact.html">📇 Contacts</a></li>
+    </ul>
+    <div class="side-sec">الإدارة</div>
+    <ul class="side-nav">
+      <li><a href="approvals.html">✅ Approvals <span class="count">7</span></a></li>
+      <li><a href="bulk.html">⬆ Bulk Import</a></li>
+      <li><a href="sync.html">🔄 Sheet Sync</a></li>
+    </ul>
+    <div class="side-sec">التقارير</div>
+    <ul class="side-nav">
+      <li><a href="#">📈 Sales Reports</a></li>
+      <li><a href="#">👨‍👩‍👧 Team Perf</a></li>
+      <li><a href="#">🎯 Campaigns ROI</a></li>
+    </ul>
+    <div class="side-sec">النظام</div>
+    <ul class="side-nav">
+      <li><a href="#">⚙ Settings</a></li>
+      <li><a href="#">👤 Users &amp; Roles</a></li>
+      <li><a href="#">📜 Audit Log</a></li>
+    </ul>
+    <div class="side-bottom">
+      <div class="avatar">ن</div>
+      <div style="flex:1"><b>نورا سيد</b><span>TL · Cairo</span></div>
+      <span class="sts" title="Online"></span>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="cmd">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input placeholder="Command palette · ابحث عن أي شيء…">
+        <span class="kbd">⌘ K</span>
+      </div>
+      <div class="top-actions">
+        <span class="pill-live">LIVE · 37 active agents</span>
+        <button class="btn">+ Lead <span class="kbd">N</span></button>
+        <button class="ibtn" title="Notifications">🔔<span class="n">9</span></button>
+        <button class="ibtn" title="Queue">📋<span class="n">7</span></button>
+        <button class="ibtn" title="Help">?</button>
+      </div>
+    </div>
+
+    <div class="subbar">
+      <div class="tab active">Overview</div>
+      <div class="tab">Team <span class="c">5</span></div>
+      <div class="tab">Sources</div>
+      <div class="tab">Campaigns</div>
+      <div class="tab">SLA</div>
+      <div class="tab">Cohorts</div>
+      <div style="margin-right:auto;display:flex;gap:6px;align-items:center">
+        <select class="btn btn-sm"><option>Today</option><option>This week</option><option>This month</option><option>QTD</option></select>
+        <button class="btn btn-sm">📤 Export</button>
+      </div>
+    </div>
+
+    <div class="page">
+      <div>
+        <div class="bread"><a href="#">CRM</a> › <a href="#">Ops</a> › <span>Dashboard</span></div>
+        <h1 class="page-title">Operations Overview <span class="small-tag">LIVE</span></h1>
+      </div>
+
+      <div class="kpi-strip">
+        <div class="kpi"><div class="kpi-l">Open Leads</div><div class="kpi-v">1,247</div><div class="kpi-s up">▲ +142 today</div></div>
+        <div class="kpi"><div class="kpi-l">Activities / 1h</div><div class="kpi-v">84</div><div class="kpi-s up">▲ 12%</div></div>
+        <div class="kpi w"><div class="kpi-l">SLA Breaches</div><div class="kpi-v">6</div><div class="kpi-s dn">▲ 2 vs avg</div></div>
+        <div class="kpi"><div class="kpi-l">Win Rate (30d)</div><div class="kpi-v">24.6%</div><div class="kpi-s dn">▼ 2.1%</div></div>
+        <div class="kpi"><div class="kpi-l">Pipeline $</div><div class="kpi-v">$284K</div><div class="kpi-s up">▲ 12%</div></div>
+        <div class="kpi i"><div class="kpi-l">Pending Approvals</div><div class="kpi-v">7</div><div class="kpi-s">3 &gt; 4h</div></div>
+        <div class="kpi r"><div class="kpi-l">Overdue Tasks</div><div class="kpi-v">12</div><div class="kpi-s dn">▲ 4</div></div>
+        <div class="kpi"><div class="kpi-l">Conv · New→Won</div><div class="kpi-v">8.3%</div><div class="kpi-s up">▲ 0.4</div></div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1.6fr 1fr;gap:12px">
+        <div class="panel">
+          <div class="panel-h">
+            <h3>Activities (Last 30d)</h3>
+            <span class="hint">· محدّث تلقائي كل دقيقة</span>
+            <div class="right">
+              <button class="btn btn-xs">Calls</button>
+              <button class="btn btn-xs" style="background:var(--brand);color:white;border-color:var(--brand)">All</button>
+              <button class="btn btn-xs">Emails</button>
+              <button class="btn btn-xs">Meetings</button>
+            </div>
+          </div>
+          <div class="panel-b">
+            <div class="chart-fake"></div>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:10px;font-size:11px">
+              <div><div style="color:var(--ink-mute)">📞 Calls</div><b>642</b></div>
+              <div><div style="color:var(--ink-mute)">✉ Emails</div><b>1,208</b></div>
+              <div><div style="color:var(--ink-mute)">💬 WhatsApp</div><b>2,104</b></div>
+              <div><div style="color:var(--ink-mute)">🎥 Meetings</div><b>86</b></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-h">
+            <h3>Team Performance (Today)</h3>
+            <div class="right"><button class="btn btn-xs">See all</button></div>
+          </div>
+          <div class="panel-b nopad">
+            <table class="tbl">
+              <thead><tr><th>Agent</th><th>Actv</th><th>Won</th><th>Conv</th><th>SLA</th></tr></thead>
+              <tbody>
+                <tr><td><span class="mini">ن</span> نورا <span class="st st-q">TL</span></td><td><b>47</b></td><td>4</td><td>28%</td><td><span class="dot-s g"></span></td></tr>
+                <tr><td><span class="mini">م</span> منى</td><td><b>39</b></td><td>3</td><td>26%</td><td><span class="dot-s g"></span></td></tr>
+                <tr><td><span class="mini">ك</span> كريم</td><td><b>33</b></td><td>2</td><td>22%</td><td><span class="dot-s y"></span></td></tr>
+                <tr><td><span class="mini">س</span> سيف</td><td><b>28</b></td><td>2</td><td>24%</td><td><span class="dot-s g"></span></td></tr>
+                <tr><td><span class="mini">ر</span> ريم</td><td><b>21</b></td><td>1</td><td>19%</td><td><span class="dot-s r"></span> 3 breach</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
+        <div class="panel">
+          <div class="panel-h"><h3>Pipeline by Stage</h3><div class="right"><button class="btn btn-xs">Drill</button></div></div>
+          <div class="panel-b" style="display:grid;gap:8px">
+            <div><div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px"><b>New</b><span>48 · $92K</span></div><div class="progress"><span style="width:85%"></span></div></div>
+            <div><div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px"><b>Contacted</b><span>36 · $68K</span></div><div class="progress"><span style="width:65%"></span></div></div>
+            <div><div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px"><b>Qualified</b><span>22 · $48K</span></div><div class="progress"><span style="width:45%"></span></div></div>
+            <div><div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px"><b>Meeting</b><span>14 · $42K</span></div><div class="progress"><span style="width:32%"></span></div></div>
+            <div><div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px"><b>Won</b><span>9 · $18K</span></div><div class="progress"><span style="width:22%"></span></div></div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-h"><h3>Sources (30d)</h3></div>
+          <div class="panel-b nopad">
+            <table class="tbl">
+              <thead><tr><th>Source</th><th>Leads</th><th>Won</th><th>CVR</th></tr></thead>
+              <tbody>
+                <tr><td>Facebook Ads</td><td>482</td><td>38</td><td>7.9%</td></tr>
+                <tr><td>Google Ads</td><td>312</td><td>34</td><td>10.9%</td></tr>
+                <tr><td>Referral</td><td>128</td><td>28</td><td><b style="color:var(--brand)">21.8%</b></td></tr>
+                <tr><td>LinkedIn</td><td>96</td><td>12</td><td>12.5%</td></tr>
+                <tr><td>TikTok</td><td>88</td><td>6</td><td>6.8%</td></tr>
+                <tr><td>Landing</td><td>62</td><td>8</td><td>12.9%</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-h"><h3>SLA Risk (Next 2h)</h3></div>
+          <div class="panel-b nopad">
+            <table class="tbl">
+              <thead><tr><th>Lead</th><th>Agent</th><th>In</th></tr></thead>
+              <tbody>
+                <tr><td>أحمد فاروق</td><td><span class="mini">م</span></td><td><span class="dot-s r"></span> 15د</td></tr>
+                <tr><td>سارة عبد الله</td><td><span class="mini">ك</span></td><td><span class="dot-s r"></span> 22د</td></tr>
+                <tr><td>حسن أشرف</td><td><span class="mini">ن</span></td><td><span class="dot-s y"></span> 45د</td></tr>
+                <tr><td>مي فاروق</td><td><span class="mini">ر</span></td><td><span class="dot-s y"></span> 52د</td></tr>
+                <tr><td>عمر شريف</td><td><span class="mini">ك</span></td><td><span class="dot-s g"></span> 1س 20د</td></tr>
+                <tr><td>ندى إبراهيم</td><td><span class="mini">ن</span></td><td><span class="dot-s g"></span> 1س 38د</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-h">
+          <h3>Live Activity Feed</h3>
+          <span class="pill-live">LIVE</span>
+          <div class="right"><button class="btn btn-xs">Pause</button><button class="btn btn-xs">Filter</button></div>
+        </div>
+        <div class="panel-b" style="max-height:260px;overflow-y:auto">
+          <div class="log">
+<span class="t">10:42:12</span> <span class="ok">[WON]</span>  ليلى حسن — $980 Digital Marketing — approved by نورا
+<span class="t">10:41:58</span> <span class="ok">[CALL]</span> منى → أحمد فاروق (8m 20s) "interested, asking installments"
+<span class="t">10:40:12</span> <span class="w">[SLA]</span>  سارة عبد الله — 22m since assigned, no touch
+<span class="t">10:38:05</span> <span>[NEW]</span>   +3 leads from Facebook Ads (campaign: Fall-Bootcamps-2026)
+<span class="t">10:35:49</span> <span>[STAGE]</span> يوسف حجاج moved Contacted → Qualified by منى
+<span class="t">10:33:20</span> <span class="err">[ERR]</span>  Sheet sync row 1407: invalid phone "0100"
+<span class="t">10:30:00</span> <span>[TASK]</span>  كريم started "Send proposal" for طارق سالم
+<span class="t">10:28:11</span> <span class="ok">[WON]</span>  دينا مصطفى — $1,850 Web Dev — awaiting TL approval
+<span class="t">10:26:04</span> <span>[MEET]</span>  محمد عاطف — Zoom scheduled tomorrow 16:00
+<span class="t">10:22:00</span> <span>[NEW]</span>   +8 leads from Google Ads (campaign: Data-Analytics)
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
