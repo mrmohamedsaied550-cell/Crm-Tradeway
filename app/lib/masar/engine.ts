@@ -1,3 +1,4 @@
+import { waSendText, waReceive, waInboundReview, waExecute } from './whatsapp';
 import { type State, type Agent, type Journey, type Stage, type Command, type Exposure, type BonusPlan, type RoutingRule, type RotationRule, stages, labels, uid, seed, M, H, D } from './model';
 const required = (v: unknown, name = 'القيمة') => { if (typeof v !== 'string' || !v.trim())
     throw Error(`${name} مطلوبة`); return v.trim().slice(0, 6000); };
@@ -57,7 +58,7 @@ function closeHistory(s: State, j: Journey) { for (const h of j.history.filter(h
     h.end = s.now;
     h.endRevision = s.revision;
 } }
-function acceptOwner(s: State, j: Journey, a: Agent, kind: Exposure['kind']) { const old = j.ownerId; closeHistory(s, j); j.ownerId = a.id; j.assignedAt = s.now; j.firstAttemptAt = null; j.dueAt = firstDue(s, j); j.history.push({ agentId: a.id, stage: j.stage, start: s.now, reason: kind }); a.lastAssignedAt = s.now; if (!s.exposures.some(e => e.journeyId === j.id && e.agentId === a.id && e.stage === j.stage && clockParts(e.at, product(s, j.productId).timezone).month === clockParts(s.now, product(s, j.productId).timezone).month))
+function acceptOwner(s: State, j: Journey, a: Agent, kind: Exposure['kind']) { const old = j.ownerId; closeHistory(s, j); j.ownerId = a.id; j.assignedAt = s.now; for (const cv of s.conversations.filter(cv => cv.journeyId === j.id && cv.status === 'open')) { cv.assignedToId = a.id; cv.assignmentSource = 'lead_propagation'; cv.assignedAt = s.now; } j.firstAttemptAt = null; j.dueAt = firstDue(s, j); j.history.push({ agentId: a.id, stage: j.stage, start: s.now, reason: kind }); a.lastAssignedAt = s.now; if (!s.exposures.some(e => e.journeyId === j.id && e.agentId === a.id && e.stage === j.stage && clockParts(e.at, product(s, j.productId).timezone).month === clockParts(s.now, product(s, j.productId).timezone).month))
     s.exposures.push({ id: uid('EX'), journeyId: j.id, personId: j.personId, agentId: a.id, stage: j.stage, at: s.now, kind, excluded: false }); for (const f of s.followups.filter(f => f.journeyId === j.id && !f.done))
     f.agentId = a.id; if (kind === 'rotation') {
     j.rotations++;
@@ -109,7 +110,7 @@ function milestone(s: State, j: Journey, to: Stage, a: Agent, evidence: string) 
 }
 export function bonus(s: State, p: BonusPlan, agentId: string, month: string) { const tz = product(s, p.productId).timezone; const inMonth = (t: number) => clockParts(t, tz).month === month; const js = new Set(s.journeys.filter(j => j.productId === p.productId).map(j => j.id)); const eligibleAgents = p.role === 'agent' ? [agentId] : s.agents.filter(a => a.productId === p.productId && a.role === 'agent').map(a => a.id); const exposure = s.exposures.filter(e => eligibleAgents.includes(e.agentId) && e.stage === p.stage && js.has(e.journeyId) && !e.excluded && (p.mode === 'cohort' ? inMonth(find(s.journeys, e.journeyId).createdAt) && inMonth(e.at) : p.mode === 'period' ? clockParts(e.at, tz).month <= month : inMonth(e.at))); const unique = exposure.filter((e, i, a) => a.findIndex(x => x.journeyId === e.journeyId) === i); const ids = new Set(unique.map(e => e.journeyId)); const results = s.outcomes.filter(o => o.valid && eligibleAgents.includes(o.agentId) && o.from === p.stage && (p.stage !== 'trips' || o.trips === (p.tripTarget || 10)) && js.has(o.journeyId) && inMonth(o.at) && (p.mode !== 'cohort' || ids.has(o.journeyId))); const outcomes = results.filter((o, i, a) => a.findIndex(x => x.journeyId === o.journeyId && x.to === o.to) === i); const numerator = outcomes.length, denominator = unique.length, ratio = denominator ? numerator / denominator * 100 : 0; const tier = [...p.tiers].sort((a, b) => b.rate - a.rate).find(t => ratio >= t.rate); const rate = denominator && tier ? tier.amount : 0, amount = denominator && tier ? (p.payout === 'fixed' ? p.fixedAmount : numerator * rate) : 0; return { numerator, denominator, ratio, rate, amount, exposures: unique, outcomes, next: [...p.tiers].sort((a, b) => a.rate - b.rate).find(t => t.rate > ratio) }; }
 export function scoped(s: State, a: Agent): State { const out = structuredClone(s); const visible = s.journeys.filter(j => canView(s, a, j)), jids = new Set(visible.map(j => j.id)), pids = new Set(visible.map(j => j.personId)); out.journeys = visible; out.people = s.people.filter(p => pids.has(p.id) && !p.mergedInto); out.products = s.products.filter(p => canScope(a, p.id)); out.agents = s.agents.filter(x => canScope(a, x.productId) || x.id === a.id); out.submissions = s.submissions.filter(x => jids.has(x.journeyId)); out.messages = s.messages.filter(m => jids.has(m.journeyId) && canEdit(a, find(s.journeys, m.journeyId))); out.documents = s.documents.filter(d => jids.has(d.journeyId) && canEdit(a, find(s.journeys, d.journeyId))); out.activities = s.activities.filter(e => e.journeyId ? jids.has(e.journeyId) && (canEdit(a, find(s.journeys, e.journeyId)) || ((e.revision || 0) <= Math.max(...find(s.journeys, e.journeyId).history.filter(h => h.agentId === a.id).map(h => h.endRevision || 0), 0) && e.at <= Math.max(...find(s.journeys, e.journeyId).history.filter(h => h.agentId === a.id).map(h => h.end || s.now), 0))) : a.role !== 'agent' && (!e.productId || canScope(a, e.productId))); out.exposures = s.exposures.filter(e => jids.has(e.journeyId) && (a.role !== 'agent' || e.agentId === a.id)); out.outcomes = s.outcomes.filter(e => jids.has(e.journeyId) && (a.role !== 'agent' || e.agentId === a.id)); out.offers = s.offers.filter(o => jids.has(o.journeyId) && (a.role !== 'agent' || o.agentId === a.id || o.fromId === a.id)); out.followups = s.followups.filter(f => jids.has(f.journeyId) && (a.role !== 'agent' || f.agentId === a.id)); out.approvals = s.approvals.filter(x => canScope(a, x.productId) && (a.role !== 'agent' || x.requestedBy === a.id)); out.partnerRows = a.role === 'agent' ? [] : s.partnerRows.filter(p => canScope(a, p.productId)); for (const k of ['routing', 'sla', 'rotation', 'bonusPlans', 'competitions', 'automations'] as const)
-    (out[k] as unknown) = s[k].filter(x => canScope(a, x.productId)); out.snapshots = s.snapshots.filter(x => canScope(a, s.bonusPlans.find(p => p.id === x.planId)?.productId || 'none') && (a.role !== 'agent' || x.agentId === a.id)); out.leaves = s.leaves.filter(x => a.role !== 'agent' && canScope(a, actor(s, x.agentId).productId) || x.agentId === a.id); out.outbox = a.role === 'agent' ? [] : s.outbox.filter(x => jids.has(String(x.payload.journeyId))); out.processed = []; return out; }
+    (out[k] as unknown) = s[k].filter(x => canScope(a, x.productId)); out.snapshots = s.snapshots.filter(x => canScope(a, s.bonusPlans.find(p => p.id === x.planId)?.productId || 'none') && (a.role !== 'agent' || x.agentId === a.id)); out.leaves = s.leaves.filter(x => a.role !== 'agent' && canScope(a, actor(s, x.agentId).productId) || x.agentId === a.id); out.outbox = a.role === 'agent' ? [] : s.outbox.filter(x => jids.has(String(x.payload.journeyId))); const accs = s.waAccounts.filter(x => canScope(a, x.productId)); out.waAccounts = accs; const accIds = new Set(accs.map(x => x.id)); out.waTemplates = s.waTemplates.filter(t => accIds.has(t.accountId)); out.conversations = s.conversations.filter(cv => accIds.has(cv.accountId) && (a.role !== 'agent' || (cv.journeyId ? jids.has(cv.journeyId) && canEdit(a, find(s.journeys, cv.journeyId)) : cv.assignedToId === a.id || cv.assignedToId === null))); const cids = new Set(out.conversations.map(cv => cv.id)); out.messages = s.messages.filter(m => (m.conversationId ? cids.has(m.conversationId) : jids.has(m.journeyId)) && (a.role !== 'agent' || !m.conversationId || (() => { const cv = s.conversations.find(x => x.id === m.conversationId)!; return cv.handoverMode === 'full' || cv.handoverMode === undefined || !cv.assignedAt || m.at >= cv.assignedAt; })())); out.waReviews = a.role === 'agent' ? [] : s.waReviews.filter(r => cids.has(r.conversationId)); out.processed = []; return out; }
 export function execute(input: State, aId: string, c: Command, requestId: string): State {
     if (input.processed.includes(requestId))
         return input;
@@ -217,8 +218,9 @@ export function execute(input: State, aId: string, c: Command, requestId: string
             }
             s.submissions.push({ id: uid('SUB'), personId: pe.id, journeyId: j.id, source, externalId, at: s.now, answers: Array.isArray(c.answers) ? c.answers.map((q) => ({ question: required(q.question), answer: required(q.answer) })) : [] });
             log(s, a.id, 'lead_created', created ? 'وصول ليد جديد' : 'وصول تسجيل إضافي', `${source} · ${externalId} · ملف شخص واحد`, j);
+            let conv = null as ReturnType<typeof waReceive> | null;
             if (c.type === 'inbound') {
-                s.messages.push({ id: uid('MSG'), journeyId: j.id, at: s.now, direction: 'in', text: required(c.text, 'الرسالة'), state: 'received', kind: 'human' });
+                conv = waReceive(s, j, required(c.text, 'الرسالة'));
                 if (j.firstAttemptAt)
                     j.successfulAt = s.now;
             }
@@ -226,6 +228,8 @@ export function execute(input: State, aId: string, c: Command, requestId: string
                 routeOffer(s, j, 'fresh');
                 auto(s, 'lead_created', j);
             }
+            if (conv)
+                waInboundReview(s, j, conv, String(c.text));
             break;
         }
         case 'note': {
@@ -256,17 +260,15 @@ export function execute(input: State, aId: string, c: Command, requestId: string
                 if (product(s, j.productId).statuses[j.stage].includes(status))
                     j.status = status;
             }
-            else {
-                s.messages.push({ id: uid('MSG'), journeyId: j.id, at: s.now, direction: 'out', text: required(c.text, 'الرسالة'), actorId: a.id, state: 'sent', kind: 'human' });
-                log(s, a.id, 'whatsapp_attempt', 'محاولة تواصل عبر واتساب', 'رسالة بشرية أُرسلت داخل محاكاة القناة.', j);
-            }
+            else
+                waSendText(s, a, j, required(c.text, 'الرسالة'));
             if (!j.firstAttemptAt)
                 j.firstAttemptAt = s.now;
             break;
         }
         case 'receive_reply': {
             const j = edit();
-            s.messages.push({ id: uid('MSG'), journeyId: j.id, at: s.now, direction: 'in', text: required(c.text), state: 'received', kind: 'human' });
+            waReceive(s, j, required(c.text));
             if (j.firstAttemptAt)
                 j.successfulAt = s.now;
             log(s, a.id, 'inbound_message', 'وصل رد العميل', 'تم تسجيل الرد وربطه بالمحادثة الحالية.', j);
@@ -817,7 +819,8 @@ export function execute(input: State, aId: string, c: Command, requestId: string
             log(s, a.id, 'marketing_callback', 'محاكاة رد الماركتنج', `${x.externalId} · ${x.state} · لا إرسال خارجي`);
             break;
         }
-        default: throw Error('الإجراء غير معروف');
+        default: if (!waExecute(s, a, c, { manager, admin, edit, getJ }))
+            throw Error('الإجراء غير معروف');
     }
     s.revision = input.revision + 1;
     s.processed = [...s.processed, requestId].slice(-1000);
