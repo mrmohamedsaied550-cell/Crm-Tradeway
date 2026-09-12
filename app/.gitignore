@@ -1,0 +1,6 @@
+node_modules
+portable-release
+dist
+.test-build
+portable/masar-data
+*.tsbuildinfo
