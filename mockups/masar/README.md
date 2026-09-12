@@ -2,9 +2,11 @@
 
 Interactive HTML prototype for the rebranded CRM. Open `index.html` in a browser (no build step) or `masar-standalone.html` (single file, everything inlined).
 
-Screens (hash routes): `#login` · `#dashboard` · `#leads` · `#contact` · `#funnel` · `#approvals` · `#bulk` · `#sheets` · `#leaderboard` · `#settings`
+**v3 (current)** — content rebuilt on the real Masar business from the `Masar_Interactive_Prototype_v2` package (Reference-specifications v2.0, 2026-09-07): Trade Way / Captain Masr recruits and activates drivers ("captains") for ride-hailing partners (Uber, inDrive, Careem, Yango) across markets (company × country).
 
-Interactions that work: sidebar collapse, dark/light toggle (persists), ⌘K / Ctrl+K command palette, kanban drag-and-drop (dropping into «أكتف» raises an approval request), chart hover tooltips, new-lead drawer, notifications popover, filter chips, segmented controls, toasts on every action.
+Screens (hash routes): `#login` · `#dashboard` · `#workspace` · `#leads` (table + board) · `#person` · `#inbox` · `#followups` · `#approvals` · `#bonus` · `#competitions` · `#reports` · `#distribution` · `#partners` · `#team` · `#settings` · `#integrations` · `#audit`
+
+Interactions that work: sidebar collapse, dark/light toggle (persists), ⌘K / Ctrl+K command palette, table/board toggle, kanban drag-and-drop (dropping into a gated stage raises an approval request instead of moving), chart hover tooltips, new-lead drawer with duplicate detection, notifications popover, filter chips, tabs, toasts on every action.
 
 ## Reference analysis → what Masar took from each
 
@@ -25,20 +27,25 @@ Everything else (data model, copy, flows, roles, approvals, Google Sheets sync, 
 - **Type**: IBM Plex Sans Arabic (UI + display), IBM Plex Mono (IDs, phone numbers, keyboard hints). Tabular numerals everywhere.
 - **Shape**: radius 8 / 12 / 16, pills 999. Shadows only on popovers and dragged cards.
 
-## Business model encoded in the prototype
+## Business model encoded in the prototype (from the v2 specs)
 
-- **Roles**: Sales Agent, Senior Agent, Team Leader, Account Manager, QA — see permission matrix in `#settings`.
-- **Pipeline**: جديد → تم التواصل → مهتم → متابعة → مسجّل (Enrolled) → أكتف (Active). Moving to Active requires Team Leader approval.
-- **Approvals queue**: discounts above the agent's limit (10% / 15% / 30%), stage moves to Active, refunds within the 7-day window, lead reassignment.
-- **Lead sources**: Meta Lead Ads, TikTok forms, Google Ads, referrals, Google Sheets (media team), bulk CSV/XLSX.
-- **Programs**: Funded Challenge, Forex Fundamentals, Crypto Pro, Gold Masterclass — a contact can hold several enrollments.
-- **Leaderboard**: ranked by approved activations, with revenue and conversion; monthly team target with per-day pace.
+- **One person file, one journey per company × product**: the same phone is one Person (P-xxxxx); Uber and inDrive journeys are independent, each with its own stage, owner and SLA.
+- **Four stages**: جديد (Fresh) → التسجيل (Signup) → جاهز للعمل (Approved / Ready to drive) → الرحلات (Trips, D5/D10). Statuses per stage are configurable; «مرفوض» is the display name of a lost outcome with a mandatory reason and a cool-off before reactivation.
+- **Roles**: موظفة (sales / registration / operations), قائدة فريق, Account Manager, مدير النظام. Permission matrix in `#settings`; forbidden field writes are silently stripped and audited by field name.
+- **Distribution**: ordered rules per market and stage (Round Robin, Least Loaded, Weighted, specific person, Queue Claim), an 8-step eligibility filter with a recorded reason, assignment offers with expiry and accept/reject, «اطلب ليد» through the same engine, starvation goes to a watched queue.
+- **SLA and escalation**: per-stage budget on the market calendar (60 min for Fresh), ladder ok → t75 → t100 → t150 → t200, rotation that keeps the previous owner's credit, no double rotation within 24 h (supervisor review instead).
+- **Approvals**: transitions into gated stages (partner evidence or a tagged manual override), lost with reason, supervisor reviews, WhatsApp reviews; a rejection creates a 24 h corrective task.
+- **WhatsApp inbox**: one number per company, conversation follows the journey owner, 24 h reply window, approved templates outside it, correlation ids, 24-month retention.
+- **Partner Data Hub**: partner sheets/CSV as append-only snapshots, reconciliation categories, controlled field-by-field merge (approved_at, DFT) with evidence, derived D5/D10 commission risk. Partner data never moves a stage or creates a captain.
+- **Bonus**: mixed ratio N ÷ D, highest earned tier applied to all P results, month snapshot → Account Manager review → approved → paid with reference; adjustments are explicit, the original is never rewritten.
+- **Competitions**: time-boxed, per stage and team, credit follows the stage owner at outcome time, ties need a management decision.
+- **Team & leaves**: shifts, availability, approved leave with a coverage plan, capacity, night/weekend coverage policy.
 
 ## Files
 
 ```
 mockups/masar/
-├── index.html              # prototype (all screens, hash router)
+├── index.html              # prototype (16 screens + login, hash router)
 ├── masar-standalone.html   # same, single file for sharing
 ├── README.md
 └── assets/

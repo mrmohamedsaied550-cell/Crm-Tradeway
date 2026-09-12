@@ -18,7 +18,7 @@
   $('#railBtn') && $('#railBtn').addEventListener('click', () => { if (innerWidth <= 768) app.classList.toggle('menu-open'); else app.classList.toggle('rail'); });
 
   /* ---------- router ---------- */
-  const titles = { dashboard: ['الرئيسية', 'لوحة التحكم'], leads: ['المبيعات', 'الليدز'], contact: ['المبيعات', 'ملف العميل'], funnel: ['المبيعات', 'مسار الصفقات'], approvals: ['التشغيل', 'طابور الموافقات'], bulk: ['البيانات', 'رفع ملف'], sheets: ['البيانات', 'مزامنة Google Sheets'], leaderboard: ['الفريق', 'لوحة الأبطال'], settings: ['الإعدادات', 'الفريق والصلاحيات'], login: ['', 'تسجيل الدخول'] };
+  const titles = { dashboard: ['التشغيل', 'لوحة التحكم'], workspace: ['التشغيل', 'مساحة عملي'], leads: ['التشغيل', 'العملاء المحتملون'], person: ['العملاء المحتملون', 'P-24817 · أحمد صلاح'], inbox: ['التشغيل', 'صندوق الوارد'], followups: ['التشغيل', 'المتابعات والتقويم'], approvals: ['التشغيل', 'الموافقات'], bonus: ['الأداء', 'البونص'], competitions: ['الأداء', 'المسابقات'], reports: ['الأداء', 'التقارير'], distribution: ['الإدارة', 'التوزيع والقواعد'], partners: ['الإدارة', 'بيانات الشركاء'], team: ['الإدارة', 'الفريق والإجازات'], settings: ['الإدارة', 'الإعدادات'], integrations: ['الإدارة', 'التكاملات'], audit: ['الإدارة', 'سجل النشاط'], login: ['', 'تسجيل الدخول'] };
   function route() {
     let h = (location.hash || '#dashboard').slice(1).split('?')[0];
     if (!titles[h]) h = 'dashboard';
@@ -44,8 +44,12 @@
     const sw = e.target.closest('.switch'); if (sw) sw.classList.toggle('on');
     const sg = e.target.closest('.seg button'); if (sg) { $$('button', sg.parentElement).forEach(b => b.classList.remove('active')); sg.classList.add('active'); }
     const ch = e.target.closest('.chip[data-toggle]'); if (ch) ch.classList.toggle('on');
+    const tb = e.target.closest('.tabs button'); if (tb) { $$('button', tb.parentElement).forEach(b => b.classList.remove('active')); tb.classList.add('active'); }
     const rp = e.target.closest('.role-pick button'); if (rp) { $$('button', rp.parentElement).forEach(b => b.classList.remove('on')); rp.classList.add('on'); }
   });
+
+  /* ---------- leads view toggle ---------- */
+  document.addEventListener('click', e => { const v = e.target.closest('[data-view]'); if (v) { $$('[data-view-pane]').forEach(p => p.hidden = p.dataset.viewPane !== v.dataset.view); requestAnimationFrame(redrawAll); } });
 
   /* ---------- select all ---------- */
   $$('input[data-all]').forEach(m => m.addEventListener('change', () => $$(`input[data-row="${m.dataset.all}"]`).forEach(c => c.checked = m.checked)));
@@ -60,7 +64,7 @@
 
   /* ---------- command palette ---------- */
   const pal = $('#palette'); const palIn = $('#palInput'); const palList = $('#palList');
-  const cmds = [['dashboard', 'لوحة التحكم', 'G D'], ['leads', 'الليدز', 'G L'], ['funnel', 'مسار الصفقات', 'G F'], ['approvals', 'طابور الموافقات', 'G A'], ['bulk', 'رفع ملف ليدز', 'G U'], ['sheets', 'مزامنة Google Sheets', 'G S'], ['leaderboard', 'لوحة الأبطال', 'G B'], ['contact', 'فتح ملف: أحمد سمير', ''], ['settings', 'الإعدادات', ',']];
+  const cmds = [['dashboard', 'لوحة التحكم', 'G D'], ['workspace', 'مساحة عملي', 'G W'], ['leads', 'العملاء المحتملون', 'G L'], ['inbox', 'صندوق الوارد', 'G I'], ['followups', 'المتابعات والتقويم', 'G F'], ['approvals', 'الموافقات', 'G A'], ['bonus', 'البونص', 'G B'], ['reports', 'التقارير', 'G R'], ['distribution', 'التوزيع والقواعد', ''], ['partners', 'بيانات الشركاء', ''], ['person', 'فتح ملف: أحمد صلاح · P-24817', ''], ['person', 'فتح ملف: محمد حسن · P-24816', ''], ['team', 'الفريق والإجازات', ''], ['settings', 'الإعدادات', ',']];
   function openPal() { pal.hidden = false; palIn.value = ''; renderPal(''); setTimeout(() => palIn.focus(), 10); }
   function renderPal(q) { palList.innerHTML = cmds.filter(c => c[1].includes(q)).map((c, i) => `<li class="${i === 0 ? 'sel' : ''}" data-go="${c[0]}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>${c[1]}<span class="k kbd">${c[2]}</span></li>`).join('') || '<li class="muted">لا نتائج</li>'; }
   $$('[data-open-palette]').forEach(b => b.addEventListener('click', openPal));
@@ -75,7 +79,7 @@
   $$('.col').forEach(col => {
     col.addEventListener('dragover', e => { e.preventDefault(); col.classList.add('over'); });
     col.addEventListener('dragleave', () => col.classList.remove('over'));
-    col.addEventListener('drop', e => { e.preventDefault(); col.classList.remove('over'); if (drag) { $('.col-body', col).prepend(drag); recount(); const stage = $('.col-head b', col).textContent; if (col.dataset.needsApproval) window.toast('تم إرسال طلب موافقة لقائد الفريق للنقل إلى «' + stage + '»'); else window.toast('تم نقل ' + $('.t', drag).textContent + ' إلى «' + stage + '»'); } });
+    col.addEventListener('drop', e => { e.preventDefault(); col.classList.remove('over'); if (drag) { $('.col-body', col).prepend(drag); recount(); const stage = $('.col-head b', col).textContent; if (col.dataset.needsApproval) window.toast('طلب انتقال إلى «' + stage + '» أُرسل لقائدة الفريق · الرحلة لا تتحرك قبل القرار'); else window.toast('تم نقل ' + $('.t', drag).textContent + ' إلى «' + stage + '»'); } });
   });
   function recount() { $$('.col').forEach(col => { const n = $$('.kcard', col).length; $('.col-head .n', col).textContent = n; }); }
 
