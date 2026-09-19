@@ -1647,6 +1647,43 @@ const S_points = () => desk('points','نقاط التوزيع','<button class="b
   border-radius:var(--r-xs);padding:2px 8px;color:var(--text-2)}
 .demo-hint{font-size:11.5px;color:var(--text-3);background:var(--surface-sunken);border:1px dashed var(--hairline);
   border-radius:var(--r-xs);padding:8px 11px;line-height:1.6}
+
+/* ---- mobile-first: the portal is used on a phone, in a forecourt ---- */
+.wide-only{display:block}
+.narrow-only{display:none}
+.acard{background:var(--surface);border:1px solid var(--hairline);border-radius:var(--r-md);
+  padding:14px;display:flex;flex-direction:column;gap:10px}
+.acard .hd{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.acard .nm{font:600 17px/1.4 var(--font-ui)}
+.acard .slot{font:600 17px var(--font-figure);color:var(--text)}
+.acard dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:0;font-size:14px}
+.acard dt{color:var(--text-3);font-size:13px}
+.acard dd{margin:0;font-weight:500}
+.acard .btn{min-height:48px;font-size:15px}
+@media (max-width:760px){
+  .wide-only{display:none}
+  .narrow-only{display:block}
+  .pt-body{padding:14px;gap:14px;font-size:15px}
+  .pt-top{padding:10px 14px}
+  .pt .tiny{font-size:12.5px}
+  .pt .sm{font-size:14px}
+  .pt .btn{min-height:48px}
+  .pt .btn-sm{min-height:44px;font-size:14px;padding:10px 14px}
+  .pt .kpi{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .pt .split{grid-template-columns:1fr}
+  .step-body{padding:16px 14px}
+  .step-h{font-size:20px}
+  .step-foot{padding:12px 14px}
+  .step-foot .btn{flex:1}
+  .rail{padding:10px 14px}
+  .pinpad button{min-height:58px;font-size:22px}
+  .cam{padding:36px 16px}
+  .sig{height:150px}
+  .shot-tile{font-size:12.5px}
+  .inp{font-size:16px}
+}
+@media (max-width:900px){ .pt .btn{min-height:48px} .pt .btn-sm{min-height:44px;font-size:14px;padding:10px 14px} }
+@media (max-width:380px){ .pt .kpi{grid-template-columns:1fr!important} }
 </style>
 <script>
 /* ============ portal state — client-side only, resets on reload ============ */
@@ -1724,7 +1761,7 @@ const S_p0 = () => ptShell(`
   <div class="login stack g18">
     <div style="text-align:center">
       <h3 style="font-size:22px;font-weight:700">دخول نقطة التوزيع</h3>
-      <p class="sm muted" style="margin-block-start:6px">كل نقطة بتشوف مواعيدها ومخزونها هي بس. مفيش نقطة بتشوف حاجة لنقطة تانية.</p>
+      <p class="sm muted" style="margin-block-start:6px">من أي موبايل. مفيش جهاز مخصص ولا تابلت مربوط.<br>كل نقطة بتشوف مواعيدها ومخزونها هي بس.</p>
     </div>
     <div class="field"><label for="pcode">كود النقطة</label>
       <select class="inp" id="pcode" data-pt="setCode">
@@ -1745,14 +1782,14 @@ const S_p0 = () => ptShell(`
       </div>
     </div>
     <div class="demo-hint">في النموذج ده: اختار أي نقطة وأي رقم سري من ٤ أرقام. جرّب تدخل بنقطتين مختلفين وشوف إن المواعيد والمخزون بيتغيّروا بالكامل — ده نطاق النقطة.</div>
-    ${notice('info','', 'الجهاز لازم يكون مربوط بالنقطة. جهاز غير مربوط ما يقدرش يدخل غير بموافقة مدير المعرض.')}
+    ${notice('info','', 'الدخول من أي موبايل. أول مرة بس بيوصلك كود تأكيد على رقمك المسجّل، وبعدها بالرقم السري على طول.')}
   </div>`);
 
 /* ============ P1 · فتح اليوم ============ */
 const DEVCHECKS = [
-  ['الكاميرا','الكاميرا الخلفية شغّالة','ok','مفيش تسليم من غير كاميرا شغالة'],
-  ['المساحة الفاضية','12.4 جيجا فاضية — المطلوب 2 جيجا','ok',''],
-  ['البطارية','48% والشاحن مش موصّل','warn','تنبيه بس — وصّل الشاحن'],
+  ['الكاميرا','كاميرا الموبايل شغّالة','ok','مفيش تسليم من غير كاميرا'],
+  ['المساحة الفاضية','2.8 جيجا فاضية — المطلوب 1 جيجا','ok',''],
+  ['البطارية','48% والشاحن مش موصّل','warn','تنبيه بس — التسليم بياخد ساعة ونص'],
   ['المزامنة','مفيش تسليمات من امبارح مستنية رفع','ok','']
 ];
 const S_p1 = () => {
@@ -1765,7 +1802,7 @@ const S_p1 = () => {
     <span class="tiny dim">الأحد 20 سبتمبر · ${APP.point.name}</span></div>
   ${APP.dayOpen ? notice('ok','اليوم مفتوح','تقدر تبدأ التسليمات. الجرد اتقفل الساعة '+now()+'.') : ''}
   <div class="split">
-    <div class="card"><b class="sm">فحص الجهاز</b>
+    <div class="card"><b class="sm">فحص موبايلك</b>
       <ol class="tl" style="margin-block-start:12px">${DEVCHECKS.map(([t,d,k,n])=>`
         <li data-s="${k==='ok'?'done':'warn'}"><span class="dot">${k==='ok'?'✓':'!'}</span>
         <div><b>${t}</b><p>${d}</p>${n?`<p class="dim" style="font-size:11.5px">${n}</p>`:''}</div></li>`).join('')}</ol>
@@ -1782,7 +1819,16 @@ const S_p1 = () => {
   <div class="card">
     <div class="spread" style="margin-block-end:10px"><b class="sm">وحدات مخزون النقطة</b>
       <span class="tiny dim">${APP.stock.length} وحدة في ${APP.point.name}</span></div>
-    <div class="tbl-wrap"><table class="tbl" style="min-width:620px">
+    <div class="narrow-only"><div class="stack g10">${APP.stock.map((u,i)=>`<div class="acard">
+      <div class="hd"><div><div class="nm num">${u.plate}</div><div class="tiny dim num">${u.ch}</div></div>
+        ${u.variance?pill('dan','فرق'):u.checked?pill('ok','مطابق'):pill('mute','لسه')}</div>
+      <div class="row" style="gap:8px">${pill(u.state==='متاح'?'info':u.state==='محجوز لميعاد'?'brand':'mute',u.state)}
+        ${u.today?pill('warn','مطلوبة النهاردة'):''}</div>
+      <div class="row" style="gap:8px">
+        <button class="btn btn-soft btn-sm" style="flex:1" data-pt="stockOk" data-i="${i}" ${u.checked?'disabled':''}>أكّد</button>
+        <button class="btn btn-dan btn-sm" style="flex:1" data-pt="stockVar" data-i="${i}">بلّغ فرق</button></div>
+    </div>`).join('')}</div></div>
+    <div class="wide-only"><div class="tbl-wrap"><table class="tbl" style="min-width:620px">
       <thead><tr><th>اللوحة</th><th>الشاسيه</th><th>الحالة</th><th>مطلوبة النهاردة</th><th>الجرد</th><th></th></tr></thead>
       <tbody>${APP.stock.map((u,i)=>`<tr>
         <td class="num"><b>${u.plate}</b></td><td class="num dim">${u.ch}</td>
@@ -1792,7 +1838,7 @@ const S_p1 = () => {
         <td><div class="row" style="gap:6px;flex-wrap:nowrap">
           <button class="btn btn-soft btn-sm" data-pt="stockOk" data-i="${i}" ${u.checked?'disabled style="opacity:.4"':''}>أكّد</button>
           <button class="btn btn-dan btn-sm" data-pt="stockVar" data-i="${i}">بلّغ فرق</button></div></td></tr>`).join('')}</tbody>
-    </table></div>
+    </table></div></div>
   </div>
   ${vars?notice('dan','فيه فرق جرد على وحدة محجوزة النهاردة','اليوم ما يفتحش غير لما المدير يسجّل سبب الفرق. الميعاد المرتبط بالوحدة اتعلّم «الوحدة غير مؤكدة».'):''}
   <div class="row">
@@ -1821,6 +1867,17 @@ const rowAct = (a,i) => {
   if(a.off<=120) return `<button class="btn btn-pri btn-sm" data-pt="checkin" data-i="${i}">سجّل الحضور</button>`;
   return `<button class="btn btn-soft btn-sm" data-pt="card" data-i="${i}">افتح الملف</button>`;
 };
+const apptCard = (a,i) => `<div class="acard">
+  <div class="hd"><div><div class="nm">${a.nm}</div><div class="tiny dim lat">${a.id}</div></div>
+    <span class="slot lat">${a.slot}</span></div>
+  <div class="row" style="gap:8px">${rowPill(a)}
+    ${a.off<-20 && !isDone(a) ? `<span class="tiny" style="color:var(--crit-ink)">متأخر ${Math.abs(a.off)} د</span>`:''}</div>
+  <dl><dt>الموبايل</dt><dd class="lat">${a.ph}</dd>
+    <dt>الوحدة</dt><dd class="num">${a.unit}${a.unconfirmed?' · غير مؤكدة':''}</dd>
+    <dt>الضامن</dt><dd>${a.gu}</dd></dl>
+  <div class="row" style="gap:8px">${rowAct(a,i)}
+    ${(!isDone(a) && a.off<=-90)?`<button class="btn btn-dan btn-sm" data-pt="noshow" data-i="${i}">عدم حضور</button>`:''}</div>
+</div>`;
 const apptRow = (a,i) => `<tr>
   <td class="num">${a.slot}</td>
   <td><b>${a.nm}</b><div class="tiny dim num">${a.id}</div></td>
@@ -1843,11 +1900,13 @@ const S_p2 = () => {
              ['متأخر', late.length, late.length?'dan':''],
              ['حالات مفتوحة', APP.cases.length, APP.cases.length?'warn':''],
              ['بانتظار المزامنة', APP.sync.length, APP.sync.length?'warn':'']];
-  const tbl = (rows) => `<div class="tbl-wrap" style="margin-block-end:14px"><table class="tbl" style="min-width:820px">
-    <thead><tr><th>الميعاد</th><th>الكابتن</th><th>الموبايل</th><th>الوحدة</th><th>الحالة</th><th>التأخير</th><th></th></tr></thead>
-    <tbody>${rows.map(({a,i})=>apptRow(a,i)).join('')}</tbody></table></div>`;
+  const tbl = (rows) => `
+    <div class="wide-only"><div class="tbl-wrap" style="margin-block-end:14px"><table class="tbl" style="min-width:820px">
+      <thead><tr><th>الميعاد</th><th>الكابتن</th><th>الموبايل</th><th>الوحدة</th><th>الحالة</th><th>التأخير</th><th></th></tr></thead>
+      <tbody>${rows.map(({a,i})=>apptRow(a,i)).join('')}</tbody></table></div></div>
+    <div class="narrow-only"><div class="stack g10" style="margin-block-end:14px">${rows.map(({a,i})=>apptCard(a,i)).join('')}</div></div>`;
   return ptShell(`
-  ${APP.dayOpen?'':notice('warn','اليوم لسه ما اتفتحش','لازم تعمل فحص الجهاز والجرد الأول. زرار «ابدأ التسليم» مقفول لحد ما تفتح اليوم. <button class="btn btn-soft btn-sm" data-pt="go" data-s="P1" style="padding:2px 8px">افتح اليوم</button>')}
+  ${APP.dayOpen?'':notice('warn','اليوم لسه ما اتفتحش','لازم تعمل فحص الموبايل والجرد الأول. زرار «ابدأ التسليم» مقفول لحد ما تفتح اليوم. <button class="btn btn-soft btn-sm" data-pt="go" data-s="P1" style="padding:2px 8px">افتح اليوم</button>')}
   ${unconf?notice('warn','وحدات مش مؤكدة في الجرد', unconf+' ميعاد النهاردة وحدته مش مؤكدة. بلّغ الإدارة دلوقتي — مش وقت ما الكابتن يكون واقف قدامك.'):''}
   <div class="kpi" style="grid-template-columns:repeat(5,minmax(0,1fr))">
     ${M.map(([lb,v,k])=>`<div class="tile"><div class="eb">${k?`<span class="dot" style="background:var(--${k==='dan'?'crit':'att'}-edge)"></span>`:''}${lb}</div>
@@ -2000,7 +2059,7 @@ const S_p6 = () => {
   <div class="spread"><h3 style="font-size:22px;font-weight:700">إيصال التسليم</h3>
     <span class="num tiny dim">HO-2026-${a.id.slice(-4)}</span></div>
   ${unsynced
-    ? notice('warn','التسليم اتسجّل على الجهاز ولسه بيترفع','متقفلش التابلت لحد ما يخلص. الإيصال سليم والكابتن يقدر يمشي.')
+    ? notice('warn','التسليم اتسجّل على الجهاز ولسه بيترفع','متقفلش التطبيق لحد ما يخلص. الإيصال سليم والكابتن يقدر يمشي.')
     : notice('ok','تم التسليم','الموتوسيكل بقى مسجّل باسم الكابتن في البرنامج، ونسخة الورق ظهرت في حسابه.')}
   <div class="split">
     <div class="card"><b class="sm">اللي اتسلّم</b>
@@ -2096,12 +2155,12 @@ const S_p15 = () => ptShell(`
 const S_p16 = () => ptShell(`
   <div class="spread"><h3 style="font-size:22px;font-weight:700">مستخدمو النقطة</h3>
     ${APP.user.role==='manager'?pill('ok','صلاحية مدير'):pill('warn','عرض فقط — دي شاشة المدير')}</div>
-  <p class="sm muted">المدير بيضيف مشغّلين ويربط أجهزة. ما يقدرش يعمل مدير تاني ولا يدّي صلاحية هو نفسه مش معاه.</p>
+  <p class="sm muted">المدير بيضيف مشغّلين برقم موبايلهم. مفيش ربط أجهزة — أي موبايل ينفع. ما يقدرش يعمل مدير تاني ولا يدّي صلاحية هو نفسه مش معاه.</p>
   <div class="tbl-wrap"><table class="tbl" style="min-width:620px">
-    <thead><tr><th>الاسم</th><th>الصلاحية</th><th>الجهاز المربوط</th><th>آخر دخول</th><th>الحالة</th><th></th></tr></thead>
+    <thead><tr><th>الاسم</th><th>الصلاحية</th><th>الموبايل</th><th>آخر دخول</th><th>الحالة</th><th></th></tr></thead>
     <tbody>${APP.point.users.map(u=>`<tr><td><b>${u.nm}</b></td>
       <td>${u.role==='manager'?pill('brand','مدير النقطة'):pill('mute','مشغّل')}</td>
-      <td class="lat dim">TAB-${APP.point.code.slice(-3)}-0${u.role==='manager'?2:1}</td>
+      <td class="lat dim">010${APP.point.code.slice(-3)}4${u.role==='manager'?'21':'08'}9</td>
       <td class="lat dim">${now()}</td><td>${pill('ok','نشط')}</td>
       <td>${APP.user.role==='manager'&&u.role!=='manager'?`<button class="btn btn-dan btn-sm">أوقف</button>`:'<span class="dim tiny">—</span>'}</td></tr>`).join('')}</tbody></table></div>
   ${APP.user.role==='manager'?`<div class="card"><b class="sm">إضافة مشغّل</b>
@@ -2109,7 +2168,7 @@ const S_p16 = () => ptShell(`
       <div class="field"><label for="nu-nm">الاسم</label><input class="inp" id="nu-nm" placeholder="الاسم الثلاثي"></div>
       <div class="field"><label for="nu-ph">الموبايل</label><input class="inp lat" id="nu-ph" inputmode="numeric" placeholder="01xxxxxxxxx"></div>
     </div>
-    ${notice('info','','المشغّل الجديد بيستلم رقم سري مؤقت برسالة، وبيربط جهازه بكود من المدير أول مرة بس.')}
+    ${notice('info','','المشغّل الجديد بيستلم رقم سري مؤقت برسالة على موبايله، ويغيّره أول دخول. مفيش ربط جهاز.')}
     <button class="btn btn-pri btn-sm" style="margin-block-start:10px" data-pt="addUser">أضف المشغّل</button></div>`:''}
   <button class="btn btn-ghost btn-sm" data-pt="go" data-s="P2">رجوع</button>`);
 </script>
