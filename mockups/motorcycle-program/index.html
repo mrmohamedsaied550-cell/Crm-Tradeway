@@ -184,6 +184,7 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
   display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .desk-top h3{font-family:var(--font-ui);font-size:16px;font-weight:600}
 .desk-body{padding:18px;display:flex;flex-direction:column;gap:16px}
+.desk-body>*{min-width:0;max-width:100%}
 @media (max-width:860px){
   .desk{grid-template-columns:1fr;border-radius:var(--r-md)}
   .desk-side{flex-direction:row;overflow-x:auto;gap:4px;padding:8px}
@@ -212,6 +213,7 @@ hr.rule{border:0;border-block-start:1px solid var(--hairline);margin:0}
 .grid4{display:grid;grid-template-columns:repeat(auto-fit,minmax(178px,1fr));gap:12px}
 .grid6{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 .split{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.split>*{min-width:0}
 @media (max-width:860px){.grid6{grid-template-columns:repeat(2,1fr)}.split{grid-template-columns:1fr}}
 @media (max-width:700px){.grid3{grid-template-columns:1fr 1fr}}
 @media (max-width:460px){.grid6{grid-template-columns:1fr}.grid3{grid-template-columns:1fr}}
@@ -329,7 +331,7 @@ select.inp{appearance:none;background-repeat:no-repeat;background-position:left 
 .track i.neutral{background:var(--accent)}
 .track .tick{position:absolute;top:-2px;bottom:-2px;width:2px;background:var(--border-strong);border-radius:1px}
 /* ===================== table ===================== */
-.tbl-wrap{overflow-x:auto;border:1px solid var(--hairline);border-radius:var(--r-sm);background:var(--surface)}
+.tbl-wrap{min-width:0;max-width:100%;overflow-x:auto;border:1px solid var(--hairline);border-radius:var(--r-sm);background:var(--surface)}
 table.tbl{width:100%;border-collapse:collapse;font-size:13px;min-width:680px}
 table.tbl th{background:var(--th-bg);color:var(--text-3);font:600 11.5px/1.55 var(--font-ui);
   padding:10px 14px;text-align:start;white-space:nowrap;border-block-end:1px solid var(--hairline)}
@@ -594,6 +596,8 @@ const desk = (activeId, title, topExtra, body) => `<div class="desk">
     <div class="desk-body">${ADM.toast?`<div class="notice n-warn">${ico('warn','ico')}<div>${ADM.toast}</div></div>`:''}${body}</div>
   </div></div>`;
 const ADM_BADGE = {work:12, queues:87, exceptions:9};
+
+const ar = (n) => String(n).replace(/[0-9]/g, d => '\u0660\u0661\u0662\u0663\u0664\u0665\u0666\u0667\u0668\u0669'[+d]);
 
 const pill = (kind, text) => `<span class="pill p-${kind}">${text}</span>`;
 const DRAFT = `<span class="draft">قيمة مبدئية — لم تُعتمد مع أوبر</span>`;
@@ -1592,7 +1596,7 @@ const S_compliance = () => desk('captains','متابعة الالتزام',
   <div class="card">
     <div class="spread" style="margin-block-end:12px"><b class="sm">تفاصيل: محمود سيد عبد العظيم</b>
       <span class="tiny dim">أسبوع 15–21 سبتمبر</span></div>
-    <div class="grid2" style="gap:12px">
+    <div class="split" style="gap:12px">
       ${gaugeCard('ساعات الاتصال / اليوم', 7.2, 8, true, '7.2', '8', 'أقل من الهدف بـ 0.8 ساعة في اليوم — يعني 19 ساعة على مدار الشهر.', 'أعلى')}
       ${gaugeCard('أيام التشغيل / الشهر', 24, 26, true, '24', '26', 'أقل من الهدف بيومين.', 'أعلى')}
       ${gaugeCard('نسبة قبول الطلبات', 68, 60, true, '68%', '60%', 'أعلى من الحد الأدنى بـ 8 نقاط مئوية.', 'أعلى')}
@@ -1670,6 +1674,7 @@ const S_points = () => desk('points','نقاط التوزيع','<button class="b
 .pt-who{font-size:12px;color:var(--text-3);text-align:start}
 .pt-who b{display:block;font-size:13px;color:var(--text);font-weight:600}
 .pt-body{padding:18px;display:flex;flex-direction:column;gap:16px;background:var(--ground);min-height:420px}
+.pt-body>*{min-width:0;max-width:100%}
 .offline{background:var(--att-fill);border-block-end:1px solid var(--att-border);color:var(--att-ink);
   padding:9px 18px;font:500 12.5px var(--font-ui);display:flex;align-items:center;gap:9px}
 .login{max-width:420px;margin-inline:auto;padding-block:28px}
