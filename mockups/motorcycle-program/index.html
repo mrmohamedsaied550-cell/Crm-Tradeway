@@ -4,118 +4,147 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <style>
-:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root{color-scheme:light dark;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 body{margin:0;font-family:system-ui,sans-serif;font-size:14px;background:#fafafa}
 img{max-width:100%}[hidden]{display:none!important}
 </style>
-<title>تمليك الموتوسيكل — تريد واي</title>
+<title>تمليك موتوسيكلات تريد واي</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Noto+Kufi+Arabic:wght@600;700&display=swap">
 <style>
-/* ============ tokens ============ */
+/* ===================== tokens ===================== */
 :root{
   direction:rtl;
-  --bg:#F2F5F1; --surface:#FFFFFF; --surface2:#F7FAF6; --sunk:#EDF1EA;
-  --line:#DCE3D9; --line-soft:#E8EDE4;
-  --text:#14201A; --text2:#4B5C51; --text3:#7C8C81;
-  --brand:#2E7D32; --brand-ink:#12482A; --brand-soft:#E3F1E2; --brand-line:#B9D9B7;
-  --lime:#7CB342;
-  --ok:#1B7F3B; --ok-soft:#E1F3E4;
-  --warn:#9A6200; --warn-soft:#FBEFD6;
-  --danger:#B3271E; --danger-soft:#FBE6E3;
-  --info:#1F5F9E; --info-soft:#E2EDF8;
-  --chrome:#101A14; --chrome2:#1B2820; --chrome-line:#2C3D33; --chrome-text:#E8F0E8; --chrome-dim:#93A79A;
-  --shadow:0 1px 2px rgba(20,32,26,.05), 0 8px 24px -12px rgba(20,32,26,.18);
-  --shadow-lift:0 2px 4px rgba(20,32,26,.06), 0 18px 40px -18px rgba(20,32,26,.28);
-  --r-s:8px; --r-m:12px; --r-l:18px; --r-xl:26px;
+  --ground:#F1F2F6; --surface:#FFFFFF; --surface-sunken:#E4E6EC; --hairline:#DDDFE6; --border-strong:#868C9A;
+  --text:#14171F; --text-2:#4B5160; --text-3:#666C7B; --text-disabled:#9AA0AD;
+  --accent:#26346F; --accent-hover:#1A2553; --accent-subtle:#E6E9F4; --accent-border:#9FABD0;
+  --accent-edge:#26346F; --accent-ink:#22306A; --on-accent:#FFFFFF;
+  --pos-fill:#DFEEE9;  --pos-border:#94C3B6;  --pos-edge:#3A8974;  --pos-ink:#0E6250;
+  --att-fill:#F9EEDB;  --att-border:#D6B375;  --att-edge:#A3762A;  --att-ink:#7A5214;
+  --crit-fill:#FBE7E3; --crit-border:#E3A79B; --crit-edge:#C25243; --crit-ink:#9E2E20;
+  --info-fill:#E1EDF6; --info-border:#98B9D4; --info-edge:#3A80AE; --info-ink:#1A5A88;
+  --brand-green:#62AE46; --brand-green-deep:#528D41;
+  --chrome:#2B2724; --chrome-raised:#38332F; --chrome-line:#4A443E;
+  --chrome-text:#EEE9E2; --chrome-dim:#A79F95; --chrome-sel:#EAE4D9; --chrome-sel-ink:#241F1C;
+  --side:#151B2B; --side-raised:#202940; --side-line:#2D3648;
+  --side-text:#E5E8F0; --side-dim:#98A1B7; --side-rail:#8AA6E8;
+  --row-alt:#F7F8FA; --th-bg:#F4F5F8;
+  --r-xs:6px; --r-sm:10px; --r-md:14px; --r-lg:20px; --r-pill:999px; --r-device:36px;
+  --shadow-sticky:0 -1px 0 var(--hairline), 0 -14px 28px -22px rgba(20,23,31,.30);
+  --shadow-overlay:0 2px 6px rgba(20,23,31,.08), 0 26px 52px -26px rgba(20,23,31,.38);
+  --shadow-device:0 4px 10px rgba(20,23,31,.06), 0 40px 72px -36px rgba(20,23,31,.45);
+  --scrim:rgba(15,18,25,.45);
+  --font-display:"Noto Kufi Arabic","Segoe UI",Tahoma,system-ui,sans-serif;
+  --font-ui:"Cairo","Segoe UI",Tahoma,system-ui,sans-serif;
+  --font-figure:"IBM Plex Sans Arabic","Segoe UI",Tahoma,ui-monospace,monospace;
 }
-@media (prefers-color-scheme: dark){
+@media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
-    --bg:#0D1410; --surface:#141E18; --surface2:#18241D; --sunk:#101A14;
-    --line:#2A3A30; --line-soft:#223029;
-    --text:#E7EFE8; --text2:#A8BCAE; --text3:#7B9184;
-    --brand:#5DB863; --brand-ink:#CBE9CB; --brand-soft:#1A2E1E; --brand-line:#2F4C34;
-    --lime:#9CCB5E;
-    --ok:#63C179; --ok-soft:#142C1B;
-    --warn:#E0A94A; --warn-soft:#2E2312;
-    --danger:#EE8377; --danger-soft:#331815;
-    --info:#79B1E6; --info-soft:#132537;
-    --chrome:#070C09; --chrome2:#111A14; --chrome-line:#24332A; --chrome-text:#E8F0E8; --chrome-dim:#879B8D;
-    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
-    --shadow-lift:0 2px 4px rgba(0,0,0,.5), 0 18px 40px -18px rgba(0,0,0,.7);
+    --ground:#0F1219; --surface:#161A23; --surface-sunken:#0A0D13; --hairline:#252B37; --border-strong:#646C82;
+    --text:#E6E9F0; --text-2:#A4AAB9; --text-3:#868D9E; --text-disabled:#6B7285;
+    --accent:#8FA8E8; --accent-hover:#A9BEF2; --accent-subtle:#1A2340; --accent-border:#414F80;
+    --accent-edge:#5E76B8; --accent-ink:#B8C8F3; --on-accent:#0B0F1C;
+    --pos-fill:#10271F;  --pos-border:#2F5E4E;  --pos-edge:#3E8A73;  --pos-ink:#63C4A6;
+    --att-fill:#2A2113;  --att-border:#6B5427;  --att-edge:#96762F;  --att-ink:#E0AE5C;
+    --crit-fill:#2D1613; --crit-border:#7A3A31; --crit-edge:#A75246; --crit-ink:#F08A7A;
+    --info-fill:#0F2130; --info-border:#2B5070; --info-edge:#3B759C; --info-ink:#74B4DE;
+    --chrome:#1B1815; --chrome-raised:#262220; --chrome-line:#3A3530;
+    --chrome-text:#EEE9E2; --chrome-dim:#9D958B; --chrome-sel:#DBD4C7; --chrome-sel-ink:#1B1815;
+    --side:#0B0F1A; --side-raised:#151C2C; --side-line:#222A3B;
+    --side-text:#E5E8F0; --side-dim:#8E97AD; --side-rail:#8FA8E8;
+    --row-alt:#1A1F29; --th-bg:#1B2029;
+    --shadow-sticky:0 -1px 0 var(--hairline), 0 -14px 28px -20px rgba(0,0,0,.65);
+    --shadow-overlay:0 2px 6px rgba(0,0,0,.50), 0 26px 52px -24px rgba(0,0,0,.75);
+    --shadow-device:0 4px 10px rgba(0,0,0,.45), 0 40px 72px -34px rgba(0,0,0,.80);
+    --scrim:rgba(0,0,0,.62);
   }
 }
 :root[data-theme="dark"]{
-  --bg:#0D1410; --surface:#141E18; --surface2:#18241D; --sunk:#101A14;
-  --line:#2A3A30; --line-soft:#223029;
-  --text:#E7EFE8; --text2:#A8BCAE; --text3:#7B9184;
-  --brand:#5DB863; --brand-ink:#CBE9CB; --brand-soft:#1A2E1E; --brand-line:#2F4C34;
-  --lime:#9CCB5E;
-  --ok:#63C179; --ok-soft:#142C1B;
-  --warn:#E0A94A; --warn-soft:#2E2312;
-  --danger:#EE8377; --danger-soft:#331815;
-  --info:#79B1E6; --info-soft:#132537;
-  --chrome:#070C09; --chrome2:#111A14; --chrome-line:#24332A; --chrome-text:#E8F0E8; --chrome-dim:#879B8D;
-  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
-  --shadow-lift:0 2px 4px rgba(0,0,0,.5), 0 18px 40px -18px rgba(0,0,0,.7);
+  --ground:#0F1219; --surface:#161A23; --surface-sunken:#0A0D13; --hairline:#252B37; --border-strong:#646C82;
+  --text:#E6E9F0; --text-2:#A4AAB9; --text-3:#868D9E; --text-disabled:#6B7285;
+  --accent:#8FA8E8; --accent-hover:#A9BEF2; --accent-subtle:#1A2340; --accent-border:#414F80;
+  --accent-edge:#5E76B8; --accent-ink:#B8C8F3; --on-accent:#0B0F1C;
+  --pos-fill:#10271F;  --pos-border:#2F5E4E;  --pos-edge:#3E8A73;  --pos-ink:#63C4A6;
+  --att-fill:#2A2113;  --att-border:#6B5427;  --att-edge:#96762F;  --att-ink:#E0AE5C;
+  --crit-fill:#2D1613; --crit-border:#7A3A31; --crit-edge:#A75246; --crit-ink:#F08A7A;
+  --info-fill:#0F2130; --info-border:#2B5070; --info-edge:#3B759C; --info-ink:#74B4DE;
+  --chrome:#1B1815; --chrome-raised:#262220; --chrome-line:#3A3530;
+  --chrome-text:#EEE9E2; --chrome-dim:#9D958B; --chrome-sel:#DBD4C7; --chrome-sel-ink:#1B1815;
+  --side:#0B0F1A; --side-raised:#151C2C; --side-line:#222A3B;
+  --side-text:#E5E8F0; --side-dim:#8E97AD; --side-rail:#8FA8E8;
+  --row-alt:#1A1F29; --th-bg:#1B2029;
+  --shadow-sticky:0 -1px 0 var(--hairline), 0 -14px 28px -20px rgba(0,0,0,.65);
+  --shadow-overlay:0 2px 6px rgba(0,0,0,.50), 0 26px 52px -24px rgba(0,0,0,.75);
+  --shadow-device:0 4px 10px rgba(0,0,0,.45), 0 40px 72px -34px rgba(0,0,0,.80);
+  --scrim:rgba(0,0,0,.62);
 }
+/* ===================== base ===================== */
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);
-  font-family:"IBM Plex Sans Arabic","Segoe UI",system-ui,sans-serif;
-  font-size:15px;line-height:1.75;-webkit-font-smoothing:antialiased}
-h1,h2,h3,h4,.display{font-family:"Readex Pro","IBM Plex Sans Arabic",system-ui,sans-serif;
-  font-weight:600;line-height:1.35;text-wrap:balance;margin:0}
-p{margin:0}
+body{margin:0;background:var(--ground);color:var(--text);
+  font:400 15px/1.75 var(--font-ui);-webkit-font-smoothing:antialiased}
+:root,body,h1,h2,h3,h4,p,td,th,label,button,input,select{letter-spacing:0}
+h1,h2,h3,h4{margin:0;font-family:var(--font-display);line-height:1.4;text-wrap:balance}
+p{margin:0;text-wrap:pretty}
 ul,ol{margin:0;padding:0;list-style:none}
 a{color:inherit}
 button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
-:focus-visible{outline:2px solid var(--brand);outline-offset:2px;border-radius:6px}
-.num{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+:focus-visible{outline:2px solid var(--accent-edge);outline-offset:2px;border-radius:var(--r-xs)}
+.proto :focus-visible,.screens :focus-visible{outline-color:var(--chrome-text)}
+.desk-side :focus-visible{outline-color:var(--side-rail)}
+/* figures: role-split numerals */
+.num,.fig{font-family:var(--font-figure);font-variant-numeric:tabular-nums}
+.lat{direction:ltr;unicode-bidi:isolate;font-family:var(--font-figure);font-variant-numeric:tabular-nums;text-align:start}
+.lat-caps{direction:ltr;unicode-bidi:isolate;font-family:var(--font-figure);text-transform:uppercase;
+  letter-spacing:.07em;font-weight:600;font-size:11.5px}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 <style>
-/* ============ prototype chrome ============ */
+/* ===================== prototype chrome (scaffolding, warm graphite) ===================== */
 .proto{position:sticky;top:env(safe-area-inset-top,0px);z-index:60;background:var(--chrome);
-  border-bottom:1px solid var(--chrome-line);color:var(--chrome-text)}
-.proto-in{max-width:1280px;margin:0 auto;padding-block:10px;padding-inline:16px;
+  border-block-end:1px solid var(--chrome-line);color:var(--chrome-text)}
+.proto-in{max-width:1280px;margin-inline:auto;padding-inline:16px;padding-block:10px;
   display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-.proto-brand{display:flex;align-items:center;gap:10px;margin-inline-end:auto}
-.proto-brand b{font-family:"Readex Pro",sans-serif;font-weight:600;font-size:14px;letter-spacing:.01em}
-.proto-brand small{display:block;color:var(--chrome-dim);font-size:11px;line-height:1.3}
-.tabs{display:flex;gap:4px;max-width:100%;overflow-x:auto;scrollbar-width:none;background:var(--chrome2);border:1px solid var(--chrome-line);
-  border-radius:999px;padding:3px}
+.proto-brand{display:flex;align-items:center;gap:10px;margin-inline-end:auto;min-width:0}
+.proto-brand .mark{width:19px;height:22px;flex:0 0 auto}
+.proto-brand b{font:600 13px/1.35 var(--font-ui);display:block}
+.proto-brand small{display:block;color:var(--chrome-dim);font-size:11px;line-height:1.35}
+.tabs{display:flex;gap:3px;max-width:100%;overflow-x:auto;scrollbar-width:none;
+  background:var(--chrome-raised);border:1px solid var(--chrome-line);border-radius:var(--r-pill);padding:3px}
 .tabs::-webkit-scrollbar{display:none}
-.tabs button{padding:6px 14px;border-radius:999px;font-size:13px;font-weight:600;color:var(--chrome-dim);
-  transition:background .15s,color .15s;white-space:nowrap}
-.tabs button[aria-selected="true"]{background:var(--brand);color:#fff}
-.proto-note{font-size:12px;color:var(--chrome-dim)}
-.proto-note button{color:var(--lime);text-decoration:underline;text-underline-offset:3px;font-size:12px}
-.screens{background:var(--chrome2);border-bottom:1px solid var(--chrome-line);
+.tabs button{padding:7px 15px;border-radius:var(--r-pill);font:600 12.5px/1 var(--font-ui);
+  color:var(--chrome-dim);white-space:nowrap}
+@media (prefers-reduced-motion:no-preference){.tabs button{transition:background-color .15s ease,color .15s ease}}
+.tabs button:hover{color:var(--chrome-text)}
+.tabs button[aria-selected="true"]{background:var(--chrome-sel);color:var(--chrome-sel-ink)}
+.proto-note{font-size:11.5px;color:var(--chrome-dim)}
+.proto-note button{color:var(--chrome-text);text-decoration:underline;text-underline-offset:3px;font-size:11.5px}
+.screens{background:var(--chrome-raised);border-block-end:1px solid var(--chrome-line);
   position:sticky;top:calc(env(safe-area-inset-top,0px) + 54px);z-index:59}
-.screens-in{max-width:1280px;margin:0 auto;padding-block:8px;padding-inline:16px;
-  display:flex;gap:6px;overflow-x:auto;scrollbar-width:thin}
-.screens-in::-webkit-scrollbar{height:4px}
+.screens-in{max-width:1280px;margin-inline:auto;padding-inline:16px;padding-block:7px;
+  display:flex;gap:5px;overflow-x:auto;scrollbar-width:thin}
+.screens-in::-webkit-scrollbar{height:3px}
 .screens-in::-webkit-scrollbar-thumb{background:var(--chrome-line);border-radius:9px}
-.screens button{flex:0 0 auto;padding:5px 12px;border-radius:8px;font-size:12.5px;font-weight:500;
-  color:var(--chrome-dim);border:1px solid transparent;display:flex;align-items:center;gap:7px}
+.screens button{flex:0 0 auto;padding:6px 12px;border-radius:var(--r-xs);font-size:12.5px;
+  color:var(--chrome-dim);border:1px solid transparent;display:flex;align-items:center;gap:8px;white-space:nowrap}
 .screens button:hover{color:var(--chrome-text)}
 .screens button[aria-current="true"]{background:var(--chrome);color:var(--chrome-text);border-color:var(--chrome-line)}
-.screens .ix{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--lime);opacity:.85}
-/* stage */
-.stage{max-width:1280px;margin:0 auto;padding-block:22px 56px;padding-inline:16px}
-.stage-head{display:flex;align-items:flex-start;gap:14px;flex-wrap:wrap;margin-bottom:16px}
-.stage-head h2{font-size:19px}
-.stage-head p{font-size:13px;color:var(--text2);max-width:62ch}
-.stage-kind{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
-  color:var(--text3);border:1px solid var(--line);border-radius:999px;padding:3px 10px;white-space:nowrap}
-/* phone frame */
+.screens .ix{font-family:var(--font-figure);font-size:10.5px;color:var(--chrome-dim)}
+.screens button[aria-current="true"] .ix{color:var(--chrome-sel)}
+/* ===================== stage ===================== */
+.stage{max-width:1280px;margin-inline:auto;padding-inline:16px;padding-block:22px 56px}
+.stage-head{display:flex;align-items:flex-start;gap:14px;flex-wrap:wrap;margin-block-end:16px}
+.stage-head h2{font-size:22px;font-weight:700;line-height:1.45}
+.stage-head p{font-size:13px;line-height:1.7;color:var(--text-2);max-width:62ch;margin-block-start:4px}
+.stage-kind{font:600 11.5px/1.55 var(--font-ui);color:var(--text-3);border:1px solid var(--hairline);
+  border-radius:var(--r-pill);padding:4px 12px;white-space:nowrap;background:var(--surface)}
+/* ===================== phone frame (scaffolding family) ===================== */
 .phone-wrap{display:flex;justify-content:center}
-.phone{width:min(430px,100%);background:var(--bg);border:9px solid var(--chrome);border-radius:40px;
-  box-shadow:var(--shadow-lift);overflow:hidden;position:relative}
+.phone{width:min(430px,100%);background:var(--ground);border:9px solid var(--chrome);
+  border-radius:var(--r-device);box-shadow:var(--shadow-device);overflow:hidden}
 .phone-bar{background:var(--chrome);color:var(--chrome-dim);display:flex;justify-content:space-between;
-  padding:2px 20px 6px;font-size:11px}
-.phone-scroll{max-height:76vh;overflow-y:auto;overscroll-behavior:contain;background:var(--bg)}
+  padding:2px 20px 7px;font:500 11px var(--font-figure)}
+.phone-scroll{max-height:76vh;overflow-y:auto;overscroll-behavior:contain;background:var(--ground)}
 @media (max-width:620px){
   .phone{border:0;border-radius:0;box-shadow:none;width:100%}
   .phone-bar{display:none}
@@ -123,24 +152,29 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
   .stage{padding-inline:0;padding-block:14px 40px}
   .stage-head{padding-inline:16px}
 }
-/* desktop app frame */
-.desk{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-l);overflow:hidden;
-  box-shadow:var(--shadow);display:grid;grid-template-columns:212px 1fr}
-.desk-side{background:var(--chrome);color:var(--chrome-dim);padding-block:16px;padding-inline:10px;
+/* ===================== admin console ===================== */
+.desk{background:var(--surface);border:1px solid var(--hairline);border-radius:var(--r-lg);
+  overflow:hidden;display:grid;grid-template-columns:216px 1fr}
+.desk-side{background:var(--side);color:var(--side-dim);padding-block:16px;padding-inline:10px;
   display:flex;flex-direction:column;gap:2px}
-.desk-side .who{padding:8px 10px 14px;border-bottom:1px solid var(--chrome-line);margin-bottom:10px}
-.desk-side .who b{color:var(--chrome-text);font-size:13px;display:block}
-.desk-side .who small{font-size:11px}
-.desk-side a{padding:7px 10px;border-radius:8px;font-size:13px;display:flex;gap:9px;align-items:center;
-  text-decoration:none}
-.desk-side a[data-on="1"]{background:var(--chrome2);color:var(--chrome-text);box-shadow:inset 2px 0 0 var(--lime)}
-.desk-main{min-width:0;background:var(--surface2)}
-.desk-top{background:var(--surface);border-bottom:1px solid var(--line);padding:12px 18px;
+.desk-side .who{display:flex;align-items:center;gap:10px;padding:6px 10px 14px;
+  border-block-end:1px solid var(--side-line);margin-block-end:12px}
+.desk-side .who .mark{width:22px;height:26px;flex:0 0 auto}
+.desk-side .who b{color:var(--side-text);font:600 13px/1.35 var(--font-ui);display:block}
+.desk-side .who small{font-size:11.5px;line-height:1.35}
+.desk-side a{padding:9px 11px;border-radius:var(--r-xs);font:500 13px var(--font-ui);
+  color:var(--side-dim);display:flex;gap:10px;align-items:center;text-decoration:none}
+@media (prefers-reduced-motion:no-preference){.desk-side a{transition:background-color .15s ease,color .15s ease}}
+.desk-side a:hover{color:var(--side-text)}
+.desk-side a[data-on="1"]{background:var(--side-raised);color:var(--side-text);box-shadow:inset 2px 0 0 var(--side-rail)}
+.desk-side a .ic{width:18px;height:18px;flex:0 0 auto;opacity:.9}
+.desk-main{min-width:0;background:var(--ground)}
+.desk-top{background:var(--surface);border-block-end:1px solid var(--hairline);padding:13px 18px;
   display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.desk-top h3{font-size:16px}
+.desk-top h3{font-family:var(--font-ui);font-size:16px;font-weight:600}
 .desk-body{padding:18px;display:flex;flex-direction:column;gap:16px}
 @media (max-width:860px){
-  .desk{grid-template-columns:1fr;border-radius:var(--r-m)}
+  .desk{grid-template-columns:1fr;border-radius:var(--r-md)}
   .desk-side{flex-direction:row;overflow-x:auto;gap:4px;padding:8px}
   .desk-side .who{display:none}
   .desk-side a{white-space:nowrap}
@@ -149,238 +183,281 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 @media (max-width:620px){.desk{border-inline:0;border-radius:0}}
 </style>
 <style>
-/* ============ shared product UI ============ */
-.pad{padding-inline:18px}
+/* ===================== type helpers & layout ===================== */
 .stack{display:flex;flex-direction:column}
 .g6{gap:6px}.g8{gap:8px}.g10{gap:10px}.g12{gap:12px}.g14{gap:14px}.g18{gap:18px}.g24{gap:24px}
 .row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .spread{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.muted{color:var(--text2)}
-.dim{color:var(--text3)}
-.tiny{font-size:12px;line-height:1.6}
+.muted{color:var(--text-2)}
+.dim{color:var(--text-3)}
+.tiny{font-size:11.5px;line-height:1.55}
 .sm{font-size:13px;line-height:1.7}
-.eyebrow{font-size:11px;font-weight:600;letter-spacing:.08em;color:var(--text3);text-transform:uppercase}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-l);padding:16px}
-.card.flat{box-shadow:none}
-.card.tight{padding:13px}
-.sec-title{font-size:16px;margin-bottom:2px}
-hr.rule{border:0;border-top:1px solid var(--line-soft);margin:0}
-/* pills */
-.pill{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;
-  padding:3px 9px;border-radius:999px;border:1px solid transparent;white-space:nowrap;line-height:1.7}
-.pill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;flex:0 0 auto}
-.pill.plain::before{display:none}
-.p-ok{background:var(--ok-soft);color:var(--ok);border-color:color-mix(in srgb,var(--ok) 26%,transparent)}
-.p-warn{background:var(--warn-soft);color:var(--warn);border-color:color-mix(in srgb,var(--warn) 26%,transparent)}
-.p-dan{background:var(--danger-soft);color:var(--danger);border-color:color-mix(in srgb,var(--danger) 26%,transparent)}
-.p-info{background:var(--info-soft);color:var(--info);border-color:color-mix(in srgb,var(--info) 26%,transparent)}
-.p-mute{background:var(--sunk);color:var(--text2);border-color:var(--line)}
-.p-brand{background:var(--brand-soft);color:var(--brand-ink);border-color:var(--brand-line)}
-:root[data-theme="dark"] .p-brand,:root:not([data-theme="light"]) .p-brand{color:var(--brand-ink)}
-.draft{font-size:10.5px;font-weight:600;color:var(--warn);background:var(--warn-soft);
-  border:1px dashed color-mix(in srgb,var(--warn) 45%,transparent);border-radius:6px;padding:2px 7px;white-space:nowrap}
-/* buttons */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:600;font-size:14px;
-  padding:11px 18px;border-radius:12px;border:1px solid transparent;transition:filter .15s,background .15s;
-  text-decoration:none;text-align:center}
-.btn:hover{filter:brightness(.96)}
-.btn-pri{background:var(--brand);color:#fff}
-:root[data-theme="dark"] .btn-pri,:root:not([data-theme="light"]) .btn-pri{color:#08150C}
-.btn-ghost{background:var(--surface);border-color:var(--line);color:var(--text)}
-.btn-soft{background:var(--brand-soft);color:var(--brand-ink);border-color:var(--brand-line)}
-.btn-dan{background:var(--danger-soft);color:var(--danger);border-color:color-mix(in srgb,var(--danger) 30%,transparent)}
-.btn-sm{padding:7px 12px;font-size:12.5px;border-radius:9px}
-.btn-block{width:100%}
-/* form */
-.field{display:flex;flex-direction:column;gap:6px}
-.field>label{font-size:13px;font-weight:600}
-.field .hint{font-size:11.5px;color:var(--text3)}
-.inp{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:11px;
-  padding:11px 13px;font:inherit;font-size:14px;color:var(--text)}
-.inp::placeholder{color:var(--text3)}
-select.inp{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--text3) 50%),linear-gradient(135deg,var(--text3) 50%,transparent 50%);
-  background-position:left 16px top 50%,left 11px top 50%;background-size:5px 5px,5px 5px;background-repeat:no-repeat}
-.opts{display:flex;flex-direction:column;gap:7px}
-.opt{display:flex;align-items:flex-start;gap:10px;border:1px solid var(--line);background:var(--surface);
-  border-radius:11px;padding:10px 12px;font-size:13.5px;cursor:pointer;transition:border-color .15s,background .15s}
-.opt:hover{border-color:var(--brand-line)}
-.opt input{accent-color:var(--brand);margin:5px 0 0}
-.opt b{font-weight:600;display:block}
-.opt span{font-size:11.5px;color:var(--text3)}
-.opt[data-on="1"]{border-color:var(--brand);background:var(--brand-soft)}
-.opts.inline{flex-direction:row;flex-wrap:wrap}
-.opts.inline .opt{flex:1 1 130px}
-.reveal{border-inline-start:2px solid var(--brand-line);padding-inline-start:12px;margin-inline-start:4px;
-  display:flex;flex-direction:column;gap:12px}
-.reveal-tag{font-size:11px;color:var(--brand);font-weight:600}
-/* steps */
-.steps{display:flex;gap:4px;overflow-x:auto;padding-bottom:2px}
-.steps button{flex:0 0 auto;display:flex;flex-direction:column;gap:5px;width:88px;text-align:start}
-.steps .bar{height:4px;border-radius:9px;background:var(--line)}
-.steps button[data-state="done"] .bar{background:var(--brand)}
-.steps button[data-state="now"] .bar{background:var(--brand)}
-.steps button[data-state="now"] .lb{color:var(--text);font-weight:600}
-.steps .lb{font-size:11px;color:var(--text3);line-height:1.45}
-/* timeline */
-.tl{display:flex;flex-direction:column}
-.tl li{display:grid;grid-template-columns:22px 1fr;gap:12px;padding-bottom:16px;position:relative}
-.tl li::before{content:"";position:absolute;inset-inline-start:10px;top:20px;bottom:0;width:2px;background:var(--line)}
-.tl li:last-child{padding-bottom:0}
-.tl li:last-child::before{display:none}
-.tl .dot{width:21px;height:21px;border-radius:50%;border:2px solid var(--line);background:var(--surface);
-  display:grid;place-items:center;font-size:11px;color:var(--text3);z-index:1}
-.tl li[data-s="done"] .dot{background:var(--brand);border-color:var(--brand);color:#fff}
-.tl li[data-s="done"]::before{background:var(--brand)}
-.tl li[data-s="now"] .dot{border-color:var(--brand);color:var(--brand);
-  box-shadow:0 0 0 4px color-mix(in srgb,var(--brand) 16%,transparent)}
-.tl li[data-s="now"] b{color:var(--brand-ink)}
-:root[data-theme="dark"] .tl li[data-s="now"] b,:root:not([data-theme="light"]) .tl li[data-s="now"] b{color:var(--brand)}
-.tl b{font-size:13.5px;font-weight:600;display:block}
-.tl p{font-size:12px;color:var(--text2)}
-.tl time{font-size:11px;color:var(--text3);font-family:"IBM Plex Mono",monospace}
-/* metric */
-.metric{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-m);padding:12px}
-.metric .top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
-.metric .val{font-size:20px;font-weight:700;font-family:"IBM Plex Mono",monospace;line-height:1.2}
-.metric .cap{font-size:11.5px;color:var(--text3)}
-.track{height:6px;border-radius:9px;background:var(--sunk);overflow:hidden;margin-top:9px}
-.track i{display:block;height:100%;border-radius:9px;background:var(--brand)}
-.track i.bad{background:var(--danger)}
-.track i.mid{background:var(--warn)}
+.eyebrow{font:600 11.5px/1.55 var(--font-ui);color:var(--text-3)}
+.sec-title{font-family:var(--font-ui);font-size:18px;font-weight:600;line-height:1.55}
+.lede{font-size:15px;line-height:1.75;color:var(--text-2);max-width:38ch}
+hr.rule{border:0;border-block-start:1px solid var(--hairline);margin:0}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 .grid4{display:grid;grid-template-columns:repeat(auto-fit,minmax(178px,1fr));gap:12px}
 .grid6{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 .split{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 @media (max-width:860px){.grid6{grid-template-columns:repeat(2,1fr)}.split{grid-template-columns:1fr}}
-@media (max-width:460px){.grid6{grid-template-columns:1fr}}
 @media (max-width:700px){.grid3{grid-template-columns:1fr 1fr}}
-@media (max-width:420px){.grid3{grid-template-columns:1fr}}
-/* table */
-.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r-m);background:var(--surface)}
-table.tbl{width:100%;border-collapse:collapse;font-size:12.5px;min-width:660px}
-table.tbl th{text-align:start;font-weight:600;color:var(--text3);font-size:11px;letter-spacing:.03em;
-  padding:9px 12px;background:var(--surface2);border-bottom:1px solid var(--line);white-space:nowrap}
-table.tbl td{padding:10px 12px;border-bottom:1px solid var(--line-soft);vertical-align:middle}
-table.tbl tr:last-child td{border-bottom:0}
-table.tbl tbody tr:hover{background:var(--surface2)}
+@media (max-width:460px){.grid6{grid-template-columns:1fr}.grid3{grid-template-columns:1fr}}
+/* ===================== surfaces ===================== */
+.card{background:var(--surface);border:1px solid var(--hairline);border-radius:var(--r-md);padding:16px}
+.card.tight{padding:13px}
+.card.sm-r{border-radius:var(--r-sm)}
+
+/* icon sizing */
+svg.ic{width:18px;height:18px;flex:0 0 auto}
+svg.ico{width:20px;height:20px;flex:0 0 auto;margin-block-start:1px}
+.doc .ic svg{width:18px;height:18px}
+.desk-side a svg{width:18px;height:18px;flex:0 0 auto;opacity:.85}
+.desk-side a[data-on="1"] svg{opacity:1}
+/* ===================== status pill ===================== */
+.pill{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:var(--r-pill);
+  font:600 11.5px/1.55 var(--font-ui);white-space:nowrap;border:1px solid transparent}
+.pill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;flex:0 0 auto}
+.pill.plain::before{display:none}
+.p-ok{background:var(--pos-fill);border-color:var(--pos-border);color:var(--pos-ink)}
+.p-warn{background:var(--att-fill);border-color:var(--att-border);color:var(--att-ink)}
+.p-dan{background:var(--crit-fill);border-color:var(--crit-border);color:var(--crit-ink)}
+.p-info{background:var(--info-fill);border-color:var(--info-border);color:var(--info-ink)}
+.p-mute{background:var(--surface-sunken);border-color:var(--hairline);color:var(--text-2)}
+.p-brand{background:var(--accent-subtle);border-color:var(--accent-border);color:var(--accent-ink)}
+.draft{font:600 11px/1.55 var(--font-ui);color:var(--att-ink);background:var(--att-fill);
+  border:1px dashed var(--att-edge);border-radius:var(--r-xs);padding:2px 8px;white-space:nowrap}
+/* ===================== buttons ===================== */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid transparent;
+  font:600 15px/1.2 var(--font-ui);cursor:pointer;text-decoration:none;text-align:center;
+  padding:13px 20px;border-radius:var(--r-sm)}
+@media (prefers-reduced-motion:no-preference){.btn{transition:background-color .15s ease,border-color .15s ease,color .15s ease}}
+.btn-pri{background:var(--accent);color:var(--on-accent)}
+.btn-pri:hover{background:var(--accent-hover)}
+.btn-ghost{background:var(--surface);color:var(--text);border-color:var(--border-strong);padding:12px 19px}
+.btn-ghost:hover{background:var(--surface-sunken)}
+.btn-soft{background:transparent;color:var(--accent);padding:12px 16px}
+.btn-soft:hover{background:var(--accent-subtle)}
+.btn-dan{background:var(--crit-fill);color:var(--crit-ink);border-color:var(--crit-edge);padding:12px 19px}
+.btn-dan:hover{border-color:var(--crit-ink)}
+.btn[disabled]{background:var(--surface-sunken);color:var(--text-disabled);border-color:var(--hairline);cursor:not-allowed}
+.btn-sm{padding:7px 12px;font-size:13px;border-radius:var(--r-xs)}
+.btn-block{width:100%}
+.phone-scroll .btn{min-height:44px}
+.phone-scroll .btn-sm{min-height:40px;padding:9px 14px}
+/* ===================== form ===================== */
+.field{display:flex;flex-direction:column;gap:6px}
+.field>label{font:600 13px/1.6 var(--font-ui)}
+.field .hint{font-size:11.5px;line-height:1.55;color:var(--text-3)}
+.inp{width:100%;background:var(--surface);border:1px solid var(--border-strong);border-radius:var(--r-sm);
+  padding:12px 14px;font:400 15px/1.5 var(--font-ui);color:var(--text)}
+.inp::placeholder{color:var(--text-3)}
+.inp:hover{border-color:var(--text-2)}
+.inp:focus{border-color:var(--accent-edge)}
+select.inp{appearance:none;background-repeat:no-repeat;background-position:left 14px center;background-size:11px 7px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' fill='none' stroke='%23666C7B' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E")}
+/* option card */
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{display:flex;align-items:flex-start;gap:12px;background:var(--surface);border:1px solid var(--hairline);
+  border-radius:var(--r-md);padding:14px 16px;min-height:56px;cursor:pointer;font-size:16px}
+@media (prefers-reduced-motion:no-preference){.opt{transition:background-color .15s ease,border-color .15s ease,color .15s ease}}
+.opt:hover{border-color:var(--border-strong)}
+.opt input{accent-color:var(--accent);width:20px;height:20px;margin:3px 0 0;flex:0 0 auto}
+.opt b{font:600 16px/1.5 var(--font-ui);display:block}
+.opt span span,.opt>span>span{display:block;font-size:12px;line-height:1.6;color:var(--text-3);font-weight:400}
+.opt[data-on="1"]{border:1.5px solid var(--accent-edge);background:var(--accent-subtle);color:var(--accent-ink);padding:13.5px 15.5px}
+.opt[data-on="1"] span span{color:var(--accent-ink);opacity:.82}
+.opts.inline{flex-direction:row;flex-wrap:wrap}
+.opts.inline .opt{flex:1 1 140px;font-size:14px;min-height:48px;padding:11px 13px}
+.opts.inline .opt b{font-size:14px}
+.reveal{border-inline-start:2px solid var(--accent-border);padding-inline-start:14px;margin-inline-start:4px;
+  display:flex;flex-direction:column;gap:12px}
+.reveal-tag{font:600 11.5px/1.55 var(--font-ui);color:var(--accent-ink)}
+/* ===================== stepper ===================== */
+.steps{display:flex;gap:6px;overflow-x:auto;padding-block-end:2px;scrollbar-width:none}
+.steps::-webkit-scrollbar{display:none}
+.steps button{flex:1 1 0;min-width:62px;display:flex;flex-direction:column;gap:6px;text-align:start}
+.steps .bar{height:4px;border-radius:var(--r-pill);background:var(--hairline)}
+.steps button[data-state="done"] .bar,.steps button[data-state="now"] .bar{background:var(--accent)}
+.steps .lb{font-size:11.5px;line-height:1.45;color:var(--text-3);font-weight:400}
+.steps button[data-state="done"] .lb{color:var(--text-2)}
+.steps button[data-state="now"] .lb{color:var(--text);font-weight:600}
+.steps button[data-state="now"] .lb::before{content:"";display:block;width:4px;height:4px;border-radius:50%;
+  background:var(--accent);margin-block-end:4px}
+/* ===================== timeline ===================== */
+.tl li{display:grid;grid-template-columns:22px 1fr;gap:12px;padding-block-end:18px;position:relative}
+.tl li::before{content:"";position:absolute;inset-inline-start:10px;top:22px;bottom:0;width:2px;background:var(--hairline)}
+.tl li:last-child{padding-block-end:0}
+.tl li:last-child::before{display:none}
+.tl .dot{width:20px;height:20px;border-radius:50%;border:2px solid var(--hairline);background:var(--surface);
+  display:grid;place-items:center;font-size:11px;color:var(--text-3);z-index:1;font-family:var(--font-figure)}
+.tl li[data-s="done"] .dot{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.tl li[data-s="done"]::before{background:var(--accent)}
+.tl li[data-s="now"] .dot{border-color:var(--accent-edge);color:var(--accent-ink);
+  box-shadow:0 0 0 4px var(--accent-subtle)}
+.tl li[data-s="warn"] .dot{background:var(--att-fill);border-color:var(--att-edge);color:var(--att-ink)}
+.tl li[data-s="warn"] b{color:var(--att-ink)}
+.tl b{font:600 13px/1.6 var(--font-ui);display:block}
+.tl li[data-s="todo"] b{color:var(--text-3);font-weight:400}
+.tl p{font-size:13px;line-height:1.7;color:var(--text-2)}
+.tl time{display:block;font-family:var(--font-figure);font-size:13px;color:var(--text-3)}
+/* ===================== metric tile & meter ===================== */
+.metric{background:var(--surface);border:1px solid var(--hairline);border-radius:var(--r-sm);
+  padding:14px;display:flex;flex-direction:column;gap:4px}
+.metric .cap{font:600 11.5px/1.55 var(--font-ui);color:var(--text-3)}
+.metric .top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.metric .val{font:600 22px/1.2 var(--font-figure);font-variant-numeric:tabular-nums;color:var(--text)}
+.metric .unit{font:500 13px var(--font-ui);color:var(--text-3)}
+.track{position:relative;height:6px;border-radius:var(--r-pill);background:var(--surface-sunken);
+  overflow:hidden;margin-block-start:9px}
+.track i{display:block;height:100%;border-radius:var(--r-pill);background:var(--accent)}
+.track i.good{background:var(--pos-edge)}
+.track i.mid{background:var(--att-edge)}
+.track i.bad{background:var(--crit-edge)}
+.track i.neutral{background:var(--accent)}
+.track .tick{position:absolute;top:-2px;bottom:-2px;width:2px;background:var(--border-strong);border-radius:1px}
+/* ===================== table ===================== */
+.tbl-wrap{overflow-x:auto;border:1px solid var(--hairline);border-radius:var(--r-sm);background:var(--surface)}
+table.tbl{width:100%;border-collapse:collapse;font-size:13px;min-width:680px}
+table.tbl th{background:var(--th-bg);color:var(--text-3);font:600 11.5px/1.55 var(--font-ui);
+  padding:10px 14px;text-align:start;white-space:nowrap;border-block-end:1px solid var(--hairline)}
+table.tbl td{padding:12px 14px;border-block-end:1px solid var(--hairline);vertical-align:middle}
+table.tbl tr:last-child td{border-block-end:0}
+table.tbl tbody tr:hover{background:var(--row-alt)}
+table.tbl td .btn-sm{opacity:.55}
+table.tbl tr:hover .btn-sm,table.tbl tr:focus-within .btn-sm{opacity:1}
+table.tbl th{position:sticky;top:0;z-index:2}
 table.tbl td b{font-weight:600}
+table.tbl td.num,table.tbl .num{color:var(--text-2)}
 .matrix{min-width:520px}
-/* notices */
-.notice{border-radius:var(--r-m);padding:12px 14px;display:flex;gap:11px;align-items:flex-start;font-size:13px;line-height:1.65}
-.notice b{display:block;font-weight:600;margin-bottom:2px}
-.n-info{background:var(--info-soft);color:var(--info);border:1px solid color-mix(in srgb,var(--info) 22%,transparent)}
-.n-warn{background:var(--warn-soft);color:var(--warn);border:1px solid color-mix(in srgb,var(--warn) 24%,transparent)}
-.n-ok{background:var(--ok-soft);color:var(--ok);border:1px solid color-mix(in srgb,var(--ok) 24%,transparent)}
-.n-dan{background:var(--danger-soft);color:var(--danger);border:1px solid color-mix(in srgb,var(--danger) 24%,transparent)}
-.notice .ico{font-size:15px;line-height:1.5}
-/* misc */
+/* ===================== notices ===================== */
+.notice{display:flex;gap:12px;align-items:flex-start;border-radius:var(--r-md);padding:14px 16px;
+  font-size:13px;line-height:1.7;border:1px solid transparent}
+.notice b{display:block;font:600 16px/1.5 var(--font-ui);margin-block-end:2px}
+.notice .ico{width:20px;height:20px;flex:0 0 auto;margin-block-start:1px}
+.n-info{background:var(--info-fill);border-color:var(--info-border);color:var(--info-ink)}
+.n-warn{background:var(--att-fill);border-color:var(--att-border);color:var(--att-ink)}
+.n-ok{background:var(--pos-fill);border-color:var(--pos-border);color:var(--pos-ink)}
+.n-dan{background:var(--crit-fill);border-color:var(--crit-border);color:var(--crit-ink)}
+/* ===================== misc components ===================== */
 .chips{display:flex;gap:6px;flex-wrap:wrap}
-.chip{font-size:12px;padding:5px 11px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--text2)}
-.chip[data-on="1"]{background:var(--brand);border-color:var(--brand);color:#fff}
-:root[data-theme="dark"] .chip[data-on="1"],:root:not([data-theme="light"]) .chip[data-on="1"]{color:#08150C}
-.kv{display:grid;grid-template-columns:auto 1fr;gap:5px 14px;font-size:13px}
-.kv dt{color:var(--text3);font-size:12px}
+.chip{font:500 12.5px/1.5 var(--font-ui);padding:6px 12px;border-radius:var(--r-xs);
+  border:1px solid var(--hairline);background:var(--surface);color:var(--text-2);cursor:pointer}
+.chip:hover{border-color:var(--border-strong)}
+.chip[data-on="1"]{background:var(--accent-subtle);border-color:var(--accent-edge);color:var(--accent-ink);font-weight:600}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;font-size:13px;margin:0}
+.kv dt{color:var(--text-3);font-size:12px}
 .kv dd{margin:0;font-weight:500}
-.doc{display:flex;align-items:center;gap:11px;padding:11px 12px;border:1px solid var(--line);
-  border-radius:var(--r-m);background:var(--surface)}
-.doc .ic{width:34px;height:34px;border-radius:9px;background:var(--sunk);display:grid;place-items:center;flex:0 0 auto;font-size:15px}
+.doc{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--hairline);
+  border-radius:var(--r-md);background:var(--surface)}
+.doc .ic{width:34px;height:34px;border-radius:var(--r-xs);background:var(--surface-sunken);
+  display:grid;place-items:center;flex:0 0 auto;color:var(--text-2)}
 .doc .t{flex:1;min-width:0}
-.doc .t b{display:block;font-size:13px;font-weight:600}
-.doc .t span{font-size:11.5px;color:var(--text3)}
-.qr{width:112px;height:112px;border-radius:12px;background:
-  repeating-conic-gradient(var(--text) 0 25%, transparent 0 50%) 0 0/16px 16px;
-  border:6px solid var(--surface);box-shadow:0 0 0 1px var(--line);flex:0 0 auto}
-.ring{--p:0;width:58px;height:58px;border-radius:50%;flex:0 0 auto;display:grid;place-items:center;
-  background:conic-gradient(var(--rc,var(--brand)) calc(var(--p)*1%),var(--sunk) 0)}
-.ring span{width:44px;height:44px;border-radius:50%;background:var(--surface);display:grid;place-items:center;
-  font-size:12.5px;font-weight:700;font-family:"IBM Plex Mono",monospace}
+.doc .t b{display:block;font:600 13px/1.6 var(--font-ui)}
+.doc .t span{font-size:11.5px;line-height:1.55;color:var(--text-3)}
+.check{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-block-end:1px solid var(--hairline)}
+.check:last-child{border-block-end:0}
+.check .bx{width:21px;height:21px;border-radius:var(--r-xs);border:1.5px solid var(--hairline);
+  display:grid;place-items:center;font-size:11px;flex:0 0 auto;background:var(--surface);color:var(--text-3)}
+.check[data-s="done"] .bx{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.check[data-s="now"] .bx{border-color:var(--att-edge);color:var(--att-ink);background:var(--att-fill)}
+.check .bd{flex:1;min-width:0}
+.check .bd b{font:600 13px/1.6 var(--font-ui);display:block}
+.check .bd p{font-size:12px;line-height:1.65;color:var(--text-2)}
+.check[data-s="todo"] .bd b{color:var(--text-3);font-weight:400}
+.qr{width:112px;height:112px;border-radius:var(--r-xs);flex:0 0 auto;
+  background:repeating-conic-gradient(var(--text) 0 25%, transparent 0 50%) 0 0/16px 16px;
+  border:6px solid var(--surface);box-shadow:0 0 0 1px var(--hairline)}
+/* ===================== sheet ===================== */
+.sheet{position:fixed;inset:0;z-index:90;background:var(--scrim);display:grid;place-items:end center}
+.sheet-in{background:var(--surface);width:min(560px,100%);max-height:82%;overflow-y:auto;
+  border-radius:var(--r-lg) var(--r-lg) 0 0;box-shadow:var(--shadow-overlay);
+  padding:20px 18px calc(18px + env(safe-area-inset-bottom,0px));position:relative}
+.sheet-in::before{content:"";position:absolute;top:8px;inset-inline:0;margin-inline:auto;
+  width:36px;height:4px;border-radius:var(--r-pill);background:var(--hairline)}
+@media (min-width:700px){
+  .sheet{place-items:center}
+  .sheet-in{border-radius:var(--r-lg);padding:24px;max-height:86%}
+  .sheet-in::before{display:none}
+}
 </style>
 <style>
-/* ============ applicant-site specific ============ */
-.app-top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--surface) 92%,transparent);
-  backdrop-filter:blur(10px);border-bottom:1px solid var(--line-soft);padding:10px 16px;
-  display:flex;align-items:center;justify-content:space-between;gap:10px}
-.lockup{display:flex;align-items:center;gap:9px}
-.lockup .mark{width:30px;height:30px;flex:0 0 auto}
-.lockup .nm{font-family:"Readex Pro",sans-serif;font-weight:600;font-size:13.5px;line-height:1.2}
-.lockup .nm small{display:block;font-size:10px;color:var(--text3);font-weight:400;font-family:"IBM Plex Sans Arabic",sans-serif}
-.partner{display:flex;align-items:center;gap:8px;border-inline-start:1px solid var(--line);padding-inline-start:9px}
-.partner .ub{font-family:"Readex Pro",sans-serif;font-weight:700;font-size:14px;letter-spacing:-.02em;color:var(--text)}
-.partner .pl{font-size:9.5px;color:var(--text3);line-height:1.2}
-.hero{background:
-   radial-gradient(120% 90% at 92% 0%, color-mix(in srgb,var(--lime) 22%,transparent) 0%, transparent 58%),
-   linear-gradient(190deg, var(--brand-soft) 0%, var(--surface) 78%);
-  padding:26px 18px 22px;border-bottom:1px solid var(--line-soft);position:relative;overflow:hidden}
-.hero .stripes{position:absolute;inset-inline-end:-30px;top:-20px;width:170px;height:170px;opacity:.16;pointer-events:none}
-.hero h1{font-size:25px;line-height:1.45;font-weight:700;letter-spacing:-.01em;position:relative}
-.hero h1 em{font-style:normal;color:var(--brand);display:block}
-.hero p{font-size:14px;color:var(--text2);margin-top:10px;position:relative;max-width:34ch}
-.facts{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);
-  border:1px solid var(--line);border-radius:var(--r-m);overflow:hidden;margin-top:18px;position:relative}
-.facts div{background:var(--surface);padding:11px 13px}
-.facts b{display:block;font-family:"IBM Plex Mono",monospace;font-size:17px;font-weight:600;color:var(--brand-ink)}
-:root[data-theme="dark"] .facts b,:root:not([data-theme="light"]) .facts b{color:var(--brand)}
-.facts span{font-size:11px;color:var(--text3)}
-.sec{padding:22px 18px;border-bottom:1px solid var(--line-soft)}
-.sec:last-child{border-bottom:0}
-.sec-h{display:flex;align-items:baseline;gap:9px;margin-bottom:13px;flex-wrap:wrap}
-.faq details{border:1px solid var(--line);border-radius:var(--r-m);background:var(--surface);overflow:hidden}
-.faq summary{padding:12px 14px;font-size:13.5px;font-weight:600;cursor:pointer;list-style:none;
-  display:flex;justify-content:space-between;gap:10px;align-items:center}
+/* ===================== applicant site ===================== */
+.app-top{position:sticky;top:0;z-index:20;background:var(--surface);
+  border-block-end:1px solid var(--hairline);box-shadow:var(--shadow-sticky);
+  padding:10px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.lockup{display:flex;align-items:center;gap:12px;color:var(--text)}
+.tw-icon{width:26px;height:30px;flex:0 0 auto;display:block}
+.proto-brand .mark,.proto-brand .tw-icon{width:19px;height:22px}
+.desk-side .who .tw-icon{width:22px;height:26px}
+.lockup .nm{font:600 15px/1.35 var(--font-ui);white-space:nowrap}
+.partner{display:flex;align-items:center;padding-inline-start:12px;
+  border-inline-start:1px solid var(--hairline);margin-inline-start:4px}
+.partner .pl{display:block;font-size:10px;line-height:1.3;color:var(--text-3)}
+.partner .ub{display:block;font:700 15px/1.15 var(--font-figure);color:var(--text)}
+/* hero — flat, start-aligned, no gradient */
+.hero{background:var(--ground);padding:24px 18px 22px;border-block-end:1px solid var(--hairline);text-align:start}
+.hero h1{font:700 28px/1.4 var(--font-display);margin-block-start:10px}
+.hero h1 em{font-style:normal;display:block;color:var(--accent-ink)}
+.hero .lede{margin-block-start:12px}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--hairline);
+  border:1px solid var(--hairline);border-radius:var(--r-sm);overflow:hidden;margin-block-start:20px}
+.facts div{background:var(--surface);padding:12px 14px}
+.facts b{display:block;font:600 22px/1.25 var(--font-ui);font-variant-numeric:tabular-nums;color:var(--text)}
+.facts span{font-size:11.5px;line-height:1.55;color:var(--text-3)}
+.sec{padding:22px 18px;border-block-end:1px solid var(--hairline);background:var(--surface)}
+.sec.alt{background:var(--ground)}
+.sec:last-of-type{border-block-end:0}
+.sec-h{display:flex;align-items:baseline;gap:10px;margin-block-end:14px;flex-wrap:wrap}
+.faq details{border:1px solid var(--hairline);border-radius:var(--r-md);background:var(--surface);overflow:hidden}
+.faq summary{padding:13px 15px;font:600 13px/1.6 var(--font-ui);cursor:pointer;list-style:none;
+  display:flex;justify-content:space-between;gap:10px;align-items:center;min-height:44px}
 .faq summary::-webkit-details-marker{display:none}
-.faq summary::after{content:"+";color:var(--brand);font-size:17px;font-weight:600}
+.faq summary::after{content:"+";color:var(--accent);font-size:18px;font-weight:600;font-family:var(--font-figure)}
 .faq details[open] summary::after{content:"−"}
-.faq p{padding:0 14px 13px;font-size:13px;color:var(--text2)}
-.stickycta{position:sticky;bottom:0;background:color-mix(in srgb,var(--surface) 94%,transparent);
-  backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:11px 16px calc(11px + env(safe-area-inset-bottom,0px));
-  display:flex;gap:9px;z-index:20}
-.otp{display:flex;gap:9px;direction:ltr;justify-content:center}
-.otp input{width:52px;height:58px;text-align:center;font-size:22px;font-weight:600;
-  font-family:"IBM Plex Mono",monospace;border:1px solid var(--line);border-radius:12px;
-  background:var(--surface);color:var(--text)}
-.otp input[value]:not([value=""]){border-color:var(--brand);background:var(--brand-soft)}
-.bikecard{background:linear-gradient(160deg,var(--brand-ink),#0A2E1A);color:#EAF6EA;border-radius:var(--r-l);
-  padding:16px;position:relative;overflow:hidden}
-.bikecard .stripes{position:absolute;inset-inline-start:-24px;bottom:-30px;width:150px;height:150px;opacity:.2}
-.bikecard b{font-family:"Readex Pro",sans-serif;font-size:16px;font-weight:600}
-.bikecard .plate{font-family:"IBM Plex Mono",monospace;font-size:15px;background:rgba(255,255,255,.12);
-  border:1px solid rgba(255,255,255,.22);border-radius:8px;padding:3px 10px;display:inline-block}
-.bikecard dl{display:grid;grid-template-columns:1fr 1fr;gap:8px 12px;margin:14px 0 0;position:relative}
-.bikecard dt{font-size:10.5px;color:#A8CFB0}
-.bikecard dd{margin:0;font-size:13px;font-weight:600;font-family:"IBM Plex Mono",monospace}
-.msg{display:flex;gap:10px;padding:11px 0;border-bottom:1px solid var(--line-soft)}
-.msg:last-child{border-bottom:0}
-.msg .av{width:30px;height:30px;border-radius:9px;background:var(--brand-soft);color:var(--brand-ink);
-  display:grid;place-items:center;font-size:12px;font-weight:700;flex:0 0 auto}
+.faq p{padding:0 15px 14px;font-size:13px;line-height:1.75;color:var(--text-2)}
+.stickycta{position:sticky;bottom:0;z-index:20;background:var(--surface);
+  border-block-start:1px solid var(--hairline);box-shadow:var(--shadow-sticky);
+  padding-inline:16px;padding-block:12px;padding-block-end:calc(12px + env(safe-area-inset-bottom,0px));
+  display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.stickycta .note{flex-basis:100%;font-size:11.5px;line-height:1.5;color:var(--text-3);order:-1}
+.otp{display:flex;gap:10px;direction:ltr;justify-content:center}
+.otp input{width:54px;height:60px;text-align:center;font:600 28px var(--font-figure);
+  border:1px solid var(--border-strong);border-radius:var(--r-sm);background:var(--surface);color:var(--text)}
+.otp input:not([value=""]){border-color:var(--accent-edge);background:var(--accent-subtle);color:var(--accent-ink)}
+/* delivered-bike card — flat side-ink, no gradient */
+.bikecard{background:var(--side);color:var(--side-text);border-radius:var(--r-md);padding:16px;
+  border:1px solid var(--side-line)}
+.bikecard b{font:600 16px/1.5 var(--font-ui)}
+.bikecard .plate{font:600 15px var(--font-figure);white-space:nowrap;
+  background:var(--side-raised);border:1px solid var(--side-line);border-radius:var(--r-xs);padding:4px 10px;display:inline-block}
+.bikecard dl{display:grid;grid-template-columns:1fr 1fr;gap:10px 14px;margin:16px 0 0}
+.bikecard dt{font-size:11px;line-height:1.4;color:var(--side-dim)}
+.bikecard dd{margin:0;font:600 13px var(--font-figure);color:var(--side-text)}
+.bikecard .track{background:var(--side-raised)}
+.bikecard .track i{background:var(--side-rail)}
+.msg{display:flex;gap:12px;padding:12px 0;border-block-end:1px solid var(--hairline)}
+.msg:last-child{border-block-end:0}
+.msg .av{width:32px;height:32px;border-radius:var(--r-xs);background:var(--accent-subtle);color:var(--accent-ink);
+  display:grid;place-items:center;font:700 12px var(--font-ui);flex:0 0 auto}
 .msg .bd{flex:1;min-width:0}
-.msg .bd p{font-size:12.5px;color:var(--text2);line-height:1.7}
 .msg .bd .hd{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
-.msg .bd b{font-size:12.5px}
-.msg time{font-size:10.5px;color:var(--text3);font-family:"IBM Plex Mono",monospace;white-space:nowrap}
-.pointcard{border:1px solid var(--line);border-radius:var(--r-m);padding:12px;background:var(--surface);
-  display:flex;flex-direction:column;gap:9px;cursor:pointer}
-.pointcard[data-on="1"]{border-color:var(--brand);background:var(--brand-soft);box-shadow:0 0 0 3px color-mix(in srgb,var(--brand) 12%,transparent)}
-.slots{display:flex;gap:6px;flex-wrap:wrap}
-.slot{font-size:12px;padding:6px 11px;border-radius:9px;border:1px solid var(--line);background:var(--surface);
-  font-family:"IBM Plex Mono",monospace}
-.slot[data-on="1"]{background:var(--brand);color:#fff;border-color:var(--brand)}
-.slot[disabled]{opacity:.42;text-decoration:line-through;cursor:not-allowed}
-.check{display:flex;gap:11px;align-items:flex-start;padding:11px 0;border-bottom:1px solid var(--line-soft)}
-.check:last-child{border-bottom:0}
-.check .bx{width:21px;height:21px;border-radius:7px;border:1.5px solid var(--line);display:grid;place-items:center;
-  font-size:11px;flex:0 0 auto;background:var(--surface);color:transparent}
-.check[data-s="done"] .bx{background:var(--brand);border-color:var(--brand);color:#fff}
-.check[data-s="now"] .bx{border-color:var(--brand);color:var(--brand);border-style:dashed}
-.check .bd{flex:1;min-width:0}
-.check .bd b{font-size:13.5px;font-weight:600;display:block}
-.check .bd p{font-size:12px;color:var(--text2)}
-/* modal */
-.sheet{position:fixed;inset:0;z-index:90;background:rgba(10,18,13,.55);display:grid;place-items:end center;padding:0}
-.sheet-in{background:var(--surface);width:min(680px,100%);max-height:86vh;overflow-y:auto;
-  border-radius:var(--r-xl) var(--r-xl) 0 0;padding:20px 20px calc(24px + env(safe-area-inset-bottom,0px));
-  border:1px solid var(--line);border-bottom:0}
-@media (min-width:700px){.sheet{place-items:center}.sheet-in{border-radius:var(--r-xl);border-bottom:1px solid var(--line)}}
+.msg .bd b{font:600 13px var(--font-ui)}
+.msg .bd p{font-size:13px;line-height:1.7;color:var(--text-2)}
+.msg time{font-family:var(--font-figure);font-size:11px;color:var(--text-3);white-space:nowrap}
+.pointcard{display:flex;flex-direction:column;gap:9px;text-align:start;width:100%;
+  border:1px solid var(--hairline);border-radius:var(--r-md);padding:14px 16px;background:var(--surface);cursor:pointer}
+.pointcard:hover{border-color:var(--border-strong)}
+.pointcard[data-on="1"]{border:1.5px solid var(--accent-edge);background:var(--accent-subtle);padding:13px 15px}
+.pointcard[disabled]{cursor:not-allowed;opacity:.6}
+.slots{display:flex;gap:8px;flex-wrap:wrap}
+.slot{font:500 13px var(--font-figure);padding:10px 14px;min-height:44px;border-radius:var(--r-xs);
+  border:1px solid var(--border-strong);background:var(--surface);color:var(--text)}
+.slot[data-on="1"]{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.slot[disabled]{opacity:.45;text-decoration:line-through;cursor:not-allowed;border-color:var(--hairline)}
+.upload{border:1.5px dashed var(--accent-border);border-radius:var(--r-md);padding:24px 16px;
+  text-align:center;background:var(--accent-subtle);color:var(--accent-ink)}
 </style>
 
 </head>
@@ -388,21 +465,14 @@ table.tbl td b{font-weight:600}
 <div class="proto">
   <div class="proto-in">
     <div class="proto-brand">
-      <svg class="mark" width="26" height="26" viewBox="0 0 120 120" aria-hidden="true">
-        <g opacity=".9"><rect x="6" y="30" width="8" height="60" transform="rotate(-45 10 60)" fill="#7CB342"/>
-        <rect x="18" y="30" width="8" height="60" transform="rotate(-45 22 60)" fill="#7CB342"/>
-        <rect x="30" y="30" width="8" height="60" transform="rotate(-45 34 60)" fill="#7CB342"/></g>
-        <rect x="42" y="18" width="60" height="60" rx="4" transform="rotate(45 72 48)" fill="#43A047"/>
-        <text x="60" y="68" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="26" fill="#fff" text-anchor="middle">TW</text>
-      </svg>
-      <div><b>بروتوتايب — برنامج تمليك الموتوسيكلات</b>
-        <small>تريد واي × أوبر · ٣ واجهات · ١٧ شاشة</small></div>
+      <span id="protoMark"></span>
+      <div><b>تريد واي</b><small>نموذج تفاعلي — ليس نظامًا حيًّا</small></div>
     </div>
     <div class="tabs" role="tablist" id="portalTabs"></div>
-    <div class="proto-note">نسخة تصميم مبدئية — <button type="button" id="openNotes">ملاحظات وقرارات مفتوحة</button></div>
+    <div class="proto-note">قيم التشغيل مبدئية — <button type="button" id="openNotes">القرارات المفتوحة</button></div>
   </div>
 </div>
-<nav class="screens" aria-label="شاشات البروتوتايب"><div class="screens-in" id="screenNav"></div></nav>
+<nav class="screens" aria-label="شاشات النموذج"><div class="screens-in" id="screenNav"></div></nav>
 <main class="stage">
   <div class="stage-head">
     <div style="flex:1;min-width:240px">
@@ -416,46 +486,74 @@ table.tbl td b{font-weight:600}
 <div id="sheetMount"></div>
 <script>
 /* ================= helpers ================= */
-const TW_MARK = `<svg class="mark" viewBox="0 0 120 120" aria-hidden="true">
-  <g opacity=".9"><rect x="6" y="30" width="8" height="60" transform="rotate(-45 10 60)" fill="#7CB342"/>
-  <rect x="18" y="30" width="8" height="60" transform="rotate(-45 22 60)" fill="#7CB342"/>
-  <rect x="30" y="30" width="8" height="60" transform="rotate(-45 34 60)" fill="#7CB342"/></g>
-  <rect x="42" y="18" width="60" height="60" rx="4" transform="rotate(45 72 48)" fill="#43A047"/>
-  <text x="60" y="68" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="26" fill="#fff" text-anchor="middle">TW</text></svg>`;
+/* Trade Way brand marks — extracted verbatim from TRADE_WAY_LOGO.pdf */
+const TW_GREEN='#62AE46', TW_GREEN_DEEP='#528D41';
+const LOGO_ICON = `<svg class="tw-icon" viewBox="0 0 630.76 774.63" aria-hidden="true"><g transform="translate(-728.305 1736.599) scale(1 -1)"><path fill="#62AE46" d="M1045.663 961.966L1353.909 1338.458C1359.064 1344.755 1359.064 1353.811 1353.909 1360.106L1045.663 1736.599L728.305 1349.283Z"/><path fill="#FFFFFF" d="M1068.188 1439.555L1068.188 1308.307L1118.272 1268.573L1118.272 1392.588L1167.115 1392.588L1167.115 1176.878L1043.765 1267.665L920.417 1176.878L920.417 1392.588L969.260 1392.588L969.260 1268.573L1019.345 1308.307L1019.345 1439.555L920.417 1439.555L920.417 1488.398L1167.115 1488.398L1167.115 1439.555Z"/></g></svg>`;
+const LOGO_MARK = `<svg class="tw-mark" viewBox="0 0 912.74 781.24" aria-hidden="true"><g transform="translate(-446.327 1743.207) scale(1 -1)"><path fill="#62AE46" d="M446.327 1352.581L766.412 1743.207L799.912 1702.262L480.554 1312.513Z"/><path fill="#62AE46" d="M525.977 1274.695L837.372 1654.716L870.872 1613.771L551.514 1224.022L526.192 1253.665C521.038 1259.698 520.948 1268.557 525.977 1274.695"/><path fill="#62AE46" d="M583.553 1173.220L903.638 1563.846L937.138 1522.901L617.779 1133.152Z"/><path fill="#62AE46" d="M669.536 1101.558L979.606 1479.962L1013.106 1439.017L693.748 1049.269L669.784 1077.322C663.845 1084.275 663.740 1094.485 669.536 1101.558"/><path fill="#62AE46" d="M739.483 1010.981L1052.236 1392.660L1085.736 1351.715L766.378 961.966L739.665 993.238C735.316 998.328 735.240 1005.803 739.483 1010.981"/><path fill="#528D41" d="M684.831 1297.125L1004.916 1687.751L1038.416 1646.806L719.058 1257.057Z"/><path fill="#528D41" d="M757.043 1209.886L1077.128 1600.512L1110.628 1559.567L791.270 1169.818Z"/><path fill="#528D41" d="M830.925 1120.977L1151.010 1511.603L1184.510 1470.658L865.152 1080.909Z"/><path fill="#62AE46" d="M1045.663 961.966L1353.909 1338.458C1359.064 1344.755 1359.064 1353.811 1353.909 1360.106L1045.663 1736.599L728.305 1349.283Z"/><path fill="#FFFFFF" d="M1068.188 1439.555L1068.188 1308.307L1118.272 1268.573L1118.272 1392.588L1167.115 1392.588L1167.115 1176.878L1043.765 1267.665L920.417 1176.878L920.417 1392.588L969.260 1392.588L969.260 1268.573L1019.345 1308.307L1019.345 1439.555L920.417 1439.555L920.417 1488.398L1167.115 1488.398L1167.115 1439.555Z"/></g></svg>`;
+const LOGO_WORD = `<svg class="tw-word" viewBox="0 0 853.38 391.14" aria-hidden="true"><g transform="translate(-1386.138 1475.830) scale(1 -1)"><path fill="currentColor" d="M1755.034 1255.172L1776.827 1255.172L1810.758 1105.103L1847.028 1251.258C1847.599 1253.557 1849.663 1255.172 1852.032 1255.172L1869.579 1255.172C1871.968 1255.172 1874.044 1253.531 1874.595 1251.206L1909.241 1105.103L1944.827 1255.172L1966.344 1255.172L1926.361 1091.531C1925.380 1087.515 1921.781 1084.689 1917.647 1084.689L1904.054 1084.689C1899.962 1084.689 1896.389 1087.458 1895.368 1091.420L1860.689 1225.931L1827.344 1091.500C1826.352 1087.499 1822.760 1084.689 1818.637 1084.689L1803.467 1084.689C1799.328 1084.689 1795.726 1087.521 1794.750 1091.544Z"/><path fill="currentColor" d="M2008.970 1144.280L2037.220 1227.280C2037.920 1229.240 2040.700 1229.240 2041.400 1227.280L2069.660 1144.280ZM2052.670 1248.610C2051.280 1252.540 2047.560 1255.170 2043.380 1255.170L2033.910 1255.170C2029.710 1255.170 2025.980 1252.510 2024.600 1248.540L1967.860 1084.690L1987.720 1084.690L2002.900 1126.070L2076.280 1126.070L2090.340 1084.690L2110.760 1084.690Z"/><path fill="currentColor" d="M2105.448 1255.172L2130.552 1255.172L2172.207 1160.931L2218.000 1255.172L2239.517 1255.172L2182.414 1141.344L2182.414 1084.689L2160.896 1084.689L2160.896 1139.965Z"/><path fill="currentColor" d="M1537.172 1445.621L1386.138 1445.621L1386.138 1475.828L1537.172 1475.828Z"/><path fill="currentColor" d="M1479.862 1279.345L1443.448 1279.345L1443.448 1455.897L1479.862 1455.897Z"/><path fill="currentColor" d="M1595.310 1446.860L1638.000 1446.860C1654.070 1446.860 1667.100 1433.830 1667.100 1417.760L1667.100 1411.140C1667.100 1395.060 1654.070 1382.030 1638.000 1382.030L1595.310 1382.030ZM1661.990 1355.990C1683.710 1358.810 1700.480 1377.370 1700.480 1399.860L1700.480 1426.310C1700.480 1453.660 1678.310 1475.830 1650.970 1475.830L1558.900 1475.830L1558.900 1279.340L1595.310 1279.340L1595.310 1355.620L1622.120 1355.620L1663.720 1279.340L1703.790 1279.340Z"/><path fill="currentColor" d="M1778.550 1354.590L1803.600 1432.630C1804.570 1435.470 1808.580 1435.490 1809.580 1432.660L1835.380 1354.590ZM1836.460 1460.140C1833.340 1469.510 1824.580 1475.830 1814.710 1475.830L1798.140 1475.830C1788.260 1475.830 1779.490 1469.500 1776.380 1460.110L1716.480 1279.340L1753.170 1279.340L1768.340 1323.690L1844.760 1323.690L1860.690 1279.340L1896.620 1279.340Z"/><path fill="currentColor" d="M2013.990 1314.590C2007.950 1310.000 2001.730 1309.330 1997.230 1309.580L1958.170 1309.580L1958.170 1445.570C1970.580 1445.360 1982.980 1445.150 1995.380 1444.940C2000.220 1445.160 2009.480 1444.550 2017.690 1436.350C2031.530 1422.540 2032.110 1397.430 2032.470 1382.090C2032.700 1372.060 2033.690 1329.580 2013.990 1314.590M2069.660 1384.100C2068.950 1406.270 2067.780 1442.560 2040.070 1462.520C2023.630 1474.360 2005.080 1475.250 1995.400 1474.930C1970.570 1475.230 1945.730 1475.530 1920.900 1475.830L1920.900 1279.340L1999.100 1279.340C2008.120 1278.970 2020.570 1279.940 2032.660 1286.580C2072.100 1308.230 2070.130 1369.620 2069.660 1384.100"/><path fill="currentColor" d="M2237.379 1445.570L2237.379 1472.103C2203.442 1472.888 2169.506 1473.672 2135.570 1474.457C2132.138 1474.281 2124.859 1473.413 2117.793 1468.379C2105.504 1459.625 2103.941 1445.453 2103.724 1443.138C2103.224 1387.836 2103.474 1343.448 2103.724 1314.862C2103.770 1309.540 2103.995 1299.472 2110.760 1291.138C2117.540 1282.785 2127.615 1280.208 2133.103 1279.272L2237.379 1279.272L2237.379 1309.535L2138.068 1309.535L2138.068 1364.103L2215.034 1364.103L2215.034 1391.000L2137.241 1391.000L2137.241 1445.570Z"/></g></svg>`;
+const LOGO_LOCKUP = `<svg class="tw-lockup" viewBox="0 0 1793.19 781.24" aria-hidden="true"><g transform="translate(-446.327 1743.207) scale(1 -1)"><path fill="#62AE46" d="M446.327 1352.581L766.412 1743.207L799.912 1702.262L480.554 1312.513Z"/><path fill="#62AE46" d="M525.977 1274.695L837.372 1654.716L870.872 1613.771L551.514 1224.022L526.192 1253.665C521.038 1259.698 520.948 1268.557 525.977 1274.695"/><path fill="#62AE46" d="M583.553 1173.220L903.638 1563.846L937.138 1522.901L617.779 1133.152Z"/><path fill="#62AE46" d="M669.536 1101.558L979.606 1479.962L1013.106 1439.017L693.748 1049.269L669.784 1077.322C663.845 1084.275 663.740 1094.485 669.536 1101.558"/><path fill="#62AE46" d="M739.483 1010.981L1052.236 1392.660L1085.736 1351.715L766.378 961.966L739.665 993.238C735.316 998.328 735.240 1005.803 739.483 1010.981"/><path fill="#528D41" d="M684.831 1297.125L1004.916 1687.751L1038.416 1646.806L719.058 1257.057Z"/><path fill="#528D41" d="M757.043 1209.886L1077.128 1600.512L1110.628 1559.567L791.270 1169.818Z"/><path fill="#528D41" d="M830.925 1120.977L1151.010 1511.603L1184.510 1470.658L865.152 1080.909Z"/><path fill="#62AE46" d="M1045.663 961.966L1353.909 1338.458C1359.064 1344.755 1359.064 1353.811 1353.909 1360.106L1045.663 1736.599L728.305 1349.283Z"/><path fill="#FFFFFF" d="M1068.188 1439.555L1068.188 1308.307L1118.272 1268.573L1118.272 1392.588L1167.115 1392.588L1167.115 1176.878L1043.765 1267.665L920.417 1176.878L920.417 1392.588L969.260 1392.588L969.260 1268.573L1019.345 1308.307L1019.345 1439.555L920.417 1439.555L920.417 1488.398L1167.115 1488.398L1167.115 1439.555Z"/><path fill="currentColor" d="M1755.034 1255.172L1776.827 1255.172L1810.758 1105.103L1847.028 1251.258C1847.599 1253.557 1849.663 1255.172 1852.032 1255.172L1869.579 1255.172C1871.968 1255.172 1874.044 1253.531 1874.595 1251.206L1909.241 1105.103L1944.827 1255.172L1966.344 1255.172L1926.361 1091.531C1925.380 1087.515 1921.781 1084.689 1917.647 1084.689L1904.054 1084.689C1899.962 1084.689 1896.389 1087.458 1895.368 1091.420L1860.689 1225.931L1827.344 1091.500C1826.352 1087.499 1822.760 1084.689 1818.637 1084.689L1803.467 1084.689C1799.328 1084.689 1795.726 1087.521 1794.750 1091.544Z"/><path fill="currentColor" d="M2008.970 1144.280L2037.220 1227.280C2037.920 1229.240 2040.700 1229.240 2041.400 1227.280L2069.660 1144.280ZM2052.670 1248.610C2051.280 1252.540 2047.560 1255.170 2043.380 1255.170L2033.910 1255.170C2029.710 1255.170 2025.980 1252.510 2024.600 1248.540L1967.860 1084.690L1987.720 1084.690L2002.900 1126.070L2076.280 1126.070L2090.340 1084.690L2110.760 1084.690Z"/><path fill="currentColor" d="M2105.448 1255.172L2130.552 1255.172L2172.207 1160.931L2218.000 1255.172L2239.517 1255.172L2182.414 1141.344L2182.414 1084.689L2160.896 1084.689L2160.896 1139.965Z"/><path fill="currentColor" d="M1537.172 1445.621L1386.138 1445.621L1386.138 1475.828L1537.172 1475.828Z"/><path fill="currentColor" d="M1479.862 1279.345L1443.448 1279.345L1443.448 1455.897L1479.862 1455.897Z"/><path fill="currentColor" d="M1595.310 1446.860L1638.000 1446.860C1654.070 1446.860 1667.100 1433.830 1667.100 1417.760L1667.100 1411.140C1667.100 1395.060 1654.070 1382.030 1638.000 1382.030L1595.310 1382.030ZM1661.990 1355.990C1683.710 1358.810 1700.480 1377.370 1700.480 1399.860L1700.480 1426.310C1700.480 1453.660 1678.310 1475.830 1650.970 1475.830L1558.900 1475.830L1558.900 1279.340L1595.310 1279.340L1595.310 1355.620L1622.120 1355.620L1663.720 1279.340L1703.790 1279.340Z"/><path fill="currentColor" d="M1778.550 1354.590L1803.600 1432.630C1804.570 1435.470 1808.580 1435.490 1809.580 1432.660L1835.380 1354.590ZM1836.460 1460.140C1833.340 1469.510 1824.580 1475.830 1814.710 1475.830L1798.140 1475.830C1788.260 1475.830 1779.490 1469.500 1776.380 1460.110L1716.480 1279.340L1753.170 1279.340L1768.340 1323.690L1844.760 1323.690L1860.690 1279.340L1896.620 1279.340Z"/><path fill="currentColor" d="M2013.990 1314.590C2007.950 1310.000 2001.730 1309.330 1997.230 1309.580L1958.170 1309.580L1958.170 1445.570C1970.580 1445.360 1982.980 1445.150 1995.380 1444.940C2000.220 1445.160 2009.480 1444.550 2017.690 1436.350C2031.530 1422.540 2032.110 1397.430 2032.470 1382.090C2032.700 1372.060 2033.690 1329.580 2013.990 1314.590M2069.660 1384.100C2068.950 1406.270 2067.780 1442.560 2040.070 1462.520C2023.630 1474.360 2005.080 1475.250 1995.400 1474.930C1970.570 1475.230 1945.730 1475.530 1920.900 1475.830L1920.900 1279.340L1999.100 1279.340C2008.120 1278.970 2020.570 1279.940 2032.660 1286.580C2072.100 1308.230 2070.130 1369.620 2069.660 1384.100"/><path fill="currentColor" d="M2237.379 1445.570L2237.379 1472.103C2203.442 1472.888 2169.506 1473.672 2135.570 1474.457C2132.138 1474.281 2124.859 1473.413 2117.793 1468.379C2105.504 1459.625 2103.941 1445.453 2103.724 1443.138C2103.224 1387.836 2103.474 1343.448 2103.724 1314.862C2103.770 1309.540 2103.995 1299.472 2110.760 1291.138C2117.540 1282.785 2127.615 1280.208 2133.103 1279.272L2237.379 1279.272L2237.379 1309.535L2138.068 1309.535L2138.068 1364.103L2215.034 1364.103L2215.034 1391.000L2137.241 1391.000L2137.241 1445.570Z"/></g></svg>`;
 
-const STRIPES = `<svg class="stripes" viewBox="0 0 120 120" aria-hidden="true">
-  <rect x="6" y="10" width="10" height="100" transform="rotate(-45 11 60)" fill="#43A047"/>
-  <rect x="26" y="10" width="10" height="100" transform="rotate(-45 31 60)" fill="#7CB342"/>
-  <rect x="46" y="10" width="10" height="100" transform="rotate(-45 51 60)" fill="#43A047"/></svg>`;
 
-const LOCKUP = `<div class="lockup">${TW_MARK}
-  <div class="nm">تريد واي<small>Trade Way</small></div>
-  <div class="partner"><div><div class="pl">بالشراكة مع</div><div class="ub">Uber</div></div></div>
-</div>`;
+/* ---- icon set: 24-grid, 1.5px stroke, currentColor, no emoji ---- */
+const IP = {
+  id:'<rect x="2.8" y="5" width="18.4" height="14" rx="2.2"/><circle cx="8.6" cy="11" r="2.1"/><path d="M5.2 16.3c.5-1.6 1.8-2.4 3.4-2.4s2.9.8 3.4 2.4M15 10h4M15 13.4h4"/>',
+  bike:'<circle cx="5.6" cy="16.6" r="3.4"/><circle cx="18.4" cy="16.6" r="3.4"/><path d="M5.6 16.6h5.1l4.1-7.2h3M11.9 9.4h4.6l1.9 7.2M14.3 9.4l-1.2-3h-2.4"/>',
+  doc:'<path d="M13.6 2.9H6.8a2 2 0 0 0-2 2v14.2a2 2 0 0 0 2 2h10.4a2 2 0 0 0 2-2V8.5z"/><path d="M13.6 2.9v5.6h5.6M8.6 13h6.8M8.6 16.6h4.6"/>',
+  home:'<path d="M3.6 10.2 12 3.4l8.4 6.8v9a1.8 1.8 0 0 1-1.8 1.8H5.4a1.8 1.8 0 0 1-1.8-1.8z"/><path d="M9.4 20.8v-7.2h5.2v7.2"/>',
+  guar:'<circle cx="8.4" cy="8.2" r="3.3"/><path d="M2.6 20.2c.6-3.5 2.9-5.4 5.8-5.4s5.2 1.9 5.8 5.4"/><circle cx="17.6" cy="9.6" r="2.6"/><path d="M15.2 15.1c3 .1 5 1.9 5.6 5.1"/>',
+  clip:'<rect x="5" y="4.4" width="14" height="16.2" rx="2"/><path d="M9.2 4.4a2.8 2.8 0 0 1 5.6 0M8.8 11.2h6.4M8.8 15h4.4"/>',
+  cam:'<path d="M3.4 8.6a2 2 0 0 1 2-2h2.3l1.5-2.2h5.6l1.5 2.2h2.3a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5.4a2 2 0 0 1-2-2z"/><circle cx="12" cy="13.2" r="3.7"/>',
+  wrench:'<path d="M20 5.4a5.4 5.4 0 0 1-7.3 6.9L6.1 19a2.3 2.3 0 0 1-3.3-3.3l6.7-6.6A5.4 5.4 0 0 1 16.4 2l-3 3 .8 3.7 3.7.8z"/>',
+  shop:'<path d="M3.4 9.2 5 4.4h14l1.6 4.8a3 3 0 0 1-5.7 1.4 3 3 0 0 1-5.8 0 3 3 0 0 1-5.7-1.4z"/><path d="M4.8 11.6v8.2h14.4v-8.2M10 19.8v-5h4v5"/>',
+  ban:'<circle cx="12" cy="12" r="8.6"/><path d="M6 18 18 6"/>',
+  phone:'<path d="M20.4 16.7v2.6a1.9 1.9 0 0 1-2.1 1.9 18.6 18.6 0 0 1-8.1-2.9 18.3 18.3 0 0 1-5.6-5.6 18.6 18.6 0 0 1-2.9-8.2 1.9 1.9 0 0 1 1.9-2.1h2.6a1.9 1.9 0 0 1 1.9 1.6c.1 1 .4 1.9.7 2.8a1.9 1.9 0 0 1-.4 2L7.2 10a14.8 14.8 0 0 0 5.6 5.6l1.2-1.2a1.9 1.9 0 0 1 2-.4c.9.3 1.8.6 2.8.7a1.9 1.9 0 0 1 1.6 2z"/>',
+  info:'<circle cx="12" cy="12" r="8.8"/><path d="M12 16.4v-4.8M12 8.2h.01"/>',
+  warn:'<path d="M10.3 3.9 2.1 17.6a2 2 0 0 0 1.7 3h16.4a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9.2v4.2M12 17.2h.01"/>',
+  ok:'<circle cx="12" cy="12" r="8.8"/><path d="M8.2 12.2l2.7 2.7 5-5.3"/>',
+  crit:'<circle cx="12" cy="12" r="8.8"/><path d="M12 7.6v5M12 16.2h.01"/>',
+  grid:'<rect x="3.2" y="3.2" width="7.4" height="7.4" rx="1.4"/><rect x="13.4" y="3.2" width="7.4" height="7.4" rx="1.4"/><rect x="3.2" y="13.4" width="7.4" height="7.4" rx="1.4"/><rect x="13.4" y="13.4" width="7.4" height="7.4" rx="1.4"/>',
+  rows:'<path d="M3.4 6h17.2M3.4 12h17.2M3.4 18h17.2"/>',
+  user:'<circle cx="12" cy="8" r="3.6"/><path d="M4.6 20.4c.8-4 3.7-6.2 7.4-6.2s6.6 2.2 7.4 6.2"/>',
+  box:'<path d="M20.6 8.4v7.2a1.8 1.8 0 0 1-.9 1.6l-6.8 3.8a1.8 1.8 0 0 1-1.8 0l-6.8-3.8a1.8 1.8 0 0 1-.9-1.6V8.4a1.8 1.8 0 0 1 .9-1.6l6.8-3.8a1.8 1.8 0 0 1 1.8 0l6.8 3.8a1.8 1.8 0 0 1 .9 1.6z"/><path d="M3.6 7.4 12 12.2l8.4-4.8M12 21V12.2"/>',
+  gauge:'<path d="M20.6 15.4a9 9 0 1 0-17.2 0"/><path d="m12 12.6 4.2-3.4"/>',
+  back:'<path d="M14.6 6 8.8 12l5.8 6"/>',
+  fwd:'<path d="M9.4 6 15.2 12 9.4 18"/>',
+  pin:'<path d="M12 21.2s7-5.6 7-11.2a7 7 0 1 0-14 0c0 5.6 7 11.2 7 11.2z"/><circle cx="12" cy="10" r="2.7"/>'
+};
+const ico = (n, cls) => `<svg class="${cls||'ic'}" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IP[n]||''}</svg>`;
+
+const LOCKUP = `<div class="lockup">${LOGO_ICON}<span class="nm">تريد واي</span>
+  <span class="partner"><span><span class="pl">بالشراكة مع</span><span class="ub">Uber</span></span></span></div>`;
 
 const appHeader = (right) => `<header class="app-top">${LOCKUP}<div>${right||''}</div></header>`;
 
 const phone = (inner) => `<div class="phone-wrap"><div class="phone">
-  <div class="phone-bar"><span class="num">9:41</span><span>مصر · ٤G</span></div>
+  <div class="phone-bar"><span>9:41</span><span>4G</span></div>
   <div class="phone-scroll" dir="rtl">${inner}</div></div></div>`;
 
 const ADMIN_NAV = [
-  ['ops','لوحة التشغيل','◧'],['apps','الطلبات','▤'],['profile','ملف متقدم','◉'],
-  ['alloc','التخصيص والمواعيد','⬒'],['compliance','متابعة الالتزام','◈'],
-  ['recovery','الاسترداد','⊘'],['points','نقاط التوزيع','⌂']
+  ['ops','لوحة التشغيل','grid'],['apps','الطلبات','rows'],['profile','ملف متقدم','user'],
+  ['alloc','التخصيص والمواعيد','box'],['compliance','متابعة الالتزام','gauge'],
+  ['recovery','الاسترداد','ban'],['points','نقاط التوزيع','pin']
 ];
 const desk = (activeId, title, topExtra, body) => `<div class="desk">
   <aside class="desk-side">
-    <div class="who"><b>تريد واي — لوحة البرنامج</b><small>منى ع. · مشرف تشغيل</small></div>
-    ${ADMIN_NAV.map(([id,lb,ic])=>`<a href="#" data-go="admin:${id}" data-on="${id===activeId?1:0}"><span aria-hidden="true">${ic}</span>${lb}</a>`).join('')}
+    <div class="who">${LOGO_ICON}<div><b>تريد واي</b><small>غرفة العمليات</small></div></div>
+    ${ADMIN_NAV.map(([id,lb,ic])=>`<a href="#" data-go="admin:${id}" data-on="${id===activeId?1:0}">${ico(ic)}${lb}</a>`).join('')}
   </aside>
   <div class="desk-main">
     <div class="desk-top"><h3 style="flex:1">${title}</h3>${topExtra||''}</div>
     <div class="desk-body">${body}</div>
   </div></div>`;
 
+const ar = (n) => String(n).replace(/[0-9]/g, d => '\u0660\u0661\u0662\u0663\u0664\u0665\u0666\u0667\u0668\u0669'[+d]);
+
 const pill = (kind, text) => `<span class="pill p-${kind}">${text}</span>`;
 const DRAFT = `<span class="draft">قيمة مبدئية — لم تُعتمد مع أوبر</span>`;
+const NOTE_ICO = {info:'info', warn:'warn', ok:'ok', dan:'crit'};
+const notice = (kind, title, body) => `<div class="notice n-${kind}">${ico(NOTE_ICO[kind],'ico')}
+  <div>${title?`<b>${title}</b>`:''}${body}</div></div>`;
 
 /* حدود الماتريكس المبدئية — يتغيّر من هنا لما تتأكد مع أوبر */
 const MATRIX = [
@@ -470,10 +568,9 @@ const MATRIX = [
 const S_landing = () => phone(`
 ${appHeader(`<button class="btn btn-ghost btn-sm" data-go="applicant:track">متابعة طلبي</button>`)}
 <section class="hero">
-  ${STRIPES}
   <span class="eyebrow">برنامج تمليك موتوسيكلات — دفعة ٢٠٢٦</span>
   <h1 style="margin-top:8px">اشتغل بالموتوسيكل<em>وفي الآخر يبقى باسمك.</em></h1>
-  <p>برنامج من <b>تريد واي</b> بالشراكة مع <b>أوبر</b>. من غير مقدم ولا أقساط تمليك — الشرط الوحيد إنك تلتزم بساعات وأيام الشغل المتفق عليها طول مدة البرنامج.</p>
+  <p class="lede">برنامج من <b>تريد واي</b> بالشراكة مع <b>أوبر</b>. من غير مقدم ولا أقساط تمليك — الشرط الوحيد إنك تلتزم بساعات وأيام الشغل المتفق عليها طول مدة البرنامج.</p>
   <div class="facts">
     <div><b>٠ جنيه</b><span>مقدم</span></div>
     <div><b>٠ جنيه</b><span>قسط تمليك شهري</span></div>
@@ -498,7 +595,7 @@ ${appHeader(`<button class="btn btn-ghost btn-sm" data-go="applicant:track">مت
   </ol>
 </section>
 
-<section class="sec" style="background:var(--surface2)">
+<section class="sec alt">
   <div class="sec-h"><h3 class="sec-title">التزاماتك خلال البرنامج</h3>${DRAFT}</div>
   <div class="tbl-wrap" style="margin-bottom:10px"><table class="tbl matrix">
     <thead><tr><th>المؤشر</th><th>المطلوب</th><th>بنقيسه إزاي</th></tr></thead>
@@ -506,7 +603,7 @@ ${appHeader(`<button class="btn btn-ghost btn-sm" data-go="applicant:track">مت
       <td><span class="num" style="font-weight:600">${m.target}</span></td>
       <td class="dim">${m.how}</td></tr>`).join('')}</tbody>
   </table></div>
-  <div class="notice n-info"><span class="ico">ⓘ</span><div>
+  <div class="notice n-info">${ico('info','ico')}<div>
     <b>الطلب الضعيف في منطقتك مش خصم عليك</b>
     لو الشغل قلّ في منطقتك أو حصل عطل أو مرض، الحالة بتترفع لمراجعة بشرية قبل أي قرار — مش خصم أوتوماتيك.</div></div>
 </section>
@@ -523,16 +620,16 @@ ${appHeader(`<button class="btn btn-ghost btn-sm" data-go="applicant:track">مت
     </tbody></table></div>
 </section>
 
-<section class="sec" style="background:var(--surface2)">
+<section class="sec alt">
   <div class="sec-h"><h3 class="sec-title">المستندات المطلوبة</h3></div>
   <div class="stack g8">
     ${[
-      ['🪪','بطاقة الرقم القومي','سارية · صورة واضحة للوجهين','أساسي'],
-      ['🛵','رخصة قيادة موتوسيكل','سارية أو تحت الاستخراج','أساسي'],
-      ['📄','فيش وتشبيه','حديث خلال ٣ شهور','أساسي'],
-      ['🏠','إثبات محل إقامة','إيصال مرافق أو عقد سكن','أساسي'],
-      ['🤝','مستندات الضامن','بطاقة الضامن + إقرار حسب العقد','قبل التسليم'],
-      ['📋','مستندات إضافية','ممكن تُطلب لبعض الحالات (مثل ما يفيد محدودية الدخل أو الحالة الاجتماعية)','حسب الحالة']
+      [ico('id'),'بطاقة الرقم القومي','سارية · صورة واضحة للوجهين','أساسي'],
+      [ico('bike'),'رخصة قيادة موتوسيكل','سارية أو تحت الاستخراج','أساسي'],
+      [ico('doc'),'فيش وتشبيه','حديث خلال ٣ شهور','أساسي'],
+      [ico('home'),'إثبات محل إقامة','إيصال مرافق أو عقد سكن','أساسي'],
+      [ico('guar'),'مستندات الضامن','بطاقة الضامن + إقرار حسب العقد','قبل التسليم'],
+      [ico('clip'),'مستندات إضافية','ممكن تُطلب لبعض الحالات (مثل ما يفيد محدودية الدخل أو الحالة الاجتماعية)','حسب الحالة']
     ].map(([ic,t,s,tag])=>`<div class="doc"><div class="ic">${ic}</div>
       <div class="t"><b>${t}</b><span>${s}</span></div>
       <span class="pill ${tag==='أساسي'?'p-brand':'p-mute'} plain">${tag}</span></div>`).join('')}
@@ -541,12 +638,12 @@ ${appHeader(`<button class="btn btn-ghost btn-sm" data-go="applicant:track">مت
 </section>
 
 <section class="sec">
-  <div class="notice n-warn"><span class="ico">⚠</span><div>
+  <div class="notice n-warn">${ico('warn','ico')}<div>
     <b>مهم تعرفه قبل ما تقدّم</b>
     الموتوسيكل بيفضل مُرخّص باسم تريد واي طول مدة البرنامج. لو توقفت عن الشغل، أو الحساب اتقفل، أو ما التزمتش بالمؤشرات — بنتواصل معاك ونديك مهلة تصحيح، ولو الوضع استمر يحق لنا استرداد الموتوسيكل حسب العقد.</div></div>
 </section>
 
-<section class="sec faq" style="background:var(--surface2)">
+<section class="sec alt faq">
   <div class="sec-h"><h3 class="sec-title">أسئلة بتتسأل كتير</h3></div>
   <div class="stack g8">
     ${[
@@ -560,6 +657,7 @@ ${appHeader(`<button class="btn btn-ghost btn-sm" data-go="applicant:track">مت
 </section>
 
 <div class="stickycta">
+  <span class="note">بدون مقدم · بدون أقساط تمليك · الالتزام بالشغل هو الشرط الوحيد</span>
   <button class="btn btn-pri" style="flex:2" data-go="applicant:verify">ابدأ التقديم</button>
   <button class="btn btn-ghost" style="flex:1" data-go="applicant:track">طلبي</button>
 </div>`);
@@ -583,10 +681,10 @@ ${appHeader(`<button class="btn btn-ghost btn-sm" data-go="applicant:landing">ر
     <button class="btn btn-pri btn-block" data-go="applicant:apply">تأكيد ومتابعة</button>
   </div>
 </section>
-<section class="sec" style="background:var(--surface2)">
+<section class="sec alt">
   <div class="sec-h"><h3 class="sec-title">الشاشة دي ليها نتيجتين</h3><span class="tiny dim">(معروضين مع بعض للمراجعة)</span></div>
   <div class="stack g10">
-    <div class="card" style="border-color:var(--brand-line);background:var(--brand-soft)">
+    <div class="card" style="border-color:var(--accent-border);background:var(--accent-subtle)">
       <div class="row" style="justify-content:space-between">${pill('ok','رقمك موجود ضمن ترشيحات أوبر')}<span class="tiny num dim">UB-2026-0431</span></div>
       <p class="sm" style="margin-top:8px">أهلاً <b>محمود سيد عبد العظيم</b>. الترشيح معناه إنك مؤهل تقدّم — مش معناه قبول نهائي ولا حجز موتوسيكل.</p>
       <button class="btn btn-pri btn-sm btn-block" style="margin-top:10px" data-go="applicant:apply">كمّل طلبك</button>
@@ -618,7 +716,7 @@ const applyBody = () => {
   <div class="field"><label for="f-area">المنطقة اللي ساكن فيها</label>
     <select class="inp" id="f-area">${AREAS.map(a=>`<option ${a==='المعادي'?'selected':''}>${a}</option>`).join('')}</select>
     <span class="hint">بنستخدمها في حاجة واحدة: نوجّهك لأقرب نقطة استلام وتوقيع.</span></div>
-  <div class="notice n-ok"><span class="ico">✓</span><div><b>أقرب نقطة توزيع ليك</b>
+  <div class="notice n-ok">${ico('ok','ico')}<div><b>أقرب نقطة توزيع ليك</b>
     معرض النصر موتورز — شارع ٩، المعادي · حوالي ٢.٤ كم</div></div>`;
 
   if(applyStep===2) return `
@@ -627,7 +725,7 @@ const applyBody = () => {
       ${[['سارية',1],['منتهية',0],['تحت الاستخراج',0],['لسه معنديش',0]].map(([t,on])=>
       `<label class="opt" data-on="${on}"><input type="radio" name="lic" ${on?'checked':''}><b>${t}</b></label>`).join('')}
     </div></div>
-  <div class="reveal"><span class="reveal-tag">↳ ظهرت لأنك اخترت «سارية»</span>
+  <div class="reveal"><span class="reveal-tag">ظهرت لأنك اخترت «سارية»</span>
     <div class="field"><label for="f-lic">تاريخ انتهاء الرخصة</label>
       <input class="inp num" id="f-lic" value="2028-04-11" dir="ltr" style="text-align:start"></div></div>
   <div class="field"><label>اشتغلت كابتن قبل كده؟</label>
@@ -640,7 +738,7 @@ const applyBody = () => {
     </div></div>
   <div class="field"><label for="f-yrs">مدة الخبرة</label>
     <select class="inp" id="f-yrs"><option>أقل من ٦ شهور</option><option selected>من ٦ شهور لسنة</option><option>من سنة لسنتين</option><option>أكتر من سنتين</option></select></div>
-  <div class="notice n-info"><span class="ico">ⓘ</span><div><b>عدم وجود خبرة مش سبب رفض</b>
+  <div class="notice n-info">${ico('info','ico')}<div><b>عدم وجود خبرة مش سبب رفض</b>
     البرنامج أصلاً موجّه لناس كتير هتبدأ من الصفر. الأسئلة دي بتحدد احتياجك للتدريب، مش أهليتك.</div></div>`;
 
   if(applyStep===3) return `
@@ -652,14 +750,14 @@ const applyBody = () => {
       `<label class="opt" data-on="${on}"><input type="radio" name="acc" ${on?'checked':''}>
         <span><b>${t}</b><span>${s}</span></span></label>`).join('')}
     </div></div>
-  <div class="reveal"><span class="reveal-tag">↳ ظهرت لأنك اخترت «عندي حساب»</span>
+  <div class="reveal"><span class="reveal-tag">ظهرت لأنك اخترت «عندي حساب»</span>
     <div class="field"><label for="f-acph">رقم الموبايل المسجّل على أوبر</label>
       <input class="inp num" id="f-acph" value="0100 254 7719" dir="ltr" style="text-align:start"></div>
     <div class="field"><label for="f-acst">حالة الحساب حسب معرفتك</label>
       <select class="inp" id="f-acst"><option>شغّال بشكل طبيعي</option><option selected>ناقص مستندات</option><option>متوقف / بلوك</option><option>مش متأكد</option></select>
       <span class="hint">إجابتك هنا بتوجّه ملفك للموظف المناسب — وبتفضل «محتاجة تحقق» لحد ما الفريق يتأكد.</span></div>
   </div>
-  <div class="notice n-warn"><span class="ico">⚠</span><div><b>ما نقدرش نأكد حالة حسابك من هنا</b>
+  <div class="notice n-warn">${ico('warn','ico')}<div><b>ما نقدرش نأكد حالة حسابك من هنا</b>
     التأكيد بيجي من أوبر. لو الحساب متوقف، ملفك بيتحول لمسار «مراجعة خاصة» وبنتواصل معاك.</div></div>`;
 
   if(applyStep===4) return `
@@ -680,7 +778,7 @@ const applyBody = () => {
     <span class="hint">مش هنطلب ورق الضامن دلوقتي — بس بعد القبول المبدئي.</span></div>`;
 
   return `
-  <div class="card" style="background:var(--surface2)">
+  <div class="card" style="background:var(--ground);border-color:var(--hairline)">
     <div class="spread" style="margin-bottom:10px"><b>ملخص طلبك</b>
       <button class="btn btn-ghost btn-sm" data-step="1">تعديل</button></div>
     <dl class="kv">
@@ -699,17 +797,18 @@ const applyBody = () => {
     <span><b>أقرّ بصحة بياناتي</b><span>وإني اطلعت على شروط البرنامج والتزامات التشغيل ومسؤوليات الصيانة.</span></span></label>
   <label class="opt" data-on="1"><input type="checkbox" checked>
     <span><b>موافق تتواصلوا معايا</b><span>بالاتصال والرسائل والواتساب بخصوص طلبي.</span></span></label>
-  <div class="notice n-info"><span class="ico">ⓘ</span><div>
+  <div class="notice n-info">${ico('info','ico')}<div>
     بنحفظ نسخة من نص الشروط اللي وافقت عليه بتاريخه. أي تعديل في شروط دفعة جاية مش بيغيّر شروط عقدك.</div></div>`;
 };
 
 const S_apply = () => phone(`
 ${appHeader(`<span class="tiny dim num">TW-2026-10428</span>`)}
 <section class="sec">
+  <div class="eyebrow" style="margin-block-end:8px">الخطوة ${ar(applyStep)} من ٥ — ${APPLY_STEPS[applyStep-1]}</div>
   <div class="steps" id="stepBar">${APPLY_STEPS.map((s,i)=>{
     const n=i+1, st = n<applyStep?'done':(n===applyStep?'now':'todo');
     return `<button type="button" data-step="${n}" data-state="${st}"><span class="bar"></span>
-      <span class="lb">${n}. ${s}</span></button>`;}).join('')}</div>
+      <span class="lb">${ar(n)}. ${s}</span></button>`;}).join('')}</div>
   <p class="tiny dim" style="margin-top:8px">كل خطوة بتتحفظ لوحدها — تقدر تقفل وترجع تكمّل في أي وقت من نفس رقم الموبايل.</p>
 </section>
 <section class="sec"><div class="stack g14">${applyBody()}</div></section>
@@ -745,10 +844,10 @@ ${appHeader(`<button class="btn btn-ghost btn-sm" data-go="applicant:landing">ا
     <div><span class="eyebrow">رقم الطلب</span><div class="num" style="font-size:15px;font-weight:600">TW-2026-10428</div></div>
     ${pill('info','قيد التجهيز')}
   </div>
-  <div class="card" style="border-color:var(--warn);background:var(--warn-soft)">
-    <span class="eyebrow" style="color:var(--warn)">المطلوب منك دلوقتي</span>
+  <div class="card" style="border-color:var(--att-edge);background:var(--att-fill)">
+    <span class="eyebrow" style="color:var(--att-edge)">المطلوب منك دلوقتي</span>
     <b style="display:block;font-size:15px;margin:4px 0 6px">ارفع «فيش وتشبيه» تاني</b>
-    <p class="sm" style="color:var(--text2)">الصورة اللي رفعتها مش واضحة والبيانات مش مقروءة. صوّر الورقة كاملة في إضاءة كويسة من غير ظل.</p>
+    <p class="sm" style="color:var(--text-2)">الصورة اللي رفعتها مش واضحة والبيانات مش مقروءة. صوّر الورقة كاملة في إضاءة كويسة من غير ظل.</p>
     <button class="btn btn-pri btn-sm btn-block" style="margin-top:10px" data-go="applicant:docs">ارفع المستند</button>
   </div>
 </section>
@@ -758,7 +857,7 @@ ${appHeader(`<button class="btn btn-ghost btn-sm" data-go="applicant:landing">ا
     <span class="dot">${s==='done'?'✓':(s==='now'?'●':'')}</span>
     <div><b>${t}</b><time>${d}</time>${n?`<p>${n}</p>`:''}</div></li>`).join('')}</ol>
 </section>
-<section class="sec" style="background:var(--surface2)">
+<section class="sec alt">
   <div class="sec-h"><h3 class="sec-title">الرسائل اللي وصلتك</h3><span class="tiny dim">رسائل + واتساب</span></div>
   <div class="card tight">${MSGS.map(([av,nm,tx,tm])=>`<div class="msg"><div class="av">${av}</div>
     <div class="bd"><div class="hd"><b>${nm}</b><time>${tm}</time></div><p>${tx}</p></div></div>`).join('')}</div>
@@ -777,12 +876,12 @@ const PREP = [
   ['todo','التعاقد والاستلام','لسه ما فتحتش','بعد اعتماد جاهزية الملف']
 ];
 const DOCS = [
-  ['🪪','بطاقة الرقم القومي','ok','تمت المراجعة','الوجهين · ١٤ سبتمبر'],
-  ['🛵','رخصة القيادة','ok','تمت المراجعة','سارية حتى ٢٠٢٨/٠٤/١١'],
-  ['🏠','إثبات محل إقامة','info','قيد المراجعة','إيصال كهرباء · اترفع أمس'],
-  ['📄','فيش وتشبيه','dan','مرفوض — الصورة غير واضحة','ارفع نسخة جديدة'],
-  ['🤝','بطاقة الضامن','mute','بتتطلب بعد القبول النهائي',''],
-  ['📋','ما يفيد محدودية الدخل','mute','مطلوب لحالتك — اختياري دلوقتي','ممكن ترفعه لو متاح']
+  [ico('id'),'بطاقة الرقم القومي','ok','تمت المراجعة','الوجهين · ١٤ سبتمبر'],
+  [ico('bike'),'رخصة القيادة','ok','تمت المراجعة','سارية حتى ٢٠٢٨/٠٤/١١'],
+  [ico('home'),'إثبات محل إقامة','info','قيد المراجعة','إيصال كهرباء · اترفع أمس'],
+  [ico('doc'),'فيش وتشبيه','dan','مرفوض — الصورة غير واضحة','ارفع نسخة جديدة'],
+  [ico('guar'),'بطاقة الضامن','mute','بتتطلب بعد القبول النهائي',''],
+  [ico('clip'),'ما يفيد محدودية الدخل','mute','مطلوب لحالتك — اختياري دلوقتي','ممكن ترفعه لو متاح']
 ];
 const S_docs = () => phone(`
 ${appHeader(`<button class="btn btn-ghost btn-sm" data-go="applicant:track">طلبي</button>`)}
@@ -794,7 +893,7 @@ ${appHeader(`<button class="btn btn-ghost btn-sm" data-go="applicant:track">طل
     <div class="bd"><b>${t}</b><p>${d}</p>${n!=='—'?`<p class="dim" style="font-size:11.5px">${n}</p>`:''}</div>
     ${s==='done'?pill('ok','تمام'):s==='now'?pill('warn','شغّال عليه'):pill('mute','مقفول')}</div>`).join('')}</div>
 </section>
-<section class="sec" style="background:var(--surface2)">
+<section class="sec alt">
   <div class="sec-h"><h3 class="sec-title">مستنداتي</h3></div>
   <div class="stack g8">${DOCS.map(([ic,t,k,st,sub])=>`<div class="doc">
     <div class="ic">${ic}</div>
@@ -803,12 +902,12 @@ ${appHeader(`<button class="btn btn-ghost btn-sm" data-go="applicant:track">طل
       ? `<button class="btn btn-dan btn-sm">ارفع تاني</button>`
       : k==='mute' ? pill('mute','مطلوب لاحقًا') : pill(k==='ok'?'ok':'info', st)}
   </div>`).join('')}</div>
-  <div class="notice n-info" style="margin-top:12px"><span class="ico">ⓘ</span><div>
+  <div class="notice n-info" style="margin-top:12px">${ico('info','ico')}<div>
     <b>رفع الصورة مش معناه اعتمادها</b>
     كل مستند بيتراجع من الفريق، والأصل بيتطابق وقت التوقيع في نقطة التوزيع.</div></div>
 </section>
 <section class="sec">
-  <div class="card" style="border-color:var(--brand-line)">
+  <div class="card" style="border-color:var(--accent-border)">
     <div class="row" style="justify-content:space-between;margin-bottom:6px"><b class="sm">مسؤول التسجيل بتاعك</b>${pill('ok','متاح')}</div>
     <div class="row"><div class="msg" style="border:0;padding:0"><div class="av">أف</div></div>
       <div style="flex:1"><b class="sm">أحمد فتحي</b><p class="tiny dim">بيجهّز حسابك على أوبر · آخر تواصل أمس ٦:٤٠ م</p></div></div>
@@ -822,7 +921,6 @@ ${appHeader(`<button class="btn btn-ghost btn-sm" data-go="applicant:track">طل
 const S_accepted = () => phone(`
 ${appHeader(`<span class="tiny dim num">TW-2026-10428</span>`)}
 <section class="hero" style="padding-bottom:18px">
-  ${STRIPES}
   ${pill('ok','مقبول — استكمل إجراءات التسليم')}
   <h1 style="font-size:21px;margin-top:10px">ملفك اكتمل. فاضل التوقيع والاستلام.</h1>
   <p>الموتوسيكل بيتخصص باسمك بعد التوقيع، والتسليم بيتم خلال <b>٧ أيام عمل</b> بحد أقصى من تاريخ التوقيع.</p>
@@ -840,13 +938,13 @@ ${appHeader(`<span class="tiny dim num">TW-2026-10428</span>`)}
     </button>
   </div>
 </section>
-<section class="sec" style="background:var(--surface2)">
+<section class="sec alt">
   <div class="sec-h"><h3 class="sec-title">اللي هتمضيه</h3></div>
   <div class="stack g8">
-    ${[['📑','اتفاق المشاركة في البرنامج','شروط الاستخدام والالتزام ومدة البرنامج'],
-       ['📊','جدول التزامات التشغيل','الساعات والأيام ونسب القبول والإلغاء المعتمدة لدفعتك'],
-       ['🤝','إقرار الضامن','بحضور الضامن ببطاقته الأصلية'],
-       ['🧾','محضر تسليم الموتوسيكل','بيانات الموتوسيكل وحالته وصوره وقت الاستلام']
+    ${[[ico('doc'),'اتفاق المشاركة في البرنامج','شروط الاستخدام والالتزام ومدة البرنامج'],
+       [ico('gauge'),'جدول التزامات التشغيل','الساعات والأيام ونسب القبول والإلغاء المعتمدة لدفعتك'],
+       [ico('guar'),'إقرار الضامن','بحضور الضامن ببطاقته الأصلية'],
+       [ico('doc'),'محضر تسليم الموتوسيكل','بيانات الموتوسيكل وحالته وصوره وقت الاستلام']
       ].map(([ic,t,s])=>`<div class="doc"><div class="ic">${ic}</div>
       <div class="t"><b>${t}</b><span>${s}</span></div>
       <button class="btn btn-ghost btn-sm">اقرأ</button></div>`).join('')}
@@ -859,14 +957,14 @@ ${appHeader(`<span class="tiny dim num">TW-2026-10428</span>`)}
     ['إيصال المرافق الأصلي (إثبات السكن)',1],['خوذة — لو معاك واحدة (بنوفر واحدة مع التسليم)',0]
   ].map(([t,req])=>`<div class="check" data-s="${req?'now':'todo'}"><span class="bx">${req?'!':'•'}</span>
     <div class="bd"><b>${t}</b></div>${req?pill('warn','إلزامي'):pill('mute','اختياري')}</div>`).join('')}</div>
-  <div class="notice n-warn" style="margin-top:12px"><span class="ico">⚠</span><div>
+  <div class="notice n-warn" style="margin-top:12px">${ico('warn','ico')}<div>
     لو أي ورقة ناقصة أو مش مطابقة، نقطة التوزيع بتوقف التسليم وبترفع الحالة لينا — علشان كده راجع القايمة قبل ما تتحرك.</div></div>
 </section>
 <div class="stickycta"><button class="btn btn-pri btn-block" data-go="applicant:booking">احجز الميعاد</button></div>`);
 
 /* ================= 7. حجز الاستلام ================= */
 const POINTS = [
-  ['النصر موتورز — المعادي','شارع ٩، المعادي · ٢.٤ كم','1','٤ مواعيد متاحة بكرة','ok','متاح'],
+  ['النصر موتورز — المعادي','شارع 9، المعادي · 2.4 كم','1','٤ مواعيد متاحة بكرة','ok','متاح'],
   ['بايك هاوس — مدينة نصر','عباس العقاد · ٩.١ كم','0','ميعادين متاحين','info','متاح'],
   ['موتو بوينت — فيصل','الطريق الدائري · ١٤.٨ كم','0','المخزون خلص — بنفتح الأحد','mute','مقفول مؤقتًا']
 ];
@@ -880,7 +978,7 @@ ${appHeader(`<button class="btn btn-ghost btn-sm" data-go="applicant:accepted">�
       <div class="spread"><b class="sm">${n}</b>${pill(k,st)}</div>
       <p class="tiny dim">${d}</p><p class="tiny muted">${av}</p></button>`).join('')}</div>
 </section>
-<section class="sec" style="background:var(--surface2)">
+<section class="sec alt">
   <div class="sec-h"><h3 class="sec-title">المواعيد المتاحة</h3><span class="tiny dim">الأحد ٢٠ سبتمبر</span></div>
   <div class="slots">
     ${[['١٠:٠٠ ص',0,0],['١١:٣٠ ص',1,0],['١:٠٠ م',0,1],['٢:٣٠ م',0,0],['٤:٠٠ م',0,0],['٥:٣٠ م',0,1]]
@@ -889,7 +987,7 @@ ${appHeader(`<button class="btn btn-ghost btn-sm" data-go="applicant:accepted">�
   <p class="tiny dim" style="margin-top:10px">مدة الميعاد ٩٠ دقيقة: مطابقة ورق · توقيع · تدريب سلامة · فحص وتسليم.</p>
 </section>
 <section class="sec">
-  <div class="card" style="border-color:var(--brand-line)">
+  <div class="card" style="border-color:var(--accent-border)">
     <div class="row" style="align-items:flex-start;gap:14px">
       <div class="qr" aria-hidden="true"></div>
       <div style="flex:1;min-width:150px">
@@ -916,10 +1014,9 @@ const PERF = [
 const S_mybike = () => phone(`
 ${appHeader(`<span class="pill p-ok plain">مشارك نشط</span>`)}
 <section class="sec">
-  <div class="bikecard">${STRIPES}
-    <div class="spread" style="position:relative"><b>هوجان ١٥٠ سي سي — ٢٠٢٦</b><span class="plate num">ق ن ٤ ٢٧٩</span></div>
-    <dl><dt>رقم الشاسيه</dt><dd>LHJ...9F42</dd>
-      <dt>تاريخ الاستلام</dt><dd>٢٠ / ٠٩ / ٢٠٢٦</dd>
+  <div class="bikecard">  <div class="spread" style="position:relative"><b>هوجان ١٥٠ سي سي — ٢٠٢٦</b><span class="plate">ق ن 4279</span></div>
+    <dl><dt>رقم الشاسيه</dt><dd>LHJ4K2...9F42</dd>
+      <dt>تاريخ الاستلام</dt><dd>2026/09/20</dd>
       <dt>مدة البرنامج</dt><dd>١٢ شهر (مبدئية)</dd>
       <dt>الترخيص باسم</dt><dd>تريد واي</dd></dl>
     <div class="track" style="background:rgba(255,255,255,.16);margin-top:14px"><i style="width:4%;background:#9CCB5E"></i></div>
@@ -932,12 +1029,12 @@ ${appHeader(`<span class="pill p-ok plain">مشارك نشط</span>`)}
   <div class="grid2">${PERF.map(([lb,v,t,p,k])=>`<div class="metric">
     <div class="top"><span class="val">${v}</span>${k==='good'?pill('ok','تمام'):k==='bad'?pill('dan','فوق الحد'):pill('warn','قريب')}</div>
     <div class="cap">${lb}</div>
-    <div class="track"><i class="${k==='good'?'':k}" style="width:${p}%"></i></div>
+    <div class="track"><i class="${k}" style="width:${p}%"></i></div>
     <div class="cap" style="margin-top:5px">المطلوب: <b class="num">${t}</b></div></div>`).join('')}</div>
   <p class="tiny dim" style="margin-top:10px">الأرقام دي من تقرير أوبر الأسبوعي. لو شايف إن فيها غلط، بلّغنا وهنراجعها قبل أي قرار.</p>
 </section>
-<section class="sec" style="background:var(--surface2)">
-  <div class="notice n-warn"><span class="ico">⚠</span><div>
+<section class="sec alt">
+  <div class="notice n-warn">${ico('warn','ico')}<div>
     <b>تنبيه واحد مفتوح — نسبة الإلغاء</b>
     نسبتك ٣.١٪ والحد ٢٪. عندك <b>٧ أيام</b> للتصحيح قبل ما الحالة تترفع للمراجعة. لو فيه سبب (عطل، ظرف صحي، مشكلة في الطلبات) كلّمنا دلوقتي وهنسجّله.</div></div>
   <div class="row" style="margin-top:10px">
@@ -947,14 +1044,14 @@ ${appHeader(`<span class="pill p-ok plain">مشارك نشط</span>`)}
 <section class="sec">
   <div class="sec-h"><h3 class="sec-title">محتاج حاجة؟</h3></div>
   <div class="stack g8">
-    ${[['🔧','بلّغ عن عطل','بنوقف حساب الأيام لحد ما العطل يتصلّح'],
-       ['🏪','أقرب مركز صيانة','مركز المعادي — ٣.١ كم · مفتوح لـ ١٠ م'],
-       ['🚫','حسابي اتقفل على أوبر','بلّغنا فورًا — ده بيأثر على التزامك'],
-       ['📞','الدعم','١٦٧٢٣ · من ٩ ص لـ ٩ م']
+    ${[[ico('wrench'),'بلّغ عن عطل','بنوقف حساب الأيام لحد ما العطل يتصلّح'],
+       [ico('shop'),'أقرب مركز صيانة','مركز المعادي — ٣.١ كم · مفتوح لـ ١٠ م'],
+       [ico('ban'),'حسابي اتقفل على أوبر','بلّغنا فورًا — ده بيأثر على التزامك'],
+       [ico('phone'),'الدعم','١٦٧٢٣ · من ٩ ص لـ ٩ م']
       ].map(([ic,t,s])=>`<div class="doc"><div class="ic">${ic}</div>
       <div class="t"><b>${t}</b><span>${s}</span></div><span class="dim">›</span></div>`).join('')}
   </div>
-  <div class="notice n-info" style="margin-top:12px"><span class="ico">ⓘ</span><div>
+  <div class="notice n-info" style="margin-top:12px">${ico('info','ico')}<div>
     مفيش عدّاد تملّك بيظهر هنا لحد ما طريقة احتساب الاستحقاق تتعتمد نهائيًا مع أوبر. اللي بيتعرض دلوقتي: المدة اللي عدّت والتزامك الفعلي.</div></div>
 </section>`);
 </script>
@@ -965,35 +1062,36 @@ const FUNNEL = [
   ['مقبول مبدئيًا',1197,38],['ملف جاهز للتسليم',702,22],['تم التسليم',418,13]
 ];
 const QUEUE = [
-  ['dan','٩ ملفات','مستندات مرفوضة بقالها أكتر من ٤٨ ساعة','المتقدم مستني رد — SLA اتعدى'],
-  ['warn','١٤ ملف','حسابات أوبر متوقفة محتاجة مراجعة خاصة','أقدم حالة من ٦ أيام'],
-  ['warn','٧ مواعيد','لم يحضر — محتاجة إعادة حجز','المعادي ٤ · مدينة نصر ٣'],
-  ['info','٢٣ ملف','جاهزة لاعتماد الجاهزية','مستنية توقيع مشرف'],
-  ['info','٣ نقاط','مخزون أقل من ٥ موتوسيكلات','فيصل · الغردقة الدهار · حلوان']
+  ['dan','9 ملفات','مستندات مرفوضة بقالها أكتر من 48 ساعة','المتقدم مستني رد — SLA اتعدى'],
+  ['warn','14 ملف','حسابات أوبر متوقفة محتاجة مراجعة خاصة','أقدم حالة من 6 أيام'],
+  ['warn','7 مواعيد','لم يحضر — محتاجة إعادة حجز','المعادي 4 · مدينة نصر 3'],
+  ['info','23 ملف','جاهزة لاعتماد الجاهزية','مستنية توقيع مشرف'],
+  ['info','3 نقاط','مخزون أقل من 5 موتوسيكلات','فيصل · الغردقة الدهار · حلوان']
 ];
-const S_ops = () => desk('ops','لوحة التشغيل — دفعة سبتمبر ٢٠٢٦',
-  `<span class="chip">القاهرة الكبرى</span><span class="chip">الغردقة</span><span class="pill p-mute plain num">آخر تحديث ١٨ سبتمبر</span>`,`
+const S_ops = () => desk('ops','لوحة التشغيل — دفعة سبتمبر 2026',
+  `<span class="chip">القاهرة الكبرى</span><span class="chip">الغردقة</span><span class="pill p-mute plain num">آخر تحديث 18 سبتمبر</span>`,`
   <div class="grid6">
-    ${[['موتوسيكلات الدفعة','١٬٠٠٠','متفق عليها مع أوبر','mute'],
-       ['تم التسليم','٤١٨','٤١.٨٪ من الدفعة','ok'],
-       ['محجوزة بمواعيد','٦٢','الأسبوع ده','info'],
-       ['متاحة في النقاط','١٩٨','موزعة على ٦ نقاط','mute'],
-       ['حالات متعثرة','٣٧','تحت المستوى أو متوقفة','warn'],
-       ['استرداد قيد التنفيذ','٩','معتمدة من الإدارة','dan']
-      ].map(([lb,v,s,k])=>`<div class="metric"><div class="top"><span class="val">${v}</span>
-        <span class="pill p-${k} plain">${lb}</span></div><div class="cap">${s}</div></div>`).join('')}
+    ${[['موتوسيكلات الدفعة','1,000','متفق عليها مع أوبر','mute'],
+       ['تم التسليم','418','41.8% من الدفعة','ok'],
+       ['محجوزة بمواعيد','62','الأسبوع ده','info'],
+       ['متاحة في النقاط','198','موزعة على 6 نقاط','mute'],
+       ['حالات متعثرة','37','تحت المستوى أو متوقفة','warn'],
+       ['استرداد قيد التنفيذ','9','معتمدة من الإدارة','dan']
+      ].map(([lb,v,s,k])=>`<div class="metric"><div class="cap">${lb}</div>
+        <div class="top"><span class="val">${v}</span>${k==='warn'||k==='dan'?`<span class="pill p-${k} plain">يحتاج متابعة</span>`:''}</div>
+        <div class="tiny dim">${s}</div></div>`).join('')}
   </div>
   <div class="card">
     <div class="spread" style="margin-bottom:12px"><b>مسار التحويل</b>
       <span class="tiny dim">من ترشيح أوبر لحد التسليم</span></div>
     <div class="stack g10">${FUNNEL.map(([lb,n,p])=>`
       <div><div class="spread tiny" style="margin-bottom:4px"><span>${lb}</span>
-        <span class="num" style="font-weight:600">${n.toLocaleString('ar-EG')} <span class="dim">· ${p}٪</span></span></div>
+        <span class="num" style="font-weight:600">${n.toLocaleString('en-US')} <span class="dim">· ${p}%</span></span></div>
       <div class="track"><i style="width:${p}%"></i></div></div>`).join('')}</div>
-    <p class="tiny dim" style="margin-top:12px">أكبر تسريب: من «مقبول مبدئيًا» لـ«جاهز للتسليم» — السبب الأول تجهيز حساب أوبر، والتاني المستندات — ٤٩٥ ملف واقفين هناك دلوقتي.</p>
+    <p class="tiny dim" style="margin-top:12px">أكبر تسريب: من «مقبول مبدئيًا» لـ«جاهز للتسليم» — السبب الأول تجهيز حساب أوبر، والتاني المستندات — 495 ملف واقفين هناك دلوقتي.</p>
   </div>
   <div class="card">
-    <div class="spread" style="margin-bottom:10px"><b>اللي محتاج تدخّل النهاردة</b>${pill('dan','٥ مجموعات')}</div>
+    <div class="spread" style="margin-bottom:10px"><b>اللي محتاج تدخّل النهاردة</b>${pill('dan','5 مجموعات')}</div>
     <div>${QUEUE.map(([k,n,t,s])=>`<div class="check" data-s="now" style="align-items:center">
       <span class="pill p-${k} plain num" style="min-width:66px;justify-content:center">${n}</span>
       <div class="bd"><b>${t}</b><p>${s}</p></div>
@@ -1006,12 +1104,12 @@ const S_ops = () => desk('ops','لوحة التشغيل — دفعة سبتمب�
         <div><div class="spread tiny" style="margin-bottom:4px"><span>${c}</span>
           <span class="num">${d} / ${t}</span></div><div class="track"><i style="width:${p}%"></i></div></div>`).join('')}
       </div>
-      <p class="tiny dim" style="margin-top:12px">الغردقة أبطأ — نقطة توزيع واحدة وطاقتها ٦ مواعيد في اليوم.</p></div>
+      <p class="tiny dim" style="margin-top:12px">الغردقة أبطأ — نقطة توزيع واحدة وطاقتها 6 مواعيد في اليوم.</p></div>
     <div class="card"><b class="sm">مصدر الطلبات</b>
       <div class="stack g10" style="margin-top:12px">
         ${[['ترشيح أوبر',3120,'brand'],['تقديم عام من الموقع',1876,'mute'],['قائمة انتظار مدن تانية',642,'mute']]
           .map(([s,n,k])=>`<div class="spread"><span class="sm">${s}</span>
-          <span class="pill p-${k} plain num">${n.toLocaleString('ar-EG')}</span></div>`).join('')}
+          <span class="pill p-${k} plain num">${n.toLocaleString('en-US')}</span></div>`).join('')}
       </div>
       <p class="tiny dim" style="margin-top:12px">التقديم العام مفتوح، بس الأولوية والإتاحة بتتحسب لكل مدينة على حدة.</p></div>
   </div>`);
@@ -1019,22 +1117,22 @@ const S_ops = () => desk('ops','لوحة التشغيل — دفعة سبتمب�
 <script>
 /* ================= الطلبات ================= */
 const ROWS = [
-  ['TW-2026-10428','محمود سيد عبد العظيم','المعادي','أوبر','now|قيد التجهيز','warn|ناقص مستندات','3/4','أحمد ف.','منذ ٣ ساعات'],
+  ['TW-2026-10428','محمود سيد عبد العظيم','المعادي','أوبر','now|قيد التجهيز','warn|ناقص مستندات','3/4','أحمد ف.','منذ 3 ساعات'],
   ['TW-2026-10431','كريم أشرف مصطفى','مدينة نصر','عام','ok|جاهز للتسليم','ok|شغّال','4/4','منى ع.','أمس'],
   ['TW-2026-10433','إسلام رمضان السيد','شبرا الخيمة','أوبر','info|مراجعة خاصة','dan|حساب متوقف','4/4','أحمد ف.','منذ يومين'],
-  ['TW-2026-10440','عبد الرحمن طه','الغردقة — الدهار','أوبر','now|قيد التجهيز','info|بدون حساب','2/4','سارة م.','منذ ٥ ساعات'],
-  ['TW-2026-10444','مصطفى جمال الدين','فيصل','عام','mute|انتظار دفعة','ok|شغّال','4/4','—','منذ ٤ أيام'],
+  ['TW-2026-10440','عبد الرحمن طه','الغردقة — الدهار','أوبر','now|قيد التجهيز','info|بدون حساب','2/4','سارة م.','منذ 5 ساعات'],
+  ['TW-2026-10444','مصطفى جمال الدين','فيصل','عام','mute|انتظار دفعة','ok|شغّال','4/4','—','منذ 4 أيام'],
   ['TW-2026-10448','أحمد ناصر عبده','حلوان','أوبر','ok|محجوز ميعاد','ok|شغّال','4/4','منى ع.','منذ ساعة'],
-  ['TW-2026-10451','يوسف صبحي علي','إمبابة','عام','dan|غير مستوفٍ','mute|—','1/4','سارة م.','منذ ٣ أيام']
+  ['TW-2026-10451','يوسف صبحي علي','إمبابة','عام','dan|غير مستوفٍ','mute|—','1/4','سارة م.','منذ 3 أيام']
 ];
 const cell = (v) => { const [k,t] = v.split('|'); return pill(k==='now'?'warn':k, t); };
 const S_apps = () => desk('apps','الطلبات',
   `<button class="btn btn-ghost btn-sm">تصدير</button><button class="btn btn-pri btn-sm">استيراد كشف أوبر</button>`,`
   <div class="row" style="gap:8px">
     <input class="inp" style="max-width:260px" placeholder="بحث برقم الطلب أو الموبايل أو الاسم" id="q-apps">
-    <div class="chips"><span class="chip" data-on="1">الكل ١٬٨٤٢</span><span class="chip">يحتاج تجهيز ٦٢٤</span>
-      <span class="chip">جاهز للمراجعة ٢٣</span><span class="chip">مراجعة خاصة ١٤</span>
-      <span class="chip">انتظار دفعة ٣٩١</span><span class="chip">غير مستوفٍ ١٤٨</span></div>
+    <div class="chips"><span class="chip" data-on="1">الكل 1,842</span><span class="chip">يحتاج تجهيز 624</span>
+      <span class="chip">جاهز للمراجعة 23</span><span class="chip">مراجعة خاصة 14</span>
+      <span class="chip">انتظار دفعة 391</span><span class="chip">غير مستوفٍ 148</span></div>
   </div>
   <div class="tbl-wrap"><table class="tbl">
     <thead><tr><th>رقم الطلب</th><th>الاسم</th><th>المنطقة</th><th>المصدر</th><th>حالة الطلب</th>
@@ -1046,17 +1144,17 @@ const S_apps = () => desk('apps','الطلبات',
       <td class="dim">${r[7]}</td><td class="dim tiny">${r[8]}</td>
       <td><button class="btn btn-ghost btn-sm" data-go="admin:profile">افتح</button></td></tr>`).join('')}</tbody>
   </table></div>
-  <div class="notice n-info"><span class="ico">ⓘ</span><div>
+  <div class="notice n-info">${ico('info','ico')}<div>
     <b>أربع حالات منفصلة عن بعض</b>
     حالة الطلب، وحالة حساب أوبر، وحالة المستندات، وحالة الموتوسيكل — كل واحدة مستقلة داخليًا.
     المتقدم بيشوف رسالة واحدة بس: «المطلوب منك دلوقتي».</div></div>`);
 
 /* ================= ملف متقدم ================= */
 const LOG = [
-  ['أحمد فتحي','مسؤول تسجيل','رفض «فيش وتشبيه» — الصورة غير واضحة والبيانات غير مقروءة','١٦ سبتمبر ٧:٠٢ م','dan'],
-  ['أحمد فتحي','مسؤول تسجيل','مكالمة تجهيز حساب — الكابتن طلب معاودة الاتصال بكرة','١٧ سبتمبر ٦:٤٠ م','mute'],
-  ['منى عادل','مشرف تشغيل','قبول مبدئي — استوفى شروط الأهلية، دفعة القاهرة الكبرى سبتمبر','١٤ سبتمبر ١١:٢٠ ص','ok'],
-  ['النظام','—','تطابق الترشيح مع كشف أوبر UB-2026-0431','١٢ سبتمبر ٢:١٤ م','mute']
+  ['أحمد فتحي','مسؤول تسجيل','رفض «فيش وتشبيه» — الصورة غير واضحة والبيانات غير مقروءة','16 سبتمبر 7:02 م','dan'],
+  ['أحمد فتحي','مسؤول تسجيل','مكالمة تجهيز حساب — الكابتن طلب معاودة الاتصال بكرة','17 سبتمبر 6:40 م','mute'],
+  ['منى عادل','مشرف تشغيل','قبول مبدئي — استوفى شروط الأهلية، دفعة القاهرة الكبرى سبتمبر','14 سبتمبر 11:20 ص','ok'],
+  ['النظام','—','تطابق الترشيح مع كشف أوبر UB-2026-0431','12 سبتمبر 2:14 م','mute']
 ];
 const S_profile = () => desk('profile','محمود سيد عبد العظيم حسن',
   `<span class="num tiny dim">TW-2026-10428</span><button class="btn btn-ghost btn-sm">اتصل</button>
@@ -1064,22 +1162,22 @@ const S_profile = () => desk('profile','محمود سيد عبد العظيم ح
   <div class="row" style="gap:8px">
     <span class="tiny dim">الحالات:</span>
     ${pill('warn','الطلب — قيد التجهيز')}${pill('warn','الحساب — ناقص مستندات')}
-    ${pill('dan','المستندات — ١ مرفوض')}${pill('mute','الموتوسيكل — لم يُخصص')}
+    ${pill('dan','المستندات — 1 مرفوض')}${pill('mute','الموتوسيكل — لم يُخصص')}
   </div>
   <div class="split" style="align-items:start">
     <div class="card"><b class="sm">البيانات</b>
       <dl class="kv" style="margin-top:10px">
         <dt>الموبايل</dt><dd class="num">0100 254 7719</dd>
         <dt>الرقم القومي</dt><dd class="num">29704151201534</dd>
-        <dt>السن</dt><dd>٢٩ سنة · يعول ٣</dd>
+        <dt>السن</dt><dd>29 سنة · يعول 3</dd>
         <dt>المنطقة</dt><dd>القاهرة — المعادي</dd>
-        <dt>نقطة التوزيع المقترحة</dt><dd>النصر موتورز — المعادي (٢.٤ كم)</dd>
-        <dt>الرخصة</dt><dd>سارية حتى ٢٠٢٨/٠٤/١١</dd>
-        <dt>الخبرة</dt><dd>كابتن أوبر سابق — ٦ شهور لسنة</dd>
+        <dt>نقطة التوزيع المقترحة</dt><dd>النصر موتورز — المعادي (2.4 كم)</dd>
+        <dt>الرخصة</dt><dd>سارية حتى 2028/04/11</dd>
+        <dt>الخبرة</dt><dd>كابتن أوبر سابق — 6 شهور لسنة</dd>
         <dt>المصدر</dt><dd>ترشيح أوبر — UB-2026-0431</dd>
       </dl></div>
     <div class="stack g14">
-      <div class="card"><div class="spread"><b class="sm">ترتيب الأولوية</b>${pill('info','٧٢ / ١٠٠')}</div>
+      <div class="card"><div class="spread"><b class="sm">ترتيب الأولوية</b>${pill('info','72 / 100')}</div>
         <div class="stack g8" style="margin-top:12px">
           ${[['الاحتياج الاقتصادي',26,30],['الاستعداد لبدء الشغل',20,25],['اكتمال الملف والمواعيد',14,25],
              ['احتياج التشغيل في المنطقة',12,20]].map(([lb,v,m])=>`
@@ -1099,7 +1197,7 @@ const S_profile = () => desk('profile','محمود سيد عبد العظيم ح
   <div class="card"><div class="spread" style="margin-bottom:8px"><b class="sm">سجل القرارات والتواصل</b>
     <span class="tiny dim">كل قرار مؤثر مسجّل باسم صاحبه وسببه</span></div>
     <div>${LOG.map(([who,role,what,when,k])=>`<div class="check" data-s="done" style="align-items:flex-start">
-      <span class="bx" style="background:var(--surface);border-color:var(--line);color:var(--text3)">•</span>
+      <span class="bx" style="background:var(--surface);border-color:var(--hairline);color:var(--text-3)">•</span>
       <div class="bd"><div class="spread"><b>${who} <span class="dim" style="font-weight:400">${role}</span></b>
         <time class="tiny dim num">${when}</time></div><p>${what}</p></div>${pill(k,k==='dan'?'رفض':k==='ok'?'قبول':'متابعة')}</div>`).join('')}</div>
   </div>`);
@@ -1107,34 +1205,34 @@ const S_profile = () => desk('profile','محمود سيد عبد العظيم ح
 <script>
 /* ================= التخصيص والمواعيد ================= */
 const STOCK = [
-  ['LHJ4K2...9F42','ق ن ٤ ٢٧٩','هوجان ١٥٠','النصر موتورز — المعادي','ok|محجوز لميعاد','محمود سيد — الأحد ١١:٣٠ ص'],
-  ['LHJ4K2...9F51','ق ن ٤ ٢٨٣','هوجان ١٥٠','النصر موتورز — المعادي','info|متاح','—'],
-  ['LHJ4K2...8B17','—','هوجان ١٥٠','النصر موتورز — المعادي','warn|تحت الترخيص','اللوحة متوقعة ٢٢ سبتمبر'],
-  ['LHJ4K2...7C90','ق ن ٣ ١١٤','هوجان ١٥٠','بايك هاوس — مدينة نصر','mute|مُسلّم','كريم أشرف — ٠٩ سبتمبر'],
-  ['LHJ4K2...6A33','ق ن ٢ ٩٠٧','هوجان ١٥٠','ورشة تريد واي — حلوان','dan|مرتجع — تحت الفحص','استرداد حالة RC-0071']
+  ['LHJ4K2...9F42','ق ن 4 279','هوجان 150','النصر موتورز — المعادي','ok|محجوز لميعاد','محمود سيد — الأحد 11:30 ص'],
+  ['LHJ4K2...9F51','ق ن 4 283','هوجان 150','النصر موتورز — المعادي','info|متاح','—'],
+  ['LHJ4K2...8B17','—','هوجان 150','النصر موتورز — المعادي','warn|تحت الترخيص','اللوحة متوقعة 22 سبتمبر'],
+  ['LHJ4K2...7C90','ق ن 3 114','هوجان 150','بايك هاوس — مدينة نصر','mute|مُسلّم','كريم أشرف — 09 سبتمبر'],
+  ['LHJ4K2...6A33','ق ن 2 907','هوجان 150','ورشة تريد واي — حلوان','dan|مرتجع — تحت الفحص','استرداد حالة RC-0071']
 ];
 const S_alloc = () => desk('alloc','التخصيص والمواعيد',
   `<button class="btn btn-ghost btn-sm">إضافة دفعة مخزون</button><button class="btn btn-pri btn-sm">تخصيص تلقائي حسب المنطقة</button>`,`
   <div class="grid6">
-    ${[['متاح','١٩٨','info'],['مخصص مبدئيًا لتفعيل الحساب','٣١','warn'],['محجوز لموعد','٦٢','ok'],
-       ['تحت الترخيص','٧٤','warn'],['مُسلّم','٤١٨','mute'],['مرتجع تحت الفحص','٩','dan']]
-      .map(([lb,v,k])=>`<div class="metric"><div class="top"><span class="val">${v}</span>
-        <span class="pill p-${k} plain">${lb}</span></div></div>`).join('')}
+    ${[['متاح','198','info'],['مخصص مبدئيًا لتفعيل الحساب','31','warn'],['محجوز لموعد','62','ok'],
+       ['تحت الترخيص','74','warn'],['مُسلّم','418','mute'],['مرتجع تحت الفحص','9','dan']]
+      .map(([lb,v,k])=>`<div class="metric"><div class="cap">${lb}</div>
+        <div class="top"><span class="val">${v}</span><span class="track" style="width:54px;margin:0"><i class="${k==='dan'?'bad':k==='warn'?'mid':'neutral'}" style="width:100%"></i></span></div></div>`).join('')}
   </div>
-  <div class="notice n-info"><span class="ico">ⓘ</span><div>
+  <div class="notice n-info">${ico('info','ico')}<div>
     <b>«مخصص مبدئيًا» ≠ «محجوز»</b>
     بعض حسابات أوبر بتحتاج بيانات موتوسيكل علشان تتفعّل، فبنخصص مبدئيًا قبل التسليم الفعلي — والموتوسيكل بيفضل في المخزون لحد ما يتحجز لميعاد.</div></div>
   <div class="card">
-    <div class="spread" style="margin-bottom:10px"><b class="sm">مواعيد الأحد ٢٠ سبتمبر</b>
-      <span class="tiny dim">٢٣ ميعاد · ٦ نقاط · طاقة قصوى ٢٨</span></div>
+    <div class="spread" style="margin-bottom:10px"><b class="sm">مواعيد الأحد 20 سبتمبر</b>
+      <span class="tiny dim">23 ميعاد · 6 نقاط · طاقة قصوى 28</span></div>
     <div class="tbl-wrap"><table class="tbl" style="min-width:560px">
       <thead><tr><th>الوقت</th><th>المتقدم</th><th>النقطة</th><th>الغرض</th><th>الموتوسيكل</th><th>الحالة</th></tr></thead>
       <tbody>${[
-        ['١٠:٠٠ ص','أحمد ناصر عبده','النصر موتورز','توقيع + استلام','ق ن ٤ ٢٦١','ok|مؤكد'],
-        ['١١:٣٠ ص','محمود سيد عبد العظيم','النصر موتورز','توقيع + استلام','ق ن ٤ ٢٧٩','ok|مؤكد'],
-        ['١٢:٠٠ م','عبد الله شعبان','بايك هاوس','توقيع فقط','—','info|تسليم خلال ٧ أيام'],
-        ['١:٠٠ م','رامي عصام','النصر موتورز','توقيع + استلام','—','dan|لم يحضر — إعادة حجز'],
-        ['٢:٣٠ م','سيد محمد حسين','موتو الغردقة','توقيع + استلام','ب ح ١ ٤٤٢','warn|الضامن لم يتأكد']
+        ['10:00 ص','أحمد ناصر عبده','النصر موتورز','توقيع + استلام','ق ن 4 261','ok|مؤكد'],
+        ['11:30 ص','محمود سيد عبد العظيم','النصر موتورز','توقيع + استلام','ق ن 4 279','ok|مؤكد'],
+        ['12:00 م','عبد الله شعبان','بايك هاوس','توقيع فقط','—','info|تسليم خلال 7 أيام'],
+        ['1:00 م','رامي عصام','النصر موتورز','توقيع + استلام','—','dan|لم يحضر — إعادة حجز'],
+        ['2:30 م','سيد محمد حسين','موتو الغردقة','توقيع + استلام','ب ح 1 442','warn|الضامن لم يتأكد']
       ].map(r=>`<tr><td class="num">${r[0]}</td><td><b>${r[1]}</b></td><td>${r[2]}</td><td>${r[3]}</td>
         <td class="num">${r[4]}</td><td>${cell(r[5])}</td></tr>`).join('')}</tbody></table></div>
   </div>
@@ -1147,27 +1245,27 @@ const S_alloc = () => desk('alloc','التخصيص والمواعيد',
 
 /* ================= متابعة الالتزام ================= */
 const COMP = [
-  ['كريم أشرف مصطفى','مدينة نصر','٨.١','٢٦','٧١٪','١.٢٪','ok|ملتزم','—'],
-  ['محمود سيد عبد العظيم','المعادي','٧.٢','٢٤','٦٨٪','٣.١٪','warn|تحت المستوى','مهلة تصحيح ٧ أيام'],
-  ['أحمد ناصر عبده','حلوان','٨.٤','٢٥','٦٤٪','٠.٩٪','ok|ملتزم','—'],
-  ['سيد محمد حسين','الغردقة','٤.٣','١٢','٥٨٪','٢.٤٪','dan|تحت المستوى للشهر التاني','مرشّح لمراجعة استرداد'],
-  ['عبد الله شعبان','شبرا الخيمة','٠','٠','—','—','dan|لم يبدأ الشغل','مر ١٢ يوم من الاستلام'],
-  ['رامي عصام فؤاد','فيصل','٦.٢','٢١','٦٦٪','١.٨٪','info|حساب متوقف','بلوك من أوبر — تحت التحقق']
+  ['كريم أشرف مصطفى','مدينة نصر','8.1','26','71%','1.2%','ok|ملتزم','—'],
+  ['محمود سيد عبد العظيم','المعادي','7.2','24','68%','3.1%','warn|تحت المستوى','مهلة تصحيح 7 أيام'],
+  ['أحمد ناصر عبده','حلوان','8.4','25','64%','0.9%','ok|ملتزم','—'],
+  ['سيد محمد حسين','الغردقة','4.3','12','58%','2.4%','dan|تحت المستوى للشهر التاني','مرشّح لمراجعة استرداد'],
+  ['عبد الله شعبان','شبرا الخيمة','0','0','—','—','dan|لم يبدأ الشغل','مر 12 يوم من الاستلام'],
+  ['رامي عصام فؤاد','فيصل','6.2','21','66%','1.8%','info|حساب متوقف','بلوك من أوبر — تحت التحقق']
 ];
 const S_compliance = () => desk('compliance','متابعة الالتزام',
   `<button class="btn btn-ghost btn-sm">سجل الاستيرادات</button><button class="btn btn-pri btn-sm">استيراد تقرير أوبر</button>`,`
-  <div class="notice n-warn"><span class="ico">⚠</span><div>
+  <div class="notice n-warn">${ico('warn','ico')}<div>
     <b>البيانات دي مستوردة، مش لحظية</b>
-    آخر استيراد لتقرير أوبر: <b class="num">١٨ سبتمبر ٢٠٢٦ — ١٬٢٤٠ صف</b> · الفترة: ١٥–٢١ سبتمبر.
+    آخر استيراد لتقرير أوبر: <b class="num">18 سبتمبر 2026 — 1,240 صف</b> · الفترة: 15–21 سبتمبر.
     غياب بيانات لكابتن مش دليل إنه ما اشتغلش — بيتفتح استفسار الأول.</div></div>
   <div class="row" style="gap:8px"><div class="chips">
-    <span class="chip" data-on="1">الكل ٤١٨</span><span class="chip">ملتزم ٣٦٤</span>
-    <span class="chip">تحت المستوى ٢٩</span><span class="chip">لم يبدأ ١١</span>
-    <span class="chip">حساب متوقف ٨</span><span class="chip">بلاغ عطل ٦</span></div></div>
+    <span class="chip" data-on="1">الكل 418</span><span class="chip">ملتزم 364</span>
+    <span class="chip">تحت المستوى 29</span><span class="chip">لم يبدأ 11</span>
+    <span class="chip">حساب متوقف 8</span><span class="chip">بلاغ عطل 6</span></div></div>
   <div class="tbl-wrap"><table class="tbl" style="min-width:820px">
-    <thead><tr><th>الكابتن</th><th>المنطقة</th><th>ساعات/يوم<br><span class="dim">هدف ٨</span></th>
-      <th>أيام/شهر<br><span class="dim">هدف ٢٦</span></th><th>قبول<br><span class="dim">≥ ٦٠٪</span></th>
-      <th>إلغاء<br><span class="dim">≤ ٢٪</span></th><th>الحالة</th><th>الإجراء المفتوح</th><th></th></tr></thead>
+    <thead><tr><th>الكابتن</th><th>المنطقة</th><th>ساعات/يوم<br><span class="dim">هدف 8 ساعات</span></th>
+      <th>أيام/شهر<br><span class="dim">هدف 26 يوم</span></th><th>قبول<br><span class="dim">60% فأعلى</span></th>
+      <th>إلغاء<br><span class="dim">2% فأقل</span></th><th>الحالة</th><th>الإجراء المفتوح</th><th></th></tr></thead>
     <tbody>${COMP.map(r=>`<tr><td><b>${r[0]}</b></td><td>${r[1]}</td>
       <td class="num">${r[2]}</td><td class="num">${r[3]}</td><td class="num">${r[4]}</td><td class="num">${r[5]}</td>
       <td>${cell(r[6])}</td><td class="dim tiny">${r[7]}</td>
@@ -1185,21 +1283,21 @@ const S_compliance = () => desk('compliance','متابعة الالتزام',
 
 /* ================= الاسترداد ================= */
 const S_recovery = () => desk('recovery','الاسترداد','',`
-  <div class="grid4">${[['حالات مفتوحة','٩','dan'],['بانتظار اعتماد الإدارة','٤','warn'],
-    ['تم الاسترداد الشهر ده','٣','mute'],['أُغلقت بالتصحيح','١٧','ok']]
-    .map(([lb,v,k])=>`<div class="metric"><div class="top"><span class="val">${v}</span>
-      <span class="pill p-${k} plain">${lb}</span></div></div>`).join('')}</div>
+  <div class="grid4">${[['حالات مفتوحة','9','dan'],['بانتظار اعتماد الإدارة','4','warn'],
+    ['تم الاسترداد الشهر ده','3','mute'],['أُغلقت بالتصحيح','17','ok']]
+    .map(([lb,v,k])=>`<div class="metric"><div class="cap">${lb}</div>
+      <div class="top"><span class="val">${v}</span>${k==='dan'||k==='warn'?`<span class="pill p-${k} plain">مفتوحة</span>`:''}</div></div>`).join('')}</div>
   <div class="tbl-wrap"><table class="tbl" style="min-width:760px">
     <thead><tr><th>الحالة</th><th>الكابتن</th><th>السبب</th><th>المرحلة</th><th>الموتوسيكل</th><th>معتمدة من</th><th></th></tr></thead>
     <tbody>${[
-      ['RC-0071','محمد إبراهيم','لم يبدأ الشغل — ٢١ يوم من الاستلام','dan|تم الاسترداد','ق ن ٢ ٩٠٧','منى ع. · ١٢ سبتمبر'],
-      ['RC-0074','سيد محمد حسين','تحت المستوى شهرين متتاليين','warn|بانتظار اعتماد','ب ح ١ ٤٤٢','—'],
-      ['RC-0075','طارق عبد الغني','بلوك دائم من أوبر','info|تحت التحقق مع أوبر','ق ن ٣ ٠٥٥','—'],
-      ['RC-0077','وليد سمير','انسحاب بطلب الكابتن','ok|جدولة تسليم','ق ن ١ ٨٨٢','أحمد ف. · ١٧ سبتمبر']
+      ['RC-0071','محمد إبراهيم','لم يبدأ الشغل — 21 يوم من الاستلام','dan|تم الاسترداد','ق ن 2 907','منى ع. · 12 سبتمبر'],
+      ['RC-0074','سيد محمد حسين','تحت المستوى شهرين متتاليين','warn|بانتظار اعتماد','ب ح 1 442','—'],
+      ['RC-0075','طارق عبد الغني','بلوك دائم من أوبر','info|تحت التحقق مع أوبر','ق ن 3 055','—'],
+      ['RC-0077','وليد سمير','انسحاب بطلب الكابتن','ok|جدولة تسليم','ق ن 1 882','أحمد ف. · 17 سبتمبر']
     ].map(r=>`<tr><td class="num">${r[0]}</td><td><b>${r[1]}</b></td><td>${r[2]}</td>
       <td>${cell(r[3])}</td><td class="num">${r[4]}</td><td class="dim tiny">${r[5]}</td>
       <td><button class="btn btn-ghost btn-sm">افتح</button></td></tr>`).join('')}</tbody></table></div>
-  <div class="notice n-dan"><span class="ico">⚠</span><div>
+  <div class="notice n-dan">${ico('crit','ico')}<div>
     <b>الاسترداد قرار بشري باعتماد</b>
     النظام بيرصد المخالفة ويفتح الحالة ويجهّز الأدلة (بيانات التشغيل، سجل التواصل، مهلة التصحيح) — لكن مفيش استرداد بيتنفذ من غير اعتماد مشرف مختلف عن اللي فتح الحالة.</div></div>`);
 
@@ -1209,27 +1307,27 @@ const S_points = () => desk('points','نقاط التوزيع','<button class="b
     <thead><tr><th>النقطة</th><th>المدينة</th><th>مخزون متاح</th><th>مواعيد اليوم</th><th>الطاقة اليومية</th>
       <th>تم التسليم</th><th>الحالة</th></tr></thead>
     <tbody>${[
-      ['النصر موتورز','القاهرة — المعادي','٤٢','٨','١٠','١٤٦','ok|شغّال'],
-      ['بايك هاوس','القاهرة — مدينة نصر','٣٦','٦','٨','١٢٢','ok|شغّال'],
-      ['موتو بوينت','الجيزة — فيصل','٤','٢','٦','٧١','warn|مخزون منخفض'],
-      ['ورشة تريد واي','القاهرة — حلوان','٢٨','٣','٦','٤٨','ok|شغّال'],
-      ['موتو الغردقة','الغردقة — الدهار','٣','٤','٦','٦٦','warn|مخزون منخفض'],
-      ['النيل موتورز','القليوبية — شبرا','٨٥','٠','٨','٠','info|تحت التجهيز']
+      ['النصر موتورز','القاهرة — المعادي','42','8','10','146','ok|شغّال'],
+      ['بايك هاوس','القاهرة — مدينة نصر','36','6','8','122','ok|شغّال'],
+      ['موتو بوينت','الجيزة — فيصل','4','2','6','71','warn|مخزون منخفض'],
+      ['ورشة تريد واي','القاهرة — حلوان','28','3','6','48','ok|شغّال'],
+      ['موتو الغردقة','الغردقة — الدهار','3','4','6','66','warn|مخزون منخفض'],
+      ['النيل موتورز','القليوبية — شبرا','85','0','8','0','info|تحت التجهيز']
     ].map(r=>`<tr><td><b>${r[0]}</b></td><td>${r[1]}</td><td class="num">${r[2]}</td><td class="num">${r[3]}</td>
       <td class="num">${r[4]}</td><td class="num">${r[5]}</td><td>${cell(r[6])}</td></tr>`).join('')}</tbody></table></div>
-  <div class="notice n-info"><span class="ico">ⓘ</span><div>
+  <div class="notice n-info">${ico('info','ico')}<div>
     <b>النقطة بتنفّذ التسليم بس</b>
     ما تقدرش تغيّر قرار قبول، ولا شروط التملّك، ولا تخصص موتوسيكل لحد تاني. صلاحياتها: تشوف مواعيدها وملفاتها هي بس.</div></div>
   <div class="split">
-    <div class="card"><b class="sm">لو هنسلّم ٣٬٠٠٠ موتوسيكل</b>
+    <div class="card"><b class="sm">لو هنسلّم 3,000 موتوسيكل</b>
       <div class="stack g10" style="margin-top:12px">
-        ${[['٣٬٠٠٠ ÷ ٦٠ يوم تسليم','٥٠ تسليم / يوم'],['طاقة النقاط الحالية','٤٤ ميعاد / يوم'],
-           ['المطلوب','٣–٤ نقاط إضافية أو مد ساعات العمل']].map(([a,b])=>`
+        ${[['3,000 ÷ 60 يوم تسليم','50 تسليم / يوم'],['طاقة النقاط الحالية','44 ميعاد / يوم'],
+           ['المطلوب','3–4 نقاط إضافية أو مد ساعات العمل']].map(([a,b])=>`
         <div class="spread"><span class="sm">${a}</span><span class="pill p-mute plain num">${b}</span></div>`).join('')}
       </div>
-      <p class="tiny dim" style="margin-top:10px">التسليم عملية ٩٠ دقيقة فيها فحص وتوقيع وتدريب — مش استقبال فورم.</p></div>
+      <p class="tiny dim" style="margin-top:10px">التسليم عملية 90 دقيقة فيها فحص وتوقيع وتدريب — مش استقبال فورم.</p></div>
     <div class="card"><b class="sm">البداية المقترحة</b>
-      <p class="sm muted" style="margin-top:8px">دفعة تجريبية <b>٥٠–١٠٠ موتوسيكل</b> على نقطتين في القاهرة قبل التوسّع، علشان نختبر: الاختيار، التعاقد، الاستلام، وصول تقارير أوبر، والتعامل مع أول عطل وأول تعثّر.</p>
+      <p class="sm muted" style="margin-top:8px">دفعة تجريبية <b>50–100 موتوسيكل</b> على نقطتين في القاهرة قبل التوسّع، علشان نختبر: الاختيار، التعاقد، الاستلام، وصول تقارير أوبر، والتعامل مع أول عطل وأول تعثّر.</p>
       <p class="tiny dim" style="margin-top:8px">تجربة قصيرة مش هتثبت رحلة سنة كاملة — بس هتكشف كسور العملية بدري.</p></div>
   </div>`);
 </script>
@@ -1246,7 +1344,7 @@ const pointShell = (title, extra, body) => `<div class="desk" style="grid-templa
     <div class="desk-body">${body}</div>
   </div></div>`;
 
-const S_pqueue = () => pointShell('','<span class="tiny dim num">الأحد ٢٠ سبتمبر</span>',`
+const S_pqueue = () => pointShell('','<span class="tiny dim num">الأحد 20 سبتمبر</span>',`
   <div class="card">
     <b class="sm">ابحث عن الكابتن</b>
     <p class="tiny dim" style="margin:4px 0 10px">برقم الموبايل، أو رقم الطلب، أو امسح كود التذكرة.</p>
@@ -1255,13 +1353,13 @@ const S_pqueue = () => pointShell('','<span class="tiny dim num">الأحد ٢٠
       <button class="btn btn-pri btn-sm">بحث</button>
       <button class="btn btn-ghost btn-sm">مسح كود</button>
     </div>
-    <div class="card" style="margin-top:12px;background:var(--surface2);border-color:var(--brand-line)">
+    <div class="card" style="margin-top:12px;background:var(--ground);border-color:var(--accent-border)">
       <div class="spread"><div><b>محمود سيد عبد العظيم حسن</b>
-        <p class="tiny dim num">TW-2026-10428 · ميعاد ١١:٣٠ ص</p></div>
+        <p class="tiny dim num">TW-2026-10428 · ميعاد 11:30 ص</p></div>
         ${pill('ok','جاهز للتسليم')}</div>
       <hr class="rule" style="margin:12px 0">
       <div class="grid3">
-        <div><span class="eyebrow">الموتوسيكل المخصص</span><div class="num sm">ق ن ٤ ٢٧٩ · LHJ...9F42</div></div>
+        <div><span class="eyebrow">الموتوسيكل المخصص</span><div class="num sm">ق ن 4 279 · LHJ...9F42</div></div>
         <div><span class="eyebrow">الغرض</span><div class="sm">توقيع + استلام</div></div>
         <div><span class="eyebrow">الضامن</span><div class="sm">مطلوب حضوره</div></div>
       </div>
@@ -1270,15 +1368,15 @@ const S_pqueue = () => pointShell('','<span class="tiny dim num">الأحد ٢٠
   </div>
   <div class="card">
     <div class="spread" style="margin-bottom:10px"><b class="sm">مواعيد النهاردة</b>
-      <span class="tiny dim">٨ مواعيد · الطاقة ١٠</span></div>
+      <span class="tiny dim">8 مواعيد · الطاقة 10</span></div>
     <div class="tbl-wrap"><table class="tbl" style="min-width:600px">
       <thead><tr><th>الوقت</th><th>الكابتن</th><th>الغرض</th><th>الموتوسيكل</th><th>الحالة</th><th></th></tr></thead>
       <tbody>${[
-        ['١٠:٠٠ ص','أحمد ناصر عبده','توقيع + استلام','ق ن ٤ ٢٦١','ok|تم التسليم'],
-        ['١١:٣٠ ص','محمود سيد عبد العظيم','توقيع + استلام','ق ن ٤ ٢٧٩','warn|في الانتظار'],
-        ['١:٠٠ م','رامي عصام فؤاد','توقيع + استلام','ق ن ٤ ٢٨٣','dan|لم يحضر'],
-        ['٢:٣٠ م','عبد الله شعبان','توقيع فقط','—','info|لم يحن بعد'],
-        ['٤:٠٠ م','هاني صلاح الدين','توقيع + استلام','ق ن ٤ ٢٩٠','info|لم يحن بعد']
+        ['10:00 ص','أحمد ناصر عبده','توقيع + استلام','ق ن 4 261','ok|تم التسليم'],
+        ['11:30 ص','محمود سيد عبد العظيم','توقيع + استلام','ق ن 4 279','warn|في الانتظار'],
+        ['1:00 م','رامي عصام فؤاد','توقيع + استلام','ق ن 4 283','dan|لم يحضر'],
+        ['2:30 م','عبد الله شعبان','توقيع فقط','—','info|لم يحن بعد'],
+        ['4:00 م','هاني صلاح الدين','توقيع + استلام','ق ن 4 290','info|لم يحن بعد']
       ].map(r=>`<tr><td class="num">${r[0]}</td><td><b>${r[1]}</b></td><td>${r[2]}</td>
         <td class="num">${r[3]}</td><td>${cell(r[4])}</td>
         <td><button class="btn btn-ghost btn-sm" data-go="point:handover">افتح</button></td></tr>`).join('')}</tbody>
@@ -1286,19 +1384,19 @@ const S_pqueue = () => pointShell('','<span class="tiny dim num">الأحد ٢٠
   </div>`);
 
 const HAND = [
-  ['done','مطابقة الهوية','البطاقة الأصلية مطابقة للاسم والرقم القومي في الملف.','تم — ١١:٣٤ ص'],
-  ['done','مطابقة مستندات الضامن','الضامن حاضر ببطاقته الأصلية.','تم — ١١:٣٩ ص'],
+  ['done','مطابقة الهوية','البطاقة الأصلية مطابقة للاسم والرقم القومي في الملف.','تم — 11:34 ص'],
+  ['done','مطابقة مستندات الضامن','الضامن حاضر ببطاقته الأصلية.','تم — 11:39 ص'],
   ['now','صورة الكابتن ببطاقته','صورة واحدة واضحة يظهر فيها وشه والبطاقة.','مطلوب دلوقتي'],
   ['todo','مطابقة الموتوسيكل','رقم الشاسيه والموتور واللوحة مطابقين للمخصص في الملف.',''],
-  ['todo','الفحص وصور الحالة','٦ صور: أمام، خلف، جنبين، العداد، الخوذة.',''],
+  ['todo','الفحص وصور الحالة','6 صور: أمام، خلف، جنبين، العداد، الخوذة.',''],
   ['todo','التوقيع','العقد + جدول الالتزامات + إقرار الضامن + محضر التسليم.',''],
   ['todo','رفع الورق الموقّع','تصوير كل ورقة موقّعة ورفعها قبل تأكيد التسليم.',''],
-  ['todo','تدريب السلامة والاستخدام','٥ دقايق: الصيانة، مراكز الخدمة، الإبلاغ عن عطل.','']
+  ['todo','تدريب السلامة والاستخدام','5 دقايق: الصيانة، مراكز الخدمة، الإبلاغ عن عطل.','']
 ];
-const S_handover = () => pointShell('','<span class="tiny dim num">TW-2026-10428 · ١١:٣٠ ص</span>',`
+const S_handover = () => pointShell('','<span class="tiny dim num">TW-2026-10428 · 11:30 ص</span>',`
   <div class="row" style="justify-content:space-between">
     <div><span class="eyebrow">تسليم جارٍ</span><h3 style="font-size:17px">محمود سيد عبد العظيم حسن</h3>
-      <p class="tiny dim num">ق ن ٤ ٢٧٩ · LHJ4K2...9F42 · هوجان ١٥٠ — ٢٠٢٦</p></div>
+      <p class="tiny dim num">ق ن 4 279 · LHJ4K2...9F42 · هوجان 150 — 2026</p></div>
     <div class="row"><button class="btn btn-dan btn-sm">أوقف التسليم وارفع الحالة</button>
       <button class="btn btn-pri btn-sm" disabled style="opacity:.5">أكّد التسليم</button></div>
   </div>
@@ -1311,9 +1409,9 @@ const S_handover = () => pointShell('','<span class="tiny dim num">TW-2026-10428
     </div>
     <div class="stack g14">
       <div class="card"><b class="sm">صورة الكابتن ببطاقته</b>
-        <div style="margin-top:10px;border:1.5px dashed var(--brand-line);border-radius:var(--r-m);
-          padding:26px;text-align:center;background:var(--brand-soft)">
-          <div style="font-size:26px">📷</div>
+        <div style="margin-top:10px;border:1.5px dashed var(--accent-border);border-radius:var(--r-md);
+          padding:26px;text-align:center;background:var(--accent-subtle)">
+          <div style="font-size:26px">${ico('cam')}</div>
           <b class="sm" style="display:block;margin-top:6px">افتح الكاميرا وصوّر</b>
           <p class="tiny dim">الصورة بتتحفظ في ملف الكابتن ومحضر التسليم.</p>
           <button class="btn btn-pri btn-sm" style="margin-top:10px">تصوير</button></div>
@@ -1322,12 +1420,12 @@ const S_handover = () => pointShell('','<span class="tiny dim num">TW-2026-10428
         <div class="stack g8" style="margin-top:10px">
           ${[['اتفاق المشاركة','mute','لم يُرفع'],['جدول الالتزامات','mute','لم يُرفع'],
              ['إقرار الضامن','mute','لم يُرفع'],['محضر تسليم الموتوسيكل','mute','لم يُرفع']]
-            .map(([t,k,s])=>`<div class="doc"><div class="ic">📄</div>
+            .map(([t,k,s])=>`<div class="doc"><div class="ic">${ico('doc')}</div>
             <div class="t"><b>${t}</b><span>${s}</span></div>
             <button class="btn btn-ghost btn-sm">ارفع</button></div>`).join('')}
         </div>
       </div>
-      <div class="notice n-warn"><span class="ico">⚠</span><div>
+      <div class="notice n-warn">${ico('warn','ico')}<div>
         <b>مفيش تأكيد تسليم قبل الورق</b>
         زرار «أكّد التسليم» بيفضل مقفول لحد ما كل الخطوات تتقفل والورق الموقّع يترفع. ساعتها بس الموتوسيكل بيتحول لـ«مُسلّم» وبتظهر نسخة المستندات للكابتن في حسابه.</div></div>
     </div>
@@ -1342,7 +1440,7 @@ const PORTALS = [
     {id:'apply',    nav:'نموذج التقديم', title:'نموذج التقديم على خطوات', desc:'خمس خطوات قصيرة، كل واحدة بتتحفظ لوحدها، والأسئلة بتتغير حسب إجاباته. دوس على أي خطوة في الشريط علشان تشوفها.', render:S_apply},
     {id:'track',    nav:'متابعة طلبي', title:'متابعة الطلب', desc:'مراحل الطلب + المطلوب منه دلوقتي + الرسائل اللي وصلته. ده الرد على «أنا وصلت لفين؟».', render:S_track},
     {id:'docs',     nav:'المستندات والتجهيز', title:'المستندات وتجهيز الملف', desc:'خمس مسارات بتتقفل بالترتيب: بياناته، مستنداته، حساب أوبر، الضامن، التعاقد. كل مستند وحالته وسبب الرفض لو مرفوض.', render:S_docs},
-    {id:'accepted', nav:'القبول والتعاقد', title:'القبول وإجراءات التسليم', desc:'اختيار طريقة التوقيع: يمضي ويستلم نفس اليوم، أو يمضي والتسليم خلال ٧ أيام عمل — ومعاه اللي لازم يحضره.', render:S_accepted},
+    {id:'accepted', nav:'القبول والتعاقد', title:'القبول وإجراءات التسليم', desc:'اختيار طريقة التوقيع: يمضي ويستلم نفس اليوم، أو يمضي والتسليم خلال 7 أيام عمل — ومعاه اللي لازم يحضره.', render:S_accepted},
     {id:'booking',  nav:'حجز الاستلام', title:'حجز نقطة وميعاد الاستلام', desc:'بنعرض النقط اللي عندها مخزون وطاقة فعلاً — مش الأقرب وخلاص — والتذكرة بتطلع بكود ورقم طلب.', render:S_booking},
     {id:'mybike',   nav:'موتوسيكلي والتزامي', title:'بعد الاستلام', desc:'الشاشة بتتحول من «متابعة طلب» لـ«متابعة التزام»: الموتوسيكل، المؤشرات مقابل المطلوب، التنبيهات، والإبلاغ عن عطل.', render:S_mybike}
   ]},
@@ -1357,12 +1455,13 @@ const PORTALS = [
   ]},
   {id:'point', tab:'بوابة نقطة التوزيع', kind:'تابلت — المعرض الشريك', screens:[
     {id:'queue',    nav:'مواعيد اليوم', title:'مواعيد اليوم والبحث', desc:'المعرض بيدور برقم الموبايل أو رقم الطلب أو الكود، وبيشوف ملفاته هو بس.', render:S_pqueue},
-    {id:'handover', nav:'تنفيذ التسليم', title:'تنفيذ التسليم', desc:'٨ خطوات إلزامية: مطابقة الهوية والضامن، صورة الكابتن ببطاقته، مطابقة الشاسيه، الفحص، التوقيع، رفع الورق، والتدريب.', render:S_handover}
+    {id:'handover', nav:'تنفيذ التسليم', title:'تنفيذ التسليم', desc:'8 خطوات إلزامية: مطابقة الهوية والضامن، صورة الكابتن ببطاقته، مطابقة الشاسيه، الفحص، التوقيع، رفع الورق، والتدريب.', render:S_handover}
   ]}
 ];
 
 let cur = {p:'applicant', s:'landing'};
 const $ = (q)=>document.querySelector(q);
+const PREFIX = {applicant:'A', admin:'B', point:'C'};
 
 function renderTabs(){
   $('#portalTabs').innerHTML = PORTALS.map(p=>
@@ -1375,7 +1474,7 @@ function render(){
   renderTabs();
   $('#screenNav').innerHTML = P.screens.map((s,i)=>
     `<button data-screen="${s.id}" aria-current="${s.id===cur.s}">
-      <span class="ix num">${String(i+1).padStart(2,'0')}</span>${s.nav}</button>`).join('');
+      <span class="ix">${PREFIX[P.id]}${i+1}</span>${s.nav}</button>`).join('');
   $('#scTitle').textContent = S.title;
   $('#scDesc').textContent = S.desc;
   $('#scKind').textContent = P.kind;
@@ -1388,7 +1487,7 @@ function go(p,s){ cur = {p, s}; render(); window.scrollTo({top:0, behavior:'smoo
 
 /* ================= ملاحظات وقرارات مفتوحة ================= */
 const OPEN = [
-  ['مع أوبر','أرقام الماتريكس النهائية','٨ ساعات · ٢٦ يوم · قبول ٦٠٪ · إلغاء ٢٪ معروضة في التصميم كقيم مبدئية. محتاجة تثبيت قبل ما تتعرض للجمهور أو تتكتب في العقود.'],
+  ['مع أوبر','أرقام الماتريكس النهائية','8 ساعات · 26 يوم · قبول 60% · إلغاء 2% معروضة في التصميم كقيم مبدئية. محتاجة تثبيت قبل ما تتعرض للجمهور أو تتكتب في العقود.'],
   ['مع أوبر','مصدر بيانات التشغيل','دلوقتي التصميم مبني على استيراد تقرير دوري. لو فيه ربط تقني، نفس المسار بيتأتمت من غير تغيير في الشاشات.'],
   ['مع أوبر','شروط استحقاق التملّك','المدة (سنة مبدئيًا) + طريقة احتساب الاستحقاق + مين يعتمد تحققها. علشان كده مفيش «عدّاد تملّك» في شاشة الكابتن لحد دلوقتي.'],
   ['مع أوبر','المستندات الإضافية','إيه بالظبط اللي أوبر هتطلبه (زي ما يفيد محدودية الدخل)، ومطلوب من كل الحالات ولا بعضها؟'],
@@ -1399,10 +1498,10 @@ const OPEN = [
   ['تجاري','عائد تريد واي وتكلفة الإدارة','مش شرط يظهر في الموقع، لكنه بيحدد حجم الدفعات والتوسّع.']
 ];
 const NOTES_HTML = `
-  <div class="spread" style="margin-bottom:14px">
-    <div><h3 style="font-size:17px">ملاحظات وقرارات مفتوحة</h3>
+  <div class="spread" style="margin-block-end:14px">
+    <div><h3 style="font-size:22px;font-weight:700">قرارات مفتوحة</h3>
       <p class="tiny dim">حاجات التصميم معتمد فيها على افتراض — ولازم تتثبت قبل فتح التسجيل.</p></div>
-    <button class="btn btn-ghost btn-sm" data-close="1">إغلاق</button></div>
+    <button class="btn btn-soft" style="width:40px;height:40px;padding:0" data-close="1" aria-label="إغلاق">✕</button></div>
   <div class="stack g10">${OPEN.map(([w,t,d])=>`<div class="card tight">
     <div class="row" style="justify-content:space-between;margin-bottom:4px">
       <b class="sm">${t}</b>${pill(w==='مع أوبر'?'brand':w==='داخلي'?'mute':'info',w)}</div>
@@ -1419,14 +1518,14 @@ const NOTES_HTML = `
   ].map(t=>`<li class="sm muted" style="display:flex;gap:8px"><span style="color:var(--brand)">▸</span><span>${t}</span></li>`).join('')}</ul>`;
 
 const HELP_HTML = `
-  <div class="spread" style="margin-bottom:12px"><h3 style="font-size:17px">رقمي اتغير</h3>
-    <button class="btn btn-ghost btn-sm" data-close="1">إغلاق</button></div>
+  <div class="spread" style="margin-block-end:12px"><h3 style="font-size:22px;font-weight:700">رقمي اتغيّر</h3>
+    <button class="btn btn-soft" style="width:40px;height:40px;padding:0" data-close="1" aria-label="إغلاق">✕</button></div>
   <p class="sm muted">لو أوبر رشّحتك برقم قديم، ما تعملش طلب جديد. سيب بياناتك وفريقنا هيطابقها مع كشف الترشيحات ويربط الطلب برقمك الجديد.</p>
   <div class="stack g12" style="margin-top:14px">
-    <div class="field"><label for="h1">الرقم القومي</label><input class="inp num" id="h1" dir="ltr" style="text-align:start" placeholder="١٤ رقم"></div>
+    <div class="field"><label for="h1">الرقم القومي</label><input class="inp num" id="h1" dir="ltr" style="text-align:start" placeholder="14 رقم"></div>
     <div class="field"><label for="h2">الرقم القديم اللي أوبر عندها</label><input class="inp num" id="h2" dir="ltr" style="text-align:start" placeholder="01xxxxxxxxx"></div>
     <button class="btn btn-pri btn-block" data-close="1">ابعت للمراجعة</button>
-    <p class="tiny dim" style="text-align:center">بنرد خلال ٣ أيام عمل برسالة على رقمك الجديد.</p>
+    <p class="tiny dim" style="text-align:center">بنرد خلال 3 أيام عمل برسالة على رقمك الجديد.</p>
   </div>`;
 
 function openSheet(html){
@@ -1463,6 +1562,8 @@ document.addEventListener('keydown',(e)=>{ if(e.key==='Escape') closeSheet(); })
 document.addEventListener('click',(e)=>{ if(e.target.classList && e.target.classList.contains('sheet')) closeSheet(); });
 
 (function init(){
+  const pm = document.getElementById('protoMark');
+  if(pm) pm.innerHTML = LOGO_ICON.replace('class="tw-icon"','class="mark"');
   const h = (location.hash||'').replace('#','').split('/');
   const P = PORTALS.find(p=>p.id===h[0]);
   if(P){ cur.p = P.id; if(P.screens.some(s=>s.id===h[1])) cur.s = h[1]; else cur.s = P.screens[0].id; }
