@@ -410,15 +410,29 @@ table.tbl.comp td:last-child,table.tbl.comp th:last-child{white-space:nowrap}
 .app-top{position:sticky;top:0;z-index:20;background:var(--surface);
   border-block-end:1px solid var(--hairline);box-shadow:var(--shadow-sticky);
   padding:10px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px}
-.lockup{display:flex;align-items:center;gap:12px;color:var(--text)}
+.lockup{display:flex;align-items:center;gap:10px;color:var(--text);min-width:0}
 .tw-icon{width:26px;height:30px;flex:0 0 auto;display:block}
 .proto-brand .mark,.proto-brand .tw-icon{width:19px;height:22px}
+.proto-brand .tw-word,.desk-side .tw-word{display:none}
 .desk-side .who .tw-icon{width:22px;height:26px}
-.lockup .nm{font:600 15px/1.35 var(--font-ui);white-space:nowrap}
-.partner{display:flex;align-items:center;padding-inline-start:12px;
-  border-inline-start:1px solid var(--hairline);margin-inline-start:4px}
-.partner .pl{display:block;font-size:10px;line-height:1.3;color:var(--text-3)}
-.partner .ub{display:block;font:700 15px/1.15 var(--font-figure);color:var(--text)}
+.tw-word{height:30px;width:auto;flex:0 0 auto;display:block;color:var(--text)}
+.uber{font-family:var(--font-figure);font-weight:600;font-size:21px;line-height:1;
+  letter-spacing:-.035em;color:var(--text);direction:ltr;unicode-bidi:isolate;display:block}
+.partner{display:flex;align-items:baseline;gap:7px;padding-inline-start:12px;
+  border-inline-start:1px solid var(--line,var(--hairline));margin-inline-start:6px}
+.partner .pl{font-size:10px;line-height:1.25;color:var(--text-3);white-space:nowrap;writing-mode:horizontal-tb}
+.partner .uber{font-size:18px}
+/* co-brand lockup */
+.cobrand{display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;
+  padding:20px 16px;border:1px solid var(--hairline);border-radius:var(--r-md);background:var(--surface)}
+.cobrand .cb-side{display:flex;align-items:center;gap:12px}
+.cobrand .tw-icon{width:34px;height:39px}
+.cobrand .tw-word{height:38px}
+.cobrand .uber{font-size:30px}
+.cb-x{width:1px;align-self:stretch;min-height:38px;background:var(--hairline)}
+.cb-sub{flex-basis:100%;text-align:center;font-size:12px;color:var(--text-3);margin-block-start:4px}
+@media (max-width:420px){.cobrand{gap:14px;padding:16px 12px}
+  .cobrand .tw-word{height:30px}.cobrand .tw-icon{width:26px;height:30px}.cobrand .uber{font-size:24px}}
 /* hero — flat, start-aligned, no gradient */
 .hero{background:var(--ground);padding:24px 18px 22px;border-block-end:1px solid var(--hairline);text-align:start}
 .hero h1{font:700 28px/1.4 var(--font-display);margin-block-start:10px}
@@ -489,7 +503,7 @@ table.tbl.comp td:last-child,table.tbl.comp th:last-child{white-space:nowrap}
   <div class="proto-in">
     <div class="proto-brand">
       <span id="protoMark"></span>
-      <div><b>تريد واي</b><small>نموذج تفاعلي — ليس نظامًا حيًّا</small></div>
+      <div><b class="lat" style="font-family:var(--font-figure);font-weight:600">Trade Way</b><small>نموذج تفاعلي — ليس نظامًا حيًّا</small></div>
     </div>
     <div class="tabs" role="tablist" id="portalTabs"></div>
     <div class="proto-note">قيم التشغيل مبدئية — <button type="button" id="openNotes">القرارات المفتوحة</button></div>
@@ -546,8 +560,15 @@ const IP = {
 const ico = (n, cls) => `<svg class="${cls||'ic'}" viewBox="0 0 24 24" fill="none" stroke="currentColor"
   stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IP[n]||''}</svg>`;
 
-const LOCKUP = `<div class="lockup">${LOGO_ICON}<span class="nm">تريد واي</span>
-  <span class="partner"><span><span class="pl">بالشراكة مع</span><span class="ub">Uber</span></span></span></div>`;
+const UBER = `<span class="uber">Uber</span>`;
+const LOCKUP = `<div class="lockup">${LOGO_ICON}${LOGO_WORD}
+  <span class="partner"><span class="pl">بالشراكة مع</span>${UBER}</span></div>`;
+/* لوك أب الشراكة الكبير — للصفحات والعروض */
+const COBRAND = (sub) => `<div class="cobrand">
+  <div class="cb-side">${LOGO_ICON}${LOGO_WORD}</div>
+  <span class="cb-x" aria-hidden="true"></span>
+  <div class="cb-side">${UBER}</div>
+  ${sub?`<p class="cb-sub">${sub}</p>`:''}</div>`;
 
 const appHeader = (right) => `<header class="app-top">${LOCKUP}<div>${right||''}</div></header>`;
 
@@ -588,7 +609,7 @@ const roleNow = () => ROLES[ADM.role];
 
 const desk = (activeId, title, topExtra, body) => `<div class="desk">
   <aside class="desk-side">
-    <div class="who">${LOGO_ICON}<div><b>تريد واي</b><small>${roleNow().nm}</small></div></div>
+    <div class="who">${LOGO_ICON}<div><b class="lat" style="font-family:var(--font-figure);font-weight:600">Trade Way</b><small>${roleNow().nm}</small></div></div>
     ${ADMIN_NAV.map(x => x[0]==='g'
       ? `<div class="side-group">${x[1]}</div>`
       : `<a href="#" data-go="admin:${x[0]}" data-on="${x[0]===activeId?1:0}">${ico(x[2])}${x[1]}
@@ -797,6 +818,10 @@ ${appHeader(`<button class="btn btn-ghost btn-sm" data-go="applicant:track">مت
 </section>
 
 <section class="sec">
+  ${COBRAND('برنامج تمويل وتمليك موتوسيكلات · الدفعة الأولى — القاهرة الكبرى والغردقة')}
+</section>
+
+<section class="sec">
   ${notice('info','البرنامج بيشتغل إزاي',
     'أوبر وتريد واي بيموّلوا الموتوسيكل ويرخّصوه ويأمّنوه، وإنت بتشتغل بيه على أوبر. شغلك ده هو اللي بيسدّد تمنه — مش فلوس من جيبك. تكمّل مدة البرنامج بالتزاماتك، والموتوسيكل يتحوّل باسمك.<br><br><b>البرنامج ما بياخدش منك جنيه في أي خطوة. لا مقدم، لا قسط، لا رسوم ملف.</b>')}
 </section>
@@ -891,6 +916,14 @@ ${appHeader(`<button class="btn btn-ghost btn-sm" data-go="applicant:track">مت
       ['هل فيه حد بيتواصل معايا يطلب فلوس؟','البرنامج ما بياخدش فلوس في أي خطوة، فأي طلب فلوس مش مننا. لو حصل، كلّمنا على ١٦٧٢٣.'],
       ['الموتوسيكل بيتنقل باسمي إمتى؟','بعد ما تكمّل المدة والمؤشرات، ويراجع الفريق استحقاقك. الشروط النهائية بتتكتب في عقدك إنت — واللي في عقدك هو اللي بيسري.']
     ].map(([q,a])=>`<details><summary>${q}</summary><p>${a}</p></details>`).join('')}
+  </div>
+</section>
+
+<section class="sec alt" style="padding-block:24px">
+  ${COBRAND('')}
+  <div class="stack g8" style="margin-block-start:16px;text-align:center">
+    <p class="tiny dim">خدمة عملاء البرنامج · <b class="lat">16723</b> · من ٩ ص لـ ٩ م</p>
+    <p class="tiny dim">البرنامج ما بياخدش رسوم في أي خطوة.</p>
   </div>
 </section>
 
@@ -3004,6 +3037,7 @@ const S_pitch = () => {
   </div>
 
   <section class="popen">
+    <div style="margin-block-end:22px;max-width:520px">${COBRAND('')}</div>
     <span class="kicker">أوبر بالشراكة مع تريد واي · الدفعة الأولى</span>
     <h2>${U?'برنامج تمويل بينتهي بتملّك':'موتوسيكلك وشغلك'}<em>${U?'١٬٠٠٠ موتوسيكل، مدينتين، ١٢ شهر.':'من غير ما تدفع جنيه.'}</em></h2>
     <p class="lede" style="margin-block-start:14px;font-size:16px;color:var(--text-2)">
