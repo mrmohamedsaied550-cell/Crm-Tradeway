@@ -443,6 +443,8 @@ table.tbl.comp td:last-child,table.tbl.comp th:last-child{white-space:nowrap}
 .facts div{background:var(--surface);padding:12px 14px}
 .facts b{display:block;font:600 22px/1.25 var(--font-ui);font-variant-numeric:tabular-nums;color:var(--text)}
 .facts span{font-size:11.5px;line-height:1.55;color:var(--text-3)}
+.hero-cta{display:flex;gap:10px;margin-block-start:18px;flex-wrap:wrap}
+.hero-cta .btn{flex:1 1 150px;min-height:48px}
 .sec{padding:22px 18px;border-block-end:1px solid var(--hairline);background:var(--surface)}
 .sec.alt{background:var(--ground)}
 .sec:last-of-type{border-block-end:0}
@@ -459,6 +461,10 @@ table.tbl.comp td:last-child,table.tbl.comp th:last-child{white-space:nowrap}
   padding-inline:16px;padding-block:12px;padding-block-end:calc(12px + env(safe-area-inset-bottom,0px));
   display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .stickycta .note{flex-basis:100%;font-size:11.5px;line-height:1.5;color:var(--text-3);order:-1}
+@media (max-width:620px){
+  .stickycta{position:fixed;inset-inline:0;bottom:0;z-index:40}
+  .phone-scroll{padding-block-end:118px}
+}
 .otp{display:flex;gap:10px;direction:ltr;justify-content:center}
 .otp input{width:54px;height:60px;text-align:center;font:600 28px var(--font-figure);
   border:1px solid var(--border-strong);border-radius:var(--r-sm);background:var(--surface);color:var(--text)}
@@ -814,7 +820,11 @@ ${appHeader(`<button class="btn btn-ghost btn-sm" data-go="applicant:track">مت
     <div><b>١٢ شهر</b><span>مدة البرنامج (مبدئية)</span></div>
     <div><b>مدينتين</b><span>القاهرة الكبرى · الغردقة</span></div>
   </div>
-  <div class="row" style="margin-top:12px">${DRAFT}<span class="tiny dim">المدة والمؤشرات لسه تحت الاعتماد النهائي مع أوبر. اللي هيتكتب في عقدك هو اللي بيسري عليك.</span></div>
+  <div class="hero-cta">
+    <button class="btn btn-pri" data-go="applicant:verify">قدّم دلوقتي</button>
+    <button class="btn btn-ghost" data-go="applicant:track">عندي طلب بالفعل</button>
+  </div>
+  <div class="row" style="margin-top:14px">${DRAFT}<span class="tiny dim">المدة والمؤشرات لسه تحت الاعتماد النهائي مع أوبر. اللي هيتكتب في عقدك هو اللي بيسري عليك.</span></div>
 </section>
 
 <section class="sec">
