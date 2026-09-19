@@ -170,6 +170,14 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 @media (prefers-reduced-motion:no-preference){.desk-side a{transition:background-color .15s ease,color .15s ease}}
 .desk-side a:hover{color:var(--side-text)}
 .desk-side a[data-on="1"]{background:var(--side-raised);color:var(--side-text);box-shadow:inset 2px 0 0 var(--side-rail)}
+.side-group{font:600 10.5px/1.4 var(--font-ui);color:var(--side-dim);padding:12px 11px 5px;opacity:.85}
+.side-badge{margin-inline-start:auto;font:600 11px var(--font-figure);background:var(--side-raised);
+  color:var(--side-text);border-radius:var(--r-pill);padding:1px 8px}
+.desk-side a[data-on="1"] .side-badge{background:var(--side);color:var(--side-rail)}
+.role-pick{display:flex;align-items:center;gap:7px;font:600 11.5px var(--font-ui);color:var(--text-3)}
+.role-pick select{font:500 12.5px var(--font-ui);color:var(--text);background:var(--surface);
+  border:1px solid var(--border-strong);border-radius:var(--r-xs);padding:6px 10px}
+@media (max-width:860px){.side-group{display:none}}
 .desk-side a .ic{width:18px;height:18px;flex:0 0 auto;opacity:.9}
 .desk-main{min-width:0;background:var(--ground)}
 .desk-top{background:var(--surface);border-block-end:1px solid var(--hairline);padding:13px 18px;
@@ -538,22 +546,54 @@ const phone = (inner) => `<div class="phone-wrap"><div class="phone">
   <div class="phone-bar"><span>9:41</span><span>4G</span></div>
   <div class="phone-scroll" dir="rtl">${inner}</div></div></div>`;
 
+const ROLES = {
+  R1:{k:'R1', nm:'مراجع الطلبات', who:'سارة مجدي'},
+  R2:{k:'R2', nm:'مسؤول تجهيز الحسابات', who:'أحمد فتحي'},
+  R3:{k:'R3', nm:'مشرف', who:'منى عادل'},
+  R4:{k:'R4', nm:'مسؤول المخزون والمواعيد', who:'خالد سمير'},
+  R5:{k:'R5', nm:'مسؤول الالتزام', who:'هبة رمزي'},
+  R6:{k:'R6', nm:'مدير البرنامج', who:'شريف نبيل'},
+  R7:{k:'R7', nm:'قراءة فقط — مالية', who:'نهى عصام'}
+};
+const ADM = { role:'R3', queue:'Q4', sheet:null, toast:null, impStep:1 };
+
 const ADMIN_NAV = [
-  ['ops','لوحة التشغيل','grid'],['apps','الطلبات','rows'],['profile','ملف متقدم','user'],
-  ['alloc','التخصيص والمواعيد','box'],['compliance','متابعة الالتزام','gauge'],
-  ['recovery','الاسترداد','ban'],['points','نقاط التوزيع','pin']
+  ['g','العمل'],
+  ['work','شغلي','rows'], ['queues','الصناديق','box'], ['exceptions','الاستثناءات','warn'],
+  ['g','السجلات'],
+  ['apps','الطلبات','doc'], ['captains','الكباتن','user'], ['fleet','الأسطول والمواعيد','bike'],
+  ['points','نقاط التوزيع','pin'], ['imports','الاستيرادات','gauge'],
+  ['g','الإدارة'],
+  ['board','لوحة البرنامج','grid'], ['governance','الحوكمة','clip']
 ];
+/* الصلاحية: ✔ متاح · ✎ متاح بسبب مسجّل · ✖ ممنوع */
+const PERM = {
+  D1:{R1:'y',R3:'y',R6:'y'}, D2:{R1:'y',R3:'y'}, D3:{R2:'y',R3:'y'},
+  D4:{R3:'y',R6:'y'}, D5:{R4:'y'}, D6:{R4:'y',R3:'y'},
+  D7:{R5:'r',R3:'r',R6:'r'}, D8:{R3:'r',R6:'r'}, D9:{R5:'r',R6:'r'},
+  pull:{R1:'y',R2:'y',R3:'y',R4:'y',R5:'y'}, commitImport:{R3:'y',R6:'y'},
+  override:{R3:'r',R6:'r'}, governance:{R6:'r'}
+};
+const can = (act) => (PERM[act]||{})[ADM.role] || 'n';
+const roleNow = () => ROLES[ADM.role];
+
 const desk = (activeId, title, topExtra, body) => `<div class="desk">
   <aside class="desk-side">
-    <div class="who">${LOGO_ICON}<div><b>تريد واي</b><small>غرفة العمليات</small></div></div>
-    ${ADMIN_NAV.map(([id,lb,ic])=>`<a href="#" data-go="admin:${id}" data-on="${id===activeId?1:0}">${ico(ic)}${lb}</a>`).join('')}
+    <div class="who">${LOGO_ICON}<div><b>تريد واي</b><small>${roleNow().nm}</small></div></div>
+    ${ADMIN_NAV.map(x => x[0]==='g'
+      ? `<div class="side-group">${x[1]}</div>`
+      : `<a href="#" data-go="admin:${x[0]}" data-on="${x[0]===activeId?1:0}">${ico(x[2])}${x[1]}
+         ${ADM_BADGE[x[0]]?`<span class="side-badge">${ADM_BADGE[x[0]]}</span>`:''}</a>`).join('')}
   </aside>
   <div class="desk-main">
-    <div class="desk-top"><h3 style="flex:1">${title}</h3>${topExtra||''}</div>
-    <div class="desk-body">${body}</div>
+    <div class="desk-top"><h3 style="flex:1">${title}</h3>
+      <label class="role-pick"><span>الدور</span>
+        <select id="rolePick" data-adm="role">${Object.values(ROLES).map(r=>
+          `<option value="${r.k}" ${r.k===ADM.role?'selected':''}>${r.nm} — ${r.who}</option>`).join('')}</select></label>
+      ${topExtra||''}</div>
+    <div class="desk-body">${ADM.toast?`<div class="notice n-warn">${ico('warn','ico')}<div>${ADM.toast}</div></div>`:''}${body}</div>
   </div></div>`;
-
-const ar = (n) => String(n).replace(/[0-9]/g, d => '\u0660\u0661\u0662\u0663\u0664\u0665\u0666\u0667\u0668\u0669'[+d]);
+const ADM_BADGE = {work:12, queues:87, exceptions:9};
 
 const pill = (kind, text) => `<span class="pill p-${kind}">${text}</span>`;
 const DRAFT = `<span class="draft">قيمة مبدئية — لم تُعتمد مع أوبر</span>`;
@@ -1300,7 +1340,7 @@ const QUEUE = [
   ['info','3 نقاط','مخزون أقل من 5 موتوسيكلات','فيصل · الغردقة الدهار · حلوان']
 ];
 const CITY = [['القاهرة الكبرى',352,600],['الغردقة',66,150]];
-const S_ops = () => desk('ops','لوحة التشغيل — دفعة سبتمبر 2026',
+const S_ops = () => desk('board','لوحة التشغيل — دفعة سبتمبر 2026',
   `<span class="chip">القاهرة الكبرى</span><span class="chip">الغردقة</span><span class="pill p-mute plain">آخر تحديث 18 سبتمبر</span>`,`
   ${kpiRow()}
   <div class="card">
@@ -1379,7 +1419,7 @@ const LOG = [
   ['منى عادل','مشرف تشغيل','قبول مبدئي — استوفى شروط الأهلية، دفعة القاهرة الكبرى سبتمبر','14 سبتمبر 11:20 ص','ok'],
   ['النظام','—','تطابق الترشيح مع كشف أوبر UB-2026-0431','12 سبتمبر 2:14 م','mute']
 ];
-const S_profile = () => desk('profile','محمود سيد عبد العظيم حسن',
+const S_profile = () => desk('file','محمود سيد عبد العظيم حسن',
   `<span class="num tiny dim">TW-2026-10428</span><button class="btn btn-ghost btn-sm">اتصل</button>
    <button class="btn btn-pri btn-sm">اعتمد جاهزية الملف</button>`,`
   <div class="row" style="gap:8px">
@@ -1434,7 +1474,7 @@ const STOCK = [
   ['LHJ4K2...7C90','ق ن 3 114','هوجان 150','بايك هاوس — مدينة نصر','mute|مُسلّم','كريم أشرف — 09 سبتمبر'],
   ['LHJ4K2...6A33','ق ن 2 907','هوجان 150','ورشة تريد واي — حلوان','dan|مرتجع — تحت الفحص','استرداد حالة RC-0071']
 ];
-const S_alloc = () => desk('alloc','التخصيص والمواعيد',
+const S_alloc = () => desk('fleet','التخصيص والمواعيد',
   `<button class="btn btn-ghost btn-sm">إضافة دفعة مخزون</button><button class="btn btn-pri btn-sm">تخصيص تلقائي حسب المنطقة</button>`,`
   <div class="card">
     <div class="spread" style="margin-block-end:4px"><b class="sm">حالة المخزون</b>
@@ -1497,7 +1537,7 @@ const MCOL = [
   ['نسبة القبول', 60, true, r=>r.a, '%'],
   ['نسبة الإلغاء', 2, false, r=>r.c, '%']
 ];
-const S_compliance = () => desk('compliance','متابعة الالتزام',
+const S_compliance = () => desk('captains','متابعة الالتزام',
   `<button class="btn btn-soft btn-sm">سجل الاستيرادات</button><button class="btn btn-pri btn-sm">استيراد تقرير أوبر</button>`,`
   ${notice('warn','البيانات دي مستوردة، مش لحظية',
     'آخر استيراد لتقرير أوبر: <b>18 سبتمبر 2026 — 1,240 صف</b> · الفترة 15–21 سبتمبر. غياب بيانات لكابتن مش دليل إنه ما اشتغلش — بيتفتح استفسار الأول.')}
@@ -2356,6 +2396,393 @@ const S_point = () => {
   return (APP.toast?`<div class="notice n-warn" style="margin-block-end:14px">${ico('warn','ico')}<div>${APP.toast}</div></div>`:'') + body;
 };
 </script>
+<style>
+.qrail{display:grid;grid-template-columns:248px minmax(0,1fr);gap:0;background:var(--surface);
+  border:1px solid var(--hairline);border-radius:var(--r-sm);overflow:hidden}
+.qrail .rail-list{border-inline-end:1px solid var(--hairline);padding:8px;display:flex;flex-direction:column;gap:2px}
+.qrail .rail-list button{display:flex;align-items:flex-start;gap:8px;text-align:start;padding:9px 11px;
+  border-radius:var(--r-xs);width:100%}
+.qrail .rail-list b{font:600 13px/1.45 var(--font-ui);display:block}
+.qrail .rail-list small{font-size:11.5px;color:var(--text-3)}
+.qrail .rail-list .n{margin-inline-start:auto;font:600 12px var(--font-figure);color:var(--text-2)}
+.qrail .rail-list button[data-on="1"]{background:var(--accent-subtle);color:var(--accent-ink)}
+.qrail .rail-list button[data-on="1"] .n{color:var(--accent-ink)}
+.qrail .rail-body{padding:16px;min-width:0;display:flex;flex-direction:column;gap:14px}
+@media (max-width:860px){.qrail{grid-template-columns:1fr}
+  .qrail .rail-list{flex-direction:row;overflow-x:auto;border-inline-end:0;border-block-end:1px solid var(--hairline)}
+  .qrail .rail-list button{white-space:nowrap;width:auto}}
+.slabar{height:4px;border-radius:var(--r-pill);background:var(--surface-sunken);overflow:hidden;margin-block-start:4px;width:84px}
+.slabar i{display:block;height:100%;border-radius:var(--r-pill);background:var(--pos-edge)}
+.slabar i.mid{background:var(--att-edge)} .slabar i.bad{background:var(--crit-edge)}
+.fig3{font-family:var(--font-figure);font-variant-numeric:tabular-nums}
+.fig3.none{color:var(--text-3);border-block-end:1px dotted var(--text-3);cursor:help}
+.fig3.zero{color:var(--att-ink);font-weight:600}
+.dec-ev{background:var(--surface-sunken);border-radius:var(--r-sm);padding:14px;margin-block:12px}
+.dec-msg{background:var(--info-fill);border:1px solid var(--info-border);color:var(--info-ink);
+  border-radius:var(--r-sm);padding:12px 14px;font-size:13px;line-height:1.7;margin-block:12px}
+.dec-msg .ch{font:600 11.5px var(--font-ui);display:block;margin-block-end:5px;opacity:.85}
+.pmx td,.pmx th{text-align:center}
+.pmx td:first-child,.pmx th:first-child{text-align:start}
+.pmx .y{color:var(--pos-ink);font-weight:700}
+.pmx .r{color:var(--att-ink);font-weight:700}
+.pmx .n{color:var(--text-3)}
+.steps-h{display:flex;gap:6px;flex-wrap:wrap;margin-block-end:14px}
+.steps-h span{font:600 12px var(--font-ui);padding:6px 12px;border-radius:var(--r-pill);
+  border:1px solid var(--hairline);color:var(--text-3);background:var(--surface)}
+.steps-h span[data-on="1"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.steps-h span[data-done="1"]{background:var(--accent-subtle);border-color:var(--accent-border);color:var(--accent-ink)}
+</style>
+<script>
+/* ================= شغلي ================= */
+const WORK = [
+  {ref:'TW-2026-10428', nm:'محمود سيد عبد العظيم', city:'القاهرة — المعادي', ask:'راجع فيش وتشبيه (محاولة 2)', age:'2d 6h', sla:'2d', pct:130, role:'R1', dec:'D2'},
+  {ref:'TW-2026-10433', nm:'إسلام رمضان السيد', city:'القاهرة — شبرا الخيمة', ask:'اتصل لتجهيز الحساب — محاولة 3', age:'3d 1h', sla:'2d', pct:155, role:'R2', wait:'موقوف — في انتظار الكابتن'},
+  {ref:'TW-2026-10461', nm:'هاني صلاح الدين', city:'القاهرة — المعادي', ask:'أكّد ميعاد التسليم', age:'0h 40m', sla:'1d', pct:3, role:'R4', dec:'D6', today:true},
+  {ref:'TW-2026-10470', nm:'مينا عادل غالي', city:'القاهرة — مدينة نصر', ask:'اعتمد جاهزية الملف', age:'1d 4h', sla:'2d', pct:58, role:'R3', dec:'D4'},
+  {ref:'TW-2026-10444', nm:'مصطفى جمال الدين', city:'الجيزة — فيصل', ask:'اعتمد جاهزية الملف', age:'1d 19h', sla:'2d', pct:89, role:'R3', dec:'D4'},
+  {ref:'TW-2026-10480', nm:'سيد محمد حسين', city:'الغردقة', ask:'اعتمد استرداد — فتحتها هبة ر.', age:'1d 2h', sla:'3d', pct:37, role:'R3', dec:'D8'},
+  {ref:'TW-2026-10455', nm:'رامي عصام فؤاد', city:'الجيزة — فيصل', ask:'راجع بلوك حساب أوبر', age:'6d 3h', sla:'3d', pct:205, role:'R5'},
+  {ref:'TW-2026-10399', nm:'وليد سمير عبد الله', city:'القاهرة — حلوان', ask:'خصّص موتوسيكل', age:'0d 8h', sla:'1d', pct:33, role:'R4', dec:'D5'},
+  {ref:'TW-2026-10492', nm:'طارق عبد الغني', city:'القاهرة — السلام', ask:'اعتمد استحقاق التملّك', age:'0d 5h', sla:'5d', pct:4, role:'R5', dec:'D9'}
+];
+const slaClass = p => p>=100?'bad':p>=75?'mid':'';
+const workRow = (r) => `<tr>
+  <td><span class="lat" style="font-size:12px;color:var(--text-3)">${r.ref}</span>
+    <div style="font:600 13px var(--font-ui)">${r.nm}</div></td>
+  <td class="dim">${r.city}</td>
+  <td><b>${r.ask}</b></td>
+  <td><span class="lat" style="font-size:12.5px">${r.age} / ${r.sla}</span>
+    <div class="slabar"><i class="${slaClass(r.pct)}" style="width:${Math.min(100,r.pct)}%"></i></div></td>
+  <td>${r.wait?pill('info',r.wait):'<span class="dim tiny">—</span>'}</td>
+  <td>${r.dec && can(r.dec)!=='n'
+      ? `<button class="btn btn-pri btn-sm" data-adm="dec" data-d="${r.dec}" data-n="${r.nm}">${DEC[r.dec].verb}</button>`
+      : `<button class="btn btn-soft btn-sm" data-go="admin:file">افتح الملف</button>`}</td></tr>`;
+const S_work = () => {
+  const mine = WORK.filter(r=>r.role===ADM.role);
+  const bands = [
+    ['متأخر', mine.filter(r=>r.pct>=100)],
+    ['مواعيد النهاردة', mine.filter(r=>r.today)],
+    ['لازم النهاردة', mine.filter(r=>r.pct>=75 && r.pct<100)],
+    ['مسند لي', mine.filter(r=>r.pct<75 && !r.today)]
+  ].filter(([,rows])=>rows.length);
+  const late = mine.filter(r=>r.pct>=100).length;
+  return desk('work', `شغلي — ${roleNow().who}`,
+    `<span class="pill p-mute plain lat">20 سبتمبر 2026</span>`,`
+    <div class="row">
+      <span class="pill p-brand plain">${mine.length} عنصر</span>
+      ${late?pill('dan', late+' متأخر'):pill('ok','مفيش متأخر')}
+      <div style="flex:1"></div>
+      <button class="btn btn-soft btn-sm">ابعت تذكير للكابتن</button>
+      <button class="btn btn-soft btn-sm">حوّل لمشرف</button>
+    </div>
+    ${bands.length ? bands.map(([t,rows])=>`
+      <div><div class="band" style="color:var(--text-3)">${t}<span class="lat" style="opacity:.75;margin-inline-start:6px">${rows.length}</span></div>
+      <div class="tbl-wrap"><table class="tbl" style="min-width:880px">
+        <thead><tr><th>الطلب</th><th>المنطقة</th><th>اللي مطلوب مني</th><th>العمر / المهلة</th><th>انتظار</th><th></th></tr></thead>
+        <tbody>${rows.map(workRow).join('')}</tbody></table></div></div>`).join('')
+      : `<div class="card" style="text-align:center">
+          <p class="sm" style="color:var(--text-2)">مفيش حاجة مطلوبة منك دلوقتي.</p>
+          <button class="btn btn-ghost btn-sm" style="margin-block-start:10px" data-go="admin:queues">افتح الصناديق واسحب ملف</button></div>`}
+    ${notice('info','', 'الشاشة دي بتتغيّر مع الدور. بدّل الدور من فوق وشوف شغل كل واحد. مفيش اعتماد جماعي — كل قرار بيتاخد على ملف واحد بشاشة قرار كاملة.')}`);
+};
+
+/* ================= الصناديق ================= */
+const QUEUES = [
+  ['Q1','فحص الطلب الأولي',34,'أقدم عنصر: 1 يوم','R1'],
+  ['Q2','تجهيز حساب أوبر',212,'أقدم عنصر: 6 أيام','R2'],
+  ['Q3','مراجعة المستندات',96,'أقدم عنصر: 3 أيام','R1'],
+  ['Q4','اعتماد جاهزية الملف',23,'أقدم عنصر: 2 يوم','R3'],
+  ['Q5','التخصيص والحجز',41,'أقدم عنصر: 1 يوم','R4'],
+  ['Q6','يوم التسليم',7,'أقدم عنصر: 4 ساعات','R4'],
+  ['Q7','تنبيهات الالتزام',29,'أقدم عنصر: 2 يوم','R5'],
+  ['Q8','اعتماد الاسترداد',4,'أقدم عنصر: 1 يوم','R3'],
+  ['Q9','استحقاق التملّك',0,'فاضي','R5'],
+  ['Q10','استفسارات البيانات',11,'أقدم عنصر: 5 أيام','R5']
+];
+const S_queues = () => {
+  const q = QUEUES.find(x=>x[0]===ADM.queue) || QUEUES[3];
+  const rows = WORK.filter(r=>r.role===q[4]).concat(WORK.filter(r=>r.role!==q[4]).slice(0,2));
+  const mayPull = can('pull')!=='n';
+  return desk('queues','الصناديق','',`
+  <div class="qrail">
+    <div class="rail-list">${QUEUES.map(([id,nm,n,old])=>`
+      <button type="button" data-adm="queue" data-q="${id}" data-on="${id===q[0]?1:0}">
+        <span style="flex:1"><b>${nm}</b><small>${old}</small></span>
+        <span class="n">${n}</span></button>`).join('')}</div>
+    <div class="rail-body">
+      <div class="spread"><div><h4 style="font:600 18px var(--font-ui)">${q[1]}</h4>
+        <p class="tiny dim">مالك الصندوق: ${ROLES[q[4]].nm} · المهلة يومين · تجاوز المهلة 12%</p></div>
+        <button class="btn btn-pri btn-sm" ${mayPull?'':'disabled'} data-adm="pullFile">اسحب ملف من الصندوق</button></div>
+      ${q[2]===0
+        ? `<div class="card" style="text-align:center;color:var(--text-3)">الصندوق فاضي.</div>`
+        : `<div class="tbl-wrap"><table class="tbl" style="min-width:860px">
+            <thead><tr><th>الطلب</th><th>المنطقة</th><th>اللي مطلوب</th><th>العمر / المهلة</th><th>المالك</th><th></th></tr></thead>
+            <tbody>${rows.slice(0,5).map(r=>`<tr>
+              <td><span class="lat tiny dim">${r.ref}</span><div style="font:600 13px var(--font-ui)">${r.nm}</div></td>
+              <td class="dim">${r.city}</td><td>${r.ask}</td>
+              <td><span class="lat" style="font-size:12.5px">${r.age} / ${r.sla}</span>
+                <div class="slabar"><i class="${slaClass(r.pct)}" style="width:${Math.min(100,r.pct)}%"></i></div></td>
+              <td class="dim">${ROLES[q[4]].who}</td>
+              <td><button class="btn btn-soft btn-sm" data-go="admin:file">افتح</button></td></tr>`).join('')}
+            </tbody></table></div>`}
+      ${mayPull?'':notice('warn','دورك الحالي ما يقدرش يسحب ملفات','بدّل الدور من فوق لدور تنفيذي علشان تجرّب السحب.')}
+    </div>
+  </div>`);
+};
+
+/* ================= الاستثناءات ================= */
+const EXC = [
+  ['EX-0141','سرقة موتوسيكل','سيد محمد حسين','الغردقة','dan|عاجلة','هبة ر.','محضر شرطة مرفوع · 2 يوم'],
+  ['EX-0139','بلوك حساب من أوبر','رامي عصام فؤاد','فيصل','warn|تحت التحقق','هبة ر.','6 أيام — تجاوز المهلة'],
+  ['EX-0138','تصعيد من نقطة توزيع','عبد الله شعبان','شبرا الخيمة','warn|مفتوحة','منى ع.','الضامن غير مطابق · 1 يوم'],
+  ['EX-0136','طلب انسحاب','وليد سمير','حلوان','info|جدولة استرداد','خالد س.','الكابتن طلب الانسحاب'],
+  ['EX-0134','تكرار طلب برقمين','كريم أشرف','مدينة نصر','info|مراجعة','سارة م.','نفس الرقم القومي'],
+  ['EX-0130','انقطاع بيانات تشغيل','12 كابتن','—','warn|استفسار مفتوح','هبة ر.','استيراد 2026-09 ناقص']
+];
+const S_exceptions = () => desk('exceptions','الاستثناءات','',`
+  <p class="sm muted">كل حاجة خرجت عن المسار في مكان واحد، بمالك ومهلة. دخولها مش من المسار الطبيعي وأنواعها مختلطة الملكية — علشان كده وجهة مستقلة مش صندوق.</p>
+  <div class="grid4">
+    ${[['مفتوحة',9,'warn'],['تجاوزت المهلة',2,'dan'],['اتقفلت الشهر ده',23,'mute'],['متوسط زمن الإغلاق','3.4 يوم','mute']]
+      .map(([lb,v,k])=>`<div class="metric"><div class="cap">${lb}</div>
+      <div class="top"><span class="val">${v}</span>${k!=='mute'?pill(k,'متابعة'):''}</div></div>`).join('')}</div>
+  <div class="tbl-wrap"><table class="tbl" style="min-width:900px">
+    <thead><tr><th>الرقم</th><th>النوع</th><th>الكابتن</th><th>المنطقة</th><th>الحالة</th><th>المالك</th><th>ملاحظة</th><th></th></tr></thead>
+    <tbody>${EXC.map(r=>`<tr><td class="lat"><b>${r[0]}</b></td><td>${r[1]}</td><td>${r[2]}</td>
+      <td class="dim">${r[3]}</td><td>${cell(r[4])}</td><td class="dim">${r[5]}</td><td class="dim tiny">${r[6]}</td>
+      <td><button class="btn btn-soft btn-sm" data-go="admin:file">افتح</button></td></tr>`).join('')}</tbody></table></div>
+  ${notice('warn','الاستثناء ليه مالك واحد ومهلة','الحالة اللي مالهاش مالك بعد ٤ ساعات بتتوزّع أوتوماتيك على المشرف، وبتفضل تظهر في «شغلي» بتاعه لحد ما تتقفل.')}`);
+</script>
+<script>
+/* ================= نقاط القرار التسعة ================= */
+const DEC = {
+  D1:{verb:'اعتمد مبدئيًا', t:'القبول المبدئي في البرنامج', wide:false,
+    ev:[['الأهلية','رخصة سارية · منطقة مخدومة · السن 29'],['المصدر','ترشيح أوبر UB-2026-0431'],['الدفعة','القاهرة الكبرى — سبتمبر 2026']],
+    rs:['استوفى شروط الأهلية','مؤهل بس مفيش إتاحة — قائمة انتظار','ما استوفاش شرط أساسي','سبب آخر'],
+    msg:'طلبك اتقبل مبدئيًا ودخلت دفعة القاهرة الكبرى. القبول المبدئي مش حجز موتوسيكل — لسه فيه تجهيز حساب ومستندات.', ch:'SMS + واتساب + صفحة الكابتن'},
+  D2:{verb:'راجع المستند', t:'اعتماد أو رفض مستند', wide:false,
+    ev:[['المستند','فيش وتشبيه — محاولة 2'],['اترفع','18 سبتمبر 2026'],['سبب الرفض السابق','الصورة غير واضحة']],
+    rs:['مطابق — اعتمد','الصورة غير واضحة','بيانات غير مطابقة للملف','المستند منتهي','شبهة تزوير — يحتاج مشرف','سبب آخر'],
+    msg:'فيش وتشبيه محتاج يترفع تاني — الصورة مش واضحة والبيانات مش مقروءة. صوّر الورقة كاملة في إضاءة كويسة. عندك ٤٨ ساعة.', ch:'SMS + واتساب + صفحة الكابتن'},
+  D3:{verb:'علّم الحساب جاهز', t:'جاهزية حساب أوبر', wide:false,
+    ev:[['حالة الحساب','ناقص مستندات — آخر تحقق 18 سبتمبر'],['محاولات الاتصال','3 محاولات · آخرها أمس 6:40 م'],['المصدر','استيراد أوبر 2026-09-18']],
+    rs:['الحساب جاهز ومفعّل','ناقص مستند على التطبيق','الحساب متوقف — يحتاج رفع بلوك','الكابتن مش مستجيب','سبب آخر'],
+    msg:'حسابك على أوبر بقى جاهز. الخطوة الجاية: استكمال المستندات والضامن.', ch:'SMS + صفحة الكابتن'},
+  D4:{verb:'اعتمد الجاهزية', t:'اعتماد جاهزية الملف للاستلام', wide:true,
+    ev:[['المستندات','4 من 4 معتمدة'],['حساب أوبر','جاهز — تحقق 19 سبتمبر'],['الضامن','مستوفٍ — بطاقة سارية'],
+        ['نسخة الشروط','TERMS-2026-03'],['نموذج الأولوية','PRI-v2 — الدرجة 72/100'],['القبول المبدئي','سارة مجدي · 14 سبتمبر']],
+    rs:['الملف مكتمل ومطابق','ناقص بند — رجّعه للمراجعة','سبب آخر'],
+    msg:'ملفك اكتمل واتعتمد. احجز نقطة التوزيع والميعاد من صفحتك — التسليم في زيارة واحدة.', ch:'SMS + واتساب + صفحة الكابتن',
+    sod:'فصل مهام: اللي اعتمد القبول المبدئي ما يقدرش يعتمد الجاهزية لنفس الملف.'},
+  D5:{verb:'خصّص موتوسيكل', t:'تخصيص موتوسيكل بعينه', wide:false,
+    ev:[['المنطقة','القاهرة — حلوان'],['أقرب نقطة بمخزون','ورشة تريد واي — حلوان (28 متاح)'],['ترتيب الموجة','12 من 40']],
+    rs:['تخصيص حسب ترتيب الموجة','تخصيص مبدئي لتفعيل الحساب','خارج الترتيب — يحتاج مشرف','سبب آخر'],
+    msg:'(مفيش رسالة للكابتن) — اللوحة والشاسيه بيظهروا بعد التسليم بس، لأن إعادة التخصيص قبل التسليم حاجة عادية.', ch:'مفيش — قرار داخلي'},
+  D6:{verb:'أكّد الميعاد', t:'تأكيد موعد التوقيع والاستلام', wide:false,
+    ev:[['النقطة','النصر موتورز — المعادي'],['الميعاد','الأحد 20 سبتمبر · 11:30 ص'],['طاقة النقطة','8 من 10 محجوزة'],['الوحدة','ق ن 4279 — مؤكدة في الجرد']],
+    rs:['الميعاد متاح ومؤكد','النقطة اتملت — حوّل لنقطة تانية','الكابتن طلب تغيير','سبب آخر'],
+    msg:'ميعادك: الأحد 20 سبتمبر 11:30 ص — النصر موتورز، شارع 9 المعادي. معاك بطاقتك ورخصتك والضامن ببطاقته. الزيارة ساعة ونص وبتستلم في نفس اليوم.', ch:'SMS + واتساب + تذكير قبلها بيوم وبساعتين'},
+  D7:{verb:'اقترح استثناء', t:'استثناء أو إعفاء من التزام تشغيلي', wide:false,
+    ev:[['الشهر','سبتمبر 2026'],['المؤشر','ساعات الاتصال 7.2 مقابل 8'],['السبب المعلن','عطل بالموتوسيكل 6 أيام — بلاغ رقم MT-0231'],['الاستيراد','2026-09-18']],
+    rs:['عطل موثّق — جمّد المدة','ظرف صحي موثّق — عدّل الهدف','ضعف طلب في المنطقة — اعتبره محقق','ارفض الاستثناء','سبب آخر'],
+    msg:'راجعنا سبب تأخرك الشهر ده واعتمدنا استثناء: مدة البرنامج اتجمّدت ٦ أيام. مدتك بتنتهي في 26 أكتوبر 2027 بدل 20 أكتوبر.', ch:'SMS + صفحة الكابتن',
+    sod:'فصل مهام: بيقترحه مسؤول الالتزام وبيعتمده المشرف. اللي اعتمد الاستيراد ما يقدرش يعتمد استثناء على نفس الشهر.'},
+  D8:{verb:'اعتمد الاسترداد', t:'اعتماد استرداد موتوسيكل', wide:true,
+    ev:[['الكابتن','سيد محمد حسين — الغردقة'],['السبب','تحت المستوى شهرين متتاليين'],
+        ['أغسطس','ساعات 4.8 · أيام 14 · قبول 61% · إلغاء 2.2%'],['سبتمبر','ساعات 4.3 · أيام 12 · قبول 58% · إلغاء 2.4%'],
+        ['التواصل','4 مكالمات · مهلة تصحيح 14 يوم انتهت'],['فاتح الحالة','هبة رمزي · 18 سبتمبر'],
+        ['بند العقد','TERMS-2026-03 بند 9/2 — نص البند ظاهر في الملف']],
+    rs:['تحت المستوى بعد مهلة تصحيح','توقف عن الشغل نهائيًا','بلوك دائم من أوبر','مخالفة جسيمة','ارفض — امنح مهلة تانية','سبب آخر'],
+    msg:'(مكالمة موثّقة إجبارية الأول) بعدها: بناءً على عدم استيفاء شروط التشغيل بعد مهلة التصحيح، هيتم استرداد الموتوسيكل. عندك ٧ أيام تتظلم على القرار.', ch:'مكالمة موثّقة ← SMS + واتساب + خطاب رسمي',
+    sod:'فصل مهام: اللي فتح الحالة ما يقدرش يعتمدها. والزرار مقفول لو أي شهر في فترة التقييم «لا توجد بيانات».'},
+  D9:{verb:'اعتمد نقل الملكية', t:'استحقاق نقل ملكية الموتوسيكل', wide:true,
+    ev:[['الكابتن','طارق عبد الغني — السلام'],['المدة','12 شهر مكتملة · 20 سبتمبر 2025 → 20 سبتمبر 2026'],
+        ['الشهور المحققة','11 من 12'],['الشهر الناقص','فبراير — استثناء معتمد (عطل موثّق)'],
+        ['نسخة الشروط','TERMS-2025-11'],['حدود الماتريكس','MATRIX-v1 — 8 ساعات · 26 يوم · 60% · 2%']],
+    rs:['استوفى الشروط — انقل الملكية','ناقص شهور — مدّد المدة','ما استوفاش — ارفض الاستحقاق','سبب آخر'],
+    msg:'مبروك. كمّلت مدة البرنامج والتزاماتك، والموتوسيكل بقى من حقك. هنتواصل معاك لإجراءات نقل الترخيص باسمك.', ch:'مكالمة + SMS + واتساب + صفحة الكابتن',
+    sod:'فصل مهام: بيقترحه مسؤول الالتزام وبيعتمده مدير البرنامج بسبب مسجّل. ولا واحد فيهم يقدر لوحده.'}
+};
+function decisionSheet(id, nm){
+  const D = DEC[id], perm = can(id);
+  return `<div class="spread" style="margin-block-end:4px">
+    <h3 style="font-size:22px;font-weight:700">${D.verb} — ${nm||'محمود سيد عبد العظيم'}</h3>
+    <button class="btn btn-soft" style="width:40px;height:40px;padding:0" data-close="1" aria-label="إغلاق">✕</button></div>
+  <p class="tiny dim">${D.t} · ${id}</p>
+  ${perm==='n' ? notice('dan','دورك ما يقدرش ياخد القرار ده','الزرار موجود هنا للعرض بس. في النظام الحقيقي مش بيتحط في الصفحة أصلًا لو الدور ما يملكش الصلاحية.') : ''}
+  <div class="dec-ev"><b class="sm" style="display:block;margin-block-end:8px">الأدلة</b>
+    <dl class="kv">${D.ev.map(([k,v])=>`<dt>${k}</dt><dd>${v}</dd>`).join('')}</dl></div>
+  ${D.sod?notice('warn','', D.sod):''}
+  <div style="margin-block:12px"><b class="sm" style="display:block;margin-block-end:8px">السبب — إجباري</b>
+    <div class="opts">${D.rs.map((t,i)=>`<label class="opt" data-on="${i===0?1:0}" data-adm="reason" data-v="${i}">
+      <input type="radio" name="dr" ${i===0?'checked':''}><b>${t}</b></label>`).join('')}</div></div>
+  <div class="field"><label for="dec-note">نص حر <span class="dim">— إجباري مع «سبب آخر» ومع الأسباب الحرجة، الحد الأدنى 20 حرف</span></label>
+    <textarea class="inp" id="dec-note" rows="3"></textarea></div>
+  <div class="dec-msg"><span class="ch">معاينة رسالة الكابتن · ${D.ch}</span>${D.msg}</div>
+  <div class="row" style="margin-block-start:14px">
+    <button class="btn btn-pri" style="flex:1" data-adm="doDec" data-d="${id}" ${perm==='n'?'disabled':''}>${D.verb}</button>
+    <button class="btn btn-ghost" data-close="1">إلغاء</button></div>
+  <p class="tiny dim" style="margin-block-start:10px">بيتسجّل مع القرار: مين، وإمتى، والسبب، ونسخة الشروط، ونسخة الماتريكس، ورقم الاستيراد لو القرار مبني على بيانات مستوردة.</p>`;
+}
+
+/* ================= الاستيرادات ================= */
+const IMPORTS = [
+  ['IMP-2026-0918','تقرير تشغيل شهري','2026-09','1,240 صف','ok|معتمد','منى ع. · 18 سبتمبر','12 صف بدون بيانات'],
+  ['IMP-2026-0901','كشف ترشيح','—','620 صف','ok|معتمد','شريف ن. · 1 سبتمبر','14 صف مرفوض'],
+  ['IMP-2026-0818','تقرير تشغيل شهري','2026-08','1,198 صف','ok|معتمد','منى ع. · 18 أغسطس','—'],
+  ['IMP-2026-0805','كشف ترشيح','—','480 صف','dan|مرفوض','—','عمود ناقص — الملف اترفض']
+];
+const IMP_STEPS = ['اختيار الملف','التحقق','معاينة الفروق','الاعتماد','سجل التدقيق'];
+const S_imports = () => desk('imports','الاستيرادات',
+  `<button class="btn btn-pri btn-sm" data-adm="newImport">استيراد ملف جديد</button>`,`
+  ${ADM.impStep>1?`<div class="card">
+    <div class="steps-h">${IMP_STEPS.map((s,i)=>`<span data-on="${i+1===ADM.impStep?1:0}" data-done="${i+1<ADM.impStep?1:0}">${i+1}. ${s}</span>`).join('')}</div>
+    ${ADM.impStep===2?`
+      <b class="sm">التحقق — 1,240 صف</b>
+      <div class="grid3" style="margin-block-start:12px">
+        <div class="metric"><div class="cap">صفوف سليمة</div><div class="top"><span class="val">1,204</span></div></div>
+        <div class="metric"><div class="cap">صفوف بأخطاء</div><div class="top"><span class="val">24</span>${pill('warn','تتجاهل')}</div></div>
+        <div class="metric"><div class="cap">كباتن مش معروفين</div><div class="top"><span class="val">12</span>${pill('dan','يحتاج قرار')}</div></div>
+      </div>
+      ${notice('warn','12 كابتن في الملف مش موجودين عندنا','الصفوف دي ما بتتستوردش. بتتحفظ في «استفسارات البيانات» وبتترفع لأوبر — عشان ممكن يكونوا اتسلّموا من نقطة ما سجّلتش التسليم.')}`
+    :ADM.impStep===3?`
+      <b class="sm">معاينة الفروق قبل الاعتماد</b>
+      <div class="tbl-wrap" style="margin-block-start:12px"><table class="tbl" style="min-width:760px">
+        <thead><tr><th>الكابتن</th><th>ساعات/يوم</th><th>أيام</th><th>قبول</th><th>إلغاء</th><th>الأثر</th></tr></thead>
+        <tbody>
+          <tr><td><b>محمود سيد</b></td><td class="fig3">7.6 ← 7.2</td><td class="fig3">25 ← 24</td>
+            <td class="fig3">70% ← 68%</td><td class="fig3">2.8% ← 3.1%</td><td>${pill('warn','هيفتح تنبيه التزام')}</td></tr>
+          <tr><td><b>كريم أشرف</b></td><td class="fig3">7.9 ← 8.1</td><td class="fig3">26 ← 26</td>
+            <td class="fig3">69% ← 71%</td><td class="fig3">1.4% ← 1.2%</td><td>${pill('ok','ملتزم — مفيش أثر')}</td></tr>
+          <tr><td><b>عبد الله شعبان</b></td><td class="fig3 zero">0</td><td class="fig3 zero">0</td>
+            <td class="fig3 none" title="لا توجد بيانات في استيراد 2026-09 — استفسار DQ-0142">—</td>
+            <td class="fig3 none" title="لا توجد بيانات في استيراد 2026-09 — استفسار DQ-0142">—</td>
+            <td>${pill('dan','صفر حقيقي + بيانات ناقصة')}</td></tr>
+        </tbody></table></div>
+      ${notice('dan','الفرق بين «صفر» و«لا توجد بيانات»','الصفر رقم وبيتكتب رقم. «لا توجد بيانات» بتتكتب شرطة بخط منقّط وبيتفتح لها استفسار. الخانة الفاضية في جدول التزام بتتقري صفر — وعلى الصفر ده بيتبني إنذار وممكن استرداد.')}`
+    :ADM.impStep===4?`
+      <b class="sm">الاعتماد</b>
+      ${notice('warn','الاعتماد بيحرّك 29 كابتن لصندوق تنبيهات الالتزام','بعد الاعتماد مفيش تراجع — التصحيح بيتم باستيراد تصحيحي جديد بيتسجّل فوق ده، والقديم بيفضل في السجل.')}
+      <div class="row" style="margin-block-start:12px">
+        <button class="btn btn-pri" data-adm="commitImport" ${can('commitImport')==='n'?'disabled':''}>اعتمد الاستيراد</button>
+        ${can('commitImport')==='n'?`<span class="tiny dim">${roleNow().nm} ما يقدرش يعتمد استيراد — المشرف أو مدير البرنامج بس.</span>`:''}
+      </div>`
+    :`<b class="sm">تم الاعتماد</b>
+      ${notice('ok','الاستيراد اتسجّل','IMP-2026-1018 · اعتمده ${roleNow().who} · 1,204 صف · 29 تنبيه اتفتح · 12 استفسار بيانات.')}`}
+    <div class="row" style="margin-block-start:14px">
+      ${ADM.impStep<5?`<button class="btn btn-pri btn-sm" data-adm="impNext">كمّل</button>`:''}
+      <button class="btn btn-ghost btn-sm" data-adm="impCancel">إلغاء</button></div>
+  </div>`:''}
+  <div class="card"><b class="sm">كل الملفات اللي جت من أوبر</b>
+    <div class="tbl-wrap" style="margin-block-start:12px"><table class="tbl" style="min-width:880px">
+      <thead><tr><th>الرقم</th><th>النوع</th><th>الشهر</th><th>الحجم</th><th>الحالة</th><th>اعتمده</th><th>ملاحظات</th></tr></thead>
+      <tbody>${IMPORTS.map(r=>`<tr><td class="lat"><b>${r[0]}</b></td><td>${r[1]}</td><td class="lat">${r[2]}</td>
+        <td class="lat">${r[3]}</td><td>${cell(r[4])}</td><td class="dim">${r[5]}</td><td class="dim tiny">${r[6]}</td></tr>`).join('')}</tbody></table></div>
+  </div>`);
+</script>
+<script>
+/* ================= الحوكمة ================= */
+const PMX_ROWS = [
+  ['فتح ملف كابتن',{R1:'y',R2:'y',R3:'y',R4:'y',R5:'y',R6:'y',R7:'v'}],
+  ['سحب ملف من صندوق',{R1:'y',R2:'y',R3:'y',R4:'y',R5:'y'}],
+  ['D1 — القبول المبدئي',PERM.D1],
+  ['D2 — اعتماد/رفض مستند',PERM.D2],
+  ['D3 — جاهزية حساب أوبر',PERM.D3],
+  ['D4 — اعتماد جاهزية الملف',PERM.D4],
+  ['D5 — تخصيص موتوسيكل',PERM.D5],
+  ['D6 — تأكيد الموعد',PERM.D6],
+  ['D7 — استثناء/إعفاء',PERM.D7],
+  ['D8 — اعتماد الاسترداد',PERM.D8],
+  ['D9 — استحقاق نقل الملكية',PERM.D9],
+  ['اعتماد استيراد أوبر',PERM.commitImport],
+  ['تجاوز يدوي للأولوية',PERM.override],
+  ['تعديل الأوزان والشروط',PERM.governance]
+];
+const SOD = [
+  'اللي اعتمد القبول المبدئي (D1) ما يقدرش يعتمد جاهزية نفس الملف (D4).',
+  'اللي اعتمد الجاهزية (D4) ما يقدرش يخصّص الموتوسيكل (D5).',
+  'اللي فتح حالة استرداد ما يقدرش يعتمدها (D8).',
+  'نقل الملكية (D9) محتاج مسؤول التزام يقترح ومدير برنامج يعتمد — ولا واحد فيهم لوحده.',
+  'اللي اعتمد الاستيراد ما يقدرش يعتمد استثناء على نفس الشهر.',
+  'مدير النظام ما يعتمدش أي قرار وما يقدرش يدّي نفسه دور.',
+  'إعلان تعارض مصالح بيشيلك من الملف فورًا.',
+  'قرارين مؤثرين كحد أقصى على نفس الملف للشخص الواحد.'
+];
+const S_governance = () => {
+  const may = can('governance')!=='n';
+  return desk('governance','الحوكمة','',`
+  ${may?'':notice('warn','عرض فقط','تعديل الشروط والحدود والأوزان لمدير البرنامج بسبب مسجّل. بدّل الدور من فوق لو عايز تجرّب.')}
+  <div class="split">
+    <div class="card"><b class="sm">نسخ الشروط</b>
+      <p class="tiny dim" style="margin-block-start:4px">نسخة كل كابتن متجمّدة عند توقيعه. تعديل دفعة جديدة ما بيغيّرش عقد قديم.</p>
+      <div class="tbl-wrap" style="margin-block-start:10px"><table class="tbl" style="min-width:420px">
+        <thead><tr><th>النسخة</th><th>نُشرت</th><th>عقود عليها</th><th></th></tr></thead>
+        <tbody>
+          <tr><td class="lat"><b>TERMS-2026-03</b></td><td class="lat dim">1 سبتمبر 2026</td><td class="lat">418</td><td>${pill('ok','سارية')}</td></tr>
+          <tr><td class="lat">TERMS-2025-11</td><td class="lat dim">1 نوفمبر 2025</td><td class="lat">96</td><td>${pill('mute','مؤرشفة')}</td></tr>
+        </tbody></table></div>
+      ${may?`<button class="btn btn-soft btn-sm" style="margin-block-start:10px">انشر نسخة جديدة</button>`:''}</div>
+    <div class="card"><b class="sm">حدود الماتريكس لكل دفعة</b>
+      <p class="tiny dim" style="margin-block-start:4px">الأرقام دي لسه مبدئية ومش معتمدة مع أوبر — وكل قرار بيتسجّل عليه نسخة الماتريكس اللي اتحسب بيها.</p>
+      <div class="tbl-wrap" style="margin-block-start:10px"><table class="tbl" style="min-width:460px">
+        <thead><tr><th>البند</th><th>MATRIX-v1</th><th>الحالة</th></tr></thead>
+        <tbody>${[['ساعات أونلاين / يوم','8'],['أيام التشغيل / شهر','26'],['نسبة القبول','60% فأعلى'],['نسبة الإلغاء','2% فأقل'],['مدة البرنامج','12 شهر']]
+          .map(([k,v])=>`<tr><td>${k}</td><td class="lat"><b>${v}</b></td><td>${DRAFT}</td></tr>`).join('')}</tbody></table></div></div>
+  </div>
+  <div class="card"><b class="sm">نموذج الأولوية — PRI-v2</b>
+    <p class="tiny dim" style="margin-block-start:4px">الدرجة بترتّب المؤهلين بس. ما بتخصصش موتوسيكل وما بتمنعش حد. كل ملف بيفضل على النسخة اللي اتقيّم بيها.</p>
+    <div class="grid4" style="margin-block-start:12px">
+      ${[['الاحتياج الاقتصادي',30],['الاستعداد لبدء الشغل',25],['اكتمال الملف والمواعيد',25],['احتياج التشغيل في المنطقة',20]]
+        .map(([lb,w])=>`<div class="metric"><div class="cap">${lb}</div>
+        <div class="top"><span class="val">${w}</span><span class="unit">وزن</span></div>
+        <div class="track"><i style="width:${w*3.3}%"></i></div></div>`).join('')}</div>
+    ${notice('info','ليه الرقم ده؟','كل درجة بيظهر جنبها زرار بيفتح تفصيل المكوّنات: المدخل الخام لكل مكوّن والقاعدة اللي اشتغلت. التجاوز اليدوي للمشرف بس، بسبب مسجّل، بحد أقصى 10% من الموجة، وبيتسجّل فيه اسم الملف اللي اتأخر بسببه.')}</div>
+  <div class="card"><b class="sm">الأدوار والصلاحيات</b>
+    <p class="tiny dim" style="margin-block-start:4px">✔ متاح · ✎ متاح بسبب مسجّل · — ممنوع (الزرار مش بيظهر أصلًا)</p>
+    <div class="tbl-wrap" style="margin-block-start:10px"><table class="tbl pmx" style="min-width:880px">
+      <thead><tr><th>الإجراء</th>${Object.values(ROLES).map(r=>`<th title="${r.nm}">${r.k}</th>`).join('')}</tr></thead>
+      <tbody>${PMX_ROWS.map(([lb,m])=>`<tr><td><b>${lb}</b></td>
+        ${Object.keys(ROLES).map(k=>{const v=(m||{})[k];
+          return `<td class="${v==='y'?'y':v==='r'?'r':'n'}">${v==='y'?'✔':v==='r'?'✎':v==='v'?'👁':'—'}</td>`;}).join('')}</tr>`).join('')}</tbody></table></div>
+    <div class="row tiny dim" style="margin-block-start:8px;gap:14px">
+      ${Object.values(ROLES).map(r=>`<span><b class="lat">${r.k}</b> ${r.nm}</span>`).join('')}</div>
+  </div>
+  <div class="card"><b class="sm">فصل المهام</b>
+    <ul class="stack g6" style="margin-block-start:10px">${SOD.map(t=>`<li class="sm muted" style="display:flex;gap:9px;align-items:flex-start">${ico('ok','ic')}<span>${t}</span></li>`).join('')}</ul></div>
+  <div class="card"><b class="sm">سجل التدقيق</b>
+    <div class="tbl-wrap" style="margin-block-start:10px"><table class="tbl" style="min-width:760px">
+      <thead><tr><th>الوقت</th><th>مين</th><th>الإجراء</th><th>على</th><th>السبب</th></tr></thead>
+      <tbody>${[['20/09 10:14','منى عادل','D4 اعتماد جاهزية','TW-2026-10470','الملف مكتمل ومطابق'],
+        ['20/09 09:52','خالد سمير','D5 تخصيص موتوسيكل','TW-2026-10399','تخصيص حسب ترتيب الموجة'],
+        ['19/09 17:30','هبة رمزي','D7 اقتراح استثناء','TW-2026-10428','عطل موثّق — تجميد 6 أيام'],
+        ['18/09 14:02','منى عادل','اعتماد استيراد','IMP-2026-0918','—']]
+        .map(r=>`<tr><td class="lat dim">${r[0]}</td><td>${r[1]}</td><td><b>${r[2]}</b></td>
+        <td class="lat">${r[3]}</td><td class="dim">${r[4]}</td></tr>`).join('')}</tbody></table></div></div>`);
+};
+
+/* ================= admin actions ================= */
+document.addEventListener('click',(e)=>{
+  const t = e.target.closest('[data-adm]'); if(!t || t.tagName==='SELECT') return;
+  e.preventDefault();
+  const k = t.dataset.adm; ADM.toast=null;
+  if(k==='queue'){ ADM.queue=t.dataset.q; }
+  else if(k==='dec'){ openSheet(decisionSheet(t.dataset.d, t.dataset.n)); return; }
+  else if(k==='reason'){ [...t.parentElement.children].forEach(c=>c.dataset.on='0'); t.dataset.on='1';
+    const r=t.querySelector('input'); if(r) r.checked=true; return; }
+  else if(k==='doDec'){ const D=DEC[t.dataset.d];
+    ADM.toast='اتسجّل القرار: '+D.verb+' — باسم '+roleNow().who+' وبالسبب المختار، ومعاه نسخة الشروط ونسخة الماتريكس. الرسالة اتبعتت على: '+D.ch;
+    closeSheet(); }
+  else if(k==='pullFile'){ ADM.toast='الملف اتسحب وبقى مسند ليك. هتلاقيه في «شغلي».'; }
+  else if(k==='newImport'){ ADM.impStep=2; }
+  else if(k==='impNext'){ ADM.impStep=Math.min(5,ADM.impStep+1); }
+  else if(k==='impCancel'){ ADM.impStep=1; }
+  else if(k==='commitImport'){ ADM.impStep=5; }
+  render();
+});
+document.addEventListener('change',(e)=>{
+  const t=e.target.closest('[data-adm="role"]'); if(!t) return;
+  ADM.role=t.value; ADM.toast=null; render();
+});
+</script>
 <script>
 /* ================= السجل والتنقل ================= */
 const PORTALS = [
@@ -2370,13 +2797,17 @@ const PORTALS = [
     {id:'mybike',   nav:'موتوسيكلي والتزامي', title:'بعد الاستلام', desc:'الشاشة بتتحول من «متابعة طلب» لـ«متابعة التزام»: الموتوسيكل، المؤشرات مقابل المطلوب، التنبيهات، والإبلاغ عن عطل.', render:S_mybike}
   ]},
   {id:'admin', tab:'لوحة الإدارة', kind:'ديسكتوب — فريق تريد واي', screens:[
-    {id:'ops',        nav:'لوحة التشغيل', title:'لوحة التشغيل', desc:'غرفة تشغيل البرنامج: أرقام الدفعة، مسار التحويل، واللي محتاج تدخّل النهاردة.', render:S_ops},
-    {id:'apps',       nav:'الطلبات', title:'الطلبات', desc:'جدول الطلبات بأربع حالات منفصلة: الطلب، حساب أوبر، المستندات، والموتوسيكل.', render:S_apps},
-    {id:'profile',    nav:'ملف متقدم', title:'ملف متقدم', desc:'كل حاجة عن الشخص في مكان واحد: بياناته، تقييم أولويته، مستنداته، وسجل القرارات بأسماء أصحابها وأسبابها.', render:S_profile},
-    {id:'alloc',      nav:'التخصيص والمواعيد', title:'تخصيص الموتوسيكلات والمواعيد', desc:'المخزون بحالاته، ومواعيد اليوم، والفرق بين «مخصص مبدئيًا لتفعيل الحساب» و«محجوز لميعاد».', render:S_alloc},
-    {id:'compliance', nav:'متابعة الالتزام', title:'متابعة الالتزام', desc:'ماتريكس التشغيل لكل كابتن من تقارير أوبر المستوردة، ومسار التعامل مع التعثّر خطوة بخطوة.', render:S_compliance},
-    {id:'recovery',   nav:'الاسترداد', title:'حالات الاسترداد', desc:'الحالات المفتوحة ومراحلها — والاسترداد قرار بشري باعتماد مشرف تاني، مش إجراء أوتوماتيك.', render:S_recovery},
-    {id:'points',     nav:'نقاط التوزيع', title:'نقاط التوزيع', desc:'المعارض الشريكة، مخزونها وطاقتها اليومية — وحساب بسيط لحجم التشغيل المطلوب.', render:S_points}
+    {id:'work', nav:'شغلي', title:'شغلي', desc:'الشاشة الافتراضية لكل دور تنفيذي: الملفات المسندة ليك ومرتّبة بالتأخير. بدّل الدور من فوق الشاشة وشوف شغل كل واحد يتغيّر.', render:S_work},
+    {id:'queues', nav:'الصناديق', title:'الصناديق العشرة', desc:'كل صندوق بعدّاده وأقدم عنصر فيه ومالكه. من هنا بتسحب ملف جديد — والسحب نفسه محكوم بصلاحية دورك.', render:S_queues},
+    {id:'exceptions', nav:'الاستثناءات', title:'الاستثناءات', desc:'كل حاجة خرجت عن المسار: سرقة، حادث، بلوك، انسحاب، تكرار، تصعيد من نقطة، انقطاع بيانات — بمالك ومهلة.', render:S_exceptions},
+    {id:'apps', nav:'الطلبات', title:'سجل الطلبات', desc:'سجل بحث من أول لحظة لحد التسليم، بأربع حالات مستقلة. ده سجل بيتقرا — مش شاشة شغل.', render:S_apps},
+    {id:'captains', nav:'الكباتن', title:'سجل الكباتن', desc:'ما بعد التسليم: الموتوسيكل، نسخة العقد، أداء كل شهر بجيچ الالتزام، والحالات المفتوحة.', render:S_compliance},
+    {id:'fleet', nav:'الأسطول والمواعيد', title:'الأسطول والمواعيد', desc:'كل موتوسيكل بحالته ومكانه، وتقويم المواعيد لكل نقطة ويوم.', render:S_alloc},
+    {id:'points', nav:'نقاط التوزيع', title:'نقاط التوزيع', desc:'المعارض الشريكة: الطاقة اليومية، المخزون، مستخدمو البوابة، وسجل التصعيدات.', render:S_points},
+    {id:'imports', nav:'الاستيرادات', title:'استيراد بيانات أوبر', desc:'كل ملف جه من أوبر بنسخته وفروقه ومين اعتمده. دوس «استيراد ملف جديد» وامشي في الخمس خطوات — أهم حتة فيها الفرق بين «صفر» و«لا توجد بيانات».', render:S_imports},
+    {id:'board', nav:'لوحة البرنامج', title:'لوحة البرنامج', desc:'أرقام الدفعة والمسار والمدن وتسريبات القمع — للمدير والمالية، للقراءة مش للتصرّف.', render:S_ops},
+    {id:'governance', nav:'الحوكمة', title:'الحوكمة', desc:'نسخ الشروط، حدود الماتريكس، أوزان الأولوية، مصفوفة الصلاحيات، قواعد فصل المهام، وسجل التدقيق.', render:S_governance},
+    {id:'file', nav:'ملف الكابتن', title:'ملف الكابتن', desc:'شاشة تفصيل بتتفتح من أي جدول — مش وجهة في القايمة. كل حاجة عن الشخص: بياناته، تقييم أولويته، مستنداته، وسجل القرارات بأسبابها.', render:S_profile}
   ]},
   {id:'point', tab:'بوابة نقطة التوزيع', kind:'تابلت — المعرض الشريك', screens:[
     {id:'P0', nav:'الدخول', title:'دخول نقطة التوزيع', desc:'كل نقطة بتدخل بكودها. جرّب تدخل بنقطتين مختلفين — المواعيد والمخزون والحالات هيتغيّروا بالكامل، وده معنى إن النقطة ما بتشوفش غير بتاعها.', render:S_point},
@@ -2502,6 +2933,13 @@ document.addEventListener('click', (e)=>{
 });
 document.addEventListener('keydown',(e)=>{ if(e.key==='Escape') closeSheet(); });
 document.addEventListener('click',(e)=>{ if(e.target.classList && e.target.classList.contains('sheet')) closeSheet(); });
+
+window.addEventListener('hashchange', ()=>{
+  const h=(location.hash||'').replace('#','').split('/');
+  const P=PORTALS.find(p=>p.id===h[0]); if(!P) return;
+  if(cur.p===P.id && cur.s===h[1]) return;
+  go(P.id, P.screens.some(s=>s.id===h[1]) ? h[1] : P.screens[0].id);
+});
 
 (function init(){
   const pm = document.getElementById('protoMark');
