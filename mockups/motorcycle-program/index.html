@@ -24,6 +24,7 @@ img{max-width:100%}[hidden]{display:none!important}
   --att-fill:#F9EEDB;  --att-border:#D6B375;  --att-edge:#A3762A;  --att-ink:#7A5214;
   --crit-fill:#FBE7E3; --crit-border:#E3A79B; --crit-edge:#C25243; --crit-ink:#9E2E20;
   --info-fill:#E1EDF6; --info-border:#98B9D4; --info-edge:#3A80AE; --info-ink:#1A5A88;
+  --ramp-1:#A7B0D0; --ramp-2:#7A87B8; --ramp-3:#4F5F97; --ramp-4:#26346F;
   --brand-green:#62AE46; --brand-green-deep:#528D41;
   --chrome:#2B2724; --chrome-raised:#38332F; --chrome-line:#4A443E;
   --chrome-text:#EEE9E2; --chrome-dim:#A79F95; --chrome-sel:#EAE4D9; --chrome-sel-ink:#241F1C;
@@ -49,7 +50,9 @@ img{max-width:100%}[hidden]{display:none!important}
     --att-fill:#2A2113;  --att-border:#6B5427;  --att-edge:#96762F;  --att-ink:#E0AE5C;
     --crit-fill:#2D1613; --crit-border:#7A3A31; --crit-edge:#A75246; --crit-ink:#F08A7A;
     --info-fill:#0F2130; --info-border:#2B5070; --info-edge:#3B759C; --info-ink:#74B4DE;
-    --chrome:#1B1815; --chrome-raised:#262220; --chrome-line:#3A3530;
+    --ramp-1:#3A4570; --ramp-2:#52618F; --ramp-3:#6E80B8; --ramp-4:#8FA8E8;
+    --ramp-1:#3A4570; --ramp-2:#52618F; --ramp-3:#6E80B8; --ramp-4:#8FA8E8;
+  --chrome:#1B1815; --chrome-raised:#262220; --chrome-line:#3A3530;
     --chrome-text:#EEE9E2; --chrome-dim:#9D958B; --chrome-sel:#DBD4C7; --chrome-sel-ink:#1B1815;
     --side:#0B0F1A; --side-raised:#151C2C; --side-line:#222A3B;
     --side-text:#E5E8F0; --side-dim:#8E97AD; --side-rail:#8FA8E8;
@@ -331,6 +334,9 @@ table.tbl th{position:sticky;top:0;z-index:2}
 table.tbl td b{font-weight:600}
 table.tbl td.num,table.tbl .num{color:var(--text-2)}
 .matrix{min-width:520px}
+table.tbl.comp td:first-child,table.tbl.comp th:first-child{white-space:nowrap}
+table.tbl.comp td,table.tbl.comp th{padding:10px 12px}
+table.tbl.comp td:last-child,table.tbl.comp th:last-child{white-space:nowrap}
 /* ===================== notices ===================== */
 .notice{display:flex;gap:12px;align-items:flex-start;border-radius:var(--r-md);padding:14px 16px;
   font-size:13px;line-height:1.7;border:1px solid transparent}
@@ -563,6 +569,165 @@ const MATRIX = [
   {k:'cnc',   lb:'نسبة الإلغاء', target:'٢٪ أو أقل', how:'الرحلات الملغاة من الكابتن ÷ الرحلات المقبولة'}
 ];
 </script>
+<style>
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.meter{direction:rtl;block-size:6px;border-radius:3px;background:var(--surface-sunken);overflow:hidden;margin-block-start:10px}
+.meter>i{display:block;block-size:100%;background:var(--accent);
+  border-start-start-radius:0;border-end-start-radius:0;
+  border-start-end-radius:3px;border-end-end-radius:3px}
+.meter>i.pos{background:var(--pos-edge)}
+.meter>i.att{background:var(--att-edge)}
+.kpi{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
+@media (max-width:1100px){.kpi{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:640px){.kpi{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.kpi .tile{background:var(--surface);border:1px solid var(--hairline);border-radius:12px;
+  padding:14px 14px 12px;min-height:104px;display:flex;flex-direction:column}
+.kpi .eb{font:600 11.5px/1.3 var(--font-ui);color:var(--text-3);display:flex;align-items:center;gap:6px}
+.kpi .dot{width:8px;height:8px;border-radius:50%;box-shadow:0 0 0 2px var(--surface);flex:0 0 auto}
+.kpi .v{font:600 30px/1.05 var(--font-figure);font-variant-numeric:tabular-nums;
+  color:var(--text);margin-block-start:6px}
+.kpi .tile.anchor .v{font-size:38px}
+.kpi .sub{font-size:12px;line-height:1.5;color:var(--text-2);margin-block-start:4px}
+.kpi .sub.up{color:var(--pos-ink);font-weight:600}
+/* funnel */
+.fn{display:grid;grid-template-columns:152px minmax(0,1fr) 16px 132px;align-items:center;
+  row-gap:0;column-gap:0}
+.fn .lb{font-size:12.5px;line-height:1.35;color:var(--text-2);text-wrap:balance;padding-inline-end:10px}
+.fn .pa,.fn .pb{height:36px;display:flex;align-items:center;justify-content:flex-start;gap:8px}
+.fn .pa{border-inline-start:0;border-inline-end:1px solid var(--border-strong);padding-inline-end:0}
+.fn .pb{border-inline-end:1px solid var(--border-strong)}
+.fn .barA{height:18px;border-radius:4px 0 0 4px;background:var(--ramp-4)}
+.fn .barB{height:18px;border-radius:4px 0 0 4px;background:var(--accent);display:flex;align-items:center;
+  justify-content:flex-start;padding-inline-start:7px}
+.fn .barB span{font:600 11.5px var(--font-figure);color:#fff}
+.fn .barB.worst{background:var(--att-edge)}
+.fn .barB.worst span{color:#1B1300}
+.fn .cnt{font:500 12.5px var(--font-figure);font-variant-numeric:tabular-nums;color:var(--text);white-space:nowrap}
+.fn .ax{font-size:11px;color:var(--text-3);padding-block-start:6px;display:flex;justify-content:space-between}
+.fn .wash{grid-column:1/-1;height:0}
+.fn-row-worst{background:color-mix(in srgb,var(--att-edge) 8%,transparent)}
+.fn-flag{display:inline-flex;align-items:center;gap:5px;font:600 11.5px var(--font-ui);color:var(--att-ink)}
+@media (max-width:760px){
+  .fn{grid-template-columns:118px minmax(0,1fr) 10px 96px}
+  .fn .lb{font-size:11.5px}
+}
+/* stacked inventory */
+.stk{display:flex;height:26px;border-radius:6px;overflow:hidden;background:var(--surface-sunken);direction:rtl}
+.stk i{display:block;height:100%}
+.legend{display:flex;flex-wrap:wrap;gap:10px 18px;margin-block-start:12px}
+.legend li{display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--text-2)}
+.legend .sw{width:11px;height:11px;border-radius:3px;flex:0 0 auto}
+.legend b{font-family:var(--font-figure);font-variant-numeric:tabular-nums;color:var(--text)}
+/* gauge cell */
+.gz{display:flex;align-items:center;gap:8px}
+.gz .gl{font:600 12px var(--font-ui);width:14px;text-align:center;flex:0 0 auto}
+.gauge-card{border:1px solid var(--hairline);border-radius:var(--r-sm);padding:14px;background:var(--surface)}
+.gauge-card .nm{font-size:13px;color:var(--text-2)}
+.gauge-card .vv{font:600 22px/1.2 var(--font-figure);font-variant-numeric:tabular-nums;color:var(--text);margin-block-start:2px}
+.gauge-card .axl{display:flex;justify-content:space-between;font-size:10.5px;color:var(--text-3);margin-block-start:4px}
+.gauge-card .exp{font-size:12px;line-height:1.6;color:var(--text-2);margin-block-start:6px}
+.pol{display:inline-block;font:500 10.5px var(--font-ui);color:var(--text-3);
+  border:1px solid var(--hairline);border-radius:var(--r-xs);padding:1px 7px;margin-inline-start:6px}
+</style>
+<script>
+/* ============ data-visualisation layer ============ */
+const clamp = (x,a,b)=>Math.max(a,Math.min(b,x));
+const arNum = (n,dec) => new Intl.NumberFormat('ar-EG',{minimumFractionDigits:dec||0,maximumFractionDigits:dec||0}).format(n);
+const arPct = (n,dec) => '٪' + arNum(n, dec===undefined?1:dec);
+const enNum = (n) => new Intl.NumberFormat('en-US').format(n);
+
+/* --- target-centred deviation gauge -----------------------------------------
+   Polarity is normalised OUT of the data: d>0 always means "good side".
+   Good arm grows LEFT (with the RTL reading flow), shortfall grows RIGHT.  */
+function devIndex(value, target, higherIsBetter){
+  return higherIsBetter ? (value-target)/target : (target-value)/target;
+}
+function gaugeState(d){
+  if(d === null) return {k:'none', gl:'', ink:'var(--text-3)', word:'لم تُسجَّل'};
+  if(d >= -0.01) return {k:'ok',  gl:'✓', ink:'var(--pos-ink)',  word:'تحقَّق',        fill:'var(--pos-edge)'};
+  if(d >= -0.10) return {k:'att', gl:'!', ink:'var(--att-ink)',  word:'قريب من الحد', fill:'var(--att-edge)'};
+  return              {k:'crit', gl:'✕', ink:'var(--crit-ink)', word:'لم يتحقَّق',   fill:'var(--crit-edge)'};
+}
+function gaugeSVG(d, o){
+  o = Object.assign({w:180,h:28,plot:168,bar:14,tick:18,minor:6,rx:4,chev:6}, o||{});
+  const cx = o.w/2, half = o.plot/2, y0 = (o.h-o.bar)/2, y1 = y0+o.bar;
+  const ty = (o.h-o.tick)/2, my = (o.h-o.minor)/2, m10 = half*0.2;
+  const R = o.rx, st = gaugeState(d);
+  let body = `<rect x="${cx-m10-.5}" y="${my}" width="1" height="${o.minor}" fill="var(--hairline)"/>`
+           + `<rect x="${cx+m10-.5}" y="${my}" width="1" height="${o.minor}" fill="var(--hairline)"/>`
+           + `<rect x="${cx-.5}" y="${ty}" width="1" height="${o.tick}" fill="var(--border-strong)"/>`;
+  if(d === null){
+    body = `<rect x="${cx-half}" y="${y0}" width="${o.plot}" height="${o.bar}" rx="${R}" fill="var(--surface-sunken)"/>` + body;
+  } else if(Math.abs(d) < 0.01){
+    body += `<rect x="${cx-o.bar/2}" y="${y0}" width="${o.bar}" height="${o.bar}" rx="${R}" fill="var(--pos-edge)"/>`;
+  } else {
+    const L = Math.min(Math.abs(d),0.5)/0.5*half, clamped = Math.abs(d) > 0.5, good = d > 0;
+    const f = st.fill;
+    if(good){
+      body += clamped
+        ? `<path d="M${cx} ${y0} H${cx-half} L${cx-half-o.chev} ${o.h/2} L${cx-half} ${y1} H${cx} Z" fill="${f}"/>`
+        : `<path d="M${cx} ${y0} H${cx-L+R} A${R} ${R} 0 0 0 ${cx-L} ${y0+R} V${y1-R} A${R} ${R} 0 0 0 ${cx-L+R} ${y1} H${cx} Z" fill="${f}"/>`;
+    } else {
+      body += clamped
+        ? `<path d="M${cx} ${y0} H${cx+half} L${cx+half+o.chev} ${o.h/2} L${cx+half} ${y1} H${cx} Z" fill="${f}"/>`
+        : `<path d="M${cx} ${y0} H${cx+L-R} A${R} ${R} 0 0 1 ${cx+L} ${y0+R} V${y1-R} A${R} ${R} 0 0 1 ${cx+L-R} ${y1} H${cx} Z" fill="${f}"/>`;
+    }
+  }
+  return `<svg viewBox="0 0 ${o.w} ${o.h}" width="${o.w}" height="${o.h}" dir="ltr"
+    aria-hidden="true" focusable="false"
+    style="${o.fluid?'width:100%;height:auto;display:block':'max-width:100%'}">${body}</svg>`;
+}
+/* table-row cell: gauge + glyph + screen-reader sentence */
+function gaugeCell(label, value, target, higherIsBetter, unit){
+  const has = value !== null;
+  const d = has ? devIndex(value,target,higherIsBetter) : null;
+  const st = gaugeState(d);
+  const say = has
+    ? `${label}: ${value}${unit||''} مقابل هدف ${target}${unit||''} — ${d>=0?'فوق':'دون'} الهدف بنسبة ${Math.abs(Math.round(d*100))}%. الحالة: ${st.word}.`
+    : `${label}: لا توجد قراءات هذا الأسبوع.`;
+  return `<div class="gz">${gaugeSVG(d)}
+    <span class="gl" style="color:${st.ink}" aria-hidden="true">${st.gl}</span>
+    <span class="sr-only">${say}</span></div>`;
+}
+/* detail card: bigger gauge, axis named in words, one plain sentence */
+function gaugeCard(label, value, target, higherIsBetter, disp, target_disp, sentence, polarity){
+  const d = value===null ? null : devIndex(value,target,higherIsBetter);
+  const st = gaugeState(d);
+  return `<div class="gauge-card">
+    <div class="spread"><span class="nm">${label}<span class="pol">الأفضل: ${polarity}</span></span>
+      <span class="pill p-${st.k==='ok'?'ok':st.k==='att'?'warn':st.k==='crit'?'dan':'mute'} plain">${st.word}</span></div>
+    <div class="vv">${disp} <span style="font-size:13px;font-weight:400;color:var(--text-3)">/ ${target_disp}</span></div>
+    <div style="margin-block-start:8px">${gaugeSVG(d,{w:332,h:32,plot:320,bar:20,tick:28,minor:8,chev:8,fluid:true})}</div>
+    <div class="axl"><span>فوق الهدف</span><span>الهدف</span><span>دون الهدف</span></div>
+    <p class="exp">${sentence}</p>
+  </div>`;
+}
+/* 8-week sparkline — RTL time axis: oldest at the right, newest at the left.
+   Domain is anchored around the target, not zero: this is a deviation trend, so the
+   two extremes are labelled so the truncated axis is stated, not hidden. */
+function spark(vals, target, o){
+  o = Object.assign({w:220,h:72,step:28,x0:208,pad:14}, o||{});
+  const lo = Math.min(target, ...vals), hi = Math.max(target, ...vals);
+  const min = lo - (hi-lo)*0.45, max = hi + (hi-lo)*0.30;
+  const y = v => o.h - o.pad - (v-min)/(max-min)*(o.h-o.pad*2);
+  const pts = vals.map((v,i)=>[o.x0 - i*o.step, y(v)]);   /* i=0 is the OLDEST, on the right */
+  const newest = pts[pts.length-1];
+  const line = pts.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' ');
+  const area = line + ` L${newest[0].toFixed(1)} ${o.h-o.pad} L${pts[0][0].toFixed(1)} ${o.h-o.pad} Z`;
+  const ty = y(target);
+  return `<svg viewBox="0 0 ${o.w} ${o.h}" width="100%" height="auto" dir="ltr" aria-hidden="true"
+    style="width:100%;height:auto;display:block">
+    <path d="${area}" fill="var(--accent-subtle)"/>
+    <path d="M6 ${ty.toFixed(1)} H${o.w-6}" fill="none" stroke="var(--border-strong)" stroke-width="1" stroke-dasharray="4 3"/>
+    <path d="${line}" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+    <circle cx="${pts[0][0]}" cy="${pts[0][1].toFixed(1)}" r="2.5" fill="var(--text-3)"/>
+    <circle cx="${newest[0]}" cy="${newest[1].toFixed(1)}" r="4" fill="var(--accent)"/>
+    <text x="${o.w-8}" y="${(ty-5).toFixed(1)}" font-size="9" fill="var(--text-3)"
+      font-family="IBM Plex Sans Arabic, sans-serif" text-anchor="end">الهدف ٨</text>
+  </svg>`;
+}
+</script>
 <script>
 /* ================= 1. صفحة البرنامج ================= */
 const S_landing = () => phone(`
@@ -588,7 +753,7 @@ ${appHeader(`<button class="btn btn-ghost btn-sm" data-go="applicant:track">مت
       ['٢','مراجعة وفلترة','بنراجع الرخصة والخبرة ومنطقة السكن، وبنحدد أقرب نقطة توزيع ليك.'],
       ['٣','تجهيز حسابك على أوبر','لو معندكش حساب أو حسابك ناقص، فيه موظف من عندنا بيمشي معاك الخطوة دي.'],
       ['٤','المستندات والضامن','بطاقة، رخصة، فيش وتشبيه، إثبات سكن، وضامن حسب الشروط.'],
-      ['٥','التعاقد والاستلام','تمضي العقد ومحضر الاستلام، وتستلم الموتوسيكل من نقطة التوزيع.'],
+      ['٥','التوقيع والاستلام','ميعاد واحد في نقطة التوزيع: تمضي العقد، يتفحص الموتوسيكل قدامك، وتستلمه.'],
       ['٦','التزام… ثم التملّك','تكمّل مؤشرات التشغيل طول المدة، وبعدها الملكية تتنقل باسمك.']
     ].map(([n,t,d],i)=>`<li data-s="${i<1?'now':'todo'}"><span class="dot">${n}</span>
       <div><b>${t}</b><p>${d}</p></div></li>`).join('')}
@@ -828,8 +993,8 @@ const TRACK = [
   ['done','مراجعة المستندات','١٦ سبتمبر ٢٠٢٦','فيش وتشبيه مرفوض — الصورة غير واضحة.'],
   ['now','تجهيز حساب أوبر','جارٍ الآن','مسؤول التسجيل: أحمد ف. — اتصل بك أمس ٦:٤٠ م.'],
   ['todo','اعتماد جاهزية الملف','—','بعد اكتمال المستندات والضامن.'],
-  ['todo','التعاقد وحجز الاستلام','—','هتختار نقطة التوزيع والموعد.'],
-  ['todo','استلام الموتوسيكل','—','خلال ٧ أيام عمل من توقيع العقد.']
+  ['todo','حجز ميعاد التوقيع والاستلام','—','هتختار نقطة التوزيع والموعد.'],
+  ['todo','التوقيع والاستلام','—','ميعاد واحد في نقطة التوزيع خلال ٧ أيام عمل من اعتماد الملف.']
 ];
 const MSGS = [
   ['TW','تريد واي','تم رفض «فيش وتشبيه» لأن الصورة غير واضحة. ارفع صورة جديدة بإضاءة كويسة من صفحة مستنداتي.','أمس ٧:٠٢ م'],
@@ -873,7 +1038,7 @@ const PREP = [
   ['now','مستنداتي','٣ من ٤ تمت مراجعتها','فيش وتشبيه محتاج إعادة رفع'],
   ['now','حساب أوبر','قيد التجهيز مع مسؤول التسجيل','ناقص صورة رخصة على التطبيق'],
   ['todo','الضامن','لسه ما فتحتش','بتفتح بعد اعتماد المستندات'],
-  ['todo','التعاقد والاستلام','لسه ما فتحتش','بعد اعتماد جاهزية الملف']
+  ['todo','التوقيع والاستلام','لسه ما فتحتش','بعد اعتماد جاهزية الملف']
 ];
 const DOCS = [
   [ico('id'),'بطاقة الرقم القومي','ok','تمت المراجعة','الوجهين · ١٤ سبتمبر'],
@@ -923,21 +1088,24 @@ ${appHeader(`<span class="tiny dim num">TW-2026-10428</span>`)}
 <section class="hero" style="padding-bottom:18px">
   ${pill('ok','مقبول — استكمل إجراءات التسليم')}
   <h1 style="font-size:21px;margin-top:10px">ملفك اكتمل. فاضل التوقيع والاستلام.</h1>
-  <p>الموتوسيكل بيتخصص باسمك بعد التوقيع، والتسليم بيتم خلال <b>٧ أيام عمل</b> بحد أقصى من تاريخ التوقيع.</p>
+  <p class="lede">ميعادك بيتحدد خلال <b>٧ أيام عمل</b> بحد أقصى من اعتماد ملفك. زيارة واحدة بس: تمضي الورق كله وتستلم الموتوسيكل في نفس اليوم.</p>
 </section>
 <section class="sec">
-  <div class="sec-h"><h3 class="sec-title">اختار طريقة التوقيع</h3></div>
-  <div class="stack g10">
-    <button type="button" class="pointcard" data-on="1">
-      <div class="spread"><b class="sm">أوقّع وأستلم في نفس اليوم</b>${pill('ok','متاح لنقطتك')}</div>
-      <p class="tiny muted">موتوسيكل متاح دلوقتي في معرض النصر موتورز. ميعاد واحد: مطابقة الورق + التوقيع + الفحص + الاستلام. مدة الزيارة حوالي ٩٠ دقيقة.</p>
-    </button>
-    <button type="button" class="pointcard">
-      <div class="spread"><b class="sm">أوقّع الأول والتسليم بعدين</b>${pill('info','خلال ٧ أيام عمل')}</div>
-      <p class="tiny muted">تيجي تمضي العقد ومحضر الضامن، ونبعتلك ميعاد الاستلام بعد ما الترخيص واللوحة يخلصوا.</p>
-    </button>
+  <div class="sec-h"><h3 class="sec-title">ميعاد واحد: توقيع واستلام</h3></div>
+  <p class="sm muted" style="margin-block-end:12px">مفيش زيارتين. بتيجي نقطة التوزيع مرة واحدة، تمضي الورق كله، تتفرج على الموتوسيكل وتستلمه في نفس الميعاد. مدة الزيارة حوالي ٩٠ دقيقة.</p>
+  <div class="card tight">
+    ${[['مطابقة بطاقتك وبطاقة الضامن','١٠ دقائق'],
+       ['مراجعة العقد وجدول الالتزامات معاك','٢٠ دقيقة'],
+       ['التوقيع على الورق كله','١٥ دقيقة'],
+       ['فحص الموتوسيكل وتصوير حالته معاك','٢٠ دقيقة'],
+       ['تدريب السلامة والصيانة','١٥ دقيقة'],
+       ['الاستلام وتسليمك نسخة من الورق','١٠ دقائق']
+      ].map(([t,d],i)=>`<div class="check" data-s="todo"><span class="bx">${ar(i+1)}</span>
+      <div class="bd"><b>${t}</b></div><span class="tiny dim">${d}</span></div>`).join('')}
   </div>
+  ${notice('info','', 'لو الترخيص أو اللوحة اتأخروا لأي سبب، بنبلغك بميعاد جديد قبلها بيومين على الأقل — وما بنلغيش حجزك.')}
 </section>
+
 <section class="sec alt">
   <div class="sec-h"><h3 class="sec-title">اللي هتمضيه</h3></div>
   <div class="stack g8">
@@ -984,7 +1152,7 @@ ${appHeader(`<button class="btn btn-ghost btn-sm" data-go="applicant:accepted">�
     ${[['١٠:٠٠ ص',0,0],['١١:٣٠ ص',1,0],['١:٠٠ م',0,1],['٢:٣٠ م',0,0],['٤:٠٠ م',0,0],['٥:٣٠ م',0,1]]
       .map(([t,on,dis])=>`<button type="button" class="slot" data-on="${on}" ${dis?'disabled':''}>${t}</button>`).join('')}
   </div>
-  <p class="tiny dim" style="margin-top:10px">مدة الميعاد ٩٠ دقيقة: مطابقة ورق · توقيع · تدريب سلامة · فحص وتسليم.</p>
+  <p class="tiny dim" style="margin-block-start:10px">الميعاد ٩٠ دقيقة وبيشمل كل حاجة: مطابقة الورق · التوقيع · تدريب السلامة · الفحص · الاستلام.</p>
 </section>
 <section class="sec">
   <div class="card" style="border-color:var(--accent-border)">
@@ -995,7 +1163,8 @@ ${appHeader(`<button class="btn btn-ghost btn-sm" data-go="applicant:accepted">�
         <div class="num" style="font-size:16px;font-weight:600;margin:3px 0 6px">TW-2026-10428</div>
         <dl class="kv"><dt>النقطة</dt><dd>النصر موتورز — المعادي</dd>
           <dt>الميعاد</dt><dd>الأحد ٢٠ سبتمبر · ١١:٣٠ ص</dd>
-          <dt>الضامن</dt><dd>حضوره مطلوب</dd></dl>
+          <dt>الضامن</dt><dd>حضوره مطلوب</dd>
+          <dt>الغرض</dt><dd>توقيع واستلام</dd></dl>
       </div></div>
     <p class="tiny dim" style="margin-top:10px">في المعرض اعرض الكود ده أو قول رقم موبايلك وبس.</p>
   </div>
@@ -1005,38 +1174,42 @@ ${appHeader(`<button class="btn btn-ghost btn-sm" data-go="applicant:accepted">�
   <button class="btn btn-pri" style="flex:1.6" data-go="applicant:mybike">تأكيد الحجز</button></div>`);
 
 /* ================= 8. بعد الاستلام ================= */
-const PERF = [
-  ['ساعات أونلاين / يوم','٧.٢','٨','90','mid'],
-  ['أيام التشغيل / الشهر','٢٤','٢٦','92','mid'],
-  ['نسبة قبول الطلبات','٦٨٪','٦٠٪','100','good'],
-  ['نسبة الإلغاء','٣.١٪','٢٪ أو أقل','100','bad']
-];
+const WEEKS = [6.4, 6.9, 7.6, 8.1, 7.8, 7.4, 6.9, 7.2];   /* أقدم ← أحدث */
 const S_mybike = () => phone(`
 ${appHeader(`<span class="pill p-ok plain">مشارك نشط</span>`)}
 <section class="sec">
-  <div class="bikecard">  <div class="spread" style="position:relative"><b>هوجان ١٥٠ سي سي — ٢٠٢٦</b><span class="plate">ق ن 4279</span></div>
+  <div class="bikecard">
+    <div class="spread"><b>هوجان ١٥٠ سي سي — ٢٠٢٦</b><span class="plate">ق ن 4279</span></div>
     <dl><dt>رقم الشاسيه</dt><dd>LHJ4K2...9F42</dd>
       <dt>تاريخ الاستلام</dt><dd>2026/09/20</dd>
       <dt>مدة البرنامج</dt><dd>١٢ شهر (مبدئية)</dd>
       <dt>الترخيص باسم</dt><dd>تريد واي</dd></dl>
-    <div class="track" style="background:rgba(255,255,255,.16);margin-top:14px"><i style="width:4%;background:#9CCB5E"></i></div>
-    <p style="font-size:11px;color:#A8CFB0;margin-top:6px">عدّى ١٥ يوم من مدة البرنامج.</p>
+    <div class="track" style="margin-top:16px"><i style="width:4%"></i></div>
+    <p style="font-size:11px;color:var(--side-dim);margin-block-start:6px">عدّى ١٥ يوم من مدة البرنامج.</p>
   </div>
 </section>
 <section class="sec">
   <div class="sec-h"><h3 class="sec-title">التزامك</h3>
     <span class="tiny dim">أسبوع ١٥–٢١ سبتمبر · آخر تحديث من أوبر ١٨ سبتمبر</span></div>
-  <div class="grid2">${PERF.map(([lb,v,t,p,k])=>`<div class="metric">
-    <div class="top"><span class="val">${v}</span>${k==='good'?pill('ok','تمام'):k==='bad'?pill('dan','فوق الحد'):pill('warn','قريب')}</div>
-    <div class="cap">${lb}</div>
-    <div class="track"><i class="${k}" style="width:${p}%"></i></div>
-    <div class="cap" style="margin-top:5px">المطلوب: <b class="num">${t}</b></div></div>`).join('')}</div>
-  <p class="tiny dim" style="margin-top:10px">الأرقام دي من تقرير أوبر الأسبوعي. لو شايف إن فيها غلط، بلّغنا وهنراجعها قبل أي قرار.</p>
+  <p class="sm muted" style="margin-block-end:14px">العمود بيتمدد <b>لليسار</b> لما تكون فوق الهدف، و<b>لليمين</b> لما تكون تحته. القاعدة واحدة في الأربع مؤشرات — حتى نسبة الإلغاء اللي الأحسن فيها إنها تقل.</p>
+  <div class="stack g12">
+    ${gaugeCard('ساعات الاتصال / اليوم', 7.2, 8, true, '٧٫٢', '٨ ساعات', 'أقل من الهدف بـ ٠٫٨ ساعة في اليوم.', 'أعلى')}
+    ${gaugeCard('أيام التشغيل / الشهر', 24, 26, true, '٢٤', '٢٦ يوم', 'أقل من الهدف بيومين.', 'أعلى')}
+    ${gaugeCard('نسبة قبول الطلبات', 68, 60, true, '٪٦٨', '٪٦٠', 'أعلى من الحد الأدنى بـ ٨ نقاط مئوية.', 'أعلى')}
+    ${gaugeCard('نسبة الإلغاء', 3.1, 2, false, '٪٣٫١', '٪٢', 'أعلى من الحد المسموح بـ ١٫١ نقطة مئوية — ده المؤشر الوحيد اللي عليه تنبيه.', 'أقل')}
+  </div>
+</section>
+<section class="sec">
+  <div class="sec-h"><h3 class="sec-title">ساعاتك آخر ٨ أسابيع</h3></div>
+  <div class="card tight">
+    ${spark(WEEKS, 8)}
+    <div class="spread tiny dim" style="margin-block-start:8px"><span>من ٨ أسابيع</span><span>أعلى ٨٫١ · أقل ٦٫٤</span><span>الأسبوع الحالي</span></div>
+  </div>
 </section>
 <section class="sec alt">
   <div class="notice n-warn">${ico('warn','ico')}<div>
     <b>تنبيه واحد مفتوح — نسبة الإلغاء</b>
-    نسبتك ٣.١٪ والحد ٢٪. عندك <b>٧ أيام</b> للتصحيح قبل ما الحالة تترفع للمراجعة. لو فيه سبب (عطل، ظرف صحي، مشكلة في الطلبات) كلّمنا دلوقتي وهنسجّله.</div></div>
+    نسبتك ٪٣٫١ والحد ٪٢. عندك <b>٧ أيام</b> للتصحيح قبل ما الحالة تترفع للمراجعة. لو فيه سبب (عطل، ظرف صحي، مشكلة في الطلبات) كلّمنا دلوقتي وهنسجّله.</div></div>
   <div class="row" style="margin-top:10px">
     <button class="btn btn-soft btn-sm" style="flex:1">اشرح السبب</button>
     <button class="btn btn-ghost btn-sm" style="flex:1">اتكلم مع الدعم</button></div>
@@ -1057,10 +1230,68 @@ ${appHeader(`<span class="pill p-ok plain">مشارك نشط</span>`)}
 </script>
 <script>
 /* ================= لوحة التشغيل ================= */
-const FUNNEL = [
-  ['مرشحين من أوبر',3120,100],['طلبات مبدوءة',2284,73],['طلبات مكتملة',1842,59],
-  ['مقبول مبدئيًا',1197,38],['ملف جاهز للتسليم',702,22],['تم التسليم',418,13]
+const BATCH = 1000;
+const KPI = [
+  {eb:'دراجات الدفعة', v:1000, kind:'anchor', sub:'متفق عليها مع أوبر'},
+  {eb:'تم التسليم', v:418, kind:'share', pct:41.8, fill:'pos', delta:'+34 عن الأسبوع الماضي'},
+  {eb:'متاح بالنقاط', v:198, kind:'share', pct:19.8, fill:''},
+  {eb:'محجوز بمواعيد', v:62, kind:'flow', delta:'+14 هذا الأسبوع'},
+  {eb:'حالات متعثرة', v:37, kind:'ratio', sub:'8.9% من المُسلَّم', dot:'var(--att-edge)'},
+  {eb:'تحت الاسترداد', v:9, kind:'ratio', sub:'24.3% من المتعثرة', dot:'var(--crit-edge)'}
 ];
+const kpiRow = () => `<div class="kpi">${KPI.map(t=>`
+  <div class="tile${t.kind==='anchor'?' anchor':''}">
+    <div class="eb">${t.dot?`<span class="dot" style="background:${t.dot}"></span>`:''}${t.eb}</div>
+    <div class="v">${enNum(t.v)}</div>
+    ${t.kind==='share'
+      ? `<div class="meter" role="img" aria-label="${t.eb}: ${enNum(t.v)} من ${enNum(BATCH)} — ${t.pct}%">
+           <i class="${t.fill}" style="inline-size:${t.pct}%"></i></div>
+         <div class="sub">${t.pct}% من الدفعة${t.delta?` · <span class="up">${t.delta}</span>`:''}</div>`
+      : `<div class="sub${t.kind==='flow'?' up':''}">${t.delta||t.sub}</div>`}
+  </div>`).join('')}</div>`;
+
+/* --- مسار التحويل: لوحتان على صفوف مشتركة --- */
+const FUNNEL = [
+  ['مرشحون من أوبر', 3120], ['طلبات مبدوءة', 2284], ['طلبات مكتملة', 1842],
+  ['مقبول مبدئيًا', 1197], ['ملف جاهز للتسليم', 702], ['تم التسليم', 418]
+];
+const funnel = () => {
+  const top = FUNNEL[0][1];
+  const rows = FUNNEL.map(([lb,v],i)=>{
+    const prev = i ? FUNNEL[i-1][1] : null;
+    const ret = prev ? v/prev : null;
+    return {lb, v, ret, pctTop: v/top};
+  });
+  const worst = rows.reduce((a,r,i)=> (r.ret!==null && (a<0 || r.ret < rows[a].ret)) ? i : a, -1);
+  return `<figure style="margin:0">
+    <div class="fn">
+      <div></div><div class="tiny dim" style="padding-block-end:6px">الأعداد الباقية</div><div></div>
+      <div class="tiny dim" style="padding-block-end:6px">نسبة العبور من المرحلة السابقة</div>
+      ${rows.map((r,i)=>`
+        <div class="lb${i===worst?' fn-row-worst':''}" style="height:36px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:1px">
+          <span>${r.lb}</span>
+          ${i===worst?`<span class="fn-flag"><svg viewBox="0 0 12 11" width="10" height="10" aria-hidden="true"><path d="M6 0 L12 11 H0 Z" fill="var(--att-ink)"/></svg>أكبر تسرُّب</span>`:''}
+        </div>
+        <div class="pa${i===worst?' fn-row-worst':''}">
+          <div class="barA" style="width:${(r.pctTop*100).toFixed(1)}%;background:var(--ramp-${Math.min(4,i+1)})"></div>
+          <span class="cnt">${enNum(r.v)}</span></div>
+        <div class="${i===worst?'fn-row-worst':''}"></div>
+        <div class="pb${i===worst?' fn-row-worst':''}">
+          ${r.ret===null
+            ? `<span class="tiny dim">—</span>`
+            : `<div class="barB${i===worst?' worst':''}" style="width:${(r.ret*100).toFixed(1)}%"><span>${(r.ret*100).toFixed(1)}%</span></div>`}
+        </div>`).join('')}
+      <div></div>
+      <div class="ax"><span>0</span><span>1,500</span><span>3,120</span></div>
+      <div></div><div class="ax"><span>0%</span><span>50%</span><span>100%</span></div>
+    </div>
+    <figcaption class="tiny dim" style="margin-block-start:12px">
+      التحويل الكلي: <b>13.4%</b> من الترشيحات وصلت للتسليم. الطول في اللوحة اليمين هو نسبة كل مرحلة من أصل الترشيحات؛
+      اللوحة الشمال بتقيس كل مرحلة على اللي قبلها مباشرة — علشان أقصر عمود هو أسوأ خطوة من غير ما تقرا رقم.
+    </figcaption>
+  </figure>`;
+};
+
 const QUEUE = [
   ['dan','9 ملفات','مستندات مرفوضة بقالها أكتر من 48 ساعة','المتقدم مستني رد — SLA اتعدى'],
   ['warn','14 ملف','حسابات أوبر متوقفة محتاجة مراجعة خاصة','أقدم حالة من 6 أيام'],
@@ -1068,50 +1299,42 @@ const QUEUE = [
   ['info','23 ملف','جاهزة لاعتماد الجاهزية','مستنية توقيع مشرف'],
   ['info','3 نقاط','مخزون أقل من 5 موتوسيكلات','فيصل · الغردقة الدهار · حلوان']
 ];
+const CITY = [['القاهرة الكبرى',352,600],['الغردقة',66,150]];
 const S_ops = () => desk('ops','لوحة التشغيل — دفعة سبتمبر 2026',
-  `<span class="chip">القاهرة الكبرى</span><span class="chip">الغردقة</span><span class="pill p-mute plain num">آخر تحديث 18 سبتمبر</span>`,`
-  <div class="grid6">
-    ${[['موتوسيكلات الدفعة','1,000','متفق عليها مع أوبر','mute'],
-       ['تم التسليم','418','41.8% من الدفعة','ok'],
-       ['محجوزة بمواعيد','62','الأسبوع ده','info'],
-       ['متاحة في النقاط','198','موزعة على 6 نقاط','mute'],
-       ['حالات متعثرة','37','تحت المستوى أو متوقفة','warn'],
-       ['استرداد قيد التنفيذ','9','معتمدة من الإدارة','dan']
-      ].map(([lb,v,s,k])=>`<div class="metric"><div class="cap">${lb}</div>
-        <div class="top"><span class="val">${v}</span>${k==='warn'||k==='dan'?`<span class="pill p-${k} plain">يحتاج متابعة</span>`:''}</div>
-        <div class="tiny dim">${s}</div></div>`).join('')}
-  </div>
+  `<span class="chip">القاهرة الكبرى</span><span class="chip">الغردقة</span><span class="pill p-mute plain">آخر تحديث 18 سبتمبر</span>`,`
+  ${kpiRow()}
   <div class="card">
-    <div class="spread" style="margin-bottom:12px"><b>مسار التحويل</b>
+    <div class="spread" style="margin-block-end:14px"><b>مسار التحويل</b>
       <span class="tiny dim">من ترشيح أوبر لحد التسليم</span></div>
-    <div class="stack g10">${FUNNEL.map(([lb,n,p])=>`
-      <div><div class="spread tiny" style="margin-bottom:4px"><span>${lb}</span>
-        <span class="num" style="font-weight:600">${n.toLocaleString('en-US')} <span class="dim">· ${p}%</span></span></div>
-      <div class="track"><i style="width:${p}%"></i></div></div>`).join('')}</div>
-    <p class="tiny dim" style="margin-top:12px">أكبر تسريب: من «مقبول مبدئيًا» لـ«جاهز للتسليم» — السبب الأول تجهيز حساب أوبر، والتاني المستندات — 495 ملف واقفين هناك دلوقتي.</p>
+    ${funnel()}
   </div>
   <div class="card">
-    <div class="spread" style="margin-bottom:10px"><b>اللي محتاج تدخّل النهاردة</b>${pill('dan','5 مجموعات')}</div>
+    <div class="spread" style="margin-block-end:10px"><b>اللي محتاج تدخّل النهاردة</b>${pill('dan','5 مجموعات')}</div>
     <div>${QUEUE.map(([k,n,t,s])=>`<div class="check" data-s="now" style="align-items:center">
-      <span class="pill p-${k} plain num" style="min-width:66px;justify-content:center">${n}</span>
+      <span class="pill p-${k} plain" style="min-width:74px;justify-content:center">${n}</span>
       <div class="bd"><b>${t}</b><p>${s}</p></div>
-      <button class="btn btn-ghost btn-sm" data-go="admin:apps">افتح</button></div>`).join('')}</div>
+      <button class="btn btn-soft btn-sm" data-go="admin:apps">افتح</button></div>`).join('')}</div>
   </div>
   <div class="split">
     <div class="card"><b class="sm">التسليم حسب المدينة</b>
-      <div class="stack g10" style="margin-top:12px">
-        ${[['القاهرة الكبرى',352,600,59],['الغردقة',66,150,44]].map(([c,d,t,p])=>`
-        <div><div class="spread tiny" style="margin-bottom:4px"><span>${c}</span>
-          <span class="num">${d} / ${t}</span></div><div class="track"><i style="width:${p}%"></i></div></div>`).join('')}
+      <p class="tiny dim" style="margin-block-start:4px">مدينتين بمقامين مختلفين — فالمقارنة بالنسبة، مش بالعدد.</p>
+      <div class="stack g14" style="margin-block-start:14px">
+        ${CITY.map(([c,d,t])=>{const p=d/t*100; return `
+        <div><div class="spread tiny" style="margin-block-end:4px"><span>${c}</span>
+          <span class="num">${enNum(d)} / ${enNum(t)} · ${p.toFixed(1)}%</span></div>
+          <div class="meter" style="margin:0;position:relative" role="img" aria-label="${c}: ${d} من ${t}">
+            <i style="inline-size:${p.toFixed(1)}%"></i>
+            <span style="position:absolute;top:-2px;bottom:-2px;inset-inline-end:55.7%;width:2px;background:var(--border-strong)"></span>
+          </div></div>`}).join('')}
       </div>
-      <p class="tiny dim" style="margin-top:12px">الغردقة أبطأ — نقطة توزيع واحدة وطاقتها 6 مواعيد في اليوم.</p></div>
+      <p class="tiny dim" style="margin-block-start:12px">الخط الرمادي = متوسط البرنامج <b>55.7%</b>. الغردقة تحته — نقطة توزيع واحدة طاقتها 6 مواعيد في اليوم.</p></div>
     <div class="card"><b class="sm">مصدر الطلبات</b>
-      <div class="stack g10" style="margin-top:12px">
+      <div class="stack g10" style="margin-block-start:12px">
         ${[['ترشيح أوبر',3120,'brand'],['تقديم عام من الموقع',1876,'mute'],['قائمة انتظار مدن تانية',642,'mute']]
           .map(([s,n,k])=>`<div class="spread"><span class="sm">${s}</span>
-          <span class="pill p-${k} plain num">${n.toLocaleString('en-US')}</span></div>`).join('')}
+          <span class="pill p-${k} plain num">${enNum(n)}</span></div>`).join('')}
       </div>
-      <p class="tiny dim" style="margin-top:12px">التقديم العام مفتوح، بس الأولوية والإتاحة بتتحسب لكل مدينة على حدة.</p></div>
+      <p class="tiny dim" style="margin-block-start:12px">التقديم العام مفتوح، بس الأولوية والإتاحة بتتحسب لكل مدينة على حدة.</p></div>
   </div>`);
 </script>
 <script>
@@ -1213,15 +1436,24 @@ const STOCK = [
 ];
 const S_alloc = () => desk('alloc','التخصيص والمواعيد',
   `<button class="btn btn-ghost btn-sm">إضافة دفعة مخزون</button><button class="btn btn-pri btn-sm">تخصيص تلقائي حسب المنطقة</button>`,`
-  <div class="grid6">
-    ${[['متاح','198','info'],['مخصص مبدئيًا لتفعيل الحساب','31','warn'],['محجوز لموعد','62','ok'],
-       ['تحت الترخيص','74','warn'],['مُسلّم','418','mute'],['مرتجع تحت الفحص','9','dan']]
-      .map(([lb,v,k])=>`<div class="metric"><div class="cap">${lb}</div>
-        <div class="top"><span class="val">${v}</span><span class="track" style="width:54px;margin:0"><i class="${k==='dan'?'bad':k==='warn'?'mid':'neutral'}" style="width:100%"></i></span></div></div>`).join('')}
+  <div class="card">
+    <div class="spread" style="margin-block-end:4px"><b class="sm">حالة المخزون</b>
+      <span class="tiny dim">المقام هو الدفعة كلها: 1,000 موتوسيكل</span></div>
+    <p class="tiny dim" style="margin-block-end:12px">الحالات اللي مش «كويسة ولا وحشة» بتتفرق بالدرجة مش باللون — اللون محجوز للمُسلَّم والمرتجع بس.</p>
+    ${(()=>{const INV=[['متاح',198,'var(--ramp-1)'],['مخصص مبدئيًا',31,'var(--ramp-2)'],
+      ['محجوز لموعد',62,'var(--ramp-3)'],['تحت الترخيص',74,'var(--ramp-4)'],
+      ['مُسلَّم',418,'var(--pos-edge)'],['مرتجع تحت الفحص',9,'var(--att-edge)']];
+      const sum=INV.reduce((a,x)=>a+x[1],0), rest=1000-sum;
+      return `<div class="stk" role="img" aria-label="توزيع 1,000 موتوسيكل على ست حالات، و${rest} لسه ما وصلوش">
+        ${INV.map(([lb,v,c])=>`<i style="width:${v/10}%;background:${c}" title="${lb}: ${v}"></i>`).join('')}
+        <i style="width:${rest/10}%;background:var(--surface-sunken)"></i></div>
+      <ul class="legend">
+        ${INV.map(([lb,v,c])=>`<li><span class="sw" style="background:${c}"></span>${lb} <b>${enNum(v)}</b></li>`).join('')}
+        <li><span class="sw" style="background:var(--surface-sunken);border:1px solid var(--hairline)"></span>لسه ما وصلتش <b>${enNum(rest)}</b></li>
+      </ul>`;})()}
   </div>
-  <div class="notice n-info">${ico('info','ico')}<div>
-    <b>«مخصص مبدئيًا» ≠ «محجوز»</b>
-    بعض حسابات أوبر بتحتاج بيانات موتوسيكل علشان تتفعّل، فبنخصص مبدئيًا قبل التسليم الفعلي — والموتوسيكل بيفضل في المخزون لحد ما يتحجز لميعاد.</div></div>
+  ${notice('info','«مخصص مبدئيًا» ≠ «محجوز»',
+    'بعض حسابات أوبر بتحتاج بيانات موتوسيكل علشان تتفعّل، فبنخصص مبدئيًا قبل التسليم الفعلي — والموتوسيكل بيفضل في المخزون لحد ما يتحجز لميعاد.')}
   <div class="card">
     <div class="spread" style="margin-bottom:10px"><b class="sm">مواعيد الأحد 20 سبتمبر</b>
       <span class="tiny dim">23 ميعاد · 6 نقاط · طاقة قصوى 28</span></div>
@@ -1230,7 +1462,7 @@ const S_alloc = () => desk('alloc','التخصيص والمواعيد',
       <tbody>${[
         ['10:00 ص','أحمد ناصر عبده','النصر موتورز','توقيع + استلام','ق ن 4 261','ok|مؤكد'],
         ['11:30 ص','محمود سيد عبد العظيم','النصر موتورز','توقيع + استلام','ق ن 4 279','ok|مؤكد'],
-        ['12:00 م','عبد الله شعبان','بايك هاوس','توقيع فقط','—','info|تسليم خلال 7 أيام'],
+        ['12:00 م','عبد الله شعبان','بايك هاوس','توقيع واستلام','ق ن 3 118','ok|مؤكد'],
         ['1:00 م','رامي عصام','النصر موتورز','توقيع + استلام','—','dan|لم يحضر — إعادة حجز'],
         ['2:30 م','سيد محمد حسين','موتو الغردقة','توقيع + استلام','ب ح 1 442','warn|الضامن لم يتأكد']
       ].map(r=>`<tr><td class="num">${r[0]}</td><td><b>${r[1]}</b></td><td>${r[2]}</td><td>${r[3]}</td>
@@ -1244,34 +1476,70 @@ const S_alloc = () => desk('alloc','التخصيص والمواعيد',
   </div>`);
 
 /* ================= متابعة الالتزام ================= */
+const GZ = {w:124,h:24,plot:112,bar:12,tick:16,minor:5,rx:3,chev:5};
 const COMP = [
-  ['كريم أشرف مصطفى','مدينة نصر','8.1','26','71%','1.2%','ok|ملتزم','—'],
-  ['محمود سيد عبد العظيم','المعادي','7.2','24','68%','3.1%','warn|تحت المستوى','مهلة تصحيح 7 أيام'],
-  ['أحمد ناصر عبده','حلوان','8.4','25','64%','0.9%','ok|ملتزم','—'],
-  ['سيد محمد حسين','الغردقة','4.3','12','58%','2.4%','dan|تحت المستوى للشهر التاني','مرشّح لمراجعة استرداد'],
-  ['عبد الله شعبان','شبرا الخيمة','0','0','—','—','dan|لم يبدأ الشغل','مر 12 يوم من الاستلام'],
-  ['رامي عصام فؤاد','فيصل','6.2','21','66%','1.8%','info|حساب متوقف','بلوك من أوبر — تحت التحقق']
+  {nm:'كريم أشرف مصطفى', ar:'مدينة نصر', h:8.1, d:26, a:71, c:1.2, st:'ok|ملتزم', act:'—'},
+  {nm:'محمود سيد عبد العظيم', ar:'المعادي', h:7.2, d:24, a:68, c:3.1, st:'warn|تحت المستوى', act:'مهلة تصحيح 7 أيام'},
+  {nm:'أحمد ناصر عبده', ar:'حلوان', h:8.4, d:25, a:64, c:0.9, st:'ok|ملتزم', act:'—'},
+  {nm:'سيد محمد حسين', ar:'الغردقة', h:4.3, d:12, a:58, c:2.4, st:'dan|تحت المستوى شهرين', act:'مرشّح لمراجعة استرداد'},
+  {nm:'عبد الله شعبان', ar:'شبرا الخيمة', h:0, d:0, a:null, c:null, st:'dan|لم يبدأ الشغل', act:'مر 12 يوم من الاستلام'},
+  {nm:'رامي عصام فؤاد', ar:'فيصل', blocked:true, h:null, d:null, a:null, c:null, st:'info|حساب متوقف', act:'بلوك من أوبر — تحت التحقق'}
+];
+const gz = (v,t,hb,lbl,unit) => {
+  if(v===null) return `<div class="gz">${gaugeSVG(null,GZ)}<span class="sr-only">${lbl}: لا توجد قراءات.</span></div>`;
+  const d=devIndex(v,t,hb), st=gaugeState(d);
+  return `<div class="gz">${gaugeSVG(d,GZ)}<span class="gl" style="color:${st.ink}" aria-hidden="true">${st.gl}</span>
+    <span class="sr-only">${lbl}: ${v}${unit||''} مقابل هدف ${t}${unit||''} — الحالة ${st.word}.</span></div>`;
+};
+const MCOL = [
+  ['ساعات/يوم', 8, true,  r=>r.h, ''],
+  ['أيام/شهر', 26, true,  r=>r.d, ''],
+  ['نسبة القبول', 60, true, r=>r.a, '%'],
+  ['نسبة الإلغاء', 2, false, r=>r.c, '%']
 ];
 const S_compliance = () => desk('compliance','متابعة الالتزام',
-  `<button class="btn btn-ghost btn-sm">سجل الاستيرادات</button><button class="btn btn-pri btn-sm">استيراد تقرير أوبر</button>`,`
-  <div class="notice n-warn">${ico('warn','ico')}<div>
-    <b>البيانات دي مستوردة، مش لحظية</b>
-    آخر استيراد لتقرير أوبر: <b class="num">18 سبتمبر 2026 — 1,240 صف</b> · الفترة: 15–21 سبتمبر.
-    غياب بيانات لكابتن مش دليل إنه ما اشتغلش — بيتفتح استفسار الأول.</div></div>
+  `<button class="btn btn-soft btn-sm">سجل الاستيرادات</button><button class="btn btn-pri btn-sm">استيراد تقرير أوبر</button>`,`
+  ${notice('warn','البيانات دي مستوردة، مش لحظية',
+    'آخر استيراد لتقرير أوبر: <b>18 سبتمبر 2026 — 1,240 صف</b> · الفترة 15–21 سبتمبر. غياب بيانات لكابتن مش دليل إنه ما اشتغلش — بيتفتح استفسار الأول.')}
   <div class="row" style="gap:8px"><div class="chips">
     <span class="chip" data-on="1">الكل 418</span><span class="chip">ملتزم 364</span>
     <span class="chip">تحت المستوى 29</span><span class="chip">لم يبدأ 11</span>
     <span class="chip">حساب متوقف 8</span><span class="chip">بلاغ عطل 6</span></div></div>
-  <div class="tbl-wrap"><table class="tbl" style="min-width:820px">
-    <thead><tr><th>الكابتن</th><th>المنطقة</th><th>ساعات/يوم<br><span class="dim">هدف 8 ساعات</span></th>
-      <th>أيام/شهر<br><span class="dim">هدف 26 يوم</span></th><th>قبول<br><span class="dim">60% فأعلى</span></th>
-      <th>إلغاء<br><span class="dim">2% فأقل</span></th><th>الحالة</th><th>الإجراء المفتوح</th><th></th></tr></thead>
-    <tbody>${COMP.map(r=>`<tr><td><b>${r[0]}</b></td><td>${r[1]}</td>
-      <td class="num">${r[2]}</td><td class="num">${r[3]}</td><td class="num">${r[4]}</td><td class="num">${r[5]}</td>
-      <td>${cell(r[6])}</td><td class="dim tiny">${r[7]}</td>
-      <td><button class="btn btn-ghost btn-sm">الحالة</button></td></tr>`).join('')}</tbody></table></div>
+  <div class="card">
+    <div class="spread" style="margin-block-end:10px"><b class="sm">مؤشرات الالتزام</b>
+      <span class="tiny dim">العمود بيتمدد لليسار = فوق الهدف · لليمين = دون الهدف. القاعدة واحدة للأربع مؤشرات.</span></div>
+    <div class="tbl-wrap"><table class="tbl comp" style="min-width:1040px">
+      <thead><tr><th>الكابتن</th><th>المنطقة</th>
+        ${MCOL.map(([lb,t,hb,,u])=>`<th>${lb}<br><span class="dim">الهدف ${t}${u} ${hb?'فأعلى':'فأقل'}</span></th>`).join('')}
+        <th>الحالة</th><th>الإجراء المفتوح</th></tr></thead>
+      <tbody>${COMP.map(r=>`<tr${r.blocked?' style="background:var(--surface-sunken)"':''}>
+        <td><b>${r.nm}</b></td><td>${r.ar}</td>
+        ${MCOL.map(([lb,t,hb,get,u])=>{const v=get(r);
+          return `<td>${gz(r.blocked?null:v, t, hb, lb, u)}
+            <div class="tiny" style="margin-block-start:3px;color:var(--text-2);font-family:var(--font-figure)">${v===null?'—':v+u}</div></td>`;}).join('')}
+        <td>${cell(r.st)}</td><td class="dim tiny">${r.act}</td></tr>`).join('')}</tbody>
+    </table></div>
+    <ul class="legend" style="margin-block-start:14px">
+      <li><span class="sw" style="background:var(--pos-edge)"></span>فوق الهدف أو عليه</li>
+      <li><span class="sw" style="background:var(--att-edge)"></span>دون الهدف بأقل من 10%</li>
+      <li><span class="sw" style="background:var(--crit-edge)"></span>دون الهدف بأكتر من 10%</li>
+      <li><span class="sw" style="background:var(--surface-sunken);border:1px solid var(--hairline)"></span>غير سارية / لا توجد بيانات</li>
+    </ul>
+  </div>
+  ${notice('dan','رامي عصام فؤاد — الحساب موقوف لدى أوبر',
+    'المؤشرات غير سارية منذ <b>2026-08-30</b>. الأربع مؤشرات بتتعرض فاضية عن قصد — مش مخالفة، دي حالة عدم سريان. <button class="btn btn-soft btn-sm" style="padding:2px 6px">تفاصيل الإيقاف</button>')}
+  <div class="card">
+    <div class="spread" style="margin-block-end:12px"><b class="sm">تفاصيل: محمود سيد عبد العظيم</b>
+      <span class="tiny dim">أسبوع 15–21 سبتمبر</span></div>
+    <div class="grid2" style="gap:12px">
+      ${gaugeCard('ساعات الاتصال / اليوم', 7.2, 8, true, '7.2', '8', 'أقل من الهدف بـ 0.8 ساعة في اليوم — يعني 19 ساعة على مدار الشهر.', 'أعلى')}
+      ${gaugeCard('أيام التشغيل / الشهر', 24, 26, true, '24', '26', 'أقل من الهدف بيومين.', 'أعلى')}
+      ${gaugeCard('نسبة قبول الطلبات', 68, 60, true, '68%', '60%', 'أعلى من الحد الأدنى بـ 8 نقاط مئوية.', 'أعلى')}
+      ${gaugeCard('نسبة الإلغاء', 3.1, 2, false, '3.1%', '2%', 'أعلى من الحد المسموح بـ 1.1 نقطة مئوية — ده المؤشر الوحيد اللي فتح الحالة.', 'أقل')}
+    </div>
+  </div>
   <div class="card"><b class="sm">مسار التعامل مع التعثّر</b>
-    <ol class="tl" style="margin-top:12px">
+    <ol class="tl" style="margin-block-start:12px">
       ${[['تنبيه أوتوماتيكي','بيوصل للكابتن في صفحته وبرسالة — بيشرح المؤشر والفرق عن المطلوب.'],
          ['تواصل لفهم السبب','مكالمة مسجّلة في الملف: عطل؟ ظرف صحي؟ ضعف طلب في المنطقة؟'],
          ['مهلة تصحيح','مدة محددة في العقد، والهدف ممكن يتعدّل لو السبب مقبول ومعتمد.'],
@@ -1375,7 +1643,7 @@ const S_pqueue = () => pointShell('','<span class="tiny dim num">الأحد 20 �
         ['10:00 ص','أحمد ناصر عبده','توقيع + استلام','ق ن 4 261','ok|تم التسليم'],
         ['11:30 ص','محمود سيد عبد العظيم','توقيع + استلام','ق ن 4 279','warn|في الانتظار'],
         ['1:00 م','رامي عصام فؤاد','توقيع + استلام','ق ن 4 283','dan|لم يحضر'],
-        ['2:30 م','عبد الله شعبان','توقيع فقط','—','info|لم يحن بعد'],
+        ['2:30 م','عبد الله شعبان','توقيع واستلام','ق ن 3 118','info|لم يحن بعد'],
         ['4:00 م','هاني صلاح الدين','توقيع + استلام','ق ن 4 290','info|لم يحن بعد']
       ].map(r=>`<tr><td class="num">${r[0]}</td><td><b>${r[1]}</b></td><td>${r[2]}</td>
         <td class="num">${r[3]}</td><td>${cell(r[4])}</td>
@@ -1440,7 +1708,7 @@ const PORTALS = [
     {id:'apply',    nav:'نموذج التقديم', title:'نموذج التقديم على خطوات', desc:'خمس خطوات قصيرة، كل واحدة بتتحفظ لوحدها، والأسئلة بتتغير حسب إجاباته. دوس على أي خطوة في الشريط علشان تشوفها.', render:S_apply},
     {id:'track',    nav:'متابعة طلبي', title:'متابعة الطلب', desc:'مراحل الطلب + المطلوب منه دلوقتي + الرسائل اللي وصلته. ده الرد على «أنا وصلت لفين؟».', render:S_track},
     {id:'docs',     nav:'المستندات والتجهيز', title:'المستندات وتجهيز الملف', desc:'خمس مسارات بتتقفل بالترتيب: بياناته، مستنداته، حساب أوبر، الضامن، التعاقد. كل مستند وحالته وسبب الرفض لو مرفوض.', render:S_docs},
-    {id:'accepted', nav:'القبول والتعاقد', title:'القبول وإجراءات التسليم', desc:'اختيار طريقة التوقيع: يمضي ويستلم نفس اليوم، أو يمضي والتسليم خلال 7 أيام عمل — ومعاه اللي لازم يحضره.', render:S_accepted},
+    {id:'accepted', nav:'القبول والتعاقد', title:'القبول وإجراءات التسليم', desc:'ميعاد واحد بس: بيمضي الورق كله ويستلم الموتوسيكل في نفس الزيارة. الشاشة بتوضح مدة كل خطوة واللي لازم يحضره معاه.', render:S_accepted},
     {id:'booking',  nav:'حجز الاستلام', title:'حجز نقطة وميعاد الاستلام', desc:'بنعرض النقط اللي عندها مخزون وطاقة فعلاً — مش الأقرب وخلاص — والتذكرة بتطلع بكود ورقم طلب.', render:S_booking},
     {id:'mybike',   nav:'موتوسيكلي والتزامي', title:'بعد الاستلام', desc:'الشاشة بتتحول من «متابعة طلب» لـ«متابعة التزام»: الموتوسيكل، المؤشرات مقابل المطلوب، التنبيهات، والإبلاغ عن عطل.', render:S_mybike}
   ]},
