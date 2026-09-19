@@ -1131,7 +1131,7 @@ ${appHeader(`<span class="tiny dim num">TW-2026-10428</span>`)}
 <div class="stickycta"><button class="btn btn-pri btn-block" data-go="applicant:booking">احجز الميعاد</button></div>`);
 
 /* ================= 7. حجز الاستلام ================= */
-const POINTS = [
+const BOOK_POINTS = [
   ['النصر موتورز — المعادي','شارع 9، المعادي · 2.4 كم','1','٤ مواعيد متاحة بكرة','ok','متاح'],
   ['بايك هاوس — مدينة نصر','عباس العقاد · ٩.١ كم','0','ميعادين متاحين','info','متاح'],
   ['موتو بوينت — فيصل','الطريق الدائري · ١٤.٨ كم','0','المخزون خلص — بنفتح الأحد','mute','مقفول مؤقتًا']
@@ -1141,7 +1141,7 @@ ${appHeader(`<button class="btn btn-ghost btn-sm" data-go="applicant:accepted">�
 <section class="sec">
   <h3 class="sec-title">اختار نقطة التوزيع</h3>
   <p class="sm muted" style="margin:4px 0 12px">بنعرض النقط القريبة منك <b>واللي فعلاً عندها موتوسيكل متاح وطاقة استيعاب</b> — مش الأقرب جغرافيًا وخلاص.</p>
-  <div class="stack g10">${POINTS.map(([n,d,on,av,k,st])=>`
+  <div class="stack g10">${BOOK_POINTS.map(([n,d,on,av,k,st])=>`
     <button type="button" class="pointcard" data-on="${on}" ${st.includes('مقفول')?'disabled style="opacity:.55"':''}>
       <div class="spread"><b class="sm">${n}</b>${pill(k,st)}</div>
       <p class="tiny dim">${d}</p><p class="tiny muted">${av}</p></button>`).join('')}</div>
@@ -1599,105 +1599,703 @@ const S_points = () => desk('points','نقاط التوزيع','<button class="b
       <p class="tiny dim" style="margin-top:8px">تجربة قصيرة مش هتثبت رحلة سنة كاملة — بس هتكشف كسور العملية بدري.</p></div>
   </div>`);
 </script>
+<style>
+/* ===================== distribution-point portal ===================== */
+.pt{background:var(--surface);border:1px solid var(--hairline);border-radius:var(--r-lg);overflow:hidden}
+.pt-top{background:var(--surface);border-block-end:1px solid var(--hairline);padding:12px 18px;
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.pt-scope{display:flex;align-items:center;gap:8px;background:var(--accent-subtle);border:1px solid var(--accent-border);
+  color:var(--accent-ink);border-radius:var(--r-pill);padding:4px 12px;font:600 12px var(--font-ui)}
+.pt-who{font-size:12px;color:var(--text-3);text-align:start}
+.pt-who b{display:block;font-size:13px;color:var(--text);font-weight:600}
+.pt-body{padding:18px;display:flex;flex-direction:column;gap:16px;background:var(--ground);min-height:420px}
+.offline{background:var(--att-fill);border-block-end:1px solid var(--att-border);color:var(--att-ink);
+  padding:9px 18px;font:500 12.5px var(--font-ui);display:flex;align-items:center;gap:9px}
+.login{max-width:420px;margin-inline:auto;padding-block:28px}
+.pinpad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:280px;margin-inline:auto}
+.pinpad button{background:var(--surface);border:1px solid var(--border-strong);border-radius:var(--r-sm);
+  padding:14px 0;font:600 20px var(--font-figure);min-height:52px}
+.pinpad button:hover{background:var(--surface-sunken)}
+.pindots{display:flex;gap:10px;justify-content:center;margin-block:14px}
+.pindots i{width:13px;height:13px;border-radius:50%;background:var(--surface);border:1.5px solid var(--border-strong)}
+.pindots i.on{background:var(--accent);border-color:var(--accent)}
+.band{font:600 11.5px var(--font-ui);color:var(--text-3);padding:10px 2px 6px;display:flex;align-items:center;gap:8px}
+.band::after{content:"";flex:1;height:1px;background:var(--hairline)}
+.runner{background:var(--surface);border:1px solid var(--hairline);border-radius:var(--r-md);overflow:hidden}
+.rail{display:flex;gap:4px;padding:12px 16px;border-block-end:1px solid var(--hairline);align-items:center}
+.rail i{height:4px;flex:1;border-radius:var(--r-pill);background:var(--hairline)}
+.rail i.done{background:var(--accent)}
+.rail i.now{background:var(--accent)}
+.rail span{font:600 12px var(--font-ui);color:var(--text-3);white-space:nowrap;margin-inline-end:8px}
+.step-body{padding:20px 18px;display:flex;flex-direction:column;gap:14px;min-height:260px}
+.step-h{font:700 22px/1.45 var(--font-display)}
+.step-foot{border-block-start:1px solid var(--hairline);padding:12px 16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.cam{border:1.5px dashed var(--accent-border);border-radius:var(--r-md);background:var(--accent-subtle);
+  color:var(--accent-ink);padding:28px 16px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px}
+.cam.shot{border-style:solid;border-color:var(--pos-border);background:var(--pos-fill);color:var(--pos-ink)}
+.shots{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+@media (max-width:620px){.shots{grid-template-columns:repeat(2,1fr)}}
+.shot-tile{aspect-ratio:4/3;border:1px solid var(--hairline);border-radius:var(--r-xs);background:var(--surface-sunken);
+  display:grid;place-items:center;font-size:11px;color:var(--text-3);text-align:center;padding:4px;cursor:pointer}
+.shot-tile[data-on="1"]{background:var(--pos-fill);border-color:var(--pos-border);color:var(--pos-ink);font-weight:600}
+.sig{border:1px solid var(--border-strong);border-radius:var(--r-sm);background:var(--surface);height:120px;
+  display:grid;place-items:center;color:var(--text-3);font-size:12.5px;cursor:crosshair;position:relative}
+.sig[data-on="1"]{border-color:var(--pos-edge);background:var(--pos-fill);color:var(--pos-ink)}
+.sig .ink{font-family:var(--font-display);font-size:26px;color:var(--accent);transform:rotate(-4deg)}
+.mini{display:flex;gap:6px;flex-wrap:wrap}
+.mini b{font:600 11.5px var(--font-ui);background:var(--surface-sunken);border:1px solid var(--hairline);
+  border-radius:var(--r-xs);padding:2px 8px;color:var(--text-2)}
+.demo-hint{font-size:11.5px;color:var(--text-3);background:var(--surface-sunken);border:1px dashed var(--hairline);
+  border-radius:var(--r-xs);padding:8px 11px;line-height:1.6}
+</style>
 <script>
-/* ================= بوابة نقطة التوزيع ================= */
-const pointShell = (title, extra, body) => `<div class="desk" style="grid-template-columns:1fr">
-  <div class="desk-main">
-    <div class="desk-top">
-      ${LOCKUP}
-      <div style="flex:1"></div>
-      <span class="pill p-brand plain">النصر موتورز — المعادي</span>
-      ${extra||''}
-    </div>
-    <div class="desk-body">${body}</div>
-  </div></div>`;
-
-const S_pqueue = () => pointShell('','<span class="tiny dim num">الأحد 20 سبتمبر</span>',`
-  <div class="card">
-    <b class="sm">ابحث عن الكابتن</b>
-    <p class="tiny dim" style="margin:4px 0 10px">برقم الموبايل، أو رقم الطلب، أو امسح كود التذكرة.</p>
-    <div class="row">
-      <input class="inp num" style="max-width:240px;text-align:start" dir="ltr" value="0100 254 7719" id="q-point">
-      <button class="btn btn-pri btn-sm">بحث</button>
-      <button class="btn btn-ghost btn-sm">مسح كود</button>
-    </div>
-    <div class="card" style="margin-top:12px;background:var(--ground);border-color:var(--accent-border)">
-      <div class="spread"><div><b>محمود سيد عبد العظيم حسن</b>
-        <p class="tiny dim num">TW-2026-10428 · ميعاد 11:30 ص</p></div>
-        ${pill('ok','جاهز للتسليم')}</div>
-      <hr class="rule" style="margin:12px 0">
-      <div class="grid3">
-        <div><span class="eyebrow">الموتوسيكل المخصص</span><div class="num sm">ق ن 4 279 · LHJ...9F42</div></div>
-        <div><span class="eyebrow">الغرض</span><div class="sm">توقيع + استلام</div></div>
-        <div><span class="eyebrow">الضامن</span><div class="sm">مطلوب حضوره</div></div>
-      </div>
-      <button class="btn btn-pri btn-sm" style="margin-top:12px" data-go="point:handover">ابدأ التسليم</button>
-    </div>
+/* ============ portal state — client-side only, resets on reload ============ */
+const POINTS = {
+  'NM-101': {code:'NM-101', name:'النصر موتورز — المعادي', city:'القاهرة', cap:10,
+    users:[{u:'kareem', nm:'كريم عبد الله', role:'operator'},{u:'nader', nm:'نادر سمير', role:'manager'}]},
+  'BH-204': {code:'BH-204', name:'بايك هاوس — مدينة نصر', city:'القاهرة', cap:8,
+    users:[{u:'hassan', nm:'حسن مأمون', role:'operator'},{u:'omar', nm:'عمر رشاد', role:'manager'}]},
+  'HG-330': {code:'HG-330', name:'موتو الغردقة — الدهار', city:'الغردقة', cap:6,
+    users:[{u:'salma', nm:'سلمى فؤاد', role:'operator'},{u:'tarek', nm:'طارق وجيه', role:'manager'}]}
+};
+const APPT_SEED = {
+ 'NM-101':[
+  {id:'TW-2026-10448', nm:'أحمد ناصر عبده', ph:'01002547719', slot:'10:00', off:-165, unit:'ق ن 4261', ch:'LHJ4K2...8A17', st:'تم التسليم', gu:'سعيد ناصر'},
+  {id:'TW-2026-10428', nm:'محمود سيد عبد العظيم', ph:'01002547719', slot:'11:30', off:-35, unit:'ق ن 4279', ch:'LHJ4K2...9F42', st:'تم الحضور', gu:'سيد عبد العظيم'},
+  {id:'TW-2026-10455', nm:'رامي عصام فؤاد', ph:'01112230098', slot:'13:00', off:55, unit:'ق ن 4283', ch:'LHJ4K2...9F51', st:'مجدول', gu:'عصام فؤاد'},
+  {id:'TW-2026-10461', nm:'هاني صلاح الدين', ph:'01277889011', slot:'16:00', off:235, unit:'ق ن 4290', ch:'LHJ4K2...7C90', st:'مجدول', gu:'صلاح الدين حسن', unconfirmed:true},
+  {id:'TW-2026-10399', nm:'وليد سمير عبد الله', ph:'01556640012', slot:'09:00', off:-225, unit:'ق ن 4255', ch:'LHJ4K2...6A33', st:'لم يحضر', gu:'سمير عبد الله'}],
+ 'BH-204':[
+  {id:'TW-2026-10431', nm:'كريم أشرف مصطفى', ph:'01221114477', slot:'10:30', off:-105, unit:'ق ن 3114', ch:'LHJ4K2...3B21', st:'تم التسليم', gu:'أشرف مصطفى'},
+  {id:'TW-2026-10467', nm:'عبد الله شعبان', ph:'01098765432', slot:'12:00', off:-5, unit:'ق ن 3118', ch:'LHJ4K2...3B44', st:'تم الحضور', gu:'شعبان محمود'},
+  {id:'TW-2026-10470', nm:'مينا عادل غالي', ph:'01144556677', slot:'15:00', off:175, unit:'ق ن 3122', ch:'LHJ4K2...3B55', st:'مجدول', gu:'عادل غالي'}],
+ 'HG-330':[
+  {id:'TW-2026-10480', nm:'سيد محمد حسين', ph:'01023334455', slot:'11:00', off:-65, unit:'ب ح 1442', ch:'LHJ4K2...5D10', st:'مُعلّق — الضامن غير حاضر', gu:'محمد حسين'},
+  {id:'TW-2026-10484', nm:'جمال الدين رضا', ph:'01066778899', slot:'14:30', off:145, unit:'ب ح 1447', ch:'LHJ4K2...5D22', st:'مجدول', gu:'رضا جمال'}]
+};
+const STOCK_SEED = {
+ 'NM-101':[['ق ن 4261','LHJ4K2...8A17','محجوز لميعاد',1],['ق ن 4279','LHJ4K2...9F42','محجوز لميعاد',1],
+   ['ق ن 4283','LHJ4K2...9F51','محجوز لميعاد',1],['ق ن 4290','LHJ4K2...7C90','محجوز لميعاد',1],
+   ['ق ن 4301','LHJ4K2...7D11','متاح',0],['ق ن 4302','LHJ4K2...7D12','متاح',0],['ق ن 4310','—','تحت الترخيص',0]],
+ 'BH-204':[['ق ن 3114','LHJ4K2...3B21','محجوز لميعاد',1],['ق ن 3118','LHJ4K2...3B44','محجوز لميعاد',1],
+   ['ق ن 3122','LHJ4K2...3B55','محجوز لميعاد',1],['ق ن 3130','LHJ4K2...3C01','متاح',0]],
+ 'HG-330':[['ب ح 1442','LHJ4K2...5D10','محجوز لميعاد',1],['ب ح 1447','LHJ4K2...5D22','محجوز لميعاد',1],
+   ['ب ح 1450','LHJ4K2...5D31','متاح',0]]
+};
+const APP = {
+  screen:'P0', point:null, user:null, dayOpen:false, online:true,
+  pin:'', loginCode:'NM-101', loginUser:'kareem',
+  appts:[], stock:[], cases:[], log:[], sync:[], session:null, q:'', sheet:null, toast:null
+};
+const now = () => { const d=new Date(); return d.getHours().toString().padStart(2,'0')+':'+d.getMinutes().toString().padStart(2,'0'); };
+function ptLog(action, detail){
+  APP.log.unshift({at:now(), who:APP.user?APP.user.nm:'—', action, detail:detail||''});
+}
+function ptLogin(code, uname){
+  const p = POINTS[code]; if(!p) return;
+  APP.point = p;
+  APP.user = p.users.find(x=>x.u===uname) || p.users[0];
+  APP.appts = APPT_SEED[code].map(a=>Object.assign({},a));
+  APP.stock = STOCK_SEED[code].map(r=>({plate:r[0], ch:r[1], state:r[2], today:r[3], checked:false, variance:false}));
+  APP.cases = code==='HG-330' ? [{ref:'ESC-2026-0412', nm:'سيد محمد حسين', cat:'الضامن غير حاضر', at:'11:12', sla:'خلال 48 ساعة', st:'warn|مفتوحة'}] : [];
+  APP.log = []; APP.sync = []; APP.session = null; APP.dayOpen = false;
+  ptLog('دخول', p.name);
+  APP.screen = 'P1';
+}
+function ptLogout(){ APP.point=null; APP.user=null; APP.screen='P0'; APP.pin=''; }
+</script>
+<script>
+/* ============ shell ============ */
+const ptShell = (body, opts) => `<div class="pt">
+  <div class="pt-top">
+    ${LOCKUP}
+    ${APP.point?`<span class="pt-scope">${ico('pin','ic')}${APP.point.name}</span>`:''}
+    <div style="flex:1"></div>
+    ${APP.point?`<div class="pt-who"><b>${APP.user.nm}</b>${APP.user.role==='manager'?'مدير النقطة':'مشغّل'} · ${APP.point.code}</div>
+      <button class="btn btn-soft btn-sm" data-pt="logout">خروج</button>`:''}
+    <button class="btn btn-ghost btn-sm" data-pt="toggleNet">${APP.online?'قطع الشبكة':'رجّع الشبكة'}</button>
   </div>
-  <div class="card">
-    <div class="spread" style="margin-bottom:10px"><b class="sm">مواعيد النهاردة</b>
-      <span class="tiny dim">8 مواعيد · الطاقة 10</span></div>
-    <div class="tbl-wrap"><table class="tbl" style="min-width:600px">
-      <thead><tr><th>الوقت</th><th>الكابتن</th><th>الغرض</th><th>الموتوسيكل</th><th>الحالة</th><th></th></tr></thead>
-      <tbody>${[
-        ['10:00 ص','أحمد ناصر عبده','توقيع + استلام','ق ن 4 261','ok|تم التسليم'],
-        ['11:30 ص','محمود سيد عبد العظيم','توقيع + استلام','ق ن 4 279','warn|في الانتظار'],
-        ['1:00 م','رامي عصام فؤاد','توقيع + استلام','ق ن 4 283','dan|لم يحضر'],
-        ['2:30 م','عبد الله شعبان','توقيع واستلام','ق ن 3 118','info|لم يحن بعد'],
-        ['4:00 م','هاني صلاح الدين','توقيع + استلام','ق ن 4 290','info|لم يحن بعد']
-      ].map(r=>`<tr><td class="num">${r[0]}</td><td><b>${r[1]}</b></td><td>${r[2]}</td>
-        <td class="num">${r[3]}</td><td>${cell(r[4])}</td>
-        <td><button class="btn btn-ghost btn-sm" data-go="point:handover">افتح</button></td></tr>`).join('')}</tbody>
-    </table></div>
+  ${APP.online?'':`<div class="offline">${ico('warn','ic')}مافيش إنترنت. كمّل عادي — كل حاجة بتتحفظ على الجهاز وهترفع لوحدها أول ما الشبكة ترجع.</div>`}
+  <div class="pt-body">${body}</div>
+</div>`;
+
+/* ============ P0 · الدخول ============ */
+const S_p0 = () => ptShell(`
+  <div class="login stack g18">
+    <div style="text-align:center">
+      <h3 style="font-size:22px;font-weight:700">دخول نقطة التوزيع</h3>
+      <p class="sm muted" style="margin-block-start:6px">كل نقطة بتشوف مواعيدها ومخزونها هي بس. مفيش نقطة بتشوف حاجة لنقطة تانية.</p>
+    </div>
+    <div class="field"><label for="pcode">كود النقطة</label>
+      <select class="inp" id="pcode" data-pt="setCode">
+        ${Object.values(POINTS).map(p=>`<option value="${p.code}" ${p.code===APP.loginCode?'selected':''}>${p.code} — ${p.name}</option>`).join('')}
+      </select></div>
+    <div class="field"><label for="puser">المستخدم</label>
+      <select class="inp" id="puser" data-pt="setUser">
+        ${POINTS[APP.loginCode].users.map(u=>`<option value="${u.u}" ${u.u===APP.loginUser?'selected':''}>${u.nm} — ${u.role==='manager'?'مدير النقطة':'مشغّل'}</option>`).join('')}
+      </select></div>
+    <div>
+      <label class="sm" style="font-weight:600;display:block;text-align:center">الرقم السري</label>
+      <div class="pindots">${[0,1,2,3].map(i=>`<i class="${APP.pin.length>i?'on':''}"></i>`).join('')}</div>
+      <div class="pinpad">
+        ${[1,2,3,4,5,6,7,8,9].map(n=>`<button type="button" data-pt="pin" data-v="${n}">${n}</button>`).join('')}
+        <button type="button" data-pt="pinDel">⌫</button>
+        <button type="button" data-pt="pin" data-v="0">0</button>
+        <button type="button" data-pt="login" ${APP.pin.length<4?'disabled style="opacity:.45"':''}>دخول</button>
+      </div>
+    </div>
+    <div class="demo-hint">في النموذج ده: اختار أي نقطة وأي رقم سري من ٤ أرقام. جرّب تدخل بنقطتين مختلفين وشوف إن المواعيد والمخزون بيتغيّروا بالكامل — ده نطاق النقطة.</div>
+    ${notice('info','', 'الجهاز لازم يكون مربوط بالنقطة. جهاز غير مربوط ما يقدرش يدخل غير بموافقة مدير المعرض.')}
   </div>`);
 
-const HAND = [
-  ['done','مطابقة الهوية','البطاقة الأصلية مطابقة للاسم والرقم القومي في الملف.','تم — 11:34 ص'],
-  ['done','مطابقة مستندات الضامن','الضامن حاضر ببطاقته الأصلية.','تم — 11:39 ص'],
-  ['now','صورة الكابتن ببطاقته','صورة واحدة واضحة يظهر فيها وشه والبطاقة.','مطلوب دلوقتي'],
-  ['todo','مطابقة الموتوسيكل','رقم الشاسيه والموتور واللوحة مطابقين للمخصص في الملف.',''],
-  ['todo','الفحص وصور الحالة','6 صور: أمام، خلف، جنبين، العداد، الخوذة.',''],
-  ['todo','التوقيع','العقد + جدول الالتزامات + إقرار الضامن + محضر التسليم.',''],
-  ['todo','رفع الورق الموقّع','تصوير كل ورقة موقّعة ورفعها قبل تأكيد التسليم.',''],
-  ['todo','تدريب السلامة والاستخدام','5 دقايق: الصيانة، مراكز الخدمة، الإبلاغ عن عطل.','']
+/* ============ P1 · فتح اليوم ============ */
+const DEVCHECKS = [
+  ['الكاميرا','الكاميرا الخلفية شغّالة','ok','مفيش تسليم من غير كاميرا شغالة'],
+  ['المساحة الفاضية','12.4 جيجا فاضية — المطلوب 2 جيجا','ok',''],
+  ['البطارية','48% والشاحن مش موصّل','warn','تنبيه بس — وصّل الشاحن'],
+  ['المزامنة','مفيش تسليمات من امبارح مستنية رفع','ok','']
 ];
-const S_handover = () => pointShell('','<span class="tiny dim num">TW-2026-10428 · 11:30 ص</span>',`
-  <div class="row" style="justify-content:space-between">
-    <div><span class="eyebrow">تسليم جارٍ</span><h3 style="font-size:17px">محمود سيد عبد العظيم حسن</h3>
-      <p class="tiny dim num">ق ن 4 279 · LHJ4K2...9F42 · هوجان 150 — 2026</p></div>
-    <div class="row"><button class="btn btn-dan btn-sm">أوقف التسليم وارفع الحالة</button>
-      <button class="btn btn-pri btn-sm" disabled style="opacity:.5">أكّد التسليم</button></div>
+const S_p1 = () => {
+  const today = APP.stock.filter(u=>u.today);
+  const done = today.filter(u=>u.checked).length;
+  const vars = APP.stock.filter(u=>u.variance).length;
+  const ready = done === today.length;
+  return ptShell(`
+  <div class="spread"><h3 style="font-size:22px;font-weight:700">فتح اليوم</h3>
+    <span class="tiny dim">الأحد 20 سبتمبر · ${APP.point.name}</span></div>
+  ${APP.dayOpen ? notice('ok','اليوم مفتوح','تقدر تبدأ التسليمات. الجرد اتقفل الساعة '+now()+'.') : ''}
+  <div class="split">
+    <div class="card"><b class="sm">فحص الجهاز</b>
+      <ol class="tl" style="margin-block-start:12px">${DEVCHECKS.map(([t,d,k,n])=>`
+        <li data-s="${k==='ok'?'done':'warn'}"><span class="dot">${k==='ok'?'✓':'!'}</span>
+        <div><b>${t}</b><p>${d}</p>${n?`<p class="dim" style="font-size:11.5px">${n}</p>`:''}</div></li>`).join('')}</ol>
+    </div>
+    <div class="card"><b class="sm">جرد النهاردة</b>
+      <p class="tiny dim" style="margin-block-start:4px">مش الفناء كله. النهاردة: ١٠٠٪ من وحدات مواعيد اليوم + عيّنة ١٠٪ من المتاح. الجرد الكامل يوم السبت.</p>
+      <div class="grid3" style="margin-block-start:12px">
+        <div class="metric"><div class="cap">وحدات النهاردة</div><div class="top"><span class="val">${today.length}</span></div></div>
+        <div class="metric"><div class="cap">تم تأكيدها</div><div class="top"><span class="val">${done}</span></div></div>
+        <div class="metric"><div class="cap">فروقات</div><div class="top"><span class="val">${vars}</span>${vars?pill('dan','تحتاج سبب'):''}</div></div>
+      </div>
+    </div>
   </div>
-  <div class="split" style="align-items:start">
-    <div class="card"><b class="sm">خطوات التسليم</b>
-      <div style="margin-top:6px">${HAND.map(([s,t,d,n])=>`<div class="check" data-s="${s}">
-        <span class="bx">${s==='done'?'✓':'•'}</span>
-        <div class="bd"><b>${t}</b><p>${d}</p></div>
-        ${s==='done'?`<span class="tiny dim num">${n}</span>`:s==='now'?pill('warn','دلوقتي'):''}</div>`).join('')}</div>
-    </div>
-    <div class="stack g14">
-      <div class="card"><b class="sm">صورة الكابتن ببطاقته</b>
-        <div style="margin-top:10px;border:1.5px dashed var(--accent-border);border-radius:var(--r-md);
-          padding:26px;text-align:center;background:var(--accent-subtle)">
-          <div style="font-size:26px">${ico('cam')}</div>
-          <b class="sm" style="display:block;margin-top:6px">افتح الكاميرا وصوّر</b>
-          <p class="tiny dim">الصورة بتتحفظ في ملف الكابتن ومحضر التسليم.</p>
-          <button class="btn btn-pri btn-sm" style="margin-top:10px">تصوير</button></div>
-      </div>
-      <div class="card"><b class="sm">الورق الموقّع</b>
-        <div class="stack g8" style="margin-top:10px">
-          ${[['اتفاق المشاركة','mute','لم يُرفع'],['جدول الالتزامات','mute','لم يُرفع'],
-             ['إقرار الضامن','mute','لم يُرفع'],['محضر تسليم الموتوسيكل','mute','لم يُرفع']]
-            .map(([t,k,s])=>`<div class="doc"><div class="ic">${ico('doc')}</div>
-            <div class="t"><b>${t}</b><span>${s}</span></div>
-            <button class="btn btn-ghost btn-sm">ارفع</button></div>`).join('')}
-        </div>
-      </div>
-      <div class="notice n-warn">${ico('warn','ico')}<div>
-        <b>مفيش تأكيد تسليم قبل الورق</b>
-        زرار «أكّد التسليم» بيفضل مقفول لحد ما كل الخطوات تتقفل والورق الموقّع يترفع. ساعتها بس الموتوسيكل بيتحول لـ«مُسلّم» وبتظهر نسخة المستندات للكابتن في حسابه.</div></div>
-    </div>
+  <div class="card">
+    <div class="spread" style="margin-block-end:10px"><b class="sm">وحدات مخزون النقطة</b>
+      <span class="tiny dim">${APP.stock.length} وحدة في ${APP.point.name}</span></div>
+    <div class="tbl-wrap"><table class="tbl" style="min-width:620px">
+      <thead><tr><th>اللوحة</th><th>الشاسيه</th><th>الحالة</th><th>مطلوبة النهاردة</th><th>الجرد</th><th></th></tr></thead>
+      <tbody>${APP.stock.map((u,i)=>`<tr>
+        <td class="num"><b>${u.plate}</b></td><td class="num dim">${u.ch}</td>
+        <td>${pill(u.state==='متاح'?'info':u.state==='محجوز لميعاد'?'brand':'mute', u.state)}</td>
+        <td>${u.today?pill('warn','أيوه'):'<span class="dim">—</span>'}</td>
+        <td>${u.variance?pill('dan','فرق — مش موجودة'):u.checked?pill('ok','مطابق'):'<span class="dim tiny">لسه</span>'}</td>
+        <td><div class="row" style="gap:6px;flex-wrap:nowrap">
+          <button class="btn btn-soft btn-sm" data-pt="stockOk" data-i="${i}" ${u.checked?'disabled style="opacity:.4"':''}>أكّد</button>
+          <button class="btn btn-dan btn-sm" data-pt="stockVar" data-i="${i}">بلّغ فرق</button></div></td></tr>`).join('')}</tbody>
+    </table></div>
+  </div>
+  ${vars?notice('dan','فيه فرق جرد على وحدة محجوزة النهاردة','اليوم ما يفتحش غير لما المدير يسجّل سبب الفرق. الميعاد المرتبط بالوحدة اتعلّم «الوحدة غير مؤكدة».'):''}
+  <div class="row">
+    <button class="btn btn-pri" data-pt="openDay" ${ready&&!APP.dayOpen?'':'disabled'}>${APP.dayOpen?'اليوم مفتوح':'افتح اليوم'}</button>
+    ${APP.dayOpen?`<button class="btn btn-ghost" data-pt="go" data-s="P2">روح لمواعيد اليوم</button>`:`<span class="tiny dim">أكّد كل وحدات النهاردة الأول (${done} من ${today.length}).</span>`}
   </div>`);
+};
+</script>
+<script>
+/* ============ P2 · مواعيد اليوم ============ */
+const isDone = a => a.st==='تم التسليم' || a.st==='لم يحضر' || a.st.startsWith('مُعلّق');
+const rowPill = a => {
+  if(a.st==='تم التسليم') return pill('ok','تم التسليم');
+  if(a.st==='لم يحضر') return pill('mute','لم يحضر');
+  if(a.st.startsWith('مُعلّق')) return pill('dan', a.st.replace('مُعلّق — ','مرفوع: '));
+  if(a.st==='جارٍ التنفيذ') return pill('warn','جارٍ التنفيذ — خطوة '+(APP.session?APP.session.step:1));
+  if(a.st==='تم الحضور') return pill('warn','في الانتظار');
+  return a.off<=120 ? pill('info','جاهز للاستقبال') : pill('info','لسه ما حانش');
+};
+const rowAct = (a,i) => {
+  if(a.st==='تم التسليم') return `<button class="btn btn-soft btn-sm" data-pt="receipt" data-i="${i}">الإيصال</button>`;
+  if(a.st.startsWith('مُعلّق')) return `<button class="btn btn-soft btn-sm" data-pt="go" data-s="P8">افتح الحالة</button>`;
+  if(a.st==='لم يحضر') return `<button class="btn btn-soft btn-sm" data-pt="card" data-i="${i}">افتح الملف</button>`;
+  if(a.st==='جارٍ التنفيذ') return `<button class="btn btn-pri btn-sm" data-pt="resume" data-i="${i}">كمّل</button>`;
+  if(a.st==='تم الحضور') return `<button class="btn btn-pri btn-sm" data-pt="start" data-i="${i}" ${APP.dayOpen?'':'disabled'}>ابدأ التسليم</button>`;
+  if(a.off<=120) return `<button class="btn btn-pri btn-sm" data-pt="checkin" data-i="${i}">سجّل الحضور</button>`;
+  return `<button class="btn btn-soft btn-sm" data-pt="card" data-i="${i}">افتح الملف</button>`;
+};
+const apptRow = (a,i) => `<tr>
+  <td class="num">${a.slot}</td>
+  <td><b>${a.nm}</b><div class="tiny dim num">${a.id}</div></td>
+  <td class="num dim">${a.ph}</td>
+  <td class="num">${a.unit}${a.unconfirmed?`<div class="tiny" style="color:var(--att-ink)">الوحدة غير مؤكدة</div>`:''}</td>
+  <td>${rowPill(a)}</td>
+  <td>${a.off<-20 && !isDone(a) ? `<span class="tiny" style="color:var(--crit-ink)">متأخر ${Math.abs(a.off)} د</span>` : '<span class="dim tiny">—</span>'}</td>
+  <td><div class="row" style="gap:6px;flex-wrap:nowrap">${rowAct(a,i)}
+    ${(!isDone(a) && a.off<=-90)?`<button class="btn btn-dan btn-sm" data-pt="noshow" data-i="${i}">عدم حضور</button>`:''}</div></td></tr>`;
+
+const S_p2 = () => {
+  const q = APP.q.trim();
+  const list = APP.appts.map((a,i)=>({a,i})).filter(({a})=> !q || a.ph.includes(q) || a.id.includes(q.toUpperCase()) || a.nm.includes(q));
+  const nowNext = list.filter(({a})=> !isDone(a) && a.off>-20);
+  const late    = list.filter(({a})=> !isDone(a) && a.off<=-20);
+  const fin     = list.filter(({a})=> isDone(a));
+  const unconf  = APP.appts.filter(a=>a.unconfirmed && !isDone(a)).length;
+  const M = [['دلوقتي', APP.appts.filter(a=>a.st==='تم الحضور'||a.st==='جارٍ التنفيذ').length,''],
+             ['المتبقي النهاردة', APP.appts.filter(a=>!isDone(a)).length,''],
+             ['متأخر', late.length, late.length?'dan':''],
+             ['حالات مفتوحة', APP.cases.length, APP.cases.length?'warn':''],
+             ['بانتظار المزامنة', APP.sync.length, APP.sync.length?'warn':'']];
+  const tbl = (rows) => `<div class="tbl-wrap" style="margin-block-end:14px"><table class="tbl" style="min-width:820px">
+    <thead><tr><th>الميعاد</th><th>الكابتن</th><th>الموبايل</th><th>الوحدة</th><th>الحالة</th><th>التأخير</th><th></th></tr></thead>
+    <tbody>${rows.map(({a,i})=>apptRow(a,i)).join('')}</tbody></table></div>`;
+  return ptShell(`
+  ${APP.dayOpen?'':notice('warn','اليوم لسه ما اتفتحش','لازم تعمل فحص الجهاز والجرد الأول. زرار «ابدأ التسليم» مقفول لحد ما تفتح اليوم. <button class="btn btn-soft btn-sm" data-pt="go" data-s="P1" style="padding:2px 8px">افتح اليوم</button>')}
+  ${unconf?notice('warn','وحدات مش مؤكدة في الجرد', unconf+' ميعاد النهاردة وحدته مش مؤكدة. بلّغ الإدارة دلوقتي — مش وقت ما الكابتن يكون واقف قدامك.'):''}
+  <div class="kpi" style="grid-template-columns:repeat(5,minmax(0,1fr))">
+    ${M.map(([lb,v,k])=>`<div class="tile"><div class="eb">${k?`<span class="dot" style="background:var(--${k==='dan'?'crit':'att'}-edge)"></span>`:''}${lb}</div>
+      <div class="v">${v}</div></div>`).join('')}
+  </div>
+  <div class="card">
+    <div class="row" style="gap:8px;margin-block-end:4px">
+      <input class="inp lat" id="ptq" style="max-width:260px" inputmode="numeric" placeholder="موبايل · رقم طلب · كود تذكرة"
+        value="${APP.q}" data-pt="search">
+      <button class="btn btn-ghost btn-sm" data-pt="scan">${ico('cam','ic')} مسح كود</button>
+      <div style="flex:1"></div>
+      <button class="btn btn-soft btn-sm" data-pt="sheet" data-k="walkin">زائر بدون ميعاد</button>
+    </div>
+    <p class="tiny dim">البحث بيدوّر في ملفات النقطة دي بس. كابتن محجوز في نقطة تانية بيرجّع كارت «ميعادك مش هنا» — مش ملفه.</p>
+  </div>
+  ${nowNext.length?`<div><div class="band">دلوقتي والجاي</div>${tbl(nowNext)}</div>`:''}
+  ${late.length?`<div><div class="band">متأخر</div>${tbl(late)}</div>`:''}
+  ${fin.length?`<div><div class="band">خلصت</div>${tbl(fin)}</div>`:''}
+  ${list.length?'':`<div class="card" style="text-align:center;color:var(--text-3)">مفيش نتيجة للبحث ده في ملفات ${APP.point.name}.</div>`}
+  <div class="row">
+    <button class="btn btn-ghost btn-sm" data-pt="go" data-s="P11">مخزون النقطة</button>
+    <button class="btn btn-ghost btn-sm" data-pt="go" data-s="P8">الحالات المفتوحة</button>
+    <button class="btn btn-ghost btn-sm" data-pt="go" data-s="P15">قائمة المزامنة</button>
+    <div style="flex:1"></div>
+    <button class="btn btn-ghost btn-sm" data-pt="go" data-s="P13">إقفال اليوم</button>
+  </div>`);
+};
+</script>
+<script>
+/* ============ P4 · تنفيذ التسليم — step runner ============ */
+const STEPS = ['مطابقة الهوية','حضور الضامن','صورة الكابتن ببطاقته','مطابقة الوحدة',
+               'الفحص وصور الحالة','التوقيع','رفع الورق الموقّع','التدريب والملحقات'];
+const DOCS4 = ['اتفاق المشاركة في البرنامج','جدول التزامات التشغيل','إقرار الضامن','محضر تسليم الموتوسيكل'];
+const SHOTS8 = ['أمام','خلف','جنب يمين','جنب شمال','العداد','الكوتشات','الشاسيه','الخوذة'];
+const FUNC = ['الفرامل','الأنوار','الكلاكس','الإشارات','المرايات','العداد'];
+const sd = () => APP.session.data;
+
+const stepBody = (a) => {
+  const d = sd(), st = APP.session.step;
+  if(st===1) return `
+    <p class="sm muted">شوف البطاقة الأصلية وقارنها بالملف. ما تكملش غير لو الاسم والرقم القومي مطابقين.</p>
+    <div class="card" style="background:var(--surface-sunken)"><dl class="kv">
+      <dt>الاسم في الملف</dt><dd>${a.nm}</dd>
+      <dt>الرقم القومي</dt><dd class="lat">•••••••••• ${d.nid||'____'}</dd></dl></div>
+    <div class="field"><label for="s-nid">آخر ٤ أرقام في البطاقة اللي قدامك</label>
+      <input class="inp lat" id="s-nid" inputmode="numeric" maxlength="4" placeholder="1534" value="${d.nid||''}">
+      <span class="hint">الصح في النموذج ده: 1534</span></div>
+    <div class="field"><label for="s-exp">تاريخ انتهاء البطاقة</label>
+      <input class="inp lat" id="s-exp" value="${d.exp||'2029-03-14'}"></div>
+    <div class="field"><label for="s-lic">تاريخ انتهاء رخصة القيادة</label>
+      <input class="inp lat" id="s-lic" value="${d.lic||'2028-04-11'}"></div>`;
+  if(st===2) return `
+    <p class="sm muted">الضامن المسجّل في الملف: <b>${a.gu}</b>. لازم يكون حاضر ببطاقته الأصلية.</p>
+    <div class="opts">
+      ${[['حاضر وبطاقته مطابقة','gok'],['حاضر بس البطاقة مش مطابقة','gbad'],['مش حاضر','gno']]
+        .map(([t,v])=>`<label class="opt" data-on="${d.gu===v?1:0}" data-pt="pick" data-k="gu" data-v="${v}">
+          <input type="radio" name="gu" ${d.gu===v?'checked':''}><b>${t}</b></label>`).join('')}
+    </div>
+    ${d.gu==='gno'?notice('dan','مفيش تسليم من غير الضامن','ما فيش تجاوز — لا للمشغّل ولا لمدير المعرض. إما تعلّق الميعاد ٤٥ دقيقة لحد ما الضامن يوصل، أو ترفع الحالة للإدارة.'):''}
+    ${d.gu==='gbad'?notice('dan','الضامن اللي قدامك مش اللي في الملف','تغيير الضامن قرار من تريد واي مش من المعرض. الحالة بترتفع للإدارة والوحدة بتتحجز ٧٢ ساعة.'):''}`;
+  if(st===3) return `
+    <p class="sm muted">صورة واحدة واضحة يظهر فيها وش الكابتن والبطاقة في إيده. بتتحفظ في ملفه وفي محضر التسليم.</p>
+    <div class="cam ${d.photo?'shot':''}" data-pt="shoot" data-k="photo">
+      ${ico(d.photo?'ok':'cam')}<b>${d.photo?'الصورة اتاخدت':'افتح الكاميرا وصوّر'}</b>
+      <span class="tiny">${d.photo?'دوس تاني لو عايز تعيد':'الكابتن ماسك بطاقته جنب وشه'}</span></div>`;
+  if(st===4) return `
+    <p class="sm muted">اكتب الأرقام اللي على الموتوسيكل نفسه، مش من الملف. لو فيه اختلاف، التسليم بيقف.</p>
+    <div class="card" style="background:var(--surface-sunken)"><dl class="kv">
+      <dt>الوحدة المخصصة في الملف</dt><dd class="num">${a.unit}</dd>
+      <dt>الشاسيه في الملف</dt><dd class="num">${a.ch}</dd></dl></div>
+    <div class="field"><label for="s-ch">آخر ٤ خانات من الشاسيه اللي على الوحدة</label>
+      <input class="inp lat" id="s-ch" maxlength="4" placeholder="9F42" value="${d.ch||''}">
+      <span class="hint">الصح في النموذج ده: ${a.ch.slice(-4)}</span></div>
+    ${d.chErr?notice('dan','الشاسيه مش مطابق للملف','ما تكملش. تقدر تطلب تبديل الوحدة من الإدارة — الطلب بيروح فورًا ومستني رد. المعرض ما يختارش الوحدة البديلة.'):''}`;
+  if(st===5) return `
+    <p class="sm muted">٨ صور للحالة قبل التسليم، والقراءات، وفحص وظيفي. أي عيب بيوقف التسليم ويفتح بلاغ.</p>
+    <div class="shots">${SHOTS8.map((s,i)=>`<div class="shot-tile" data-on="${(d.shots||[]).includes(i)?1:0}"
+      data-pt="shotTile" data-i="${i}">${(d.shots||[]).includes(i)?'✓ ':''}${s}</div>`).join('')}</div>
+    <div class="grid2">
+      <div class="field"><label for="s-odo">قراءة العداد (كم)</label><input class="inp lat" id="s-odo" value="${d.odo||'7'}"></div>
+      <div class="field"><label for="s-fuel">البنزين</label>
+        <select class="inp" id="s-fuel"><option>ربع تانك</option><option selected>نص تانك</option><option>فاضي</option></select></div>
+    </div>
+    <div><b class="sm">الفحص الوظيفي</b>
+      <div class="chips" style="margin-block-start:8px">${FUNC.map((f,i)=>`
+        <button type="button" class="chip" data-on="${(d.func||[]).includes(i)?1:0}" data-pt="funcTile" data-i="${i}">${f}</button>`).join('')}</div>
+      <p class="tiny dim" style="margin-block-start:6px">دوس على اللي اتفحص وتمام. اللي مش متدوس عليه معناه فيه ملاحظة.</p></div>
+    ${(d.func||[]).length===FUNC.length?'':notice('warn','لسه فيه بنود ما اتفحصتش','لو فيه بند فعلاً فيه عيب، اوقف التسليم وافتح بلاغ عطل — ما تكملش وتسيبه.')}
+    <button class="btn btn-dan btn-sm" data-pt="sheet" data-k="defect">فيه عيب — افتح بلاغ عطل</button>`;
+  if(st===6) return `
+    <p class="sm muted">أربع مستندات. لازم تنزل لآخر كل مستند وتدوس موافقة قبل ما التوقيع يفتح.</p>
+    <div class="stack g10">${DOCS4.map((t,i)=>{
+      const s = (d.sign||{})[i]||{};
+      return `<div class="card tight">
+        <div class="spread"><b class="sm">${t}</b>${s.done?pill('ok','اتمضى'):s.read?pill('warn','جاهز للتوقيع'):pill('mute','لسه ما اتقراش')}</div>
+        ${!s.read?`<button class="btn btn-ghost btn-sm btn-block" style="margin-block-start:10px" data-pt="readDoc" data-i="${i}">اقرا المستند لآخره</button>`
+          :`<div class="sig" data-on="${s.done?1:0}" data-pt="signDoc" data-i="${i}">
+             ${s.done?`<span class="ink">${a.nm.split(' ')[0]}</span>`:'امضي هنا بإصبعك'}</div>`}
+      </div>`;}).join('')}</div>`;
+  if(st===7) return `
+    <p class="sm muted">صوّر كل ورقة موقّعة وارفعها. مفيش تأكيد تسليم قبل ما الأربعة يترفعوا.</p>
+    <div class="stack g8">${DOCS4.map((t,i)=>`<div class="doc">
+      <div class="ic">${ico('doc')}</div>
+      <div class="t"><b>${t}</b><span>${(d.up||[]).includes(i)?'اترفع · 3 صفحات':'لم يُرفع'}</span></div>
+      ${(d.up||[]).includes(i)?pill('ok','اترفع'):`<button class="btn btn-soft btn-sm" data-pt="upDoc" data-i="${i}">ارفع</button>`}
+    </div>`).join('')}</div>
+    ${APP.online?'':notice('warn','مافيش شبكة','الصور بتتحفظ على الجهاز وهترفع لوحدها. كمّل عادي.')}`;
+  return `
+    <p class="sm muted">آخر خطوة. شرح سريع وتسليم الملحقات.</p>
+    <div class="card tight">${['الصيانة بتبقى عليك من خلال مراكز تريد واي','إزاي تبلّغ عن عطل من التطبيق',
+      'مؤشرات التشغيل المطلوبة منك كل شهر','رقم الدعم ومواعيده']
+      .map((t,i)=>`<div class="check" data-s="${(d.tr||[]).includes(i)?'done':'todo'}" data-pt="trTile" data-i="${i}" style="cursor:pointer">
+      <span class="bx">${(d.tr||[]).includes(i)?'✓':'•'}</span><div class="bd"><b>${t}</b></div></div>`).join('')}</div>
+    <div><b class="sm">الملحقات</b>
+      <div class="chips" style="margin-block-start:8px">${['خوذة','ماتور استارت','عدة صيانة','كتالوج']
+        .map((t,i)=>`<button type="button" class="chip" data-on="${(d.acc||[]).includes(i)?1:0}" data-pt="accTile" data-i="${i}">${t}</button>`).join('')}</div></div>`;
+};
+
+const S_p4 = () => {
+  if(!APP.session) return ptShell(notice('info','مفيش تسليم شغّال دلوقتي','ابدأ من مواعيد اليوم: اختار كابتن حالته «في الانتظار» ودوس «ابدأ التسليم». <button class="btn btn-soft btn-sm" data-pt="go" data-s="P2" style="padding:2px 8px">روح للمواعيد</button>'));
+  const a = APP.appts[APP.session.i], st = APP.session.step;
+  return ptShell(`
+  <div class="spread"><div><span class="eyebrow">تسليم جارٍ</span>
+      <h3 style="font-size:22px;font-weight:700">${a.nm}</h3>
+      <p class="tiny dim num">${a.id} · ${a.unit} · ميعاد ${a.slot}</p></div>
+    <button class="btn btn-dan btn-sm" data-pt="sheet" data-k="esc">أوقف التسليم وارفع الحالة</button></div>
+  <div class="runner">
+    <div class="rail"><span>الخطوة ${st} من 8</span>
+      ${STEPS.map((s,i)=>`<i class="${i+1<st?'done':i+1===st?'now':''}"></i>`).join('')}</div>
+    <div class="step-body">
+      <h4 class="step-h">${st}. ${STEPS[st-1]}</h4>
+      ${stepBody(a)}
+    </div>
+    <div class="step-foot">
+      ${st>1?`<button class="btn btn-ghost btn-sm" data-pt="stepBack">شوف الخطوة السابقة</button>`:''}
+      <div style="flex:1"></div>
+      ${sd().gu==='gno'?`<button class="btn btn-ghost" data-pt="park">علّق ٤٥ دقيقة</button>`:''}
+      <button class="btn btn-pri" data-pt="commit">${st<8?'كمّل':'روح للمراجعة'}</button>
+    </div>
+  </div>
+  ${notice('info','', 'الخطوة اللي بتتقفل ما ترجعش تتعدّل. لو فيه حاجة اتكتبت غلط، الطريق الوحيد إنك توقف التسليم وترفع الحالة.')}`);
+};
+</script>
+<script>
+/* ============ P6 · الإيصال ============ */
+const S_p6 = () => {
+  const a = APP.appts.find(x=>x.st==='تم التسليم') || APP.appts[0];
+  const unsynced = APP.sync.length>0;
+  return ptShell(`
+  <div class="spread"><h3 style="font-size:22px;font-weight:700">إيصال التسليم</h3>
+    <span class="num tiny dim">HO-2026-${a.id.slice(-4)}</span></div>
+  ${unsynced
+    ? notice('warn','التسليم اتسجّل على الجهاز ولسه بيترفع','متقفلش التابلت لحد ما يخلص. الإيصال سليم والكابتن يقدر يمشي.')
+    : notice('ok','تم التسليم','الموتوسيكل بقى مسجّل باسم الكابتن في البرنامج، ونسخة الورق ظهرت في حسابه.')}
+  <div class="split">
+    <div class="card"><b class="sm">اللي اتسلّم</b>
+      <dl class="kv" style="margin-block-start:10px">
+        <dt>الكابتن</dt><dd>${a.nm}</dd>
+        <dt>رقم الطلب</dt><dd class="lat">${a.id}</dd>
+        <dt>اللوحة</dt><dd class="num">${a.unit}</dd>
+        <dt>الشاسيه</dt><dd class="num">${a.ch}</dd>
+        <dt>وقت التسليم</dt><dd class="lat">${now()}</dd>
+        <dt>المشغّل</dt><dd>${APP.user.nm}</dd>
+        <dt>النقطة</dt><dd>${APP.point.name}</dd>
+      </dl></div>
+    <div class="card"><b class="sm">اللي مشي بيه</b>
+      <div style="margin-block-start:6px">${['الموتوسيكل + المفاتيح','خوذة','نسخة من العقد وجدول الالتزامات','محضر التسليم موقّع','كتالوج الصيانة ومراكز الخدمة']
+        .map(t=>`<div class="check" data-s="done"><span class="bx">✓</span><div class="bd"><b>${t}</b></div></div>`).join('')}</div></div>
+  </div>
+  <div class="row"><button class="btn btn-ghost" data-pt="go" data-s="P2">رجوع للمواعيد</button>
+    <span class="tiny dim">الإيصال ده ما بيتعدّلش وما بيتفتحش تاني. أي تصحيح بيتم من الإدارة.</span></div>`);
+};
+/* ============ P8 · الحالات المفتوحة ============ */
+const S_p8 = () => ptShell(`
+  <h3 style="font-size:22px;font-weight:700">الحالات المفتوحة</h3>
+  <p class="sm muted">حالات النقطة دي بس. المعرض بيقرا ويضيف ملاحظة — ما يقدرش يقفل حالة ولا يغيّر تصنيفها.</p>
+  ${APP.cases.length?`<div class="tbl-wrap"><table class="tbl" style="min-width:720px">
+    <thead><tr><th>رقم المتابعة</th><th>الكابتن</th><th>السبب</th><th>اتفتحت</th><th>الرد المتوقع</th><th>الحالة</th><th></th></tr></thead>
+    <tbody>${APP.cases.map(c=>`<tr><td class="lat"><b>${c.ref}</b></td><td>${c.nm}</td><td>${c.cat}</td>
+      <td class="lat dim">${c.at}</td><td class="dim">${c.sla}</td><td>${cell(c.st)}</td>
+      <td><button class="btn btn-soft btn-sm">أضف ملاحظة</button></td></tr>`).join('')}</tbody></table></div>`
+   :`<div class="card" style="text-align:center;color:var(--text-3)">مفيش حالات مفتوحة في النقطة دي.</div>`}
+  <button class="btn btn-ghost btn-sm" data-pt="go" data-s="P2">رجوع</button>`);
+/* ============ P11 · مخزون النقطة ============ */
+const S_p11 = () => ptShell(`
+  <div class="spread"><h3 style="font-size:22px;font-weight:700">مخزون النقطة</h3>
+    <span class="pt-scope">${ico('pin','ic')}${APP.point.name}</span></div>
+  <p class="sm muted">عرض فقط. المعرض ما يقدرش يغيّر حالة وحدة ولا يعيد تخصيصها ولا يشوف مخزون نقطة تانية.</p>
+  <div class="tbl-wrap"><table class="tbl" style="min-width:640px">
+    <thead><tr><th>اللوحة</th><th>الشاسيه</th><th>الحالة</th><th>مرتبطة بـ</th></tr></thead>
+    <tbody>${APP.stock.map(u=>{const a=APP.appts.find(x=>x.unit===u.plate);
+      return `<tr><td class="num"><b>${u.plate}</b></td><td class="num dim">${u.ch}</td>
+      <td>${pill(u.state==='متاح'?'info':u.state==='محجوز لميعاد'?'brand':'mute',u.state)}</td>
+      <td class="dim">${a?a.nm+' · '+a.slot:'—'}</td></tr>`;}).join('')}</tbody></table></div>
+  <button class="btn btn-ghost btn-sm" data-pt="go" data-s="P2">رجوع</button>`);
+/* ============ P13 · إقفال اليوم ============ */
+const S_p13 = () => {
+  const delivered = APP.appts.filter(a=>a.st==='تم التسليم').length;
+  const noshow = APP.appts.filter(a=>a.st==='لم يحضر').length;
+  const live = APP.appts.filter(a=>a.st==='جارٍ التنفيذ').length;
+  const opened = APP.stock.filter(u=>u.today).length;
+  const FIVE = [['تسليمات خلصت',delivered,''],['متوسط مدة التسليم','71 د',''],
+    ['حالات اترفعت',APP.cases.length,APP.cases.length?'warn':''],['عدم حضور',noshow,''],['بانتظار المزامنة',APP.sync.length,APP.sync.length?'warn':'']];
+  return ptShell(`
+  <h3 style="font-size:22px;font-weight:700">إقفال اليوم</h3>
+  ${live?notice('dan','فيه تسليم لسه شغّال','ما ينفعش تقفل اليوم و'+live+' تسليم في النص. كمّله أو ارفع حالته الأول.'):''}
+  <div class="kpi" style="grid-template-columns:repeat(5,minmax(0,1fr))">
+    ${FIVE.map(([lb,v,k])=>`<div class="tile"><div class="eb">${k?`<span class="dot" style="background:var(--att-edge)"></span>`:''}${lb}</div>
+      <div class="v">${v}</div></div>`).join('')}</div>
+  <div class="split">
+    <div class="card"><b class="sm">جرد الإقفال</b>
+      <dl class="kv" style="margin-block-start:10px">
+        <dt>وحدات محجوزة أول اليوم</dt><dd class="lat">${opened}</dd>
+        <dt>اتسلّمت</dt><dd class="lat">${delivered}</dd>
+        <dt>رجعت متاحة</dt><dd class="lat">0</dd>
+        <dt>المفروض متبقّي</dt><dd class="lat">${opened-delivered}</dd></dl>
+      ${notice('ok','','الجرد مظبوط. لو فيه فرق، الإقفال بيتقفل وبتتفتح حالة «فرق جرد» أوتوماتيك.')}</div>
+    <div class="card"><b class="sm">بكرة</b>
+      <p class="sm muted" style="margin-block-start:8px">٤ مواعيد بكرة. <b>٣ وحدات منهم اتأكدت النهاردة</b>، وواحدة لسه مش مؤكدة.</p>
+      ${notice('warn','','ده أهم سطر في تقرير آخر اليوم: إنك تكتشف وحدة ناقصة النهاردة بالليل، مش بكرة والكابتن واقف قدامك.')}</div>
+  </div>
+  <div class="card">
+    <div class="spread"><b class="sm">توقيع الإقفال</b>
+      ${APP.user.role==='manager'?pill('ok','مدير النقطة داخل'):pill('warn','محتاج مدير النقطة')}</div>
+    <p class="tiny dim" style="margin-block-start:6px">الإقفال بيمضيه مدير النقطة برقمه السري. المشغّل يقدر يفتح اليوم بس ما يقدرش يقفله.</p>
+    <button class="btn btn-pri" style="margin-block-start:10px" data-pt="closeDay" ${(!live&&APP.user.role==='manager')?'':'disabled'}>اقفل اليوم وامضِ التقرير</button>
+  </div>`);
+};
+/* ============ P14/P15/P16 ============ */
+const S_p14 = () => ptShell(`
+  <h3 style="font-size:22px;font-weight:700">سجل النقطة</h3>
+  <p class="sm muted">سجل بيتضاف عليه بس — مفيش حذف ولا تعديل، ولا حتى للمدير.</p>
+  ${APP.log.length?`<div class="card tight">${APP.log.map(l=>`<div class="check" data-s="done">
+    <span class="bx">•</span><div class="bd"><div class="spread"><b>${l.action}</b><time class="tiny dim lat">${l.at}</time></div>
+    <p>${l.who}${l.detail?' · '+l.detail:''}</p></div></div>`).join('')}</div>`
+   :`<div class="card" style="text-align:center;color:var(--text-3)">السجل فاضي. اعمل أي حاجة في البورتال وهتلاقيها هنا.</div>`}
+  <button class="btn btn-ghost btn-sm" data-pt="go" data-s="P2">رجوع</button>`);
+const S_p15 = () => ptShell(`
+  <h3 style="font-size:22px;font-weight:700">قائمة المزامنة</h3>
+  <p class="sm muted">اللي لسه ما اترفعش للإدارة. مفيش حذف — إعادة محاولة بس.</p>
+  ${APP.sync.length?`<div class="stack g8">${APP.sync.map(s=>`<div class="doc">
+    <div class="ic">${ico('box')}</div><div class="t"><b>${s.t}</b><span>من ${s.at} · ${s.sz}</span></div>
+    <button class="btn btn-soft btn-sm" data-pt="retry">أعد المحاولة</button></div>`).join('')}</div>`
+   :`<div class="card" style="text-align:center;color:var(--text-3)">كل حاجة اترفعت. مفيش حاجة مستنية.</div>`}
+  <button class="btn btn-ghost btn-sm" data-pt="go" data-s="P2">رجوع</button>`);
+const S_p16 = () => ptShell(`
+  <div class="spread"><h3 style="font-size:22px;font-weight:700">مستخدمو النقطة</h3>
+    ${APP.user.role==='manager'?pill('ok','صلاحية مدير'):pill('warn','عرض فقط — دي شاشة المدير')}</div>
+  <p class="sm muted">المدير بيضيف مشغّلين ويربط أجهزة. ما يقدرش يعمل مدير تاني ولا يدّي صلاحية هو نفسه مش معاه.</p>
+  <div class="tbl-wrap"><table class="tbl" style="min-width:620px">
+    <thead><tr><th>الاسم</th><th>الصلاحية</th><th>الجهاز المربوط</th><th>آخر دخول</th><th>الحالة</th><th></th></tr></thead>
+    <tbody>${APP.point.users.map(u=>`<tr><td><b>${u.nm}</b></td>
+      <td>${u.role==='manager'?pill('brand','مدير النقطة'):pill('mute','مشغّل')}</td>
+      <td class="lat dim">TAB-${APP.point.code.slice(-3)}-0${u.role==='manager'?2:1}</td>
+      <td class="lat dim">${now()}</td><td>${pill('ok','نشط')}</td>
+      <td>${APP.user.role==='manager'&&u.role!=='manager'?`<button class="btn btn-dan btn-sm">أوقف</button>`:'<span class="dim tiny">—</span>'}</td></tr>`).join('')}</tbody></table></div>
+  ${APP.user.role==='manager'?`<div class="card"><b class="sm">إضافة مشغّل</b>
+    <div class="grid2" style="margin-block-start:10px">
+      <div class="field"><label for="nu-nm">الاسم</label><input class="inp" id="nu-nm" placeholder="الاسم الثلاثي"></div>
+      <div class="field"><label for="nu-ph">الموبايل</label><input class="inp lat" id="nu-ph" inputmode="numeric" placeholder="01xxxxxxxxx"></div>
+    </div>
+    ${notice('info','','المشغّل الجديد بيستلم رقم سري مؤقت برسالة، وبيربط جهازه بكود من المدير أول مرة بس.')}
+    <button class="btn btn-pri btn-sm" style="margin-block-start:10px" data-pt="addUser">أضف المشغّل</button></div>`:''}
+  <button class="btn btn-ghost btn-sm" data-pt="go" data-s="P2">رجوع</button>`);
+</script>
+<script>
+/* ============ sheets ============ */
+function ptSheetHTML(kind){
+  const a = APP.session ? APP.appts[APP.session.i] : APP.appts[0];
+  const head = (t,s)=>`<div class="spread" style="margin-block-end:12px">
+    <div><h3 style="font-size:22px;font-weight:700">${t}</h3>${s?`<p class="tiny dim">${s}</p>`:''}</div>
+    <button class="btn btn-soft" style="width:40px;height:40px;padding:0" data-close="1" aria-label="إغلاق">✕</button></div>`;
+  if(kind==='card') return head('كارت الكابتن','عرض فقط — المعرض ما يعدّلش أي بيان هنا')+`
+    <dl class="kv"><dt>الاسم</dt><dd>${a.nm}</dd><dt>رقم الطلب</dt><dd class="lat">${a.id}</dd>
+      <dt>الموبايل</dt><dd class="lat">${a.ph}</dd><dt>الميعاد</dt><dd class="lat">${a.slot}</dd>
+      <dt>الوحدة</dt><dd class="num">${a.unit} · ${a.ch}</dd><dt>الضامن</dt><dd>${a.gu} — حضوره مطلوب</dd></dl>
+    <div style="margin-block-start:14px">${notice('info','','التسليم بيتم في زيارة واحدة: مطابقة، فحص، توقيع، واستلام في نفس اليوم. مفيش «امضي دلوقتي واستلم بعدين».')}</div>
+    <div style="margin-block-start:10px">${notice('info','','المعرض بينفّذ التسليم بس. ما يقدرش يغيّر قرار قبول، ولا شرط في العقد، ولا يخصص الموتوسيكل لحد تاني.')}</div>`;
+  if(kind==='confirm'){
+    const d=sd(), miss=[];
+    if(!d.nid) miss.push('مطابقة الهوية'); if(d.gu!=='gok') miss.push('الضامن'); if(!d.photo) miss.push('صورة الكابتن');
+    if(!d.chOk) miss.push('مطابقة الوحدة'); if((d.shots||[]).length<8) miss.push('صور الحالة');
+    if(Object.values(d.sign||{}).filter(x=>x.done).length<4) miss.push('التوقيع');
+    if((d.up||[]).length<4) miss.push('رفع الورق');
+    return head('مراجعة وتأكيد','ده القرار الوحيد اللي ما بيترجعش فيه')+`
+    <div class="card tight" style="margin-block-end:12px"><dl class="kv">
+      <dt>الكابتن</dt><dd>${a.nm}</dd><dt>الوحدة</dt><dd class="num">${a.unit}</dd>
+      <dt>الضامن</dt><dd>${a.gu}</dd><dt>المشغّل</dt><dd>${APP.user.nm}</dd></dl></div>
+    ${miss.length?notice('dan','ناقص '+miss.length+' حاجة','ما ينفعش تأكد التسليم قبل: '+miss.join(' · '))
+      :notice('ok','كل الخطوات اتقفلت','بعد التأكيد الوحدة بتتحول لـ«مُسلّم» ونسخة الورق بتظهر في حساب الكابتن. مفيش رجوع.')}
+    <div style="margin-block-start:14px">
+      <label class="sm" style="font-weight:600">اكتب رقمك السري للتأكيد</label>
+      <input class="inp lat" id="cf-pin" inputmode="numeric" maxlength="4" placeholder="••••" style="max-width:140px;margin-block-start:6px">
+    </div>
+    <button class="btn btn-pri btn-block" style="margin-block-start:14px" data-pt="confirmHandover" ${miss.length?'disabled':''}>أكّد التسليم</button>`;
+  }
+  if(kind==='esc') return head('أوقف التسليم وارفع الحالة','المعرض بيرفع الحالة بس — ما بيصنّفش النتيجة ولا بيقفلها')+`
+    <div class="field"><label for="esc-cat">سبب الإيقاف</label>
+      <select class="inp" id="esc-cat">
+        <option>الضامن غير حاضر</option><option>ضامن مختلف عن الملف</option><option>مستند منتهي</option>
+        <option>عيب في الوحدة</option><option>الشاسيه مش مطابق</option><option>اعتراض على بند في العقد</option>
+        <option>شخص تاني بيستلم بالنيابة</option><option>سبب تاني</option></select></div>
+    <div class="field" style="margin-block-start:12px"><label for="esc-note">اكتب اللي حصل (٢٠ حرف على الأقل)</label>
+      <textarea class="inp" id="esc-note" rows="4" placeholder="الكابتن حضر لوحده والضامن مجاش. اتصلنا عليه مردش."></textarea></div>
+    ${notice('warn','','بعد الرفع: الميعاد بيتعلّق، الوحدة بتتحجز باسم الكابتن ٧٢ ساعة، وبيتبعتله رقم متابعة برسالة.')}
+    <button class="btn btn-dan btn-block" style="margin-block-start:14px" data-pt="doEsc">ارفع الحالة</button>`;
+  if(kind==='noshow'){
+    const i = APP.sheetI, ap = APP.appts[i]||a;
+    return head('تسجيل عدم الحضور', ap.nm+' · ميعاد '+ap.slot)+`
+    ${notice('warn','','مش زرار واحد. لازم تسجّل محاولة تواصل واحدة على الأقل قبل ما تعلّم عدم حضور.')}
+    <div class="field" style="margin-block-start:12px"><label>محاولة التواصل</label>
+      <div class="opts">${['اتصلت — ما ردّش','اتصلت — قال هييجي','الرقم مقفول'].map((t,j)=>
+        `<label class="opt" data-on="${APP.nsPick===j?1:0}" data-pt="pick" data-k="ns" data-v="${j}">
+          <input type="radio" name="ns" ${APP.nsPick===j?'checked':''}><b>${t}</b></label>`).join('')}</div></div>
+    <button class="btn btn-dan btn-block" style="margin-block-start:14px" data-pt="doNoshow" ${APP.nsPick===undefined?'disabled':''}>سجّل عدم الحضور</button>`;
+  }
+  if(kind==='walkin') return head('زائر بدون ميعاد','بيتسجّل كاستفسار — مش طلب ولا حجز')+`
+    <div class="grid2"><div class="field"><label for="w-nm">الاسم</label><input class="inp" id="w-nm"></div>
+      <div class="field"><label for="w-ph">الموبايل</label><input class="inp lat" id="w-ph" inputmode="numeric"></div></div>
+    <div class="field" style="margin-block-start:12px"><label for="w-r">سبب الزيارة</label>
+      <select class="inp" id="w-r"><option>سمع عن البرنامج وعايز يقدّم</option><option>قدّم وعايز يعرف موقفه</option>
+        <option>جه بدل حد تاني</option><option>سبب تاني</option></select></div>
+    ${notice('info','','المعرض ما يقدرش يعمل طلب ولا يحجز ميعاد. الاستفسار بيروح لفريق التسجيل وهما اللي بيتواصلوا.')}
+    <button class="btn btn-pri btn-block" style="margin-block-start:14px" data-pt="doWalkin">سجّل الزائر</button>`;
+  if(kind==='defect') return head('بلاغ عطل في الوحدة', a.unit+' · '+a.ch)+`
+    <div class="field"><label for="df-t">نوع العيب</label>
+      <select class="inp" id="df-t"><option>عيب في الفرامل</option><option>عيب كهربائي</option>
+        <option>خدش أو كسر في الهيكل</option><option>الموتور مش بيدور</option><option>عيب تاني</option></select></div>
+    <div class="field" style="margin-block-start:12px"><label>صور العيب (صورة على الأقل)</label>
+      <div class="shots">${['العيب قريب','العيب بعيد','رقم الشاسيه'].map((s,j)=>
+        `<div class="shot-tile" data-on="${(APP.dfShots||[]).includes(j)?1:0}" data-pt="dfShot" data-i="${j}">${s}</div>`).join('')}</div></div>
+    <div class="field" style="margin-block-start:12px"><label for="df-n">ملاحظة</label><textarea class="inp" id="df-n" rows="3"></textarea></div>
+    ${notice('dan','','الوحدة هتتحول لـ«مرتجع — تحت الفحص» وتتجمّد. المعرض ما يختارش الوحدة البديلة — الإدارة هي اللي بتخصص.')}
+    <button class="btn btn-dan btn-block" style="margin-block-start:14px" data-pt="doDefect">ابعت البلاغ وأوقف التسليم</button>`;
+  return head('—','');
+}
+</script>
+<script>
+/* ============ portal actions ============ */
+const PT_SCREENS = {P0:S_p0,P1:S_p1,P2:S_p2,P4:S_p4,P6:S_p6,P8:S_p8,P11:S_p11,P13:S_p13,P14:S_p14,P15:S_p15,P16:S_p16};
+function ptBlock(msg){ APP.toast = msg; }
+function val(id){ const e=document.getElementById(id); return e?e.value.trim():''; }
+function ptQueueSync(t,sz){ if(!APP.online) APP.sync.push({t, at:now(), sz:sz||'42 ميجا'}); }
+
+function ptAction(t){
+  const k = t.dataset.pt, i = +t.dataset.i, v = t.dataset.v;
+  const S = APP.session, a = S ? APP.appts[S.i] : null, d = S ? S.data : null;
+  APP.toast = null;
+  switch(k){
+    case 'setCode': APP.loginCode = t.value; APP.loginUser = POINTS[t.value].users[0].u; break;
+    case 'setUser': APP.loginUser = t.value; break;
+    case 'pin': if(APP.pin.length<4) APP.pin += v; break;
+    case 'pinDel': APP.pin = APP.pin.slice(0,-1); break;
+    case 'login': ptLogin(APP.loginCode, APP.loginUser); APP.pin=''; break;
+    case 'logout': ptLogout(); break;
+    case 'toggleNet': APP.online = !APP.online; if(APP.online) APP.sync=[]; break;
+    case 'go': APP.screen = t.dataset.s; break;
+    case 'stockOk': APP.stock[i].checked=true; APP.stock[i].variance=false; ptLog('جرد','أكّد '+APP.stock[i].plate); break;
+    case 'stockVar': APP.stock[i].variance=true; APP.stock[i].checked=true; ptLog('فرق جرد',APP.stock[i].plate); break;
+    case 'openDay': APP.dayOpen=true; ptLog('فتح اليوم', APP.point.name); APP.screen='P2'; break;
+    case 'closeDay': ptLog('إقفال اليوم','وقّعه '+APP.user.nm); APP.toast='اليوم اتقفل واتوقّع التقرير.'; break;
+    case 'search': APP.q = t.value; break;
+    case 'scan': APP.q = APP.appts.find(x=>!isDone(x)) ? APP.appts.find(x=>!isDone(x)).ph : ''; break;
+    case 'checkin': APP.appts[i].st='تم الحضور'; ptLog('تسجيل حضور',APP.appts[i].nm); break;
+    case 'card': APP.sheetI=i; openSheet(ptSheetHTML('card')); return;
+    case 'receipt': APP.screen='P6'; break;
+    case 'start':
+      if(!APP.dayOpen){ ptBlock('لازم تفتح اليوم الأول.'); break; }
+      APP.appts[i].st='جارٍ التنفيذ';
+      APP.session={i, step:1, data:{shots:[],func:[],sign:{},up:[],tr:[],acc:[]}};
+      ptLog('بدء تسليم',APP.appts[i].nm); APP.screen='P4'; break;
+    case 'resume': APP.screen='P4'; break;
+    case 'noshow': APP.sheetI=i; APP.nsPick=undefined; openSheet(ptSheetHTML('noshow')); return;
+    case 'pick':
+      if(t.dataset.k==='gu'){ d.gu=v; }
+      if(t.dataset.k==='ns'){ APP.nsPick=+v; openSheet(ptSheetHTML('noshow')); return; }
+      break;
+    case 'shoot': d.photo=!d.photo; break;
+    case 'shotTile': d.shots.includes(i)?d.shots.splice(d.shots.indexOf(i),1):d.shots.push(i); break;
+    case 'funcTile': d.func.includes(i)?d.func.splice(d.func.indexOf(i),1):d.func.push(i); break;
+    case 'trTile': d.tr.includes(i)?d.tr.splice(d.tr.indexOf(i),1):d.tr.push(i); break;
+    case 'accTile': d.acc.includes(i)?d.acc.splice(d.acc.indexOf(i),1):d.acc.push(i); break;
+    case 'readDoc': d.sign[i]={read:true,done:false}; break;
+    case 'signDoc': d.sign[i]={read:true,done:true}; break;
+    case 'upDoc': d.up.push(i); ptQueueSync('الورق الموقّع — '+DOCS4[i],'12 ميجا'); break;
+    case 'stepBack': S.step=Math.max(1,S.step-1); break;
+    case 'park': a.st='مُعلّق — الضامن غير حاضر'; APP.session=null;
+      ptLog('تعليق ميعاد','الضامن غير حاضر — '+a.nm); APP.screen='P2';
+      APP.toast='الميعاد اتعلّق ٤٥ دقيقة والوحدة محجوزة باسمه.'; break;
+    case 'commit': {
+      const st=S.step;
+      if(st===1){ const n=val('s-nid'); if(n!=='1534'){ ptBlock('الرقم القومي مش مطابق للملف. ما تكملش — ارفع الحالة.'); break;} d.nid=n; }
+      if(st===2){ if(d.gu!=='gok'){ ptBlock('مفيش تسليم من غير ضامن مطابق. علّق الميعاد أو ارفع الحالة.'); break;} }
+      if(st===3){ if(!d.photo){ ptBlock('لازم صورة الكابتن ببطاقته.'); break;} }
+      if(st===4){ const c=val('s-ch').toUpperCase();
+        if(c!==a.ch.slice(-4).toUpperCase()){ d.chErr=true; ptBlock('الشاسيه مش مطابق. اطلب تبديل وحدة من الإدارة أو ارفع الحالة.'); break;}
+        d.chErr=false; d.chOk=true; }
+      if(st===5){ if(d.shots.length<8){ ptBlock('لازم ٨ صور للحالة. ناقص '+(8-d.shots.length)+'.'); break;} d.odo=val('s-odo'); }
+      if(st===6){ if(Object.values(d.sign).filter(x=>x.done).length<4){ ptBlock('لازم توقيع على المستندات الأربعة.'); break;} }
+      if(st===7){ if(d.up.length<4){ ptBlock('لازم ترفع الورق الموقّع كله قبل ما تكمّل.'); break;} }
+      if(st===8){ openSheet(ptSheetHTML('confirm')); return; }
+      S.step++; ptLog('قفل خطوة', STEPS[st-1]+' — '+a.nm); break; }
+    case 'sheet': APP.dfShots=[]; openSheet(ptSheetHTML(t.dataset.k)); return;
+    case 'confirmHandover':
+      if(val('cf-pin').length<4){ ptBlock('اكتب رقمك السري.'); openSheet(ptSheetHTML('confirm')); return; }
+      a.st = APP.online ? 'تم التسليم' : 'تم التسليم';
+      APP.stock.forEach(u=>{ if(u.plate===a.unit) u.state='مُسلّم'; });
+      ptQueueSync('تسليم '+a.nm,'88 ميجا');
+      ptLog('تأكيد تسليم', a.nm+' · '+a.unit);
+      APP.session=null; closeSheet(); APP.screen='P6'; break;
+    case 'doEsc': {
+      const note=val('esc-note');
+      if(note.length<20){ ptBlock('اكتب ٢٠ حرف على الأقل عن اللي حصل.'); openSheet(ptSheetHTML('esc')); return; }
+      const ref='ESC-2026-0'+(417+APP.cases.length);
+      APP.cases.push({ref, nm:a.nm, cat:val('esc-cat'), at:now(), sla:'خلال 48 ساعة', st:'warn|مفتوحة'});
+      a.st='مُعلّق — مرفوع للإدارة'; APP.session=null;
+      ptLog('رفع حالة', ref+' — '+a.nm); closeSheet(); APP.screen='P2';
+      APP.toast='الحالة اترفعت. رقم المتابعة '+ref+' — هيوصل للكابتن برسالة.'; break; }
+    case 'doNoshow': {
+      const ap=APP.appts[APP.sheetI]; ap.st='لم يحضر';
+      ptLog('عدم حضور', ap.nm+' — محاولة تواصل مسجّلة'); closeSheet(); APP.screen='P2';
+      APP.toast='اتسجّل عدم حضور مع محاولة التواصل.'; break; }
+    case 'doWalkin': ptLog('زائر بدون ميعاد', val('w-nm')||'بدون اسم'); closeSheet();
+      APP.toast='الزائر اتسجّل كاستفسار وراح لفريق التسجيل.'; break;
+    case 'dfShot': APP.dfShots=APP.dfShots||[];
+      APP.dfShots.includes(i)?APP.dfShots.splice(APP.dfShots.indexOf(i),1):APP.dfShots.push(i);
+      openSheet(ptSheetHTML('defect')); return;
+    case 'doDefect': {
+      if(!(APP.dfShots||[]).length){ ptBlock('لازم صورة واحدة على الأقل للعيب.'); openSheet(ptSheetHTML('defect')); return; }
+      APP.stock.forEach(u=>{ if(u.plate===a.unit) u.state='مرتجع — تحت الفحص'; });
+      a.st='مُعلّق — بانتظار وحدة بديلة';
+      APP.cases.push({ref:'ESC-2026-0'+(417+APP.cases.length), nm:a.nm, cat:'عيب في الوحدة', at:now(), sla:'خلال 48 ساعة', st:'dan|عاجلة'});
+      APP.session=null; ptLog('بلاغ عطل', a.unit); closeSheet(); APP.screen='P2';
+      APP.toast='الوحدة اتجمّدت والإدارة هي اللي هتخصص البديلة.'; break; }
+    case 'retry': APP.sync=[]; APP.toast='اترفع كل حاجة.'; break;
+    case 'addUser': ptLog('إضافة مشغّل', val('nu-nm')||'—'); APP.toast='المشغّل اتضاف وهيستلم رقم سري مؤقت.'; break;
+  }
+  render();
+}
+document.addEventListener('click',(e)=>{ const t=e.target.closest('[data-pt]'); if(t && t.tagName!=='SELECT' && t.tagName!=='INPUT'){ e.preventDefault(); ptAction(t);} });
+document.addEventListener('change',(e)=>{ const t=e.target.closest('[data-pt]'); if(t && (t.tagName==='SELECT')) ptAction(t); });
+document.addEventListener('input',(e)=>{ const t=e.target.closest('[data-pt="search"]'); if(t){ APP.q=t.value;
+  const m=document.getElementById('scMount'); if(m){ m.innerHTML=S_point(); const f=document.getElementById('ptq'); if(f){f.focus();f.setSelectionRange(f.value.length,f.value.length);} } } });
+
+const S_point = () => {
+  const body = APP.point ? (PT_SCREENS[APP.screen]||S_p2)() : S_p0();
+  return (APP.toast?`<div class="notice n-warn" style="margin-block-end:14px">${ico('warn','ico')}<div>${APP.toast}</div></div>`:'') + body;
+};
 </script>
 <script>
 /* ================= السجل والتنقل ================= */
@@ -1722,8 +2320,17 @@ const PORTALS = [
     {id:'points',     nav:'نقاط التوزيع', title:'نقاط التوزيع', desc:'المعارض الشريكة، مخزونها وطاقتها اليومية — وحساب بسيط لحجم التشغيل المطلوب.', render:S_points}
   ]},
   {id:'point', tab:'بوابة نقطة التوزيع', kind:'تابلت — المعرض الشريك', screens:[
-    {id:'queue',    nav:'مواعيد اليوم', title:'مواعيد اليوم والبحث', desc:'المعرض بيدور برقم الموبايل أو رقم الطلب أو الكود، وبيشوف ملفاته هو بس.', render:S_pqueue},
-    {id:'handover', nav:'تنفيذ التسليم', title:'تنفيذ التسليم', desc:'8 خطوات إلزامية: مطابقة الهوية والضامن، صورة الكابتن ببطاقته، مطابقة الشاسيه، الفحص، التوقيع، رفع الورق، والتدريب.', render:S_handover}
+    {id:'P0', nav:'الدخول', title:'دخول نقطة التوزيع', desc:'كل نقطة بتدخل بكودها. جرّب تدخل بنقطتين مختلفين — المواعيد والمخزون والحالات هيتغيّروا بالكامل، وده معنى إن النقطة ما بتشوفش غير بتاعها.', render:S_point},
+    {id:'P1', nav:'فتح اليوم', title:'فتح اليوم', desc:'بوابة إجبارية: فحص الجهاز وجرد وحدات النهاردة. زرار «ابدأ التسليم» مقفول في البورتال كله لحد ما اليوم يتفتح.', render:S_point},
+    {id:'P2', nav:'مواعيد اليوم', title:'مواعيد اليوم', desc:'شاشة البيت. بتجاوب في تانيتين: مين قدامي دلوقتي، مين اتأخر، وإيه اللي واقف. المواعيد مقسومة: دلوقتي والجاي · متأخر · خلصت.', render:S_point},
+    {id:'P4', nav:'تنفيذ التسليم', title:'تنفيذ التسليم', desc:'ثمان خطوات، كل خطوة لوحدها على الشاشة. الخطوة بتتقفل ومش بترجع تتعدّل. جرّب تكتب شاسيه غلط أو تقول إن الضامن مش حاضر وشوف بيحصل إيه.', render:S_point},
+    {id:'P6', nav:'إيصال التسليم', title:'إيصال التسليم', desc:'بعد التأكيد. ما بيتعدّلش وما بيتفتحش تاني — أي تصحيح بيتم من الإدارة.', render:S_point},
+    {id:'P8', nav:'الحالات المفتوحة', title:'الحالات المفتوحة', desc:'حالات النقطة دي بس. المعرض بيقرا ويضيف ملاحظة — ما بيقفلش حالة ولا بيغيّر تصنيفها.', render:S_point},
+    {id:'P11', nav:'مخزون النقطة', title:'مخزون النقطة', desc:'عرض فقط. ما فيش تغيير حالة، ولا إعادة تخصيص، ولا رؤية لمخزون نقطة تانية.', render:S_point},
+    {id:'P13', nav:'إقفال اليوم', title:'إقفال اليوم', desc:'الأرقام الخمسة، وجرد الإقفال، وأهم سطر: وحدات بكرة اتأكدت ولا لأ. بيمضيه مدير النقطة — المشغّل يقدر يفتح اليوم بس ما يقدرش يقفله.', render:S_point},
+    {id:'P14', nav:'سجل النقطة', title:'سجل النقطة', desc:'سجل بيتضاف عليه بس. كل حاجة تعملها في البورتال بتظهر هنا باسمك ووقتها.', render:S_point},
+    {id:'P15', nav:'قائمة المزامنة', title:'قائمة المزامنة', desc:'اقطع الشبكة من الزرار فوق وكمّل تسليم — هتلاقي اللي مستني رفع هنا. مفيش حذف، إعادة محاولة بس.', render:S_point},
+    {id:'P16', nav:'مستخدمو النقطة', title:'مستخدمو النقطة', desc:'التسجيل على مستوى النقطة: المدير بيضيف مشغّلين ويربط أجهزة. ما يقدرش يعمل مدير تاني ولا يدّي صلاحية هو نفسه مش معاه.', render:S_point}
   ]}
 ];
 
@@ -1746,12 +2353,20 @@ function render(){
   $('#scTitle').textContent = S.title;
   $('#scDesc').textContent = S.desc;
   $('#scKind').textContent = P.kind;
+  if(P.id==='point' && APP.point) cur.s = APP.screen;
   $('#scMount').innerHTML = S.render();
+  if(P.id==='point'){
+    const nav = $('#screenNav');
+    [...nav.children].forEach(b=>b.setAttribute('aria-current', b.dataset.screen===(APP.point?APP.screen:'P0')));
+  }
   const act = $(`#screenNav button[aria-current="true"]`);
   if(act) act.scrollIntoView({block:'nearest', inline:'center'});
   try{ location.hash = cur.p+'/'+cur.s; }catch(e){}
 }
-function go(p,s){ cur = {p, s}; render(); window.scrollTo({top:0, behavior:'smooth'}); }
+function go(p,s){
+  if(p==='point'){ if(!APP.point && s!=='P0'){ APP.screen='P0'; s='P0'; } else { APP.screen=s; } }
+  cur = {p, s}; render(); window.scrollTo({top:0, behavior:'smooth'});
+}
 
 /* ================= ملاحظات وقرارات مفتوحة ================= */
 const OPEN = [
