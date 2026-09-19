@@ -149,9 +149,12 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
   padding:2px 20px 7px;font:500 11px var(--font-figure)}
 .phone-scroll{max-height:76vh;overflow-y:auto;overscroll-behavior:contain;background:var(--ground)}
 @media (max-width:620px){
-  .phone{border:0;border-radius:0;box-shadow:none;width:100%}
+  /* the frame is gone, so nothing may clip: overflow:hidden on an ancestor
+     silently kills position:sticky on the app header */
+  .phone{border:0;border-radius:0;box-shadow:none;width:100%;overflow:visible}
+  .phone-wrap{display:block}
   .phone-bar{display:none}
-  .phone-scroll{max-height:none}
+  .phone-scroll{max-height:none;overflow:visible}
   .stage{padding-inline:0;padding-block:14px 40px}
   .stage-head{padding-inline:16px}
 }
@@ -213,7 +216,7 @@ hr.rule{border:0;border-block-start:1px solid var(--hairline);margin:0}
 .grid4{display:grid;grid-template-columns:repeat(auto-fit,minmax(178px,1fr));gap:12px}
 .grid6{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 .split{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.split>*{min-width:0}
+.split>*,.grid2>*,.grid3>*,.grid4>*,.grid6>*,.kpi>*{min-width:0}
 @media (max-width:860px){.grid6{grid-template-columns:repeat(2,1fr)}.split{grid-template-columns:1fr}}
 @media (max-width:700px){.grid3{grid-template-columns:1fr 1fr}}
 @media (max-width:460px){.grid6{grid-template-columns:1fr}.grid3{grid-template-columns:1fr}}
@@ -319,8 +322,8 @@ select.inp{appearance:none;background-repeat:no-repeat;background-position:left 
 .metric{background:var(--surface);border:1px solid var(--hairline);border-radius:var(--r-sm);
   padding:14px;display:flex;flex-direction:column;gap:4px}
 .metric .cap{font:600 11.5px/1.55 var(--font-ui);color:var(--text-3)}
-.metric .top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
-.metric .val{font:600 22px/1.2 var(--font-figure);font-variant-numeric:tabular-nums;color:var(--text)}
+.metric .top{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+.metric .val{font:600 22px/1.2 var(--font-figure);font-variant-numeric:tabular-nums;color:var(--text);min-width:0;overflow-wrap:anywhere}
 .metric .unit{font:500 13px var(--font-ui);color:var(--text-3)}
 .track{position:relative;height:6px;border-radius:var(--r-pill);background:var(--surface-sunken);
   overflow:hidden;margin-block-start:9px}
@@ -351,6 +354,7 @@ table.tbl th{position:sticky;top:0;z-index:2}
 table.tbl td b{font-weight:600}
 table.tbl td.num,table.tbl .num{color:var(--text-2)}
 .matrix{min-width:520px}
+@media (max-width:620px){.matrix{min-width:0}.matrix td,.matrix th{padding:10px 10px}}
 table.tbl.comp td:first-child,table.tbl.comp th:first-child{white-space:nowrap}
 table.tbl.comp td,table.tbl.comp th{padding:10px 12px}
 table.tbl.comp td:last-child,table.tbl.comp th:last-child{white-space:nowrap}
@@ -420,7 +424,15 @@ table.tbl.comp td:last-child,table.tbl.comp th:last-child{white-space:nowrap}
   letter-spacing:-.035em;color:var(--text);direction:ltr;unicode-bidi:isolate;display:block}
 .partner{display:flex;align-items:baseline;gap:7px;padding-inline-start:12px;
   border-inline-start:1px solid var(--line,var(--hairline));margin-inline-start:6px}
-.partner .pl{font-size:10px;line-height:1.25;color:var(--text-3);white-space:nowrap;writing-mode:horizontal-tb}
+.partner .pl{font-size:10px;line-height:1.25;color:var(--text-3);white-space:nowrap}
+@media (max-width:430px){
+  .app-top{padding-inline:12px;gap:6px}
+  .app-top .partner .pl{display:none}
+  .app-top .partner{padding-inline-start:9px;margin-inline-start:4px}
+  .app-top .tw-word{height:24px}
+  .app-top .uber{font-size:15px}
+  .app-top .tw-icon{width:21px;height:24px}
+}
 .partner .uber{font-size:18px}
 /* co-brand lockup */
 .cobrand{display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;
@@ -443,8 +455,12 @@ table.tbl.comp td:last-child,table.tbl.comp th:last-child{white-space:nowrap}
 .facts div{background:var(--surface);padding:12px 14px}
 .facts b{display:block;font:600 22px/1.25 var(--font-ui);font-variant-numeric:tabular-nums;color:var(--text)}
 .facts span{font-size:11.5px;line-height:1.55;color:var(--text-3)}
-.hero-cta{display:flex;gap:10px;margin-block-start:18px;flex-wrap:wrap}
-.hero-cta .btn{flex:1 1 150px;min-height:48px}
+.hdr-act{display:flex;align-items:center;gap:6px;flex:0 0 auto}
+.btn-link{background:none;border:0;color:var(--text-2);font:600 13px var(--font-ui);
+  padding:10px 8px;min-height:44px;text-decoration:underline;text-underline-offset:4px;
+  text-decoration-color:var(--hairline)}
+.btn-link:hover{color:var(--text);text-decoration-color:var(--border-strong)}
+.app-top .btn-pri{min-height:44px;padding:11px 18px;font-size:14px}
 .sec{padding:22px 18px;border-block-end:1px solid var(--hairline);background:var(--surface)}
 .sec.alt{background:var(--ground)}
 .sec:last-of-type{border-block-end:0}
@@ -809,7 +825,9 @@ function spark(vals, target, o){
 <script>
 /* ================= 1. صفحة البرنامج ================= */
 const S_landing = () => phone(`
-${appHeader(`<button class="btn btn-ghost btn-sm" data-go="applicant:track">متابعة طلبي</button>`)}
+${appHeader(`<div class="hdr-act">
+  <button class="btn btn-link" data-go="applicant:track">طلبي</button>
+  <button class="btn btn-pri btn-sm" data-go="applicant:verify">قدّم</button></div>`)}
 <section class="hero">
   <span class="eyebrow">برنامج تمويل وتمليك موتوسيكلات — أوبر بالشراكة مع تريد واي</span>
   <h1 style="margin-top:8px">موتوسيكلك وشغلك<em>من غير ما تدفع جنيه.</em></h1>
@@ -819,10 +837,6 @@ ${appHeader(`<button class="btn btn-ghost btn-sm" data-go="applicant:track">مت
     <div><b>٠ جنيه</b><span>قسط تمليك شهري</span></div>
     <div><b>١٢ شهر</b><span>مدة البرنامج (مبدئية)</span></div>
     <div><b>مدينتين</b><span>القاهرة الكبرى · الغردقة</span></div>
-  </div>
-  <div class="hero-cta">
-    <button class="btn btn-pri" data-go="applicant:verify">قدّم دلوقتي</button>
-    <button class="btn btn-ghost" data-go="applicant:track">عندي طلب بالفعل</button>
   </div>
   <div class="row" style="margin-top:14px">${DRAFT}<span class="tiny dim">المدة والمؤشرات لسه تحت الاعتماد النهائي مع أوبر. اللي هيتكتب في عقدك هو اللي بيسري عليك.</span></div>
 </section>
