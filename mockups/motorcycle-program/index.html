@@ -330,6 +330,13 @@ select.inp{appearance:none;background-repeat:no-repeat;background-position:left 
 .track i.bad{background:var(--crit-edge)}
 .track i.neutral{background:var(--accent)}
 .track .tick{position:absolute;top:-2px;bottom:-2px;width:2px;background:var(--border-strong);border-radius:1px}
+/* segmented tabs */
+.segbar{display:flex;gap:4px;background:var(--surface-sunken);border-radius:var(--r-sm);padding:3px;
+  position:sticky;top:0;z-index:5;overflow-x:auto;scrollbar-width:none}
+.segbar::-webkit-scrollbar{display:none}
+.segbar button{flex:1 0 auto;padding:10px 14px;border-radius:var(--r-xs);font:600 13px var(--font-ui);
+  color:var(--text-2);white-space:nowrap;min-height:44px}
+.segbar button[data-on="1"]{background:var(--surface);color:var(--text);box-shadow:0 1px 2px rgba(20,23,31,.06)}
 /* ===================== table ===================== */
 .tbl-wrap{min-width:0;max-width:100%;overflow-x:auto;border:1px solid var(--hairline);border-radius:var(--r-sm);background:var(--surface)}
 table.tbl{width:100%;border-collapse:collapse;font-size:13px;min-width:680px}
@@ -777,9 +784,9 @@ function spark(vals, target, o){
 const S_landing = () => phone(`
 ${appHeader(`<button class="btn btn-ghost btn-sm" data-go="applicant:track">متابعة طلبي</button>`)}
 <section class="hero">
-  <span class="eyebrow">برنامج تمليك موتوسيكلات — تريد واي × أوبر · الدفعة الأولى</span>
-  <h1 style="margin-top:8px">مش تقسيط ولا إيجار.<em>شغلك على الموتوسيكل هو تمنه — وبيه بيتحوّل باسمك.</em></h1>
-  <p class="lede">برنامج من <b>تريد واي</b> بالشراكة مع <b>أوبر</b>. مفيش مقدم ومفيش أقساط تمليك — بتاخد الموتوسيكل تشتغل بيه، والتزامك بساعات وأيام الشغل هو اللي بيخليه يتحوّل باسمك في الآخر.</p>
+  <span class="eyebrow">برنامج تمويل وتمليك موتوسيكلات — أوبر بالشراكة مع تريد واي</span>
+  <h1 style="margin-top:8px">موتوسيكلك وشغلك<em>من غير ما تدفع جنيه.</em></h1>
+  <p class="lede">برنامج تمويلي من <b>أوبر</b> بالشراكة مع <b>تريد واي</b>، هدفه إن اللي مش قادر يشتري موتوسيكل يمتلك واحد — <b>من غير مقدم، ومن غير أقساط، ومن غير أي مصاريف</b> — ويشتغل بيه على أوبر من أول يوم.</p>
   <div class="facts">
     <div><b>٠ جنيه</b><span>مقدم</span></div>
     <div><b>٠ جنيه</b><span>قسط تمليك شهري</span></div>
@@ -790,8 +797,8 @@ ${appHeader(`<button class="btn btn-ghost btn-sm" data-go="applicant:track">مت
 </section>
 
 <section class="sec">
-  ${notice('info','مش ببلاش — مدفوع بشغلك',
-    'إحنا بنجيب الموتوسيكل ونرخّصه ونأمّنه، وإنت بتشتغل بيه. لو كمّلت التزامك طول المدة، شغلك ده بيكون هو تمنه وبيتحوّل باسمك. تمن الموتوسيكل بيرجعلنا من دخل التوصيل اللي إنت بتعمله على أوبر، مش من جيبك.<br><br><b>مش هتدفع مقدم ولا قسط تمليك — ولا جنيه، ولا في أي خطوة. أي حد يطلب منك فلوس علشان «يخلّص لك الطلب» أو «يحجزلك موتوسيكل» مش من تريد واي، وبلّغنا عنه على ١٦٧٢٣.</b>')}
+  ${notice('info','البرنامج بيشتغل إزاي',
+    'أوبر وتريد واي بيموّلوا الموتوسيكل ويرخّصوه ويأمّنوه، وإنت بتشتغل بيه على أوبر. شغلك ده هو اللي بيسدّد تمنه — مش فلوس من جيبك. تكمّل مدة البرنامج بالتزاماتك، والموتوسيكل يتحوّل باسمك.<br><br><b>البرنامج ما بياخدش منك جنيه في أي خطوة. لا مقدم، لا قسط، لا رسوم ملف.</b>')}
 </section>
 
 <section class="sec alt">
@@ -876,11 +883,12 @@ ${appHeader(`<button class="btn btn-ghost btn-sm" data-go="applicant:track">مت
   <div class="stack g8">
     ${[
       ['هل فيه أي فلوس بدفعها للتملّك؟','لأ. ولا جنيه. لا مقدم، لا قسط، لا رسوم ملف. البنزين والمخالفات والصيانة عليك — بس دي مصاريف شغلك اللي بتدفعها دلوقتي أصلًا.'],
-      ['وإيه اللي يخلّيني أصدّق إن ده مش نصب؟','الترخيص والتأمين بندفعهم إحنا. محدش بينصب على حد وبيدفع له ترخيص سنة. وبتمضي في معرض على الأرض، معاك ضامنك، وبتمشي ومعاك نسخة من كل ورقة. ولو حد طلب منك فلوس في أي خطوة — ده مش إحنا.'],
+      ['طب إيه اللي هتستفيدوه إنتو؟','أوبر عايزة كباتن شغالين، وإحنا بنشغّل الأسطول. إنت بتشتغل، أوبر بتكبر، والموتوسيكل بيتسدّد من الشغل ويتحوّل لك. مفيش طرف بياخد من التاني.'],
       ['مش شغال على أوبر حاليًا — ينفع أقدّم؟','ينفع. أغلب اللي بيقدّموا في نفس وضعك. فيه موظف بيفتح الحساب معاك خطوة بخطوة، وده جزء من البرنامج مش شرط دخول.'],
       ['معنديش رخصة قيادة لسه','قدّم وحدّد إنها تحت الاستخراج. هتمشي معانا عادي، بس التسليم مش بيتم قبل ما الرخصة تخلص.'],
       ['لو مرضت أو الموتوسيكل باظ، بيحصل إيه؟','بلّغ من صفحتك في نفس اليوم. العطل والمرض بيتسجّلوا وبيترفعوا لمراجعة، وممكن الأيام دي تتجمّد. اللي بيضرّك إنك تسكت والأرقام تنزل ومحدش عارف ليه.'],
       ['ساكن في مدينة تانية','الدفعة دي القاهرة الكبرى والغردقة بس. سجّل اهتمامك وهنكلمك أول ما مدينتك تتفتح.'],
+      ['هل فيه حد بيتواصل معايا يطلب فلوس؟','البرنامج ما بياخدش فلوس في أي خطوة، فأي طلب فلوس مش مننا. لو حصل، كلّمنا على ١٦٧٢٣.'],
       ['الموتوسيكل بيتنقل باسمي إمتى؟','بعد ما تكمّل المدة والمؤشرات، ويراجع الفريق استحقاقك. الشروط النهائية بتتكتب في عقدك إنت — واللي في عقدك هو اللي بيسري.']
     ].map(([q,a])=>`<details><summary>${q}</summary><p>${a}</p></details>`).join('')}
   </div>
@@ -1240,29 +1248,111 @@ ${appHeader(`<button class="btn btn-ghost btn-sm" data-go="applicant:accepted">�
 
 /* ================= 8. بعد الاستلام ================= */
 const WEEKS = [6.4, 6.9, 7.6, 8.1, 7.8, 7.4, 6.9, 7.2];   /* أقدم ← أحدث */
+const MONTHS = [
+  {m:'يونيو ٢٠٢٦', note:'من ١٤ يونيو', h:'٧٫٨', d:'١٤ من ١٥', a:'٪٦٦', c:'٪١٫٤', st:'ok|محقق — شهر جزئي'},
+  {m:'يوليو ٢٠٢٦', note:'شهر كامل', h:'٨٫٣', d:'٢٧', a:'٪٦٩', c:'٪١٫١', st:'ok|محقق'},
+  {m:'أغسطس ٢٠٢٦', note:'شهر كامل', h:'٧٫٩', d:'٢٦', a:'٪٦٧', c:'٪١٫٨', st:'ok|محقق'},
+  {m:'سبتمبر ٢٠٢٦', note:'جارٍ — لحد ١٨ سبتمبر', h:'٧٫٢', d:'١٦ من ١٨', a:'٪٦٨', c:'٪٣٫١', st:'warn|الإلغاء فوق الحد'}
+];
+const CENTRES = [
+  ['مركز صيانة المعادي','شارع ٩، المعادي — جنب محطة المترو','٣.١ كم','من ٩ ص لـ ١٠ م','16723'],
+  ['مركز صيانة حلوان','شارع المنشية، حلوان','١١.٤ كم','من ٩ ص لـ ٩ م','16723'],
+  ['مركز صيانة مدينة نصر','عباس العقاد','١٤.٢ كم','من ١٠ ص لـ ١٠ م','16723']
+];
+const SERVICES = [
+  ['١٬٠٠٠ كم','٢٨ يونيو ٢٠٢٦','مركز المعادي','تمت'],
+  ['٢٬٥٠٠ كم','١٩ أغسطس ٢٠٢٦','مركز المعادي','تمت']
+];
+const MYDOCS = [
+  ['اتفاق المشاركة في البرنامج','TERMS-2026-03 · اتمضى ١٤ يونيو ٢٠٢٦'],
+  ['جدول التزامات التشغيل','النسخة اللي بتسري عليك إنت'],
+  ['إقرار الضامن','سيد عبد العظيم — اتمضى ١٤ يونيو ٢٠٢٦'],
+  ['محضر تسليم الموتوسيكل','٨ صور حالة + قراءة العداد ٦ كم']
+];
+
+const mbTab = (k) => APP_MB.tab===k?1:0;
+const APP_MB = {tab:'now'};
+const MB_TABS = [['now','نظرة عامة'],['perf','التزامي'],['svc','الصيانة'],['docs','أوراقي']];
+
 const S_mybike = () => phone(`
 ${appHeader(`<span class="pill p-ok plain">مشارك نشط</span>`)}
-<section class="sec">
+<section class="sec" style="padding-block-end:14px">
   <div class="bikecard">
     <div class="spread"><b>هوجان ١٥٠ سي سي — ٢٠٢٦</b><span class="plate">ق ن 4279</span></div>
-    <dl><dt>رقم الشاسيه</dt><dd>LHJ4K2...9F42</dd>
-      <dt>تاريخ الاستلام</dt><dd>2026/09/20</dd>
-      <dt>مدة البرنامج</dt><dd>١٢ شهر (مبدئية)</dd>
+    <dl><dt>تاريخ الاستلام</dt><dd>2026/06/14</dd>
+      <dt>نهاية المدة</dt><dd>2027/06/14</dd>
+      <dt>رقم الشاسيه</dt><dd>LHJ4K2...9F42</dd>
       <dt>الترخيص باسم</dt><dd>تريد واي</dd></dl>
-    <div class="track" style="margin-top:16px"><i style="width:4%"></i></div>
-    <p style="font-size:11px;color:var(--side-dim);margin-block-start:6px">عدّى ١٥ يوم من مدة البرنامج.</p>
+    <div class="track" style="margin-top:16px"><i style="width:26%"></i></div>
+    <p style="font-size:11.5px;color:var(--side-dim);margin-block-start:6px">
+      عدّى <b>٣ شهور و٦ أيام</b> من مدة البرنامج · فاضل <b>٨ شهور و٢٤ يوم</b></p>
+  </div>
+</section>
+<section class="sec" style="padding-block:0 14px">
+  <div class="segbar">${MB_TABS.map(([k,t])=>`
+    <button type="button" data-mb="${k}" data-on="${mbTab(k)}">${t}</button>`).join('')}</div>
+</section>
+
+${APP_MB.tab==='now'?`
+<section class="sec">
+  <div class="sec-h"><h3 class="sec-title">موقفك لحد دلوقتي</h3></div>
+  <div class="grid2">
+    <div class="metric"><div class="cap">شهور محققة</div>
+      <div class="top"><span class="val">٣ من ١٢</span>${pill('ok','على الطريق')}</div>
+      <div class="track"><i class="good" style="width:25%"></i></div></div>
+    <div class="metric"><div class="cap">الشهر الحالي</div>
+      <div class="top"><span class="val">سبتمبر</span>${pill('warn','تنبيه واحد')}</div>
+      <div class="cap" style="margin-block-start:5px">لسه ١٢ يوم على قفل الشهر</div></div>
+  </div>
+  ${notice('warn','تنبيه واحد مفتوح — نسبة الإلغاء',
+    'نسبتك الشهر ده ٪٣٫١ والحد ٪٢. عندك <b>٧ أيام</b> للتصحيح قبل ما الحالة تترفع للمراجعة. لو فيه سبب — عطل، ظرف صحي، مشكلة في الطلبات — كلّمنا دلوقتي وهنسجّله.')}
+  <div class="row" style="margin-block-start:12px">
+    <button class="btn btn-soft btn-sm" style="flex:1">اشرح السبب</button>
+    <button class="btn btn-ghost btn-sm" style="flex:1">اتكلم مع الدعم</button></div>
+</section>
+<section class="sec alt">
+  <div class="sec-h"><h3 class="sec-title">الصيانة الجاية</h3></div>
+  <div class="card">
+    <div class="spread"><b class="sm">عند ٤٬٠٠٠ كم أو ١٥ أكتوبر</b>${pill('info','أيهما أقرب')}</div>
+    <p class="sm muted" style="margin-block-start:6px">العداد دلوقتي <b>٣٬٢٤٠ كم</b> — فاضل حوالي ٧٦٠ كم.</p>
+    <div class="track" style="margin-block-start:10px"><i class="mid" style="width:81%"></i></div>
+    <button class="btn btn-pri btn-sm btn-block" style="margin-block-start:12px" data-mb="svc">احجز ميعاد صيانة</button>
   </div>
 </section>
 <section class="sec">
-  <div class="sec-h"><h3 class="sec-title">التزامك</h3>
-    <span class="tiny dim">أسبوع ١٥–٢١ سبتمبر · آخر تحديث من أوبر ١٨ سبتمبر</span></div>
-  <p class="sm muted" style="margin-block-end:14px">العمود بيتمدد <b>لليسار</b> لما تكون فوق الهدف، و<b>لليمين</b> لما تكون تحته. القاعدة واحدة في الأربع مؤشرات — حتى نسبة الإلغاء اللي الأحسن فيها إنها تقل.</p>
-  <div class="stack g12">
+  <div class="sec-h"><h3 class="sec-title">محتاج حاجة؟</h3></div>
+  <div class="stack g8">
+    ${[['wrench','بلّغ عن عطل','بنسجّل العطل وبنراجع أثره على أيام المدة'],
+       ['shop','أقرب مركز صيانة','مركز المعادي — ٣.١ كم · مفتوح لـ ١٠ م'],
+       ['ban','حسابي اتقفل على أوبر','بلّغنا فورًا — ده بيأثر على التزامك'],
+       ['phone','الدعم','١٦٧٢٣ · من ٩ ص لـ ٩ م']
+      ].map(([ic,t,sub])=>`<div class="doc"><div class="ic">${ico(ic)}</div>
+      <div class="t"><b>${t}</b><span>${sub}</span></div><span class="dim">›</span></div>`).join('')}
+  </div>
+</section>`:''}
+
+${APP_MB.tab==='perf'?`
+<section class="sec">
+  <div class="sec-h"><h3 class="sec-title">الشهر الحالي</h3>
+    <span class="tiny dim">١–١٨ سبتمبر</span></div>
+  ${notice('info','', 'الأرقام دي بتيجي من تقارير أوبر، وبنحدّثها أول ما التقرير يوصلنا. آخر تقرير وصل <b>١٨ سبتمبر</b> وبيغطي لحد ١٨ سبتمبر. اللي إنت شغّاله بعد التاريخ ده لسه ما ظهرش.')}
+  <div class="stack g12" style="margin-block-start:14px">
     ${gaugeCard('ساعات الاتصال / اليوم', 7.2, 8, true, '٧٫٢', '٨ ساعات', 'أقل من الهدف بـ ٠٫٨ ساعة في اليوم.', 'أعلى')}
-    ${gaugeCard('أيام التشغيل / الشهر', 24, 26, true, '٢٤', '٢٦ يوم', 'أقل من الهدف بيومين.', 'أعلى')}
+    ${gaugeCard('أيام التشغيل', 16, 18, true, '١٦', '١٨ يوم', 'أقل بيومين لحد دلوقتي — لسه عندك ١٢ يوم في الشهر.', 'أعلى')}
     ${gaugeCard('نسبة قبول الطلبات', 68, 60, true, '٪٦٨', '٪٦٠', 'أعلى من الحد الأدنى بـ ٨ نقاط مئوية.', 'أعلى')}
     ${gaugeCard('نسبة الإلغاء', 3.1, 2, false, '٪٣٫١', '٪٢', 'أعلى من الحد المسموح بـ ١٫١ نقطة مئوية — ده المؤشر الوحيد اللي عليه تنبيه.', 'أقل')}
   </div>
+</section>
+<section class="sec alt">
+  <div class="sec-h"><h3 class="sec-title">كل شهر من أول الاستلام</h3></div>
+  <div class="stack g10">${MONTHS.map(m=>`<div class="card tight">
+    <div class="spread"><div><b class="sm">${m.m}</b><div class="tiny dim">${m.note}</div></div>${cell(m.st)}</div>
+    <dl class="kv" style="margin-block-start:10px">
+      <dt>ساعات / يوم</dt><dd class="num">${m.h}</dd>
+      <dt>أيام التشغيل</dt><dd class="num">${m.d}</dd>
+      <dt>نسبة القبول</dt><dd class="num">${m.a}</dd>
+      <dt>نسبة الإلغاء</dt><dd class="num">${m.c}</dd></dl></div>`).join('')}</div>
+  ${notice('info','', 'الشهر بيتقفل آخر يوم فيه، وبعدها ما بيتغيّرش. الشهر الجزئي الأول بيتحسب بالنسبة لأيامه.')}
 </section>
 <section class="sec">
   <div class="sec-h"><h3 class="sec-title">ساعاتك آخر ٨ أسابيع</h3></div>
@@ -1270,28 +1360,64 @@ ${appHeader(`<span class="pill p-ok plain">مشارك نشط</span>`)}
     ${spark(WEEKS, 8)}
     <div class="spread tiny dim" style="margin-block-start:8px"><span>من ٨ أسابيع</span><span>أعلى ٨٫١ · أقل ٦٫٤</span><span>الأسبوع الحالي</span></div>
   </div>
+</section>`:''}
+
+${APP_MB.tab==='svc'?`
+<section class="sec">
+  <div class="sec-h"><h3 class="sec-title">الصيانة الجاية</h3></div>
+  <div class="card">
+    <div class="spread"><b class="sm">عند ٤٬٠٠٠ كم أو ١٥ أكتوبر</b>${pill('info','أيهما أقرب')}</div>
+    <p class="sm muted" style="margin-block-start:6px">العداد دلوقتي <b>٣٬٢٤٠ كم</b> — فاضل حوالي ٧٦٠ كم.</p>
+    <div class="track" style="margin-block-start:10px"><i class="mid" style="width:81%"></i></div>
+    <button class="btn btn-pri btn-sm btn-block" style="margin-block-start:12px">احجز ميعاد</button>
+  </div>
+  ${notice('info','الصيانة من مراكزنا شرط في العقد',
+    'التكلفة عليك بالأسعار المعلنة، بس الصيانة لازم تتم في مراكز تريد واي — علشان الموتوسيكل يفضل بحالته لحد ما يتحوّل باسمك. الصيانة المتأخرة بتتسجّل في ملفك.')}
 </section>
 <section class="sec alt">
-  <div class="notice n-warn">${ico('warn','ico')}<div>
-    <b>تنبيه واحد مفتوح — نسبة الإلغاء</b>
-    نسبتك ٪٣٫١ والحد ٪٢. عندك <b>٧ أيام</b> للتصحيح قبل ما الحالة تترفع للمراجعة. لو فيه سبب (عطل، ظرف صحي، مشكلة في الطلبات) كلّمنا دلوقتي وهنسجّله.</div></div>
-  <div class="row" style="margin-top:10px">
-    <button class="btn btn-soft btn-sm" style="flex:1">اشرح السبب</button>
-    <button class="btn btn-ghost btn-sm" style="flex:1">اتكلم مع الدعم</button></div>
+  <div class="sec-h"><h3 class="sec-title">مراكز الصيانة</h3></div>
+  <div class="stack g10">${CENTRES.map(([nm,addr,km,hrs,tel])=>`<div class="card tight">
+    <div class="spread"><b class="sm">${nm}</b><span class="pill p-mute plain lat">${km}</span></div>
+    <p class="tiny dim" style="margin-block-start:4px">${addr}</p>
+    <p class="tiny" style="color:var(--text-2)">${hrs}</p>
+    <div class="row" style="margin-block-start:10px">
+      <button class="btn btn-soft btn-sm" style="flex:1">${ico('pin','ic')} الخريطة</button>
+      <button class="btn btn-ghost btn-sm" style="flex:1">${ico('phone','ic')} <span class="lat">${tel}</span></button></div>
+  </div>`).join('')}</div>
 </section>
 <section class="sec">
-  <div class="sec-h"><h3 class="sec-title">محتاج حاجة؟</h3></div>
-  <div class="stack g8">
-    ${[[ico('wrench'),'بلّغ عن عطل','بنوقف حساب الأيام لحد ما العطل يتصلّح'],
-       [ico('shop'),'أقرب مركز صيانة','مركز المعادي — ٣.١ كم · مفتوح لـ ١٠ م'],
-       [ico('ban'),'حسابي اتقفل على أوبر','بلّغنا فورًا — ده بيأثر على التزامك'],
-       [ico('phone'),'الدعم','١٦٧٢٣ · من ٩ ص لـ ٩ م']
-      ].map(([ic,t,s])=>`<div class="doc"><div class="ic">${ic}</div>
-      <div class="t"><b>${t}</b><span>${s}</span></div><span class="dim">›</span></div>`).join('')}
-  </div>
-  <div class="notice n-info" style="margin-top:12px">${ico('info','ico')}<div>
-    مفيش عدّاد تملّك بيظهر هنا لحد ما طريقة احتساب الاستحقاق تتعتمد نهائيًا مع أوبر. اللي بيتعرض دلوقتي: المدة اللي عدّت والتزامك الفعلي.</div></div>
-</section>`);
+  <div class="sec-h"><h3 class="sec-title">سجل الصيانة</h3></div>
+  <div class="card tight">${SERVICES.map(([km,d,c,st])=>`<div class="check" data-s="done">
+    <span class="bx">✓</span><div class="bd"><b>صيانة ${km}</b><p>${d} · ${c}</p></div>${pill('ok',st)}</div>`).join('')}</div>
+  <p class="tiny dim" style="margin-block-start:10px">السجل ده بيتحدّث من المركز على طول بعد كل زيارة.</p>
+</section>`:''}
+
+${APP_MB.tab==='docs'?`
+<section class="sec">
+  <div class="sec-h"><h3 class="sec-title">أوراقك</h3></div>
+  <p class="sm muted" style="margin-block-end:12px">نسخة من كل ورقة مضيتها يوم الاستلام. متاحة ليك في أي وقت.</p>
+  <div class="stack g8">${MYDOCS.map(([t,sub])=>`<div class="doc">
+    <div class="ic">${ico('doc')}</div><div class="t"><b>${t}</b><span>${sub}</span></div>
+    <button class="btn btn-soft btn-sm">افتح</button></div>`).join('')}</div>
+  ${notice('info','', 'النسخة اللي بتسري عليك هي اللي مضيتها يوم <b>١٤ يونيو ٢٠٢٦</b>. أي تعديل في شروط دفعة جديدة ما بيغيّرش عقدك إنت.')}
+</section>
+<section class="sec alt">
+  <div class="sec-h"><h3 class="sec-title">بياناتك</h3></div>
+  <div class="card"><dl class="kv">
+    <dt>الاسم</dt><dd>محمود سيد عبد العظيم حسن</dd>
+    <dt>رقم الطلب</dt><dd class="lat">TW-2026-10428</dd>
+    <dt>الموبايل</dt><dd class="lat">0100 254 7719</dd>
+    <dt>نقطة الاستلام</dt><dd>النصر موتورز — المعادي</dd>
+    <dt>الضامن</dt><dd>سيد عبد العظيم</dd></dl>
+    <p class="tiny dim" style="margin-block-start:10px">لتغيير رقم الموبايل أو العنوان، كلّم الدعم — التغيير بيتم بعد التحقق.</p></div>
+</section>`:''}
+`);
+
+
+document.addEventListener('click',(e)=>{
+  const t=e.target.closest('[data-mb]'); if(!t) return;
+  e.preventDefault(); APP_MB.tab=t.dataset.mb; render();
+});
 </script>
 <script>
 /* ================= لوحة التشغيل ================= */
@@ -2423,12 +2549,6 @@ const S_point = () => {
 };
 </script>
 <style>
-.segbar{display:flex;gap:4px;background:var(--surface-sunken);border-radius:var(--r-sm);padding:3px;
-  position:sticky;top:0;z-index:5;overflow-x:auto;scrollbar-width:none}
-.segbar::-webkit-scrollbar{display:none}
-.segbar button{flex:1 0 auto;padding:10px 14px;border-radius:var(--r-xs);font:600 13px var(--font-ui);
-  color:var(--text-2);white-space:nowrap;min-height:44px}
-.segbar button[data-on="1"]{background:var(--surface);color:var(--text);box-shadow:0 1px 2px rgba(20,23,31,.06)}
 .ucard{background:var(--surface);border:1px solid var(--hairline);border-radius:var(--r-md);padding:14px;
   display:flex;flex-direction:column;gap:9px;text-align:start;width:100%;cursor:pointer}
 .ucard .pl{font:600 17px var(--font-figure)}
@@ -2755,6 +2875,9 @@ Object.assign(PT_SCREENS, {P17:S_p17, P18:S_p18, P11:S_p11x, P21:S_p21});
 .pt-aud .seg{display:flex;gap:3px;background:var(--surface-sunken);border-radius:var(--r-pill);padding:3px}
 .pt-aud .seg button{padding:8px 16px;border-radius:var(--r-pill);font:600 13px var(--font-ui);color:var(--text-2);min-height:40px}
 .pt-aud .seg button[data-on="1"]{background:var(--surface);color:var(--text);box-shadow:0 1px 2px rgba(20,23,31,.08)}
+.pt-aud .seg{background:var(--chrome-raised);border:1px solid var(--chrome-line)}
+.pt-aud .seg button{color:var(--chrome-dim)}
+.pt-aud svg{width:15px;height:15px;vertical-align:-2px}
 .psec{padding:28px 20px;border-block-end:1px solid var(--hairline)}
 .psec:last-child{border-block-end:0}
 .psec.alt{background:var(--ground)}
@@ -2872,18 +2995,20 @@ const slider = (id,lb,min,max,step,val,unit) => `<div class="slider">
 const S_pitch = () => {
   const U = isUber();
   return `<div class="pitch">
-  <div class="pt-aud">${LOCKUP}<div style="flex:1"></div>
-    <span class="tiny dim">بتعرض لـ</span>
+  <div class="pt-aud" style="background:var(--chrome);border-color:var(--chrome-line);color:var(--chrome-text)">
+    <span style="font:600 12px var(--font-ui)">${ico('ban','ic')} صفحة عرض — مش جزء من موقع المتقدم</span>
+    <div style="flex:1"></div>
+    <span class="tiny" style="color:var(--chrome-dim)">بتعرض لـ</span>
     <div class="seg">${[['captain','كابتن'],['uber','أوبر والإدارة']].map(([k,t])=>
       `<button type="button" data-pi="aud" data-v="${k}" data-on="${PITCH.aud===k?1:0}">${t}</button>`).join('')}</div>
   </div>
 
   <section class="popen">
-    <span class="kicker">تريد واي × أوبر · الدفعة الأولى</span>
-    <h2>${U?'برنامج تشغيل بينتهي بتملّك':'بتشتغل بيه دلوقتي.'}<em>${U?'١٬٠٠٠ موتوسيكل، مدينتين، ١٢ شهر.':'وبيبقى باسمك لو كمّلت.'}</em></h2>
+    <span class="kicker">أوبر بالشراكة مع تريد واي · الدفعة الأولى</span>
+    <h2>${U?'برنامج تمويل بينتهي بتملّك':'موتوسيكلك وشغلك'}<em>${U?'١٬٠٠٠ موتوسيكل، مدينتين، ١٢ شهر.':'من غير ما تدفع جنيه.'}</em></h2>
     <p class="lede" style="margin-block-start:14px;font-size:16px;color:var(--text-2)">
-      ${U?'الكابتن بياخد موتوسيكل من غير مقدم ولا أقساط، وبيلتزم بمؤشرات تشغيل شهرية بتتقاس من تقارير أوبر. تريد واي بتتحمّل الوحدة والترخيص والتأمين، والملكية بتتنقل بعد استيفاء المدة والمؤشرات.'
-         :'من غير مقدم ولا أقساط تمليك. بنجيب الموتوسيكل ونرخّصه ونأمّنه، وإنت بتشتغل بيه. لو كمّلت التزامك طول المدة، شغلك ده بيكون هو تمنه.'}</p>
+      ${U?'برنامج تمويلي بيدّي الكابتن موتوسيكل من غير مقدم ولا أقساط، مقابل التزامه بمؤشرات تشغيل شهرية بتتقاس من تقارير أوبر. التمويل والترخيص والتأمين على البرنامج، والملكية بتتنقل بعد استيفاء المدة والمؤشرات.'
+         :'برنامج تمويلي هدفه إن اللي مش قادر يشتري موتوسيكل يمتلك واحد. من غير مقدم، ومن غير أقساط، ومن غير أي مصاريف — وبتشتغل بيه على أوبر من أول يوم.'}</p>
     <div class="row" style="margin-block-start:18px">${DRAFT}
       <span class="tiny dim">المدة والمؤشرات لسه تحت الاعتماد النهائي مع أوبر.</span></div>
   </section>
@@ -3001,7 +3126,7 @@ const S_pitch = () => {
            ['الوقت من الترشيح للتسليم؟','١٧ يوم في المتوسط. ستة منهم في تجهيز حساب أوبر لوحده — وده أكبر تسريب عندنا، مش المستندات زي ما الناس فاكرة.'],
            ['ولو الطلب ضعف في منطقة؟','ده مش ذنب الكابتن، فما بيتخصمش عليه. الحالة بتروح لمراجعة بشرية، والهدف نفسه ممكن يتعدّل للمنطقة دي.']]
         :[['هل فيه أي فلوس بدفعها؟','لأ. ولا جنيه. لا مقدم، لا قسط، لا رسوم ملف. لو حد طلب منك فلوس — أيًا كان مين — ده مش إحنا.'],
-          ['وإيه اللي يخلّيني أصدّق؟','الترخيص والتأمين بندفعهم إحنا. محدش بينصب على حد وبيدفع له ترخيص سنة. وبتمضي في معرض على الأرض، معاك ضامنك، وبتمشي ومعاك نسخة من كل ورقة مضيتها.'],
+          ['طب إيه اللي هتستفيدوه إنتو؟','أوبر عايزة كباتن شغالين، وإحنا بنشغّل الأسطول. إنت بتشتغل، أوبر بتكبر، والموتوسيكل بيتسدّد من الشغل ويتحوّل لك.'],
           ['لو مرضت أو الموتوسيكل باظ؟','بلّغ من صفحتك في نفس اليوم. العطل والمرض بيتسجّلوا وبيترفعوا لمراجعة، وممكن الأيام دي تتجمّد. اللي بيضرّك إنك تسكت والأرقام تنزل ومحدش عارف ليه.'],
           ['معنديش حساب أوبر','أغلب اللي بيقدّموا معندهمش. فيه موظف بيفتحه معاك خطوة بخطوة. مش شرط دخول.'],
           ['ممكن أبيعه أو أأجّره؟','لأ. الترخيص باسمنا لحد ما المدة تخلص، والموتوسيكل علشان تشتغل بيه إنت بنفسك. ده مكتوب في العقد.']])
@@ -3461,8 +3586,8 @@ const PORTALS = [
     {id:'P15', nav:'قائمة المزامنة', title:'قائمة المزامنة', desc:'اقطع الشبكة من الزرار فوق وكمّل تسليم — هتلاقي اللي مستني رفع هنا. مفيش حذف، إعادة محاولة بس.', render:S_point},
     {id:'P16', nav:'مستخدمو النقطة', title:'مستخدمو النقطة', desc:'التسجيل على مستوى النقطة: المدير بيضيف مشغّلين ويربط أجهزة. ما يقدرش يعمل مدير تاني ولا يدّي صلاحية هو نفسه مش معاه.', render:S_point}
   ]},
-  {id:'pitch', tab:'العرض التفاعلي', kind:'للعرض — كابتن أو أوبر', screens:[
-    {id:'main', nav:'عرض البرنامج', title:'عرض البرنامج', desc:'صفحة واحدة بجمهورين: بدّل من فوق بين «كابتن» و«أوبر والإدارة». الأرقام واحدة في الحالتين — اللي بيتغيّر هو الترتيب والعمق. فيها حاسبة الكابتن يحط ساعاته الحقيقية ويشوف بصدق هيكمّل ولا لأ.', render:S_pitch}
+  {id:'pitch', tab:'عرض للاجتماعات', kind:'مش جزء من الموقع', screens:[
+    {id:'main', nav:'عرض البرنامج', title:'عرض البرنامج (مش جزء من الموقع)', desc:'دي مش صفحة في الموقع ولا الكابتن هيشوفها. دي صفحة إنت بتفتحها في اجتماع مع أوبر أو بتوريها لكابتن قاعد قدامك. صفحة واحدة بجمهورين: بدّل من فوق بين «كابتن» و«أوبر والإدارة». الأرقام واحدة في الحالتين — اللي بيتغيّر هو الترتيب والعمق. فيها حاسبة الكابتن يحط ساعاته الحقيقية ويشوف بصدق هيكمّل ولا لأ.', render:S_pitch}
   ]},
 ];
 
