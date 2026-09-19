@@ -2744,6 +2744,290 @@ document.addEventListener('click',(e)=>{
 Object.assign(PT_SCREENS, {P17:S_p17, P18:S_p18, P11:S_p11x, P21:S_p21});
 </script>
 <style>
+.pitch{background:var(--surface);border:1px solid var(--hairline);border-radius:var(--r-lg);overflow:hidden}
+.pt-aud{position:sticky;top:0;z-index:10;background:var(--surface);border-block-end:1px solid var(--hairline);
+  padding:12px 20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.pt-aud .seg{display:flex;gap:3px;background:var(--surface-sunken);border-radius:var(--r-pill);padding:3px}
+.pt-aud .seg button{padding:8px 16px;border-radius:var(--r-pill);font:600 13px var(--font-ui);color:var(--text-2);min-height:40px}
+.pt-aud .seg button[data-on="1"]{background:var(--surface);color:var(--text);box-shadow:0 1px 2px rgba(20,23,31,.08)}
+.psec{padding:28px 20px;border-block-end:1px solid var(--hairline)}
+.psec:last-child{border-block-end:0}
+.psec.alt{background:var(--ground)}
+.psec h4{font:700 24px/1.4 var(--font-display);margin-block-end:6px}
+.psec .kicker{font:600 11.5px var(--font-ui);color:var(--text-3);margin-block-end:8px}
+.psec p.lede{max-width:52ch}
+.popen{padding:40px 20px 34px;background:var(--ground);border-block-end:1px solid var(--hairline)}
+.popen h2{font:700 34px/1.35 var(--font-display);max-width:18ch}
+.popen h2 em{font-style:normal;color:var(--accent-ink);display:block}
+@media (max-width:620px){.popen h2{font-size:26px}.psec h4{font-size:20px}.psec,.popen{padding-inline:16px}}
+.calc{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
+@media (max-width:820px){.calc{grid-template-columns:1fr}}
+.slider{display:flex;flex-direction:column;gap:6px}
+.slider label{font:600 13px var(--font-ui);display:flex;justify-content:space-between;align-items:baseline}
+.slider label b{font:600 17px var(--font-figure);color:var(--accent-ink)}
+.slider input[type=range]{width:100%;accent-color:var(--accent);height:34px}
+.bignum{font:600 40px/1.1 var(--font-figure);color:var(--text)}
+.vs{display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:center;margin-block-start:14px}
+.vs .box{background:var(--surface);border:1px solid var(--hairline);border-radius:var(--r-md);padding:16px;text-align:center}
+.vs .box.win{border-color:var(--pos-border);background:var(--pos-fill)}
+.vs .mid{font:600 13px var(--font-ui);color:var(--text-3)}
+.verdict{border-radius:var(--r-md);padding:18px;border:1px solid transparent;margin-block-start:16px}
+.verdict h5{font:700 19px/1.45 var(--font-display);margin-block-end:6px}
+.verdict.pass{background:var(--pos-fill);border-color:var(--pos-border);color:var(--pos-ink)}
+.verdict.edge{background:var(--att-fill);border-color:var(--att-border);color:var(--att-ink)}
+.verdict.fail{background:var(--crit-fill);border-color:var(--crit-border);color:var(--crit-ink)}
+.jstep{border:1px solid var(--hairline);border-radius:var(--r-md);background:var(--surface);overflow:hidden}
+.jstep summary{padding:14px 16px;font:600 15px var(--font-ui);cursor:pointer;list-style:none;
+  display:flex;gap:12px;align-items:center;min-height:52px}
+.jstep summary::-webkit-details-marker{display:none}
+.jstep summary .n{width:26px;height:26px;border-radius:50%;background:var(--accent-subtle);color:var(--accent-ink);
+  display:grid;place-items:center;font:600 13px var(--font-figure);flex:0 0 auto}
+.jstep[open] summary .n{background:var(--accent);color:var(--on-accent)}
+.jstep .bd{padding:0 16px 14px 16px;font-size:13.5px;line-height:1.75;color:var(--text-2)}
+.citybtn{display:flex;gap:8px;flex-wrap:wrap}
+.pnum{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.pnum .c{background:var(--surface);border:1px solid var(--hairline);border-radius:var(--r-sm);padding:14px}
+.pnum .c b{display:block;font:600 26px/1.15 var(--font-figure)}
+.pnum .c span{font-size:12px;color:var(--text-3)}
+.formula{font:500 12.5px var(--font-figure);color:var(--text-3);background:var(--surface-sunken);
+  border-radius:var(--r-xs);padding:8px 11px;margin-block-start:10px;direction:ltr;text-align:start}
+</style>
+<script>
+/* ================= شاشة العرض التفاعلية ================= */
+const PITCH = {aud:'captain', rent:120, hours:8, days:6, acc:7, canc:2, batch:1000, city:'cairo',
+  mHours:8, mDays:26, mAcc:60, mCanc:2};
+const isUber = () => PITCH.aud==='uber';
+const CITIES = {
+  cairo:{nm:'القاهرة الكبرى', pts:['النصر موتورز — المعادي','بايك هاوس — مدينة نصر','موتو بوينت — فيصل','ورشة تريد واي — حلوان','النيل موتورز — شبرا'], cap:42, share:600},
+  hurghada:{nm:'الغردقة', pts:['موتو الغردقة — الدهار'], cap:6, share:150}
+};
+function verdict(){
+  const daysM = Math.round(PITCH.days*4.33);
+  const accPct = PITCH.acc*10;
+  const miss = [];
+  if(PITCH.hours < PITCH.mHours) miss.push(['ساعات الاتصال', PITCH.hours+' مقابل '+PITCH.mHours]);
+  if(daysM < PITCH.mDays) miss.push(['أيام التشغيل', daysM+' مقابل '+PITCH.mDays]);
+  if(accPct < PITCH.mAcc) miss.push(['نسبة القبول', accPct+'% مقابل '+PITCH.mAcc+'%']);
+  if(PITCH.canc > PITCH.mCanc) miss.push(['نسبة الإلغاء', PITCH.canc+'% مقابل '+PITCH.mCanc+'%']);
+  const hard = miss.filter(m=>{
+    if(m[0]==='ساعات الاتصال') return PITCH.hours < PITCH.mHours*0.9;
+    if(m[0]==='أيام التشغيل') return daysM < PITCH.mDays*0.9;
+    if(m[0]==='نسبة القبول') return accPct < PITCH.mAcc*0.9;
+    return PITCH.canc > PITCH.mCanc*1.5;
+  });
+  return {daysM, accPct, miss, k: miss.length===0 ? 'pass' : hard.length ? 'fail' : 'edge'};
+}
+function pitchRecalc(){
+  const V = verdict(), g = id => document.getElementById(id);
+  const set = (id, v) => { const e=g(id); if(e) e.textContent = v; };
+  const N = v => isUber() ? String(v) : ar(v);
+  set('pv-rent', N(PITCH.rent)); set('pv-hours', N(PITCH.hours)); set('pv-days', N(PITCH.days));
+  set('pv-acc', N(PITCH.acc)); set('pv-canc', N(PITCH.canc));
+  set('pv-mHours', PITCH.mHours); set('pv-mDays', PITCH.mDays);
+  set('pv-mAcc', PITCH.mAcc); set('pv-mCanc', PITCH.mCanc);
+  set('pv-month', (PITCH.rent*30).toLocaleString('ar-EG'));
+  set('pv-year', (PITCH.rent*365).toLocaleString('ar-EG'));
+  set('pv-daysm', N(V.daysM)); set('pv-accp', isUber()?V.accPct+'%':'٪'+ar(V.accPct));
+  const gz = g('pv-gauges');
+  if(gz) gz.innerHTML = [
+    ['ساعات الاتصال / اليوم', PITCH.hours, PITCH.mHours, true, PITCH.hours, PITCH.mHours+' ساعات'],
+    ['أيام التشغيل / الشهر', V.daysM, PITCH.mDays, true, V.daysM, PITCH.mDays+' يوم'],
+    ['نسبة قبول الطلبات', V.accPct, PITCH.mAcc, true, '٪'+V.accPct, '٪'+PITCH.mAcc],
+    ['نسبة الإلغاء', PITCH.canc, PITCH.mCanc, false, '٪'+PITCH.canc, '٪'+PITCH.mCanc]
+  ].map(([lb,v,t,hb,d,td])=>gaugeCard(lb, v, t, hb, d, td, '', hb?'أعلى':'أقل')).join('');
+  const vd = g('pv-verdict');
+  if(vd){
+    vd.className = 'verdict '+V.k;
+    vd.innerHTML = V.k==='pass'
+      ? `<h5>بالأرقام دي إنت هتكمّل.</h5><p>الأربع مؤشرات فوق المطلوب. خلي بالك إن ده متوسط شهر — أسبوع واحد وحش مش مشكلة، شهر كامل تحت الحد هو اللي بيفتح مهلة تصحيح.</p>`
+      : V.k==='edge'
+      ? `<h5>إنت على الحد — ينفع بس من غير هامش.</h5><p>قريب من المطلوب في: ${V.miss.map(m=>m[0]).join(' · ')}. يعني أول أسبوع مرض أو عطل هيوقّعك تحت الحد. لو تقدر تزوّد شوية، زوّد.</p>`
+      : `<h5>بالأرقام دي إنت مش هتكمّل — وأحسن تعرف دلوقتي.</h5>
+         <p>${V.miss.map(m=>m[0]+': '+m[1]).join(' · ')}. الفرق ده مش بيتعوّض بشهر كويس، وبيوصل في الآخر لمهلة تصحيح وبعدها استرداد الموتوسيكل.</p>
+         <p style="margin-block-start:8px">البرنامج ده مش مناسب لكل حد، ومفيش عيب في كده. لو ظروفك اتغيرت بعدين، الدفعات بتتفتح تاني.</p>`;
+  }
+  const cta = g('pv-cta');
+  if(cta) cta.innerHTML = V.k==='fail'
+    ? `<button class="btn btn-ghost btn-block">سجّل اهتمامي لدفعة جاية</button>`
+    : `<button class="btn btn-pri btn-block" data-go="applicant:verify">ابدأ التقديم</button>`;
+  const bn = g('pv-batch');
+  if(bn){
+    const B = PITCH.batch, pts = Math.ceil(B/220), perDay = Math.ceil(B/60), weeks = Math.ceil(B/perDay/6);
+    bn.innerHTML = [[B.toLocaleString('en-US'),'موتوسيكل في الدفعة'],[perDay,'تسليم في اليوم على 60 يوم'],
+      [pts,'نقطة توزيع مطلوبة'],[weeks,'أسبوع لإنهاء التسليم'],[Math.ceil(perDay/6),'مشغّل في كل نقطة']]
+      .map(([v,l])=>`<div class="c"><b class="lat">${v}</b><span>${l}</span></div>`).join('');
+    const f = g('pv-formula');
+    if(f) f.textContent = `${B} ÷ 60 يوم = ${perDay}/يوم · ÷ 6 تسليم لكل نقطة/يوم = ${pts} نقطة`;
+  }
+}
+const slider = (id,lb,min,max,step,val,unit) => `<div class="slider">
+  <label for="${id}">${lb}<b><span id="pv-${id.replace('ps-','')}">${val}</span> ${unit||''}</b></label>
+  <input type="range" id="${id}" min="${min}" max="${max}" step="${step}" value="${val}" data-pi="${id.replace('ps-','')}"></div>`;
+
+const S_pitch = () => {
+  const U = isUber();
+  return `<div class="pitch">
+  <div class="pt-aud">${LOCKUP}<div style="flex:1"></div>
+    <span class="tiny dim">بتعرض لـ</span>
+    <div class="seg">${[['captain','كابتن'],['uber','أوبر والإدارة']].map(([k,t])=>
+      `<button type="button" data-pi="aud" data-v="${k}" data-on="${PITCH.aud===k?1:0}">${t}</button>`).join('')}</div>
+  </div>
+
+  <section class="popen">
+    <span class="kicker">تريد واي × أوبر · الدفعة الأولى</span>
+    <h2>${U?'برنامج تشغيل بينتهي بتملّك':'بتشتغل بيه دلوقتي.'}<em>${U?'١٬٠٠٠ موتوسيكل، مدينتين، ١٢ شهر.':'وبيبقى باسمك لو كمّلت.'}</em></h2>
+    <p class="lede" style="margin-block-start:14px;font-size:16px;color:var(--text-2)">
+      ${U?'الكابتن بياخد موتوسيكل من غير مقدم ولا أقساط، وبيلتزم بمؤشرات تشغيل شهرية بتتقاس من تقارير أوبر. تريد واي بتتحمّل الوحدة والترخيص والتأمين، والملكية بتتنقل بعد استيفاء المدة والمؤشرات.'
+         :'من غير مقدم ولا أقساط تمليك. بنجيب الموتوسيكل ونرخّصه ونأمّنه، وإنت بتشتغل بيه. لو كمّلت التزامك طول المدة، شغلك ده بيكون هو تمنه.'}</p>
+    <div class="row" style="margin-block-start:18px">${DRAFT}
+      <span class="tiny dim">المدة والمؤشرات لسه تحت الاعتماد النهائي مع أوبر.</span></div>
+  </section>
+
+  <section class="psec alt">
+    <span class="kicker">مقارنة</span><h4>إنت بتدفع كام في الموتوسيكل دلوقتي؟</h4>
+    <p class="lede muted">حرّك الشريط على اللي بتدفعه إيجار في اليوم، وشوف الفرق بنفسك.</p>
+    <div class="calc" style="margin-block-start:18px">
+      <div class="stack g14">
+        ${slider('ps-rent','إيجار الموتوسيكل في اليوم',60,300,10,PITCH.rent,'جنيه')}
+        <p class="tiny dim">الرقم الافتراضي ١٢٠ جنيه في اليوم <span class="draft">افتراض</span> — حطّ رقمك إنت.</p>
+      </div>
+      <div class="vs">
+        <div class="box"><span class="tiny dim">إيجار في السنة</span>
+          <div class="bignum"><span id="pv-year">43,800</span></div><span class="tiny dim">جنيه</span></div>
+        <div class="mid">مقابل</div>
+        <div class="box win"><span class="tiny dim">في البرنامج</span>
+          <div class="bignum">٠</div><span class="tiny dim">جنيه — والموتوسيكل بيبقى باسمك</span></div>
+      </div>
+    </div>
+    <p class="tiny dim" style="margin-block-start:12px">الشهر = <span id="pv-month">3,600</span> جنيه. البنزين والمخالفات والصيانة عليك في الحالتين.</p>
+  </section>
+
+  <section class="psec">
+    <span class="kicker">الرحلة</span><h4>من التقديم للتملّك — ٦ خطوات</h4>
+    <div class="stack g8" style="margin-block-start:16px">
+      ${[['قدّم','دقيقتين على الموبايل. أوبر بتبعت كشف المرشحين، والتقديم العام مفتوح كمان.','مراجعة أولية · ٣ أيام عمل'],
+         ['مراجعة وفلترة','بنراجع الرخصة والخبرة ومنطقة السكن، وبنحدد أقرب نقطة توزيع.','مراجع الطلبات · ٢ يوم'],
+         ['تجهيز حساب أوبر','أغلب المتقدمين مالهمش حساب أو حسابهم ناقص. فيه موظف بيمشي معاك الخطوة دي.','مسؤول تجهيز · متوسط ٦ أيام'],
+         ['المستندات والضامن','بطاقة، رخصة، فيش وتشبيه، إثبات سكن، وضامن.','مراجع المستندات · ٢ يوم'],
+         ['التوقيع والاستلام','زيارة واحدة في المعرض: توقيع، فحص، تدريب، استلام. ٩٠ دقيقة.','نقطة التوزيع · نفس اليوم'],
+         ['التزام… وبعدها نقل الملكية','مؤشرات شهرية من تقارير أوبر، ومراجعة استحقاق في الآخر.','١٢ شهر (مبدئية)']]
+        .map(([t,d,meta],i)=>`<details class="jstep"${i===0?' open':''}>
+        <summary><span class="n lat">${i+1}</span>${t}</summary>
+        <div class="bd">${d}${U?`<div class="tiny dim" style="margin-block-start:6px">${meta}</div>`:''}</div></details>`).join('')}
+    </div>
+  </section>
+
+  <section class="psec alt">
+    <span class="kicker">الالتزام</span><h4>الأربع مؤشرات</h4>
+    <p class="lede muted">${U?'الأرقام دي قابلة للتعديل هنا عشان نشوف أثرها فورًا على الحاسبة تحت.':'دي اللي بتتقاس عليك كل شهر، وبتيجي من تقارير أوبر مش من تقديرنا.'}</p>
+    ${U?`<div class="grid4" style="margin-block-start:16px">
+      ${slider('ps-mHours','ساعات أونلاين / يوم',4,12,1,PITCH.mHours,'')}
+      ${slider('ps-mDays','أيام التشغيل / شهر',18,30,1,PITCH.mDays,'')}
+      ${slider('ps-mAcc','نسبة القبول',40,90,5,PITCH.mAcc,'%')}
+      ${slider('ps-mCanc','حد الإلغاء',1,6,1,PITCH.mCanc,'%')}
+    </div>
+    <button class="btn btn-ghost btn-sm" style="margin-block-start:12px" data-pi="resetMatrix">رجّع القيم المبدئية</button>`
+    :`<div class="tbl-wrap" style="margin-block-start:16px"><table class="tbl matrix">
+      <thead><tr><th>المؤشر</th><th>المطلوب</th></tr></thead>
+      <tbody>${MATRIX.map(m=>`<tr><td><b>${m.lb}</b></td><td class="num">${m.target}</td></tr>`).join('')}</tbody></table></div>`}
+  </section>
+
+  <section class="psec">
+    <span class="kicker">الحاسبة</span><h4>شوف حالتك إنت</h4>
+    <p class="lede muted">حطّ أرقامك الحقيقية — مش اللي نفسك فيها. لو الإجابة إن البرنامج مش مناسب ليك، هنقولهالك بصراحة.</p>
+    <div class="calc" style="margin-block-start:18px">
+      <div class="stack g14">
+        ${slider('ps-hours','تقدر تشتغل كام ساعة في اليوم؟',3,14,1,PITCH.hours,'ساعة')}
+        ${slider('ps-days','كام يوم في الأسبوع؟',3,7,1,PITCH.days,'أيام')}
+        ${slider('ps-acc','من كل ١٠ طلبات بتقبل كام؟',2,10,1,PITCH.acc,'')}
+        ${slider('ps-canc','بتلغي كام في المية؟',0,8,1,PITCH.canc,'%')}
+        <p class="tiny dim">يعني حوالي <b class="lat"><span id="pv-daysm">26</span></b> يوم تشغيل في الشهر،
+          ونسبة قبول <b class="lat"><span id="pv-accp">70%</span></b>.</p>
+      </div>
+      <div><div id="pv-gauges" class="stack g10"></div></div>
+    </div>
+    <div id="pv-verdict" class="verdict pass"></div>
+    <div id="pv-cta" style="margin-block-start:14px"></div>
+  </section>
+
+  <section class="psec alt">
+    <span class="kicker">التغطية</span><h4>المدن والنقاط</h4>
+    <div class="citybtn" style="margin-block-start:14px">${Object.entries(CITIES).map(([k,c])=>
+      `<button type="button" class="btn ${PITCH.city===k?'btn-pri':'btn-ghost'} btn-sm" data-pi="city" data-v="${k}">${c.nm}</button>`).join('')}</div>
+    <div class="card" style="margin-block-start:14px">
+      <div class="spread"><b class="sm">${CITIES[PITCH.city].nm}</b>
+        <span class="pill p-mute plain lat">${CITIES[PITCH.city].cap} تسليم / يوم</span></div>
+      <div class="stack g8" style="margin-block-start:12px">${CITIES[PITCH.city].pts.map(p=>
+        `<div class="doc"><div class="ic">${ico('pin')}</div><div class="t"><b>${p}</b></div></div>`).join('')}</div>
+      ${U?`<p class="tiny dim" style="margin-block-start:10px">حصة المدينة من الدفعة: <b class="lat">${CITIES[PITCH.city].share}</b> موتوسيكل <span class="draft">مقترح</span></p>`:''}
+    </div>
+  </section>
+
+  ${U?`<section class="psec">
+    <span class="kicker">حجم التشغيل</span><h4>١٬٠٠٠ ولا ٣٬٠٠٠؟</h4>
+    <p class="lede muted">ده القرار المفتوح في الأوضة. بدّل الرقم وشوف أثره على عدد النقاط والتسليم اليومي والطاقم.</p>
+    <div class="citybtn" style="margin-block-start:14px">${[1000,2000,3000].map(n=>
+      `<button type="button" class="btn ${PITCH.batch===n?'btn-pri':'btn-ghost'} btn-sm" data-pi="batch" data-v="${n}">${n.toLocaleString('en-US')} موتوسيكل</button>`).join('')}</div>
+    <div class="pnum" id="pv-batch" style="margin-block-start:16px"></div>
+    <div class="formula" id="pv-formula"></div>
+    <p class="tiny dim" style="margin-block-start:10px">كل الأرقام دي محسوبة من الصيغة المكتوبة فوق، مش مكتوبة باليد. التسليم ٩٠ دقيقة يعني ٦ تسليمات في اليوم لكل مشغّل.</p>
+  </section>`:''}
+
+  <section class="psec ${U?'alt':''}">
+    <span class="kicker">الجانب التاني</span><h4>لو ما التزمتش — بيحصل إيه بالظبط</h4>
+    <p class="lede muted">مفيش سحب مفاجئ. خمس مراحل، كل واحدة ليها مدة وليها مخرج.</p>
+    <ol class="tl" style="margin-block-start:16px">
+      ${[['تنبيه','بيوصلك في صفحتك وبرسالة، بيقول المؤشر بالظبط والفرق عن المطلوب.','فورًا بعد الاستيراد الشهري'],
+         ['مكالمة','موظف بيكلمك يفهم السبب: عطل؟ مرض؟ ضعف طلب في منطقتك؟ والمكالمة بتتسجّل في ملفك.','خلال ٣ أيام'],
+         ['مهلة تصحيح مكتوبة','مدة محددة في عقدك. ولو السبب مقبول وموثّق، الهدف نفسه ممكن يتعدّل أو المدة تتجمّد.','حسب العقد'],
+         ['مراجعة قرار','مشرف بيراجع الحالة كاملة ويقرر: استمرار، أو تعديل، أو ترشيح للاسترداد.','بعد المهلة'],
+         ['اعتماد الاسترداد','قرار إداري منفصل، بيعتمده مشرف تاني غير اللي فتح الحالة. وعندك ٧ أيام تتظلم.','آخر مرحلة']]
+        .map(([t,d,m],i)=>`<li data-s="${i<1?'now':'todo'}"><span class="dot">${i+1}</span>
+        <div><b>${t}</b><p>${d}</p><time>${m}</time></div></li>`).join('')}
+    </ol>
+  </section>
+
+  <section class="psec ${U?'':'alt'}">
+    <span class="kicker">الأسئلة الصعبة</span><h4>${U?'أسئلة أوبر والإدارة':'أسئلة بتتسأل كتير'}</h4>
+    <div class="stack g8 faq" style="margin-block-start:14px">
+      ${(U?[['إزاي نضمن إن الكابتن مش هيبيع الموتوسيكل؟','الترخيص باسم تريد واي طول المدة — قانونًا ما يقدرش يبيعه. والتأمين والمتابعة الشهرية بيكشفوا التوقف بدري.'],
+           ['مين بيتحمّل خسارة الكابتن اللي ما كمّلش؟','تريد واي. الموتوسيكل بيترجع ويتفحص ويترجّع للمخزون. علشان كده الفلترة والحاسبة اللي فوق مهمين — كابتن مش هيكمّل خسارة للطرفين.'],
+           ['إيه اللي محتاجينه من أوبر بالظبط؟','كشف المرشحين، وتقرير تشغيل شهري بصيغة متفق عليها، وقناة تصعيد لحالات بلوك الحساب. والأرقام الأربعة تتثبت.'],
+           ['الوقت من الترشيح للتسليم؟','متوسط ١٧ يوم في التصميم الحالي، أطول حتة فيهم تجهيز حساب أوبر (٦ أيام). دي أكبر تسريب في القمع.'],
+           ['لو الطلب ضعف في منطقة؟','مؤشر الطلب مش تحت سيطرة الكابتن، فالحالة بترتفع لمراجعة بشرية قبل أي قرار — مش خصم أوتوماتيك.']]
+        :[['هل فيه أي فلوس بدفعها؟','لا. ولا جنيه، ولا في أي خطوة. أي حد يطلب منك فلوس مش من تريد واي.'],
+          ['وإيه اللي يخلّيني أصدّق؟','إحنا اللي بندفع الترخيص والتأمين. محدش بينصب عليك وبيدفع لك ترخيص. وبتمضي في معرض على الأرض ومعاك ضامنك وبتمشي بنسخة من كل ورقة.'],
+          ['لو مرضت أو الموتوسيكل باظ؟','بلّغنا من صفحتك. العطل الموثّق بيترفع لمراجعة بشرية وممكن تتجمّد أيام المدة.'],
+          ['معنديش حساب أوبر','دي حالة أغلب المتقدمين. فيه مرحلة كاملة في البرنامج بنفتحه فيها معاك.'],
+          ['ممكن أبيعه أو أأجّره؟','لا. الترخيص باسم تريد واي لحد نهاية المدة، والموتوسيكل للشغل بيه إنت شخصيًا.']])
+        .map(([q,a])=>`<details><summary>${q}</summary><p>${a}</p></details>`).join('')}
+    </div>
+  </section>
+
+  <div class="stickycta">
+    <span class="note">${U?'الأرقام المؤشرة بـ«مبدئية» محتاجة تثبيت قبل فتح التسجيل':'بدون مقدم · بدون أقساط تمليك · البنزين والصيانة عليك'}</span>
+    ${U?`<button class="btn btn-pri" style="flex:1" data-go="admin:board">افتح لوحة البرنامج</button>
+       <button class="btn btn-ghost" data-go="point:P2">شوف بوابة المعرض</button>`
+      :`<button class="btn btn-pri" style="flex:1" data-go="applicant:verify">ابدأ التقديم</button>
+       <button class="btn btn-ghost" data-go="applicant:landing">اقرا التفاصيل</button>`}
+  </div>
+</div>`;
+};
+document.addEventListener('click',(e)=>{
+  const t=e.target.closest('[data-pi]'); if(!t || t.tagName==='INPUT') return;
+  const k=t.dataset.pi, v=t.dataset.v;
+  if(k==='aud'){ PITCH.aud=v; render(); }
+  else if(k==='city'){ PITCH.city=v; render(); }
+  else if(k==='batch'){ PITCH.batch=+v; render(); }
+  else if(k==='resetMatrix'){ PITCH.mHours=8; PITCH.mDays=26; PITCH.mAcc=60; PITCH.mCanc=2; render(); }
+});
+document.addEventListener('input',(e)=>{
+  const t=e.target.closest('input[type=range][data-pi]'); if(!t) return;
+  PITCH[t.dataset.pi] = +t.value;
+  pitchRecalc();
+});
+</script>
+<style>
 .qrail{display:grid;grid-template-columns:248px minmax(0,1fr);gap:0;background:var(--surface);
   border:1px solid var(--hairline);border-radius:var(--r-sm);overflow:hidden}
 .qrail .rail-list{border-inline-end:1px solid var(--hairline);padding:8px;display:flex;flex-direction:column;gap:2px}
@@ -3133,6 +3417,9 @@ document.addEventListener('change',(e)=>{
 <script>
 /* ================= السجل والتنقل ================= */
 const PORTALS = [
+  {id:'pitch', tab:'العرض التفاعلي', kind:'للعرض — كابتن أو أوبر', screens:[
+    {id:'main', nav:'عرض البرنامج', title:'عرض البرنامج', desc:'صفحة واحدة بجمهورين: بدّل من فوق بين «كابتن» و«أوبر والإدارة». الأرقام واحدة في الحالتين — اللي بيتغيّر هو الترتيب والعمق. فيها حاسبة الكابتن يحط ساعاته الحقيقية ويشوف بصدق هيكمّل ولا لأ.', render:S_pitch}
+  ]},
   {id:'applicant', tab:'موقع المتقدم', kind:'موبايل — الكابتن', screens:[
     {id:'landing',  nav:'صفحة البرنامج', title:'صفحة البرنامج', desc:'أول شاشة يشوفها الكابتن لما أوبر تبعتله اللينك: الفرصة، الالتزامات، مين بيتحمل إيه، والورق المطلوب — قبل ما يبدأ يقدّم.', render:S_landing},
     {id:'verify',   nav:'تحقق من الترشيح', title:'الدخول والتحقق', desc:'دخول برقم الموبايل وكود تأكيد. الرقم بيتطابق مع كشف ترشيحات أوبر، والتقديم العام مفتوح برضه لغير المرشحين.', render:S_verify},
@@ -3174,9 +3461,9 @@ const PORTALS = [
   ]}
 ];
 
-let cur = {p:'applicant', s:'landing'};
+let cur = {p:'pitch', s:'main'};
 const $ = (q)=>document.querySelector(q);
-const PREFIX = {applicant:'A', admin:'B', point:'C'};
+const PREFIX = {pitch:'P', applicant:'A', admin:'B', point:'C'};
 
 function renderTabs(){
   $('#portalTabs').innerHTML = PORTALS.map(p=>
@@ -3195,6 +3482,7 @@ function render(){
   $('#scKind').textContent = P.kind;
   if(P.id==='point' && APP.point) cur.s = APP.screen;
   $('#scMount').innerHTML = S.render();
+  if(P.id==='pitch') pitchRecalc();
   if(P.id==='point'){
     const nav = $('#screenNav');
     [...nav.children].forEach(b=>b.setAttribute('aria-current', b.dataset.screen===(APP.point?APP.screen:'P0')));
