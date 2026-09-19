@@ -773,16 +773,34 @@ function spark(vals, target, o){
 const S_landing = () => phone(`
 ${appHeader(`<button class="btn btn-ghost btn-sm" data-go="applicant:track">متابعة طلبي</button>`)}
 <section class="hero">
-  <span class="eyebrow">برنامج تمليك موتوسيكلات — دفعة ٢٠٢٦</span>
-  <h1 style="margin-top:8px">اشتغل بالموتوسيكل<em>وفي الآخر يبقى باسمك.</em></h1>
-  <p class="lede">برنامج من <b>تريد واي</b> بالشراكة مع <b>أوبر</b>. من غير مقدم ولا أقساط تمليك — الشرط الوحيد إنك تلتزم بساعات وأيام الشغل المتفق عليها طول مدة البرنامج.</p>
+  <span class="eyebrow">برنامج تمليك موتوسيكلات — تريد واي × أوبر · الدفعة الأولى</span>
+  <h1 style="margin-top:8px">اشتغل بالموتوسيكل<em>ولو كمّلت التزامك يبقى باسمك.</em></h1>
+  <p class="lede">برنامج من <b>تريد واي</b> بالشراكة مع <b>أوبر</b>. مفيش مقدم ومفيش أقساط تمليك — بتاخد الموتوسيكل تشتغل بيه، والتزامك بساعات وأيام الشغل هو اللي بيخليه يتحوّل باسمك في الآخر.</p>
   <div class="facts">
     <div><b>٠ جنيه</b><span>مقدم</span></div>
     <div><b>٠ جنيه</b><span>قسط تمليك شهري</span></div>
     <div><b>١٢ شهر</b><span>مدة البرنامج (مبدئية)</span></div>
     <div><b>مدينتين</b><span>القاهرة الكبرى · الغردقة</span></div>
   </div>
-  <div class="row" style="margin-top:12px">${DRAFT}<span class="tiny dim">المدة والشروط تحت الاعتماد النهائي مع أوبر.</span></div>
+  <div class="row" style="margin-top:12px">${DRAFT}<span class="tiny dim">المدة والمؤشرات لسه تحت الاعتماد النهائي مع أوبر. اللي هيتكتب في عقدك هو اللي بيسري عليك.</span></div>
+</section>
+
+<section class="sec">
+  ${notice('info','مش ببلاش — مدفوع بشغلك',
+    'إحنا بنجيب الموتوسيكل ونرخّصه ونأمّنه، وإنت بتشتغل بيه. لو كمّلت التزامك طول المدة، شغلك ده بيكون هو تمنه وبيتحوّل باسمك. تمن الموتوسيكل بيرجعلنا من دخل التوصيل اللي إنت بتعمله على أوبر، مش من جيبك.<br><br><b>مش هتدفع مقدم ولا قسط تمليك — ولا جنيه، ولا في أي خطوة. أي حد يطلب منك فلوس علشان «يخلّص لك الطلب» أو «يحجزلك موتوسيكل» مش من تريد واي، وبلّغنا عنه على ١٦٧٢٣.</b>')}
+</section>
+
+<section class="sec alt">
+  <div class="sec-h"><h3 class="sec-title">اللي هتدفعه من جيبك</h3></div>
+  <p class="sm muted" style="margin-block-end:12px">علشان تبقى داخل وإنت عارف — دي مش مصاريف البرنامج، دي مصاريف الشغل العادية اللي بتدفعها دلوقتي أصلًا.</p>
+  <div class="stack g8">
+    ${[['البنزين','يومي · على حسب شغلك'],
+       ['المخالفات المرورية','أي مخالفة تتسجّل على الموتوسيكل بعد استلامك'],
+       ['الصيانة بعد الاستلام','من مراكز صيانة تريد واي بأسعارها المعلنة']]
+      .map(([t,d])=>`<div class="doc"><div class="ic">${ico('wrench')}</div>
+      <div class="t"><b>${t}</b><span>${d}</span></div></div>`).join('')}
+  </div>
+  <p class="sm" style="margin-block-start:12px;color:var(--text-2)"><b>وعلينا إحنا:</b> تمن الموتوسيكل، الترخيص واللوحات، التأمين طول المدة، وأي عيب مصنعي ظاهر وقت الاستلام.</p>
 </section>
 
 <section class="sec">
@@ -794,7 +812,7 @@ ${appHeader(`<button class="btn btn-ghost btn-sm" data-go="applicant:track">مت
       ['٣','تجهيز حسابك على أوبر','لو معندكش حساب أو حسابك ناقص، فيه موظف من عندنا بيمشي معاك الخطوة دي.'],
       ['٤','المستندات والضامن','بطاقة، رخصة، فيش وتشبيه، إثبات سكن، وضامن حسب الشروط.'],
       ['٥','التوقيع والاستلام','ميعاد واحد في نقطة التوزيع: تمضي العقد، يتفحص الموتوسيكل قدامك، وتستلمه.'],
-      ['٦','التزام… ثم التملّك','تكمّل مؤشرات التشغيل طول المدة، وبعدها الملكية تتنقل باسمك.']
+      ['٦','التزام… وبعدها نقل الملكية','تكمّل مؤشرات التشغيل طول المدة، الفريق يراجع استحقاقك، وبعدها الملكية تتنقل باسمك.']
     ].map(([n,t,d],i)=>`<li data-s="${i<1?'now':'todo'}"><span class="dot">${n}</span>
       <div><b>${t}</b><p>${d}</p></div></li>`).join('')}
   </ol>
@@ -802,6 +820,7 @@ ${appHeader(`<button class="btn btn-ghost btn-sm" data-go="applicant:track">مت
 
 <section class="sec alt">
   <div class="sec-h"><h3 class="sec-title">التزاماتك خلال البرنامج</h3>${DRAFT}</div>
+  <p class="sm muted" style="margin-block-end:12px">الأربع مؤشرات دول بييجوا من تقارير أوبر — مش من تقديرنا إحنا.</p>
   <div class="tbl-wrap" style="margin-bottom:10px"><table class="tbl matrix">
     <thead><tr><th>المؤشر</th><th>المطلوب</th><th>بنقيسه إزاي</th></tr></thead>
     <tbody>${MATRIX.map(m=>`<tr><td><b>${m.lb}</b></td>
@@ -820,7 +839,7 @@ ${appHeader(`<button class="btn btn-ghost btn-sm" data-go="applicant:track">مت
     <tr><td>ترخيص الموتوسيكل واللوحات</td><td>${pill('brand','تريد واي')}</td></tr>
     <tr><td>التأمين خلال مدة البرنامج</td><td>${pill('brand','تريد واي')}</td></tr>
     <tr><td>عيوب التسليم (أي عيب مصنعي وقت الاستلام)</td><td>${pill('brand','تريد واي')}</td></tr>
-    <tr><td>الصيانة الدورية والأعطال بعد الاستلام</td><td>${pill('mute','الكابتن — من خلال مراكز صيانة تريد واي')}</td></tr>
+    <tr><td>الصيانة الدورية والأعطال بعد الاستلام<div class="tiny dim">الصيانة من مراكزنا شرط في العقد، علشان الموتوسيكل يفضل بحالته لحد ما يتحوّل باسمك.</div></td><td>${pill('mute','الكابتن — من خلال مراكز صيانة تريد واي')}</td></tr>
     <tr><td>البنزين والمخالفات المرورية</td><td>${pill('mute','الكابتن')}</td></tr>
     </tbody></table></div>
 </section>
@@ -845,14 +864,16 @@ ${appHeader(`<button class="btn btn-ghost btn-sm" data-go="applicant:track">مت
 <section class="sec">
   <div class="notice n-warn">${ico('warn','ico')}<div>
     <b>مهم تعرفه قبل ما تقدّم</b>
-    الموتوسيكل بيفضل مُرخّص باسم تريد واي طول مدة البرنامج. لو توقفت عن الشغل، أو الحساب اتقفل، أو ما التزمتش بالمؤشرات — بنتواصل معاك ونديك مهلة تصحيح، ولو الوضع استمر يحق لنا استرداد الموتوسيكل حسب العقد.</div></div>
+    الموتوسيكل بيفضل مُرخّص باسم تريد واي طول مدة البرنامج، ومش بيتحوّل باسمك غير بعد ما تكمّل. لو وقفت عن الشغل، أو حسابك على أوبر اتقفل، أو ما كمّلتش المؤشرات — بنكلّمك ونديك مهلة تصحيح مكتوبة، ولو الوضع استمر يحق لنا نسترد الموتوسيكل حسب العقد. الاسترداد قرار بشري باعتماد مشرفين، مش إجراء أوتوماتيك — بس هو وارد، ولازم تدخل البرنامج وإنت عارف كده.</div></div>
 </section>
 
 <section class="sec alt faq">
   <div class="sec-h"><h3 class="sec-title">أسئلة بتتسأل كتير</h3></div>
   <div class="stack g8">
     ${[
-      ['هل فيه أي فلوس بدفعها للتملّك؟','لا. مفيش مقدم ولا أقساط تملّك. التملّك مقابل الالتزام بالشغل فقط. البنزين والمخالفات والصيانة بعد الاستلام عليك.'],
+      ['هل فيه أي فلوس بدفعها للتملّك؟','لا. ولا جنيه، ولا في أي خطوة. البنزين والمخالفات والصيانة بعد الاستلام عليك — دي مصاريف شغلك، مش مصاريف البرنامج.'],
+      ['وإيه اللي يخلّيني أصدّق إن ده مش نصب؟','الموتوسيكل بيتباع ويتأمّن باسم تريد واي وإحنا بندفع ده — محدش بينصب عليك وبيدفع لك ترخيص وتأمين. وأوبر هي اللي بتبعت كشف المرشحين وهي اللي بتبعت أرقام أدائك. وبتمضي في معرض على الأرض ومعاك ضامنك وبتمشي بنسخة من كل ورقة. وأهم من ده كله: ولا خطوة في البرنامج بتاخد منك فلوس.'],
+      ['لو مرضت أو الموتوسيكل باظ، بيحصل إيه في الأيام دي؟','بلّغنا فورًا من صفحتك. العطل الموثّق أو الظرف الصحي بيترفع لمراجعة بشرية، وممكن تتجمّد أيام المدة أو يتعدّل هدف الشهر. اللي مينفعش إنك تسكت وتسيب الأرقام تنزل من غير ما حد يعرف السبب.'],
       ['مش شغال على أوبر حاليًا — ينفع أقدّم؟','ينفع. دي حالة طبيعية جدًا في البرنامج، وفيه مرحلة كاملة اسمها «تجهيز الحساب» بنمشي فيها معاك خطوة بخطوة.'],
       ['معنديش رخصة قيادة لسه','قدّم وحدّد إنها «تحت الاستخراج». هتفضل في مسار التجهيز، والتسليم بيتم بعد ما الرخصة تخلص.'],
       ['ساكن في مدينة تانية غير القاهرة والغردقة','سجّل اهتمامك دلوقتي. الدفعة الأولى في القاهرة الكبرى والغردقة، والمدن الجديدة بتتفتح على دفعات.'],
@@ -862,7 +883,7 @@ ${appHeader(`<button class="btn btn-ghost btn-sm" data-go="applicant:track">مت
 </section>
 
 <div class="stickycta">
-  <span class="note">بدون مقدم · بدون أقساط تمليك · الالتزام بالشغل هو الشرط الوحيد</span>
+  <span class="note">بدون مقدم · بدون أقساط تمليك · البنزين والصيانة عليك</span>
   <button class="btn btn-pri" style="flex:2" data-go="applicant:verify">ابدأ التقديم</button>
   <button class="btn btn-ghost" style="flex:1" data-go="applicant:track">طلبي</button>
 </div>`);
@@ -2397,6 +2418,332 @@ const S_point = () => {
 };
 </script>
 <style>
+.segbar{display:flex;gap:4px;background:var(--surface-sunken);border-radius:var(--r-sm);padding:3px;
+  position:sticky;top:0;z-index:5;overflow-x:auto;scrollbar-width:none}
+.segbar::-webkit-scrollbar{display:none}
+.segbar button{flex:1 0 auto;padding:10px 14px;border-radius:var(--r-xs);font:600 13px var(--font-ui);
+  color:var(--text-2);white-space:nowrap;min-height:44px}
+.segbar button[data-on="1"]{background:var(--surface);color:var(--text);box-shadow:0 1px 2px rgba(20,23,31,.06)}
+.ucard{background:var(--surface);border:1px solid var(--hairline);border-radius:var(--r-md);padding:14px;
+  display:flex;flex-direction:column;gap:9px;text-align:start;width:100%;cursor:pointer}
+.ucard .pl{font:600 17px var(--font-figure)}
+.ucard .ch{font-size:12.5px;color:var(--text-3);font-family:var(--font-figure)}
+.ucard .foot{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.cover{display:flex;align-items:baseline;gap:8px}
+.cover b{font:600 26px var(--font-figure)}
+.botnav{position:sticky;bottom:0;z-index:20;background:var(--surface);border-block-start:1px solid var(--hairline);
+  box-shadow:var(--shadow-sticky);display:grid;grid-template-columns:repeat(5,1fr);
+  padding-block-end:env(safe-area-inset-bottom,0px)}
+.botnav button{display:flex;flex-direction:column;align-items:center;gap:3px;padding:9px 4px;min-height:56px;
+  font:500 11px var(--font-ui);color:var(--text-3);position:relative}
+.botnav button[data-on="1"]{color:var(--accent-ink)}
+.botnav button svg{width:20px;height:20px}
+.botnav .bdg{position:absolute;top:5px;inset-inline-end:calc(50% - 20px);background:var(--crit-edge);color:#fff;
+  font:600 10px var(--font-figure);border-radius:var(--r-pill);padding:0 5px;min-width:16px;text-align:center}
+.scanrow{display:flex;align-items:center;gap:10px;padding:12px 0;border-block-end:1px solid var(--hairline)}
+.scanrow:last-child{border-block-end:0}
+.scanrow .id{flex:1;min-width:0}
+.scanrow .id b{font:600 15px var(--font-figure);display:block}
+.scanrow .id span{font-size:12px;color:var(--text-3)}
+</style>
+<script>
+/* ============ الوارد والمخزون ============ */
+const CONSIGN = {
+ 'NM-101':[
+  {id:'CN-2026-0412', src:'مورد — هوجان إيجيبت', eta:'20 سبتمبر · 11:00 ص', st:'في الطريق', late:false,
+   units:['LHJ4K2...9F71','LHJ4K2...9F72','LHJ4K2...9F73','LHJ4K2...9F74','LHJ4K2...9F75','LHJ4K2...9F76']},
+  {id:'CN-2026-0408', src:'تحويل من بايك هاوس — مدينة نصر', eta:'18 سبتمبر · 2:00 م', st:'متأخرة', late:true,
+   units:['LHJ4K2...8C11','LHJ4K2...8C12']},
+  {id:'CN-2026-0401', src:'مورد — هوجان إيجيبت', eta:'12 سبتمبر', st:'اتقفلت', late:false, done:true, units:[]}],
+ 'BH-204':[{id:'CN-2026-0410', src:'مورد — هوجان إيجيبت', eta:'21 سبتمبر · 9:00 ص', st:'في الطريق', late:false,
+   units:['LHJ4K2...3C21','LHJ4K2...3C22','LHJ4K2...3C23']}],
+ 'HG-330':[{id:'CN-2026-0409', src:'تحويل من ورشة تريد واي — حلوان', eta:'22 سبتمبر', st:'في الطريق', late:false,
+   units:['LHJ4K2...5E01','LHJ4K2...5E02']}]
+};
+const SCAN_OUT = {
+  ok:['على الكشف','pos','الوحدة اتسجّلت وصلت — تحت فحص الوارد'],
+  dup:['اتمسحت قبل كده','att','الوحدة دي اتمسحت في الشحنة دي بالفعل'],
+  other:['على شحنة تانية','att','الوحدة على كشف شحنة تانية — بتتسجّل ومش بتتحسب هنا'],
+  elsewhere:['تبع نقطة تانية','crit','الوحدة دي مخزون نقطة تانية. اتسجّلت في عهدتك ومتجمّدة لحد ما الإدارة تراجع'],
+  unknown:['مش معروفة في السجل','crit','الشاسيه ده مش موجود عندنا خالص. اتسجّل كـ«وحدة غير مسجّلة» ومتجمّد'],
+  delivered:['السجل بيقول مُسلّمة','crit','الوحدة دي متسجّلة إنها اتسلّمت لكابتن. وقف كل حاجة — الحالة اترفعت للإدارة فورًا']
+};
+const STOCKX = {
+ 'NM-101':[
+  {plate:'ق ن 4261', ch:'LHJ4K2...8A17', st:'محجوز لميعاد', hold:'أحمد ناصر · 10:00', age:3},
+  {plate:'ق ن 4279', ch:'LHJ4K2...9F42', st:'محجوز لميعاد', hold:'محمود سيد · 11:30', age:5},
+  {plate:'ق ن 4283', ch:'LHJ4K2...9F51', st:'متاح', age:12},
+  {plate:'ق ن 4290', ch:'LHJ4K2...7C90', st:'متاح', age:26},
+  {plate:'ق ن 4301', ch:'LHJ4K2...7D11', st:'متاح', age:51},
+  {plate:'—',        ch:'LHJ4K2...8B17', st:'مستلمة — تحت الترخيص', age:14},
+  {plate:'—',        ch:'LHJ4K2...8B19', st:'مستلمة — تحت الترخيص', age:4},
+  {plate:'ق ن 4255', ch:'LHJ4K2...6A33', st:'مرتجع — تحت الفحص', age:9},
+  {plate:'ق ن 4240', ch:'LHJ4K2...6A10', st:'موقوف — تلف نقل', age:6}]
+};
+const stockOf = () => (STOCKX[APP.point.code] || STOCKX['NM-101']);
+const ageTone = (st, d) => {
+  if(st==='متاح') return d>=45?['crit','واقفة '+d+' يوم']:d>=21?['att','واقفة '+d+' يوم']:null;
+  if(st==='مستلمة — تحت الترخيص') return d>=21?['crit','الترخيص متأخر '+d+' يوم']:d>=10?['att','الترخيص '+d+' يوم']:null;
+  if(st==='مرتجع — تحت الفحص') return d>=14?['crit','الفحص متأخر '+d+' يوم']:d>=5?['att','الفحص '+d+' يوم']:null;
+  return null;
+};
+const stTone = st => st==='متاح'?'ok':st==='محجوز لميعاد'?'brand':st.startsWith('موقوف')?'dan':
+  st==='مرتجع — تحت الفحص'?'warn':st==='مستلمة — تحت الترخيص'?'info':'mute';
+
+/* ---- P17 · الوارد والشحنات ---- */
+const S_p17 = () => {
+  const list = CONSIGN[APP.point.code] || [];
+  return ptShell(`
+  <div class="spread"><h3 style="font-size:22px;font-weight:700">الوارد والشحنات</h3>
+    <button class="btn btn-soft btn-sm" data-st="sheet" data-k="request">اطلب وحدات</button></div>
+  <p class="sm muted">الشحنات الجاية لنقطتك إنت بس. الاستلام بيفتحه مدير النقطة.</p>
+  <div class="stack g10">${list.map((c,i)=>`<div class="ucard">
+    <div class="spread"><div><div class="pl lat">${c.id}</div><div class="ch">${c.src}</div></div>
+      ${c.done?pill('mute','اتقفلت'):c.late?pill('dan','متأخرة'):pill('info','في الطريق')}</div>
+    <div class="foot"><span class="tiny dim">الوصول المتوقع: ${c.eta}</span>
+      ${c.units.length?`<span class="pill p-mute plain lat">${c.units.length} وحدة</span>`:''}</div>
+    ${c.done?'':`<button class="btn btn-pri" data-st="openRec" data-i="${i}"
+      ${APP.user.role==='manager'?'':'disabled'}>ابدأ استلام الشحنة</button>
+      ${APP.user.role==='manager'?'':'<span class="tiny dim">الاستلام بيفتحه مدير النقطة بس.</span>'}`}
+  </div>`).join('')}</div>
+  ${notice('info','النقطة ما بتخليش وحدة «متاحة»','إنت بتستلم وتعدّ وتصوّر وتبلّغ. الوحدة بتفضل «مستلمة — تحت الترخيص» لحد ما الإدارة تسجّل اللوحة والترخيص. ده اللي بيمنع إن كابتن يتحجزله موتوسيكل ما يقدرش يخرج من المعرض قانونًا.')}
+  ${botNav('P17')}`);
+};
+
+/* ---- P18 · استلام شحنة ---- */
+const REC_STEPS = ['طابق المندوب','امسح الوحدات','حالة الوصول','الفروقات','التوقيع والإقفال'];
+const S_p18 = () => {
+  if(!APP.rec) return ptShell(notice('info','مفيش استلام شغّال','افتح شحنة من «الوارد» وابدأ الاستلام. <button class="btn btn-soft btn-sm" data-st="go" data-s="P17" style="padding:2px 8px">روح للوارد</button>')+botNav('P18'));
+  const c = (CONSIGN[APP.point.code]||[])[APP.rec.i], R = APP.rec, st = R.step;
+  const scanned = R.scanned.length, total = c.units.length;
+  let body = '';
+  if(st===1) body = `
+    <p class="sm muted">سجّل مين اللي جايب الشحنة قبل ما تفتح أي كرتونة. الصورة دي بتثبت إن العربية وصلت بحمولتها.</p>
+    <div class="field"><label for="dv-nm">اسم المندوب</label><input class="inp" id="dv-nm" value="${R.dv||''}" placeholder="الاسم زي ما في بطاقته"></div>
+    <div class="field"><label for="dv-ph">موبايله</label><input class="inp lat" id="dv-ph" inputmode="numeric" placeholder="01xxxxxxxxx"></div>
+    <div class="field"><label for="dv-pl">لوحة العربية</label><input class="inp" id="dv-pl" placeholder="ا ب ج 1234"></div>
+    <div class="cam ${R.dvPhoto?'shot':''}" data-st="tog" data-k="dvPhoto">
+      ${ico(R.dvPhoto?'ok':'cam')}<b>${R.dvPhoto?'الصورة اتاخدت':'صوّر العربية وهي محمّلة'}</b></div>`;
+  else if(st===2) body = `
+    <p class="sm muted">امسح باركود الشاسيه أو اكتب آخر ٤ خانات. لو وحدة مش على الكشف، النظام هيقولك تعمل إيه.</p>
+    <div class="spread"><b class="sm">${scanned} من ${total} اتمسحت</b>
+      <span class="track" style="width:120px;margin:0"><i style="width:${total?scanned/total*100:0}%"></i></span></div>
+    <div class="card tight">${c.units.map((u,j)=>{
+      const done = R.scanned.includes(j);
+      return `<div class="scanrow"><div class="id"><b class="lat">${u}</b><span>${done?'اتمسحت':'لسه'}</span></div>
+        ${done?pill('ok','على الكشف'):`<button class="btn btn-soft btn-sm" data-st="scan" data-i="${j}">امسح</button>`}</div>`;}).join('')}</div>
+    <div class="field"><label for="odd-ch">وحدة مش على الكشف؟ اكتب الشاسيه</label>
+      <div class="row" style="gap:8px"><input class="inp lat" id="odd-ch" style="flex:1" placeholder="آخر ٦ خانات">
+        <button class="btn btn-ghost btn-sm" data-st="oddScan">تحقّق</button></div></div>
+    ${R.oddOut?notice(R.oddOut[1]==='pos'?'ok':R.oddOut[1]==='att'?'warn':'dan', SCAN_OUT[R.oddKey][0], R.oddOut[2]):''}`;
+  else if(st===3) body = `
+    <p class="sm muted">٤ صور لكل شحنة، وقراءة العداد، وتحديد لو فيه تلف نقل. مفيش اختيار افتراضي هنا عن قصد.</p>
+    <div class="shots">${['أمام','خلف','جنب','العداد ورقم الشاسيه'].map((t,j)=>`
+      <div class="shot-tile" data-on="${(R.shots||[]).includes(j)?1:0}" data-st="shot" data-i="${j}">${t}</div>`).join('')}</div>
+    <div class="field"><label for="rec-odo">قراءة العداد (كم)</label>
+      <input class="inp lat" id="rec-odo" value="${R.odo||'6'}">
+      <span class="hint">فوق 15 كم بيتسجّل تنبيه · فوق 80 كم بيتفتح استفسار أوتوماتيك.</span></div>
+    <div class="opts inline">
+      ${[['سليمة','ok'],['فيها تلف نقل','bad']].map(([t,v])=>`
+      <label class="opt" data-on="${R.cond===v?1:0}" data-st="pick" data-k="cond" data-v="${v}">
+        <input type="radio" name="cond" ${R.cond===v?'checked':''}><b>${t}</b></label>`).join('')}</div>
+    ${R.cond==='bad'?notice('dan','تلف نقل','الوحدات التالفة بتتحول لـ«موقوف — تلف نقل» ومش بتدخل المخزون. بتتفتح حالة على شركة النقل خلال ٧ أيام.'):''}`;
+  else if(st===4){
+    const missing = total - scanned;
+    body = `
+    <p class="sm muted">راجع الأرقام قبل ما المندوب يمشي. كل سطر ناقص لازم يتحدد سببه.</p>
+    <div class="grid2">
+      <div class="metric"><div class="cap">وصلت سليمة</div><div class="top"><span class="val">${R.cond==='bad'?Math.max(0,scanned-1):scanned}</span></div></div>
+      <div class="metric"><div class="cap">وصلت وفيها تلف</div><div class="top"><span class="val">${R.cond==='bad'?1:0}</span>${R.cond==='bad'?pill('dan','حالة'):''}</div></div>
+      <div class="metric"><div class="cap">على الكشف وما وصلتش</div><div class="top"><span class="val">${missing}</span>${missing?pill('warn','سبب مطلوب'):''}</div></div>
+      <div class="metric"><div class="cap">وصلت ومش على الكشف</div><div class="top"><span class="val">${R.odd||0}</span></div></div>
+    </div>
+    ${missing?`<div class="field"><label for="ms-r">سبب النقص — إجباري</label>
+      <select class="inp" id="ms-r"><option>المندوب بيقول ما اتحمّلتش من المورد</option>
+        <option>على الكشف بالغلط</option><option>اتفرّغت في نقطة تانية</option><option>مفقودة — بلاغ</option></select></div>`:''}
+    ${notice('warn','النقص بيتسجّل «مفقودة — تحت البحث»','مش بيتشال من الكشف. بيفضل مفتوح على شركة النقل لحد ما يترد عليه، وبيرجع بشحنة سطر واحد.')}`;
+  } else body = `
+    <p class="sm muted">المندوب بيمضي على العدد اللي اتسلّم فعلًا، ومدير النقطة بيقفل بالرقم السري.</p>
+    <div class="card tight"><dl class="kv">
+      <dt>الشحنة</dt><dd class="lat">${c.id}</dd>
+      <dt>اتسلّم فعلًا</dt><dd class="lat">${scanned} من ${total}</dd>
+      <dt>المندوب</dt><dd>${R.dv||'—'}</dd>
+      <dt>المستلم</dt><dd>${APP.user.nm}</dd></dl></div>
+    <div><b class="sm">توقيع المندوب</b>
+      <div class="sig" data-on="${R.sig?1:0}" data-st="tog" data-k="sig" style="margin-block-start:8px">
+        ${R.sig?`<span class="ink">توقيع</span>`:'امضي هنا'}</div></div>
+    <div class="field"><label for="rec-pin">الرقم السري لمدير النقطة</label>
+      <input class="inp lat" id="rec-pin" inputmode="numeric" maxlength="4" placeholder="••••" style="max-width:140px"></div>`;
+  return ptShell(`
+  <div class="spread"><div><span class="eyebrow">استلام شحنة</span>
+    <h3 style="font-size:22px;font-weight:700">${c.id}</h3>
+    <p class="tiny dim">${c.src}</p></div></div>
+  <div class="runner">
+    <div class="rail"><span>الخطوة ${st} من 5</span>
+      ${REC_STEPS.map((x,j)=>`<i class="${j+1<st?'done':j+1===st?'now':''}"></i>`).join('')}</div>
+    <div class="step-body"><h4 class="step-h">${st}. ${REC_STEPS[st-1]}</h4>${body}</div>
+    <div class="step-foot">
+      ${st>1?`<button class="btn btn-ghost btn-sm" data-st="recBack">السابق</button>`:''}
+      <div style="flex:1"></div>
+      <button class="btn btn-pri" data-st="recNext">${st<5?'كمّل':'اقفل الاستلام'}</button></div>
+  </div>
+  ${botNav('P18')}`);
+};
+</script>
+<script>
+/* ---- P11 · مخزون النقطة (rebuilt, phone-only) ---- */
+const SEGS = [['have','عندي'],['coming','جاي'],['stuck','واقف'],['reply','محتاج ردّ']];
+const S_p11x = () => {
+  const all = stockOf(), seg = APP.seg || 'have';
+  const inbound = (CONSIGN[APP.point.code]||[]).filter(c=>!c.done);
+  const avail = all.filter(u=>u.st==='متاح').length;
+  const booked14 = 6, cover = booked14? (avail/(booked14/14)) : 99;
+  const coverTone = cover<2?'dan':cover<5?'warn':'ok';
+  const stuck = all.filter(u=>u.st.startsWith('موقوف') || u.st==='مرتجع — تحت الفحص' ||
+    (u.st==='مستلمة — تحت الترخيص' && u.age>=10));
+  const reply = all.filter(u=>ageTone(u.st,u.age));
+  const lists = {have: all.filter(u=>['متاح','محجوز لميعاد','مستلمة — تحت الترخيص'].includes(u.st)),
+                 stuck, reply};
+  const card = (u) => { const t = ageTone(u.st,u.age);
+    return `<div class="ucard" data-st="unit" data-p="${u.plate}">
+      <div class="spread"><div><div class="pl">${u.plate}</div><div class="ch lat">${u.ch}</div></div>
+        ${pill(stTone(u.st), u.st)}</div>
+      <div class="foot">${u.hold?`<span class="tiny dim">محجوزة لـ ${u.hold}</span>`:''}
+        ${t?`<span class="pill p-${t[0]==='crit'?'dan':'warn'} plain">${t[1]}</span>`:''}</div></div>`;};
+  return ptShell(`
+  <div class="spread"><h3 style="font-size:22px;font-weight:700">مخزون النقطة</h3>
+    <span class="pt-scope">${ico('pin','ic')}${APP.point.name}</span></div>
+  <div class="grid2">
+    <div class="metric"><div class="cap">متاح دلوقتي</div><div class="top"><span class="val">${avail}</span></div></div>
+    <div class="metric"><div class="cap">التغطية</div>
+      <div class="cover"><b>${cover>=99?'—':cover.toFixed(1)}</b><span class="tiny dim">يوم</span>
+        ${pill(coverTone, coverTone==='dan'?'حرج':coverTone==='warn'?'منخفضة':'كويسة')}</div>
+      <div class="track"><i class="${coverTone==='dan'?'bad':coverTone==='warn'?'mid':'good'}"
+        style="width:${Math.min(100,cover/10*100)}%"></i><span class="tick" style="inset-inline-end:50%"></span></div>
+      <div class="cap" style="margin-block-start:5px">العلامة = ٥ أيام · محسوبة من مواعيدك الجاية مش من رقم ثابت</div></div>
+  </div>
+  <div class="segbar">${SEGS.map(([k,t])=>{
+    const n = k==='coming'? inbound.reduce((a,c)=>a+c.units.length,0) : (lists[k]||[]).length;
+    return `<button type="button" data-st="seg" data-v="${k}" data-on="${k===seg?1:0}">${t}
+      <span class="lat" style="opacity:.7;margin-inline-start:5px">${n}</span></button>`;}).join('')}</div>
+  ${seg==='coming'
+    ? (inbound.length?`<div class="stack g10">${inbound.map(c=>`<div class="ucard">
+        <div class="spread"><div><div class="pl lat">${c.id}</div><div class="ch">${c.src}</div></div>
+          ${c.late?pill('dan','متأخرة'):pill('info','في الطريق')}</div>
+        <div class="foot"><span class="tiny dim">${c.eta}</span>
+          <span class="pill p-mute plain lat">${c.units.length} وحدة</span></div>
+        <p class="tiny dim">الوحدات دي مش محسوبة في مخزونك لحد ما تستلمها — بتبان في سطر «التغطية مع الوارد» بس.</p>
+      </div>`).join('')}</div>` : `<div class="card" style="text-align:center;color:var(--text-3)">مفيش شحنات جاية.</div>`)
+    : (lists[seg].length?`<div class="stack g10">${lists[seg].map(card).join('')}</div>`
+       : `<div class="card" style="text-align:center;color:var(--text-3)">مفيش وحدات في القسم ده.</div>`)}
+  ${seg==='reply'&&lists.reply.length?notice('warn','الوحدات دي محتاجة ردّ منك','ساعة الوقوف بتبدأ من أول ما الوحدة تبقى متاحة، وما بترجعش لصفر لو حجز اتلغى. وحدة واقفة ٤٥ يوم = فلوس نايمة في الفناء.'):''}
+  ${notice('info','', 'عرض فقط — المعرض ما يقدرش يغيّر حالة وحدة، ولا يعيد تخصيصها، ولا يشوف مخزون نقطة تانية. كل اللي فوق طلبات وبلاغات.')}
+  <div class="row"><button class="btn btn-ghost btn-sm" data-st="sheet" data-k="request">اطلب وحدات</button>
+    <button class="btn btn-ghost btn-sm" data-st="go" data-s="P21">الجرد الأسبوعي</button></div>
+  ${botNav('P11')}`);
+};
+/* ---- P21 · الجرد الكامل الأسبوعي ---- */
+const S_p21 = () => {
+  const all = stockOf(), done = (APP.cnt||[]).length;
+  return ptShell(`
+  <h3 style="font-size:22px;font-weight:700">الجرد الكامل الأسبوعي</h3>
+  <p class="sm muted">كل سبت، وبيمنع فتح اليوم لحد ما يخلص. بيشمل الوحدات المتجمّدة كمان.</p>
+  <div class="spread"><b class="sm">${done} من ${all.length}</b>
+    <span class="track" style="width:140px;margin:0"><i style="width:${done/all.length*100}%"></i></span></div>
+  <div class="stack g8">${all.map((u,i)=>{
+    const c = (APP.cnt||[]).includes(i);
+    return `<div class="ucard" style="cursor:default">
+      <div class="spread"><div><div class="pl">${u.plate}</div><div class="ch lat">${u.ch}</div></div>
+        ${c?pill('ok','موجودة'):pill('mute','لسه')}</div>
+      ${c?'':`<div class="row" style="gap:8px"><button class="btn btn-pri btn-sm" style="flex:1" data-st="cnt" data-i="${i}">موجودة</button>
+        <button class="btn btn-soft btn-sm" data-st="cntMiss" data-i="${i}">مش موجودة</button></div>`}
+    </div>`;}).join('')}</div>
+  ${notice('warn','الفرق مرتين على نفس الوحدة = تجميد','أول فرق بيفتح حالة. تاني فرق متتالي على نفس الوحدة بيحوّلها لـ«موقوف — تحقيق». ٣ وحدات متجمّدة بتوقف أي شحنة جديدة للنقطة.')}
+  <button class="btn btn-pri" data-st="closeCount" ${done===all.length&&APP.user.role==='manager'?'':'disabled'}>اقفل الجرد بالرقم السري</button>
+  ${botNav('P11')}`);
+};
+/* ---- bottom nav ---- */
+const BOT = [['P2','المواعيد','rows',0],['P17','الوارد','box',2],['P11','المخزون','bike',0],
+             ['P8','الحالات','warn',0],['P14','السجل','clip',0]];
+const botNav = (cur) => `<div class="botnav">${BOT.map(([id,t,ic,bdg])=>`
+  <button type="button" data-st="go" data-s="${id}" data-on="${id===cur?1:0}">
+    ${ico(ic)}${t}${bdg?`<span class="bdg lat">${bdg}</span>`:''}</button>`).join('')}</div>`;
+
+/* ---- sheets + actions ---- */
+function stSheet(kind){
+  const head=(t,s)=>`<div class="spread" style="margin-block-end:12px">
+    <div><h3 style="font-size:22px;font-weight:700">${t}</h3>${s?`<p class="tiny dim">${s}</p>`:''}</div>
+    <button class="btn btn-soft" style="width:40px;height:40px;padding:0" data-close="1" aria-label="إغلاق">✕</button></div>`;
+  if(kind==='request') return head('اطلب وحدات','طلب — مش شحنة. الإدارة هي اللي بتعمل الشحنة وتوافق على التحويل')+`
+    <div class="opts">${[['محتاج وحدات','need'],['عندي وحدات زايدة','extra']].map(([t,v])=>`
+      <label class="opt" data-on="${APP.reqKind===v?1:0}" data-st="pick" data-k="reqKind" data-v="${v}">
+        <input type="radio" name="rq" ${APP.reqKind===v?'checked':''}><b>${t}</b></label>`).join('')}</div>
+    <div class="grid2" style="margin-block-start:12px">
+      <div class="field"><label for="rq-n">العدد</label><input class="inp lat" id="rq-n" inputmode="numeric" value="6"></div>
+      <div class="field"><label for="rq-w">امتى</label><select class="inp" id="rq-w"><option>خلال أسبوع</option><option>خلال أسبوعين</option></select></div></div>
+    <div class="field" style="margin-block-start:12px"><label for="rq-note">السبب</label>
+      <textarea class="inp" id="rq-note" rows="3" placeholder="عندي 9 مواعيد الأسبوع الجاي و3 وحدات متاحة بس."></textarea></div>
+    <button class="btn btn-pri btn-block" style="margin-block-start:14px" data-st="doRequest">ابعت الطلب</button>`;
+  if(kind==='unit') return head('كارت الوحدة', APP.unitP||'')+`
+    <div class="card tight" style="background:var(--surface-sunken)"><dl class="kv">
+      <dt>اللوحة</dt><dd class="num">${APP.unitP}</dd>
+      <dt>الحالة</dt><dd>حسب سجل الإدارة</dd>
+      <dt>النقطة</dt><dd>${APP.point.name}</dd></dl>
+      <p class="tiny dim" style="margin-block-start:8px">${ico('ban','ic')} البيانات دي مقفولة — المعرض بيقراها بس.</p></div>
+    <b class="sm" style="display:block;margin-block-start:14px">رحلة الوحدة</b>
+    <ol class="tl" style="margin-block-start:10px">
+      ${[['وصلت في شحنة CN-2026-0401','done'],['اتسجّلت تحت الترخيص','done'],
+         ['اللوحة اتسجّلت — بقت متاحة','done'],['محجوزة لميعاد','now'],['التسليم','todo']]
+        .map(([t,s])=>`<li data-s="${s}"><span class="dot">${s==='done'?'✓':'•'}</span><div><b>${t}</b></div></li>`).join('')}</ol>
+    <div class="row" style="margin-block-start:14px">
+      <button class="btn btn-soft btn-sm" data-close="1">اطلب معلومة من الإدارة</button>
+      <button class="btn btn-dan btn-sm" data-close="1">بلّغ عن عطل</button></div>`;
+  return head('—','');
+}
+document.addEventListener('click',(e)=>{
+  const t=e.target.closest('[data-st]'); if(!t || t.tagName==='SELECT') return;
+  e.preventDefault(); const k=t.dataset.st, i=+t.dataset.i; APP.toast=null;
+  /* keep typed values across re-renders */
+  if(APP.rec){ const g=id=>(document.getElementById(id)||{}).value;
+    if(g('dv-nm')!==undefined) APP.rec.dv = g('dv-nm') ?? APP.rec.dv;
+    if(g('rec-odo')!==undefined) APP.rec.odo = g('rec-odo') ?? APP.rec.odo; }
+  if(k==='go'){ APP.screen=t.dataset.s; }
+  else if(k==='seg'){ APP.seg=t.dataset.v; }
+  else if(k==='openRec'){ APP.rec={i, step:1, scanned:[], shots:[], odd:0}; APP.screen='P18'; }
+  else if(k==='scan'){ if(!APP.rec.scanned.includes(i)) APP.rec.scanned.push(i); }
+  else if(k==='oddScan'){ const keys=['unknown','other','elsewhere','delivered'];
+    APP.rec.oddKey = keys[(APP.rec.odd||0)%keys.length]; APP.rec.oddOut = SCAN_OUT[APP.rec.oddKey];
+    APP.rec.odd=(APP.rec.odd||0)+1; }
+  else if(k==='tog'){ APP.rec[t.dataset.k] = !APP.rec[t.dataset.k]; }
+  else if(k==='shot'){ const s=APP.rec.shots; s.includes(i)?s.splice(s.indexOf(i),1):s.push(i); }
+  else if(k==='pick'){ const key=t.dataset.k, v=t.dataset.v;
+    if(key==='cond') APP.rec.cond=v; else APP[key]=v;
+    if(key==='reqKind'){ openSheet(stSheet('request')); return; } }
+  else if(k==='recBack'){ APP.rec.step=Math.max(1,APP.rec.step-1); }
+  else if(k==='recNext'){ const R=APP.rec, c=(CONSIGN[APP.point.code]||[])[R.i];
+    if(R.step===1){
+      if(!R.dv || !R.dvPhoto){ APP.toast='لازم اسم المندوب وصورة العربية وهي محمّلة.'; render(); return; } }
+    if(R.step===2 && R.scanned.length===0){ APP.toast='امسح وحدة واحدة على الأقل.'; render(); return; }
+    if(R.step===3){ if(R.shots.length<4 || !R.cond){ APP.toast='لازم ٤ صور وتحديد لو فيه تلف نقل.'; render(); return; } }
+    if(R.step===5){
+      ptLog('استلام شحنة', c.id+' — '+R.scanned.length+' وحدة');
+      c.done=true; c.st='اتقفلت'; APP.rec=null; APP.screen='P17';
+      APP.toast='الاستلام اتقفل. الوحدات دخلت «مستلمة — تحت الترخيص» — الإدارة هي اللي بتخليها متاحة بعد اللوحة والترخيص.';
+      render(); return; }
+    R.step++; }
+  else if(k==='cnt'){ APP.cnt=APP.cnt||[]; if(!APP.cnt.includes(i)) APP.cnt.push(i); }
+  else if(k==='cntMiss'){ APP.cnt=APP.cnt||[]; if(!APP.cnt.includes(i)) APP.cnt.push(i);
+    APP.toast='الفرق اتسجّل واتفتحت حالة. لو تكرر على نفس الوحدة هتتجمّد.'; }
+  else if(k==='closeCount'){ ptLog('جرد أسبوعي','اتقفل واتوقّع'); APP.toast='الجرد الأسبوعي اتقفل.'; }
+  else if(k==='sheet'){ openSheet(stSheet(t.dataset.k)); return; }
+  else if(k==='unit'){ APP.unitP=t.dataset.p; openSheet(stSheet('unit')); return; }
+  else if(k==='doRequest'){ ptLog('طلب وحدات', (APP.reqKind==='extra'?'وحدات زايدة':'محتاج وحدات'));
+    closeSheet(); APP.toast='الطلب اتبعت للإدارة. هي اللي بتعمل الشحنة أو التحويل — المعرض بيطلب بس.'; }
+  render();
+});
+Object.assign(PT_SCREENS, {P17:S_p17, P18:S_p18, P11:S_p11x, P21:S_p21});
+</script>
+<style>
 .qrail{display:grid;grid-template-columns:248px minmax(0,1fr);gap:0;background:var(--surface);
   border:1px solid var(--hairline);border-radius:var(--r-sm);overflow:hidden}
 .qrail .rail-list{border-inline-end:1px solid var(--hairline);padding:8px;display:flex;flex-direction:column;gap:2px}
@@ -2816,7 +3163,10 @@ const PORTALS = [
     {id:'P4', nav:'تنفيذ التسليم', title:'تنفيذ التسليم', desc:'ثمان خطوات، كل خطوة لوحدها على الشاشة. الخطوة بتتقفل ومش بترجع تتعدّل. جرّب تكتب شاسيه غلط أو تقول إن الضامن مش حاضر وشوف بيحصل إيه.', render:S_point},
     {id:'P6', nav:'إيصال التسليم', title:'إيصال التسليم', desc:'بعد التأكيد. ما بيتعدّلش وما بيتفتحش تاني — أي تصحيح بيتم من الإدارة.', render:S_point},
     {id:'P8', nav:'الحالات المفتوحة', title:'الحالات المفتوحة', desc:'حالات النقطة دي بس. المعرض بيقرا ويضيف ملاحظة — ما بيقفلش حالة ولا بيغيّر تصنيفها.', render:S_point},
-    {id:'P11', nav:'مخزون النقطة', title:'مخزون النقطة', desc:'عرض فقط. ما فيش تغيير حالة، ولا إعادة تخصيص، ولا رؤية لمخزون نقطة تانية.', render:S_point},
+    {id:'P17', nav:'الوارد والشحنات', title:'الوارد والشحنات', desc:'الشحنات الجاية لنقطتك. الاستلام بيفتحه مدير النقطة، والنقطة عمرها ما بتخلّي وحدة «متاحة» — دي الإدارة بعد الترخيص.', render:S_point},
+    {id:'P18', nav:'استلام شحنة', title:'استلام شحنة', desc:'خمس خطوات: طابق المندوب، امسح الوحدات، صوّر حالة الوصول، احسم الفروقات، ومضي المندوب وإقفال بالرقم السري. جرّب تكتب شاسيه مش على الكشف.', render:S_point},
+    {id:'P11', nav:'مخزون النقطة', title:'مخزون النقطة', desc:'أربعة أقسام: عندي · جاي · واقف · محتاج ردّ. مع تغطية محسوبة من مواعيدك الجاية مش من رقم ثابت، وساعة وقوف لكل وحدة.', render:S_point},
+    {id:'P21', nav:'الجرد الأسبوعي', title:'الجرد الكامل الأسبوعي', desc:'كل سبت وبيمنع فتح اليوم. الفرق مرتين على نفس الوحدة بيجمّدها، و٣ وحدات متجمّدة بتوقف أي شحنة جديدة للنقطة.', render:S_point},
     {id:'P13', nav:'إقفال اليوم', title:'إقفال اليوم', desc:'الأرقام الخمسة، وجرد الإقفال، وأهم سطر: وحدات بكرة اتأكدت ولا لأ. بيمضيه مدير النقطة — المشغّل يقدر يفتح اليوم بس ما يقدرش يقفله.', render:S_point},
     {id:'P14', nav:'سجل النقطة', title:'سجل النقطة', desc:'سجل بيتضاف عليه بس. كل حاجة تعملها في البورتال بتظهر هنا باسمك ووقتها.', render:S_point},
     {id:'P15', nav:'قائمة المزامنة', title:'قائمة المزامنة', desc:'اقطع الشبكة من الزرار فوق وكمّل تسليم — هتلاقي اللي مستني رفع هنا. مفيش حذف، إعادة محاولة بس.', render:S_point},
